@@ -1,0 +1,13 @@
+# README
+
+KATweak is a Swift-y framework for adjusting your app on the fly - it’s omg-so-heavily-influenced-by-it-we-named-this-after-it by Facebook Tweaks, and we have plans to bring in a tidbit or two from Ken Ferry’s TunableSpec as well!
+
+KATweak allows you to adjust the “magic numbers” on-the-fly inside your app - along with Strings and UIColor values.
+
+It lacks Facebook’s use of macros under the hood - which means that there is technically a performance hit. If that’s not your jam - go check out FBTweak - it’s really really good!
+
+What it gains, though: 
+ - a Swifty API, 
+- the ability to save Versions of your Tweaks (and share ‘em with teammates easily),
+- a UI that has state restoration so you don’t have to re-navigate to a tweak you’re working out,
+- and templates for commonly-used tweaks, like spring animations!
