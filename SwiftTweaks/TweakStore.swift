@@ -13,7 +13,7 @@ public class TweakStore {
 
 	private let tweaks: [AnyTweak]
 
-	init(tweaks: [AnyTweak]) {
+	public init(tweaks: [AnyTweak]) {
 		self.tweaks = tweaks
 		// STOPSHIP (bryan): read from persistence model to populate tweakCategories
 	}

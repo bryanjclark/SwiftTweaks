@@ -13,7 +13,7 @@ public protocol TweakLibraryType {
 	static var defaultStore: TweakStore { get }
 }
 
-extension TweakLibraryType {
+public extension TweakLibraryType {
 	/// Returns the current value for a tweak from the TweakLibrary's default store.
 	static func assign<T>(tweak: Tweak<T>) -> T {
 		return self.defaultStore.currentValueForTweak(tweak)
@@ -27,8 +27,8 @@ public struct AnyTweak: TweakType {
 	public var groupName: String { return tweak.groupName }
 	public var tweakName: String { return tweak.tweakName }
 
-	public static func arrayOfAnyTweakFromArrayOfTweakTypes(tweakTypes: [TweakType]) -> [AnyTweak] {
-		return tweakTypes.map { AnyTweak(tweak: $0) }
+	public init(tweak: TweakType) {
+		self.tweak = tweak
 	}
 }
 

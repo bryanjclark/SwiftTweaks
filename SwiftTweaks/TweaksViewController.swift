@@ -10,12 +10,12 @@ import Foundation
 
 public class TweaksViewController: UIViewController {
 
-	private let library: TweakLibraryType
+	private let tweakLibrary: TweakLibraryType
 
 	private let tableView: UITableView
 
-	public init(library: TweakLibraryType) {
-		self.library = library
+	public init(tweakLibrary: TweakLibraryType) {
+		self.tweakLibrary = tweakLibrary
 
 		self.tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
 
