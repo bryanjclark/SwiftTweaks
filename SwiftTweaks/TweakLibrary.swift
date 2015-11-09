@@ -8,19 +8,19 @@
 
 import Foundation
 
-/// Allows our Tweak UI to know about all the available tweaks in a collection.
-/// Create a struct that conforms to this protocol to declare your own tweaks!
+/// Create a public struct in your application that conforms to this protocol to declare your own tweaks!
 public protocol TweakLibraryType {
 	static var defaultStore: TweakStore { get }
 }
 
 extension TweakLibraryType {
+	/// Returns the current value for a tweak from the TweakLibrary's default store.
 	static func assign<T>(tweak: Tweak<T>) -> T {
 		return self.defaultStore.currentValueForTweak(tweak)
 	}
 }
 
-/// A type-erasure around Tweak<T>, so we can collect them together in TweakLibraryType
+/// A type-erasure around Tweak<T>, so we can collect them together in TweakLibraryType.
 public struct AnyTweak: TweakType {
 	public let tweak: TweakType
 	public var collectionName: String { return tweak.collectionName }

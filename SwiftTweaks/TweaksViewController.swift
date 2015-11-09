@@ -10,12 +10,20 @@ import Foundation
 
 public class TweaksViewController: UIViewController {
 
-	private let store: TweakStore
+	private let library: TweakLibraryType
 
-	public init(store: TweakStore) {
-		self.store = store
+	private let tableView: UITableView
+
+	public init(library: TweakLibraryType) {
+		self.library = library
+
+		self.tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
 
 		super.init(nibName: nil, bundle: nil)
+
+		tableView.bounds = view.bounds
+		tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+		view.addSubview(tableView)
 	}
 
 	public required init?(coder aDecoder: NSCoder) {

@@ -10,7 +10,7 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-/// Tweaks let you adjust things on the fly
+/// Tweaks let you adjust things on the fly.
 public struct Tweak<T: TweakableType> {
 	public let collectionName: String
 	public let groupName: String
