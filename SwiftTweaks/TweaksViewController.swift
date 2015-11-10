@@ -17,30 +17,32 @@ public class TweaksViewController: UIViewController {
 	private let tweakStore: TweakStore
 
 	private let navController: UINavigationController
+	private let segmentedControl: UISegmentedControl = {
+		let tweaksTitle = NSLocalizedString("Tweaks", comment: "Segmented Control title for tweaks.")
+		let backupsTitle = NSLocalizedString("Backups", comment: "Segmented Control title for backups.")
+		return UISegmentedControl(items: [tweaksTitle, backupsTitle])
+	}()
 
 	public var delegate: TweaksViewControllerDelegate?
 
-	private static let toolbarHeight: CGFloat = 44 // I wish we didn't have to do this?
+	internal static let dismissButtonTitle = NSLocalizedString("Dismiss", comment: "Button to dismiss TweaksViewController.")
 
 	public init(tweakStore: TweakStore) {
 		self.tweakStore = tweakStore
-		self.navController = UINavigationController(rootViewController: TweaksCollectionsListViewController(tweakStore: tweakStore))
+
+		let tweaksCollectionsVC = TweaksCollectionsListViewController(tweakStore: tweakStore)
+		self.navController = UINavigationController(rootViewController: tweaksCollectionsVC)
 
 		super.init(nibName: nil, bundle: nil)
 
-		navController.toolbarHidden = true
-		view.addSubview(navController.view)
+		segmentedControl.addTarget(self, action: "segmentedControlDidChange:", forControlEvents: .ValueChanged)
+		segmentedControl.selectedSegmentIndex = 0
 
-		let toolbar = UIToolbar()
-		var toolbarFrame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: TweaksViewController.toolbarHeight)
-		toolbarFrame.origin.y -= toolbarFrame.size.height
-		toolbar.frame = toolbarFrame
-		toolbar.items = [
-			UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonTapped"),
-			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: "dismissButtonTapped")
-		]
-		view.addSubview(toolbar)
+		tweaksCollectionsVC.navigationItem.titleView = segmentedControl
+		tweaksCollectionsVC.delegate = self
+
+		navController.toolbarHidden = false
+		view.addSubview(navController.view)
 	}
 
 	public required init?(coder aDecoder: NSCoder) {
@@ -48,15 +50,17 @@ public class TweaksViewController: UIViewController {
 	}
 
 
-	// MARK: Events
+	// MARK: Handling Segmented Control
 
-	@objc private func dismissButtonTapped() {
-		self.delegate?.tweaksViewControllerPressedDismiss(self)
+
+	@objc private func segmentedControlDidChange(sender: UISegmentedControl) {
+		assert(sender == segmentedControl)
+		print("segmentedControl did change: \(segmentedControl.selectedSegmentIndex)")
 	}
+}
 
-	@objc private func actionButtonTapped() {
-		let alertController = UIAlertController(title: "Sharing Backups Not Yet Implemented", message: "Easy, tiger.", preferredStyle: .Alert)
-		alertController.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
-		presentViewController(alertController, animated: true, completion: nil)
+extension TweaksViewController: TweaksCollectionsListViewControllerDelegate {
+	func tweaksCollectionsListViewControllerDidTapDismissButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
+		self.delegate?.tweaksViewControllerPressedDismiss(self)
 	}
 }

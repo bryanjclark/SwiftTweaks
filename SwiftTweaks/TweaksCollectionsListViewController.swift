@@ -8,9 +8,15 @@
 
 import UIKit
 
+internal protocol TweaksCollectionsListViewControllerDelegate {
+	func tweaksCollectionsListViewControllerDidTapDismissButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
+}
+
 internal class TweaksCollectionsListViewController: UIViewController {
 	private let tableView: UITableView
 	private let tweakStore: TweakStore
+
+	internal var delegate: TweaksCollectionsListViewControllerDelegate?
 
 	internal init(tweakStore: TweakStore) {
 		self.tweakStore = tweakStore
@@ -24,7 +30,11 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: "resetStore")
 		navigationItem.leftBarButtonItem?.tintColor = UIColor.redColor()
 
-		navigationItem.title = "Tweaks"
+		toolbarItems = [
+			UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonTapped"),
+			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
+			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: "dismissButtonTapped")
+		]
 	}
 
 	override func viewDidLoad() {
@@ -44,5 +54,15 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		let alert = UIAlertController(title: "Tweaks Reset", message: "Tweaks have been reset to their default values.", preferredStyle: .Alert)
 		alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
 		presentViewController(alert, animated: true, completion: nil)
+	}
+
+	@objc private func dismissButtonTapped() {
+		self.delegate?.tweaksCollectionsListViewControllerDidTapDismissButton(self)
+	}
+
+	@objc private func actionButtonTapped() {
+		let alertController = UIAlertController(title: "Sharing Backups Not Yet Implemented", message: "Easy, tiger.", preferredStyle: .Alert)
+		alertController.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+		presentViewController(alertController, animated: true, completion: nil)
 	}
 }

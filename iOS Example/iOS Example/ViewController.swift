@@ -13,42 +13,43 @@ class ViewController: UIViewController {
 	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = NSTextAlignment.Center
-		label.textColor = ExampleTweaks.assign(ExampleTweaks.colorText1)
 		label.text = "SwiftTweaks"
-		label.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText1))
 		return label
 	}()
 
 	private let bodyLabel: UILabel = {
 		let label = UILabel()
-		label.textColor = ExampleTweaks.assign(ExampleTweaks.colorText2)
-		label.text = "Shake your device to bring up the Tweaks UI."
-		label.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText2))
+		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here!"
+		label.numberOfLines = 0
+		label.lineBreakMode = .ByWordWrapping
 		return label
 	}()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		view.addSubview(titleLabel)
+		view.addSubview(bodyLabel)
+	}
+
+	override func viewWillAppear(animated: Bool) {
 		view.backgroundColor = ExampleTweaks.assign(ExampleTweaks.colorBackground)
 
+		titleLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText1)
+		titleLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText1))
 		titleLabel.sizeToFit()
-		titleLabel.frame = CGRect(origin: CGPointZero, size: CGSizeMake(view.bounds.width, titleLabel.frame.height))
-		view.addSubview(titleLabel)
+		titleLabel.frame = CGRect(origin: CGPoint(x: 0, y: 30), size: CGSizeMake(view.bounds.width, titleLabel.frame.height))
 
-		bodyLabel.sizeToFit()
-		bodyLabel.frame = CGRect(origin: CGPoint(x: 0, y: CGRectGetMaxY(titleLabel.frame) + ExampleTweaks.assign(ExampleTweaks.titleScreenGapBetweenTitleAndBody)), size: CGSize(width: view.bounds.width, height: bodyLabel.bounds.height))
-		view.addSubview(bodyLabel)
+		bodyLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText2)
+		bodyLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText2))
+		bodyLabel.frame = CGRect(
+			origin: CGPoint(x: ExampleTweaks.assign(ExampleTweaks.horizontalMargins), y: CGRectGetMaxY(titleLabel.frame) + ExampleTweaks.assign(ExampleTweaks.titleScreenGapBetweenTitleAndBody)),
+			size: bodyLabel.sizeThatFits(CGSize(width: view.bounds.width - ExampleTweaks.assign(ExampleTweaks.horizontalMargins)*2, height: CGFloat.max)))
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
-	}
-
-	// MARK: Status Bar
-	override func prefersStatusBarHidden() -> Bool {
-		return true
 	}
 }
 
