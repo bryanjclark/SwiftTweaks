@@ -9,7 +9,7 @@
 import Foundation
 
 /// A UIWindow that handles the presentation and dismissal of a TweaksViewController automatically
-public class TweakWindow: UIWindow {
+@objc public class TweakWindow: UIWindow {
 
 	public enum GestureType {
 		case Shake
@@ -44,9 +44,10 @@ public class TweakWindow: UIWindow {
 
 	// MARK: Init
 
-	public init(frame: CGRect, gestureType: GestureType = .Shake, tweakLibrary: TweakLibraryType) {
+	public init(frame: CGRect, gestureType: GestureType = .Shake, tweakStore: TweakStore) {
 		self.gestureType = gestureType
-		self.tweaksViewController = TweaksViewController(tweakLibrary: tweakLibrary)
+
+		self.tweaksViewController = TweaksViewController(tweakStore: tweakStore)
 
 		super.init(frame: frame)
 
@@ -56,6 +57,8 @@ public class TweakWindow: UIWindow {
 		case .Shake:
 			break
 		}
+
+		tweaksViewController.delegate = self
 	}
 
 	public required init?(coder aDecoder: NSCoder) {
@@ -107,5 +110,10 @@ public class TweakWindow: UIWindow {
 	private func dismissTweaks() {
 		tweaksViewController.dismissViewControllerAnimated(true, completion: nil)
 	}
+}
 
+extension TweakWindow: TweaksViewControllerDelegate {
+	public func tweaksViewControllerPressedDismiss(tweaksViewController: TweaksViewController) {
+		dismissTweaks()
+	}
 }

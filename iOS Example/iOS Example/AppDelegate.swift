@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTweaks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		window = TweakWindow(frame: UIScreen.mainScreen().bounds, tweakStore: ExampleTweaks.defaultStore)
 		window!.rootViewController = ViewController()
 		window!.makeKeyAndVisible()
 
