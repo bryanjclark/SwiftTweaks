@@ -8,12 +8,19 @@
 
 import UIKit
 
+internal protocol TweaksBackupsListViewControllerDelegate {
+	func tweaksBackupsListDidPressDismiss(tweaksBackupsListViewController: TweaksBackupsListViewController)
+}
+
 internal class TweaksBackupsListViewController: UIViewController {
 	private let tableView: UITableView
 	private let tweakStore: TweakStore
+	private let delegate: TweaksBackupsListViewControllerDelegate
 
-	init(tweakStore: TweakStore) {
+	init(tweakStore: TweakStore, delegate: TweaksBackupsListViewControllerDelegate) {
 		self.tweakStore = tweakStore
+		self.delegate = delegate
+
 		self.tableView = UITableView(frame: CGRectZero, style: .Plain)
 
 		super.init(nibName: nil, bundle: nil)
@@ -30,7 +37,10 @@ internal class TweaksBackupsListViewController: UIViewController {
 	}
 
 	override func viewDidLoad() {
+		super.viewDidLoad()
+		
 		tableView.frame = view.bounds
+		view.addSubview(tableView)
 	}
 
 
@@ -41,7 +51,7 @@ internal class TweaksBackupsListViewController: UIViewController {
 	}
 
 	@objc private func dismissButtonTapped() {
-		print("Tapped dismiss button")
+		delegate.tweaksBackupsListDidPressDismiss(self)
 	}
 }
 
