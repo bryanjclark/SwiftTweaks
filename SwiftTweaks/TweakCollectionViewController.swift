@@ -100,6 +100,8 @@ internal class TweakCollectionViewController: UIViewController {
 			let view = UIView(frame: CGRect(origin: CGPointZero, size: chitSize))
 			view.layer.cornerRadius = 4
 			view.clipsToBounds = true
+			view.layer.borderColor = UIColor.blackColor().CGColor
+			view.layer.borderWidth = 1.0 / UIScreen.mainScreen().scale
 			return view
 		}()
 
@@ -135,16 +137,18 @@ extension TweakCollectionViewController: UITableViewDataSource {
 
 		let cell: UITableViewCell
 		switch tweak.tweakViewData {
-		case let .Stepper(value: value):
+		case let .Stepper(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let stepperCell  = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.StepperCellIdentifier, forIndexPath: indexPath) as! StepperCell
-			stepperCell.stepperControl.value = value
+			stepperCell.stepperControl.value = defaultValue
+			stepperCell.stepperControl.minimumValue = min
+			stepperCell.stepperControl.maximumValue = max
+			stepperCell.stepperControl.stepValue = step
 			cell = stepperCell as UITableViewCell
-		case let .Color(value: value):
+		case let .Color(defaultValue: value):
 			let colorCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.ColorCellIdentifier, forIndexPath: indexPath) as! ColorCell
-			// TODO (bryan) set color parameters
-			colorCell.colorChit.backgroundColor = UIColor.grayColor()
+			colorCell.colorChit.backgroundColor = value
 			cell = colorCell as UITableViewCell
-		case let .Switch(value: value):
+		case let .Switch(defaultValue: value):
 			let boolCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.SwitchCellIdentifier, forIndexPath: indexPath) as! SwitchCell
 			boolCell.switchControl.on = value
 			cell = boolCell as UITableViewCell

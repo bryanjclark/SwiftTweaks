@@ -37,7 +37,24 @@ extension Tweak: TweakType {
 	}
 
 	public var tweakViewData: TweakViewData {
-		return self.defaultValue.tweakViewData
+		switch T.tweakViewDataType {
+		case .Boolean:
+			return .Switch(defaultValue: (defaultValue as! Bool))
+		case .Int:
+			let def = Double(defaultValue as! Int)
+			let min = Double(minimumValue as? Int ?? 0)
+			let max = Double(maximumValue as? Int ?? 100)
+			let step = Double(stepSize as? Int ?? 1)
+			return .Stepper(defaultValue: def, min: min, max: max, stepSize: step)
+		case .CGFloat:
+			let def = Double(defaultValue as! CGFloat)
+			let min = Double(minimumValue as? CGFloat ?? 0)
+			let max = Double(maximumValue as? CGFloat ?? 100)
+			let step = Double(stepSize as? CGFloat ?? 1)
+			return .Stepper(defaultValue: def, min: min, max: max, stepSize: step)
+		case .UIColor:
+			return .Color(defaultValue: defaultValue as! UIColor)
+		}
 	}
 }
 
