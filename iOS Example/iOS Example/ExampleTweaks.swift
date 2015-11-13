@@ -21,6 +21,8 @@ public struct ExampleTweaks: TweakLibraryType {
 
 	public static let titleScreenGapBetweenTitleAndBody = Tweak("Main Screen", "Layout", "Title-Body Gap", CGFloat(10))
 
+	public static let titleScreenShowHelperText = Tweak("Main Screen", "Feature Flags", "Show Body Text", true)
+
 	public static let defaultStore: TweakStore = {
 		let allTweaks: [TweakType] = [
 			colorBackground,
@@ -32,7 +34,8 @@ public struct ExampleTweaks: TweakLibraryType {
 			fontSizeText1,
 			fontSizeText2,
 
-			titleScreenGapBetweenTitleAndBody
+			titleScreenGapBetweenTitleAndBody,
+			titleScreenShowHelperText
 		]
 		return TweakStore(tweaks: allTweaks.map(AnyTweak.init))
 	}()

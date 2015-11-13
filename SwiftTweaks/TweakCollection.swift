@@ -23,4 +23,8 @@ extension TweakCollection {
 			.sort { $0.0 < $1.0 }
 			.map { return $0.1 }
 	}
+
+	internal var numberOfTweaks: Int {
+		return sortedTweakGroups.reduce(0) { $0 + $1.sortedTweaks.count }
+	}
 }

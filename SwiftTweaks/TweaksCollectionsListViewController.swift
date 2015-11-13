@@ -109,7 +109,9 @@ extension TweaksCollectionsListViewController: UITableViewDataSource {
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(TweaksCollectionsListViewController.TweakCollectionCellIdentifier, forIndexPath: indexPath)
-		cell.textLabel!.text = tweakStore.sortedTweakCollections[indexPath.row].title
+		let tweakCollection = tweakStore.sortedTweakCollections[indexPath.row]
+		cell.textLabel!.text = tweakCollection.title
+		cell.detailTextLabel!.text = "\(tweakCollection.numberOfTweaks)"
 		return cell
 	}
 }

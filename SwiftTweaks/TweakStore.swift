@@ -12,6 +12,7 @@ import Foundation
 public class TweakStore {
 
 	private var tweakCollections: [String: TweakCollection] = [:]
+	private let persistence: TweakPersistency = TweakPersistency()
 
 	public init(tweaks: [AnyTweak]) {
 		tweaks.forEach { tweak in
@@ -56,6 +57,10 @@ public class TweakStore {
 		// STOPSHIP (bryan): Return defaultValue in production, else return persistence.currentValue ?? defaultValue
 		return tweak.defaultValue
 	}
+
+
+	// MARK: Private
+
 }
 
 extension TweakStore {
@@ -68,17 +73,18 @@ extension TweakStore {
 
 /// Identifies tweaks in TweakPersistency
 internal protocol TweakIdentifier {
-	var persistenceIdentifier: AnyObject { get }
+	var persistenceIdentifier: String { get }
 }
 
 /// Persists state for tweaks
 internal class TweakPersistency {
+	private var tweakPersistence: [String: AnyObject] = [:]
+
 	func currentValueForTweakID(tweakID: TweakIdentifier) -> AnyObject? {
-		// STOPSHIP (bryan) implement.
-		return nil
+		return tweakPersistence[tweakID.persistenceIdentifier]
 	}
 
 	func setValue(value: AnyObject?,  forTweakID tweakID: TweakIdentifier) {
-		// STOPSHIP (bryan) implement.
+		tweakPersistence[tweakID.persistenceIdentifier] = value
 	}
 }

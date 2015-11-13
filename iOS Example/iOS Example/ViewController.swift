@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 
 	private let bodyLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here!"
+		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here - well, someday, at least. For now, just uhhh shake your phone and look at the UI a bit? Working through some type-erasure bits in Swift at the moment."
 		label.numberOfLines = 0
 		label.lineBreakMode = .ByWordWrapping
 		return label
@@ -40,6 +40,7 @@ class ViewController: UIViewController {
 		titleLabel.sizeToFit()
 		titleLabel.frame = CGRect(origin: CGPoint(x: 0, y: 30), size: CGSizeMake(view.bounds.width, titleLabel.frame.height))
 
+		bodyLabel.hidden = !ExampleTweaks.assign(ExampleTweaks.titleScreenShowHelperText)
 		bodyLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText2)
 		bodyLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText2))
 		bodyLabel.frame = CGRect(

@@ -29,17 +29,51 @@ public struct Tweak<T: TweakableType> {
 		self.maximumValue = maximumValue
 		self.stepSize = stepSize
 	}
+
+	public var tweakViewData: TweakViewData {
+		switch T.tweakViewType {
+		case .Boolean:
+			return .Switch
+		case .CGFloat:
+			let min = minimumValue as? CGFloat
+			let max = maximumValue as? CGFloat
+			let step = stepSize as? CGFloat
+
+			return .Stepper(
+				min: min != nil ? Double(min!) : nil,
+				max: max != nil ? Double(max!) : nil,
+				stepSize: step != nil ? Double(step!) : nil
+			)
+		case .Int:
+			let min = minimumValue as? Int
+			let max = maximumValue as? Int
+			let step = stepSize as? Int
+
+			return .Stepper(
+				min: min != nil ? Double(min!) : nil,
+				max: max != nil ? Double(max!) : nil,
+				stepSize: step != nil ? Double(step!) : nil
+			)
+		case .Color:
+			return .Color
+		}
+	}
+
 }
 
 extension Tweak: TweakType {
 	public var tweak: TweakType {
 		return self
 	}
+
+	public var tweakViewType: TweakViewType {
+		return T.tweakViewType
+	}
 }
 
-extension Tweak {
-	public func currentValue(store: TweakStore) -> T {
-		return store.currentValueForTweak(self) ?? defaultValue
+extension Tweak: TweakIdentifier {
+	public var persistenceIdentifier: String {
+		return "\(collectionName)|\(groupName)|\(tweakName)"
 	}
 }
 
