@@ -13,36 +13,37 @@ import UIKit
 /// Declares what types are supported as Tweaks.
 /// For a type to be supported, it must specify whether it
 public protocol TweakableType {
-	static var tweakViewType: TweakViewType { get }
-}
-
-public enum TweakViewType {
-	case Boolean
-	case CGFloat
-	case Int
-	case Color
+	var tweakViewData: TweakViewData { get }
 }
 
 public enum TweakViewData {
-	case Switch
-	case Stepper(min: Double?, max: Double?, stepSize: Double?)
-	case Color
+	case Switch(value: Bool)
+	case Stepper(value: Double)
+	case Color(value: UIColor)
 }
 
 // The following types are supported as Tweaks.
 extension Bool: TweakableType {
-	public static var tweakViewType: TweakViewType { return .Boolean }
+	public var tweakViewData: TweakViewData {
+		return .Switch(value: self)
+	}
 }
 
 extension CGFloat: TweakableType {
-	public static var tweakViewType: TweakViewType { return .CGFloat }
+	public var tweakViewData: TweakViewData {
+		return .Stepper(value: Double(self))
+	}
 }
 
 extension Int: TweakableType {
-	public static var tweakViewType: TweakViewType { return .Int }
+	public var tweakViewData: TweakViewData {
+		return .Stepper(value: Double(self))
+	}
 }
 
 extension UIColor: TweakableType {
-	public static var tweakViewType: TweakViewType { return .Color }
+	public var tweakViewData: TweakViewData {
+		return .Color(value: self)
+	}
 }
 

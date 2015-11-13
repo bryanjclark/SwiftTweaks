@@ -30,16 +30,12 @@ public struct AnyTweak: TweakType {
 	public var groupName: String { return tweak.groupName }
 	public var tweakName: String { return tweak.tweakName }
 
-	public var tweakViewType: TweakViewType { return tweak.tweakViewType }
 	public var tweakViewData: TweakViewData { return tweak.tweakViewData }
-
 
 	public init(tweak: TweakType) {
 		self.tweak = tweak.tweak
 		self.getValueViewData = { return tweak.tweakViewData }
 	}
-
-
 }
 
 /// When combined with AnyTweak, this provides our type-erasure around Tweak<T>
@@ -50,6 +46,5 @@ public protocol TweakType {
 	var groupName: String { get }
 	var tweakName: String { get }
 
-	var tweakViewType: TweakViewType { get }
 	var tweakViewData: TweakViewData { get }
 }

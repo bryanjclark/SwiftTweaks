@@ -29,36 +29,6 @@ public struct Tweak<T: TweakableType> {
 		self.maximumValue = maximumValue
 		self.stepSize = stepSize
 	}
-
-	public var tweakViewData: TweakViewData {
-		switch T.tweakViewType {
-		case .Boolean:
-			return .Switch
-		case .CGFloat:
-			let min = minimumValue as? CGFloat
-			let max = maximumValue as? CGFloat
-			let step = stepSize as? CGFloat
-
-			return .Stepper(
-				min: min != nil ? Double(min!) : nil,
-				max: max != nil ? Double(max!) : nil,
-				stepSize: step != nil ? Double(step!) : nil
-			)
-		case .Int:
-			let min = minimumValue as? Int
-			let max = maximumValue as? Int
-			let step = stepSize as? Int
-
-			return .Stepper(
-				min: min != nil ? Double(min!) : nil,
-				max: max != nil ? Double(max!) : nil,
-				stepSize: step != nil ? Double(step!) : nil
-			)
-		case .Color:
-			return .Color
-		}
-	}
-
 }
 
 extension Tweak: TweakType {
@@ -66,8 +36,8 @@ extension Tweak: TweakType {
 		return self
 	}
 
-	public var tweakViewType: TweakViewType {
-		return T.tweakViewType
+	public var tweakViewData: TweakViewData {
+		return self.defaultValue.tweakViewData
 	}
 }
 

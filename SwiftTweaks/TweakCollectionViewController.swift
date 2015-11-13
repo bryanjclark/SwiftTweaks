@@ -135,20 +135,18 @@ extension TweakCollectionViewController: UITableViewDataSource {
 
 		let cell: UITableViewCell
 		switch tweak.tweakViewData {
-		case let .Stepper(min: min, max: max, stepSize: stepSize):
+		case let .Stepper(value: value):
 			let stepperCell  = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.StepperCellIdentifier, forIndexPath: indexPath) as! StepperCell
-			stepperCell.stepperControl.minimumValue = min ?? 0
-			stepperCell.stepperControl.maximumValue = max ?? 100
-			stepperCell.stepperControl.stepValue = stepSize ?? 1
+			stepperCell.stepperControl.value = value
 			cell = stepperCell as UITableViewCell
-		case .Color:
+		case let .Color(value: value):
 			let colorCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.ColorCellIdentifier, forIndexPath: indexPath) as! ColorCell
 			// TODO (bryan) set color parameters
 			colorCell.colorChit.backgroundColor = UIColor.grayColor()
 			cell = colorCell as UITableViewCell
-		case .Switch:
+		case let .Switch(value: value):
 			let boolCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.SwitchCellIdentifier, forIndexPath: indexPath) as! SwitchCell
-			boolCell.switchControl.hidden = false
+			boolCell.switchControl.on = value
 			cell = boolCell as UITableViewCell
 		}
 		cell.textLabel?.text = tweak.tweakName
