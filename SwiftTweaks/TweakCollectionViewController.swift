@@ -45,9 +45,7 @@ internal class TweakCollectionViewController: UIViewController {
 		tableView.frame = view.bounds
 		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.registerClass(SwitchCell.self, forCellReuseIdentifier: TweakCollectionViewController.SwitchCellIdentifier)
-		tableView.registerClass(StepperCell.self, forCellReuseIdentifier: TweakCollectionViewController.StepperCellIdentifier)
-		tableView.registerClass(ColorCell.self, forCellReuseIdentifier: TweakCollectionViewController.ColorCellIdentifier)
+		tableView.registerClass(TweakTableCell.self, forCellReuseIdentifier: TweakCollectionViewController.TweakTableViewCellIdentifer)
 		view.addSubview(tableView)
 	}
 
@@ -62,59 +60,7 @@ internal class TweakCollectionViewController: UIViewController {
 	// MARK: Table Cells
 
 	private static let TweakTableViewCellIdentifer = "TweakTableViewCellIdentifer"
-	private static let SwitchCellIdentifier = "SwitchCellIdentifier"
-	private static let StepperCellIdentifier = "StepperCellIdentifier"
-	private static let ColorCellIdentifier = "ColorCellIdentifier"
 
-	internal class StepperCell: UITableViewCell {
-		internal let stepperControl = UIStepper()
-
-		override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-			super.init(style: .Default, reuseIdentifier: reuseIdentifier)
-
-			accessoryView = stepperControl
-		}
-
-		required init?(coder aDecoder: NSCoder) {
-		    fatalError("init(coder:) has not been implemented")
-		}
-	}
-
-	internal class SwitchCell: UITableViewCell {
-		let switchControl = UISwitch()
-
-		override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-			super.init(style: .Default, reuseIdentifier: reuseIdentifier)
-
-			accessoryView = switchControl
-		}
-
-		required init?(coder aDecoder: NSCoder) {
-		    fatalError("init(coder:) has not been implemented")
-		}
-	}
-
-	internal class ColorCell: UITableViewCell {
-		private static let chitSize = CGSize(width: 29, height: 29)
-		let colorChit: UIView = {
-			let view = UIView(frame: CGRect(origin: CGPointZero, size: chitSize))
-			view.layer.cornerRadius = 4
-			view.clipsToBounds = true
-			view.layer.borderColor = UIColor.blackColor().CGColor
-			view.layer.borderWidth = 1.0 / UIScreen.mainScreen().scale
-			return view
-		}()
-
-		override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-			super.init(style: .Default, reuseIdentifier: reuseIdentifier)
-
-			accessoryView = colorChit
-		}
-
-		required init?(coder aDecoder: NSCoder) {
-		    fatalError("init(coder:) has not been implemented")
-		}
-	}
 }
 
 extension TweakCollectionViewController: UITableViewDelegate {
@@ -135,25 +81,9 @@ extension TweakCollectionViewController: UITableViewDataSource {
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let tweak = tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
 
-		let cell: UITableViewCell
-		switch tweak.tweakViewData {
-		case let .Stepper(defaultValue: defaultValue, min: min, max: max, stepSize: step):
-			let stepperCell  = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.StepperCellIdentifier, forIndexPath: indexPath) as! StepperCell
-			stepperCell.stepperControl.value = defaultValue
-			stepperCell.stepperControl.minimumValue = min
-			stepperCell.stepperControl.maximumValue = max
-			stepperCell.stepperControl.stepValue = step
-			cell = stepperCell as UITableViewCell
-		case let .Color(defaultValue: value):
-			let colorCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.ColorCellIdentifier, forIndexPath: indexPath) as! ColorCell
-			colorCell.colorChit.backgroundColor = value
-			cell = colorCell as UITableViewCell
-		case let .Switch(defaultValue: value):
-			let boolCell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.SwitchCellIdentifier, forIndexPath: indexPath) as! SwitchCell
-			boolCell.switchControl.on = value
-			cell = boolCell as UITableViewCell
-		}
+		let cell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.TweakTableViewCellIdentifer, forIndexPath: indexPath) as! TweakTableCell
 		cell.textLabel?.text = tweak.tweakName
+		cell.viewData = tweakStore.currentViewDataForTweak(tweak)
 		return cell
 	}
 

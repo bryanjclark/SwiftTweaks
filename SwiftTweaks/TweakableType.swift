@@ -13,23 +13,31 @@ import UIKit
 /// Declares what types are supported as Tweaks.
 /// For a type to be supported, it must specify whether it
 public protocol TweakableType {
-//	var tweakViewData: TweakViewData { get }
 	static var tweakViewDataType: TweakViewDataType { get }
-}
-
-/// View data used to populate our UI
-public enum TweakViewData {
-	case Switch(defaultValue: Bool)
-	case Stepper(defaultValue: Double, min: Double, max: Double, stepSize: Double)
-	case Color(defaultValue: UIColor)
 }
 
 /// The data types that are currently supported for SwiftTweaks
 public enum TweakViewDataType {
 	case Boolean
-	case Int
+	case Integer
 	case CGFloat
 	case UIColor
+}
+
+
+public enum TweakDefaultData {
+	case Boolean(defaultValue: Bool)
+	case Integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
+	case Float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
+	case Color(defaultValue: UIColor)
+}
+
+/// View data used to populate our table cells
+internal enum TweakViewData {
+	case Boolean(value: Bool, defaultValue: Bool)
+	case Integer(value: Int, defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
+	case Float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
+	case Color(value: UIColor, defaultValue: UIColor)
 }
 
 // The following types are supported as Tweaks.
@@ -47,7 +55,7 @@ extension CGFloat: TweakableType {
 
 extension Int: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .Int
+		return .Integer
 	}
 }
 

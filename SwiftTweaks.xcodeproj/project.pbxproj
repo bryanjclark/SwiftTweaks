@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */; };
 		9345EC071BF296350086AB5D /* TweaksBackupsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */; };
 		9345EC091BF2A0490086AB5D /* TweaksRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */; };
 		9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC0D1BF2B9100086AB5D /* TweakCollection.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakTableCell.swift; sourceTree = "<group>"; };
 		9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksBackupsListViewController.swift; sourceTree = "<group>"; };
 		9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksRootViewController.swift; sourceTree = "<group>"; };
 		9345EC0D1BF2B9100086AB5D /* TweakCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollection.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */,
 				9356CD1E1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift */,
 				938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */,
+				9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */,
 				9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */,
 			);
 			name = Internal;
@@ -286,6 +289,7 @@
 				93A84EF01BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
+				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
 				93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */,
 			);

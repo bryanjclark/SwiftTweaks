@@ -24,17 +24,15 @@ public extension TweakLibraryType {
 public struct AnyTweak: TweakType {
 	public let tweak: TweakType
 
-	private let getValueViewData: () -> TweakViewData
-
 	public var collectionName: String { return tweak.collectionName }
 	public var groupName: String { return tweak.groupName }
 	public var tweakName: String { return tweak.tweakName }
 
-	public var tweakViewData: TweakViewData { return tweak.tweakViewData }
+	public var tweakViewDataType: TweakViewDataType { return tweak.tweakViewDataType }
+	public var tweakDefaultData: TweakDefaultData { return tweak.tweakDefaultData }
 
 	public init(tweak: TweakType) {
 		self.tweak = tweak.tweak
-		self.getValueViewData = { return tweak.tweakViewData }
 	}
 }
 
@@ -46,5 +44,13 @@ public protocol TweakType {
 	var groupName: String { get }
 	var tweakName: String { get }
 
-	var tweakViewData: TweakViewData { get }
+	var tweakViewDataType: TweakViewDataType { get }
+	var tweakDefaultData: TweakDefaultData { get }
+}
+
+/// Extend AnyTweak to support identification in persistence
+extension AnyTweak: TweakIdentifiable {
+	var persistenceIdentifier: String {
+		return "\(collectionName)|\(groupName)|\(tweakName)"
+	}
 }

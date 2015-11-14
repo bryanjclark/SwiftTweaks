@@ -47,10 +47,10 @@ public class TweakStore {
 	}
 
 	// MARK: - Internal
-
+	
 	/// Resets all tweaks to their `defaultValue`
 	internal func reset() {
-		// STOPSHIP (bryan): Implement
+		persistence.clearAllData()
 	}
 
 	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
@@ -58,9 +58,24 @@ public class TweakStore {
 		return tweak.defaultValue
 	}
 
+	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {
+		let cachedValue = persistence.currentValueForTweakIdentifiable(tweak)
 
-	// MARK: Private
-
+		switch tweak.tweakDefaultData {
+		case let .Boolean(defaultValue: defaultValue):
+			let currentValue = cachedValue as? Bool ?? defaultValue
+			return .Boolean(value: currentValue, defaultValue: defaultValue)
+		case let .Integer(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Int ?? defaultValue
+			return .Integer(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .Float(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? CGFloat ?? defaultValue
+			return .Float(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .Color(defaultValue: defaultValue):
+			let currentValue = cachedValue as? UIColor ?? defaultValue
+			return .Color(value: currentValue, defaultValue: defaultValue)
+		}
+	}
 }
 
 extension TweakStore {
@@ -72,7 +87,7 @@ extension TweakStore {
 }
 
 /// Identifies tweaks in TweakPersistency
-internal protocol TweakIdentifier {
+internal protocol TweakIdentifiable {
 	var persistenceIdentifier: String { get }
 }
 
@@ -80,11 +95,15 @@ internal protocol TweakIdentifier {
 internal class TweakPersistency {
 	private var tweakPersistence: [String: AnyObject] = [:]
 
-	func currentValueForTweakID(tweakID: TweakIdentifier) -> AnyObject? {
+	func currentValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> AnyObject? {
 		return tweakPersistence[tweakID.persistenceIdentifier]
 	}
 
-	func setValue(value: AnyObject?,  forTweakID tweakID: TweakIdentifier) {
+	func setValue(value: AnyObject?,  forTweakIdentifiable tweakID: TweakIdentifiable) {
 		tweakPersistence[tweakID.persistenceIdentifier] = value
+	}
+
+	func clearAllData() {
+		tweakPersistence = [:]
 	}
 }
