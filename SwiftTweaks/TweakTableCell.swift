@@ -14,6 +14,8 @@ internal protocol TweakTableCellDelegate {
 
 
 internal class TweakTableCell: UITableViewCell {
+	internal var delegate: TweakTableCellDelegate?
+
 	internal var viewData: TweakViewData? {
 		didSet {
 			accessoryView = accessory
@@ -30,7 +32,7 @@ internal class TweakTableCell: UITableViewCell {
 				switchControl.hidden = true
 				textField.hidden = true
 				stepperControl.hidden = true
-				colorControl.hidden = true
+				colorChit.hidden = true
 				return
 			}
 
@@ -40,17 +42,17 @@ internal class TweakTableCell: UITableViewCell {
 				switchControl.hidden = false
 				textField.hidden = true
 				stepperControl.hidden = true
-				colorControl.hidden = true
+				colorChit.hidden = true
 			case .Integer, .Float:
 				switchControl.hidden = true
 				textField.hidden = false
 				stepperControl.hidden = false
-				colorControl.hidden = true
+				colorChit.hidden = true
 			case .Color:
 				switchControl.hidden = true
-				textField.hidden = true
+				textField.hidden = false
 				stepperControl.hidden = true
-				colorControl.hidden = false
+				colorChit.hidden = false
 			}
 
 			// Update accessory internals based on viewData
@@ -74,15 +76,15 @@ internal class TweakTableCell: UITableViewCell {
 				textField.text = String(value)
 				textField.keyboardType = .DecimalPad
 			case let .Color(value: value, defaultValue: _):
-				colorControl.backgroundColor = value
+				colorChit.backgroundColor = value
+				textField.text = value.hexString
 			}
 		}
 	}
-
 	private var accessory = UIView()
 	private var switchControl = UISwitch()
 	private var stepperControl = UIStepper()
-	private var colorControl: UIView = {
+	private var colorChit: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
 		return view
@@ -96,7 +98,12 @@ internal class TweakTableCell: UITableViewCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorControl, textField].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField].forEach { accessory.addSubview($0) }
+
+		switchControl.addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+		stepperControl.addTarget(self, action: "stepperChanged:", forControlEvents: .ValueChanged)
+		textField.delegate = self
+
 		detailTextLabel?.textColor = UIColor.blackColor()
 	}
 
@@ -104,9 +111,10 @@ internal class TweakTableCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	private static let detailTextLabelFraction: CGFloat = 0.20 // The fraction of the cell's width used for the text field
+	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
+	private static let colorTextWidthFraction: CGFloat = 0.30
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
-	private static let colorControlSize = CGSize(width: 29, height: 29)
+	private static let colorChitSize = CGSize(width: 29, height: 29)
 
 	override func layoutSubviews() {
 
@@ -126,35 +134,94 @@ internal class TweakTableCell: UITableViewCell {
 			accessory.bounds = switchControl.bounds
 		case .Integer, .Float:
 			stepperControl.sizeToFit()
-			let textFrame = CGRect(
-				origin: CGPointZero,
-				size: CGSize(
-					width: bounds.width * TweakTableCell.detailTextLabelFraction,
-					height: bounds.height
-				)
-			)
-			let stepperFrame = CGRect(
-				x: textFrame.width + TweakTableCell.horizontalPadding,
-				y: (textFrame.height - stepperControl.bounds.height) / 2,
-				width: stepperControl.bounds.width,
-				height: stepperControl.bounds.height)
+			let textWidth = bounds.width * TweakTableCell.numberTextWidthFraction
+			let (textFrame, stepperControlFrame) = layoutFramesForTextFieldAndControlWithControlSize(stepperControl.bounds.size, textFieldWidth: textWidth)
 			textField.frame = textFrame
-			stepperControl.frame = stepperFrame
+			stepperControl.frame = stepperControlFrame
 
-			let accessoryFrame = CGRectUnion(stepperFrame, textFrame)
+			let accessoryFrame = CGRectUnion(textFrame, stepperControlFrame)
 			accessory.bounds = CGRectIntegral(accessoryFrame)
 		case .Color:
-			colorControl.frame = CGRect(origin: CGPointZero, size: TweakTableCell.colorControlSize)
-			accessory.bounds = colorControl.bounds
+			let textWidth = bounds.width * TweakTableCell.colorTextWidthFraction
+			let (textFrame, colorControlFrame) = layoutFramesForTextFieldAndControlWithControlSize(TweakTableCell.colorChitSize, textFieldWidth: textWidth)
+			textField.frame = textFrame
+			colorChit.frame = colorControlFrame
+
+			let accessoryFrame = CGRectUnion(colorControlFrame, textFrame)
+			accessory.bounds = CGRectIntegral(accessoryFrame)
 		}
+	}
+
+	private func layoutFramesForTextFieldAndControlWithControlSize(controlSize: CGSize, textFieldWidth: CGFloat) -> (textFrame: CGRect, controlFrame: CGRect) {
+		let textFrame = CGRect(
+			origin: CGPointZero,
+			size: CGSize(
+				width: textFieldWidth,
+				height: bounds.height
+			)
+		)
+
+		let controlFrame = CGRect(
+			origin: CGPoint(
+				x: textFrame.width + TweakTableCell.horizontalPadding,
+				y: (textFrame.height - controlSize.height) / 2
+			),
+			size: controlSize
+		)
+
+		return (textFrame, controlFrame)
 	}
 
 	// MARK: Events
 	@objc private func switchChanged(sender: UISwitch) {
-		// updateValue(switch.on, primary: false, write: true)
+		switch viewData! {
+		case let .Boolean(value: _, defaultValue: defaultValue):
+			viewData = .Boolean(value: switchControl.on, defaultValue: defaultValue)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		default:
+			assertionFailure("Shouldn't be able to toggle switch if view data isn't Boolean type")
+		}
 	}
 
 	@objc private func stepperChanged(sender: UIStepper) {
-		// updateValue(sender.value, primary: false, write: true)
+		switch viewData! {
+		case let .Integer(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = .Integer(value: Int(stepperControl.value), defaultValue: defaultValue, min: min, max: max, stepSize: step)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .Float(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = .Float(value: CGFloat(stepperControl.value), defaultValue: defaultValue, min: min, max: max, stepSize: step)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case .Color, .Boolean:
+			assertionFailure("Shouldn't be able to update text field with a Color or Boolean tweak.")
+		}
+	}
+}
+
+extension TweakTableCell: UITextFieldDelegate {
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+
+	func textFieldDidEndEditing(textField: UITextField) {
+		switch viewData! {
+		case let .Integer(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			if let text = textField.text, newValue = Int(text) {
+				viewData = .Integer(value: newValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			}
+		case let .Float(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			if let text = textField.text, newValue = Float(text) {
+				viewData = .Float(value: CGFloat(newValue), defaultValue: defaultValue, min: min, max: max, stepSize: step)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			}
+		case let .Color(value: _, defaultValue: defaultValue):
+			if let text = textField.text, newValue = UIColor(hexString: text) {
+				viewData = .Color(value: newValue, defaultValue: defaultValue)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			}
+		case .Boolean:
+			assertionFailure("Shouldn't be able to update text field with a Boolean tweak.")
+		}
 	}
 }

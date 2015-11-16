@@ -68,11 +68,10 @@ internal class TweaksCollectionsListViewController: UIViewController {
 	// MARK: Events
 
 	@objc private func resetStore() {
-		self.tweakStore.reset()
-
-		let alert = UIAlertController(title: "Tweaks Reset", message: "Tweaks have been reset to their default values.", preferredStyle: .Alert)
-		alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
-		presentViewController(alert, animated: true, completion: nil)
+		let confirmationAlert = UIAlertController(title: nil, message: "Reset all tweaks to their default values?", preferredStyle: .ActionSheet)
+		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		confirmationAlert.addAction(UIAlertAction(title: "Reset", style: .Destructive, handler: { _ in self.tweakStore.reset() }))
+		presentViewController(confirmationAlert, animated: true, completion: nil)
 	}
 
 	@objc private func dismissButtonTapped() {

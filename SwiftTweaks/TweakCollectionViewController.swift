@@ -84,10 +84,23 @@ extension TweakCollectionViewController: UITableViewDataSource {
 		let cell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.TweakTableViewCellIdentifer, forIndexPath: indexPath) as! TweakTableCell
 		cell.textLabel?.text = tweak.tweakName
 		cell.viewData = tweakStore.currentViewDataForTweak(tweak)
+		cell.delegate = self
 		return cell
 	}
 
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return tweakCollection.sortedTweakGroups[section].title
+	}
+}
+
+extension TweakCollectionViewController: TweakTableCellDelegate {
+	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell) {
+		if let
+			indexPath = tableView.indexPathForCell(tweakCell),
+			viewData = tweakCell.viewData
+		{
+			let tweak = tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
+			tweakStore.setValue(viewData, forTweak: tweak)
+		}
 	}
 }

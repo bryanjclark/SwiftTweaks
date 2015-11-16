@@ -55,7 +55,7 @@ public class TweakStore {
 
 	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
 		// STOPSHIP (bryan): Return defaultValue in production, else return persistence.currentValue ?? defaultValue
-		return tweak.defaultValue
+		return shouldAllowTweaks ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
 	}
 
 	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {
@@ -76,6 +76,27 @@ public class TweakStore {
 			return .Color(value: currentValue, defaultValue: defaultValue)
 		}
 	}
+
+	internal func setValue(viewData: TweakViewData, forTweak tweak: AnyTweak) {
+		let value: AnyObject
+		switch viewData {
+		case let .Boolean(value: boolValue, defaultValue: _):
+			value = boolValue
+		case let .Integer(value: intValue, defaultValue: _, min: _, max: _, stepSize: _):
+			value = intValue
+		case let .Float(value: floatValue, defaultValue: _, min: _, max: _, stepSize: _):
+			value = floatValue
+		case let .Color(value: colorValue, defaultValue: _):
+			value = colorValue
+		}
+		persistence.setValue(value, forTweakIdentifiable: tweak)
+	}
+
+	// MARK - Private
+
+	private var shouldAllowTweaks: Bool {
+		return true // STOPSHIP (bryan): figure out whether we're in production or debug.
+	}
 }
 
 extension TweakStore {
@@ -94,6 +115,10 @@ internal protocol TweakIdentifiable {
 /// Persists state for tweaks
 internal class TweakPersistency {
 	private var tweakPersistence: [String: AnyObject] = [:]
+
+	func currentValueForTweak<T>(tweak: Tweak<T>) -> T? {
+		return currentValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T
+	}
 
 	func currentValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> AnyObject? {
 		return tweakPersistence[tweakID.persistenceIdentifier]

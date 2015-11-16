@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */; };
 		9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */; };
 		9345EC071BF296350086AB5D /* TweaksBackupsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */; };
 		9345EC091BF2A0490086AB5D /* TweaksRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Tweaks.swift"; sourceTree = "<group>"; };
 		9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakTableCell.swift; sourceTree = "<group>"; };
 		9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksBackupsListViewController.swift; sourceTree = "<group>"; };
 		9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksRootViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				93A84EEB1BEAE88D0022D2F3 /* HashingUtilities.swift */,
+				932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
 				93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */,
+				932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
