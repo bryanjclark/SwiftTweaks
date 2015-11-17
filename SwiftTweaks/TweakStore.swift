@@ -42,8 +42,6 @@ public class TweakStore {
 			tweakCollection.tweakGroups[tweakGroup.title] = tweakGroup
 			tweakCollections[tweakCollection.title] = tweakCollection
 		}
-
-		// STOPSHIP (bryan): read from persistence model to populate tweakCategories
 	}
 
 	public func assign<T>(tweak: Tweak<T>) -> T {

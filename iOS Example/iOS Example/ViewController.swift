@@ -30,6 +30,9 @@ class ViewController: UIViewController {
 
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
+
+		ExampleTweaks.bind(ExampleTweaks.titleScreenShowHelperText) { self.bodyLabel.hidden = !$0 }
+
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -40,7 +43,7 @@ class ViewController: UIViewController {
 		titleLabel.sizeToFit()
 		titleLabel.frame = CGRect(origin: CGPoint(x: 0, y: 30), size: CGSizeMake(view.bounds.width, titleLabel.frame.height))
 
-		bodyLabel.hidden = !ExampleTweaks.assign(ExampleTweaks.titleScreenShowHelperText)
+//		bodyLabel.hidden = !ExampleTweaks.assign(ExampleTweaks.titleScreenShowHelperText)
 		bodyLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText2)
 		bodyLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText2))
 		bodyLabel.frame = CGRect(

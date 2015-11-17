@@ -18,6 +18,10 @@ public extension TweakLibraryType {
 	static func assign<T>(tweak: Tweak<T>) -> T {
 		return self.defaultStore.currentValueForTweak(tweak)
 	}
+
+	static func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
+		self.defaultStore.bind(tweak, binding: binding)
+	}
 }
 
 /// A type-erasure around Tweak<T>, so we can collect them together in TweakLibraryType.
@@ -48,20 +52,18 @@ public protocol TweakType {
 	var tweakDefaultData: TweakDefaultData { get }
 }
 
-/// Extend AnyTweak to support identification in persistence
-extension AnyTweak: TweakIdentifiable {
-	var persistenceIdentifier: String {
-		return "\(collectionName)|\(groupName)|\(tweakName)"
+extension TweakType {
+	var tweakIdentifier: String {
+		return "\(collectionName)^\(groupName)^\(tweakName)"
 	}
 }
 
-/*
-backupName: CoolBackup
+/// Extend AnyTweak to support identification in persistence
+extension AnyTweak: TweakIdentifiable {
+	var persistenceIdentifier: String { return tweakIdentifier }
+}
 
-nacho|cool|tweak: F(0.5)
-nacho|other|tweak: B(t)
-nacho|other|tweak2: #FF00FF00
-
-*/
-
-// mybackup.swifttweakbackup
+/// Extend Tweak to support identification in bindings
+extension Tweak: TweakIdentifiable {
+	var persistenceIdentifier: String { return tweakIdentifier }
+}
