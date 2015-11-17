@@ -35,7 +35,7 @@ public struct ExampleTweaks: TweakLibraryType {
 			fontSizeText2,
 
 			titleScreenGapBetweenTitleAndBody,
-			titleScreenShowHelperText,
+			titleScreenShowHelperText
 		]
 
 		// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.

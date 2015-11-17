@@ -12,7 +12,7 @@ import Foundation
 public class TweakStore {
 
 	private var tweakCollections: [String: TweakCollection] = [:]
-	private var tweakBindings: [String: [(TweakableType) -> Void]] = [:]
+	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
 	private let persistence: TweakPersistency
 
@@ -53,14 +53,26 @@ public class TweakStore {
 
 	/// Immediately binds the currentValue of a given tweak, and then continues to update whenever the tweak changes.
 	public func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
-		// Cache the binding in our dictionary
-		let existingTweakBindings = tweakBindings[tweak.persistenceIdentifier] ?? []
-		let tweakableTypeBinding = binding as! (TweakableType) -> Void
-		tweakBindings[tweak.persistenceIdentifier] = existingTweakBindings + [tweakableTypeBinding]
+		// Create the TweakBinding<T>, and wrap it in our type-erasing AnyTweakBinding
+		let tweakBinding = TweakBinding(tweak: tweak, binding: binding)
+		let anyTweakBinding = AnyTweakBinding(tweakBinding: tweakBinding)
 
-		// Then return the current value for the tweak
+		// Cache the binding
+		let existingTweakBindings = tweakBindings[tweak.persistenceIdentifier] ?? []
+		tweakBindings[tweak.persistenceIdentifier] = existingTweakBindings + [anyTweakBinding]
+
+		// Then immediately apply the binding on whatever current value we have
 		binding(currentValueForTweak(tweak))
 	}
+
+	// TODO (bryan): Build out bindTweakCluster
+	/// Similar to `bind`, this accepts an array of Tweaks, and returns an array of their current values in a binding. 
+	/// The binding is then re-called each time any of those tweaks change.
+	/// This function's API is a little more cumbersome, but it's pretty powerful!
+	// 	public func bindTweakCluster(tweakCluster: [AnyTweak], binding: [TweakableType] -> Void) {
+		// Cache the binding cluster.
+		// Then immediately apply the binding with our current value.
+	// }
 
 	// MARK: - Internal
 	
@@ -106,7 +118,7 @@ public class TweakStore {
 			value = colorValue
 		}
 		persistence.setValue(value, forTweakIdentifiable: tweak)
-		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0(value) }
+		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0.applyBindingWithValue(value) }
 	}
 
 	// MARK - Private

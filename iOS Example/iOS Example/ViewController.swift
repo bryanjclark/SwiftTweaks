@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTweaks
 
 class ViewController: UIViewController {
 
@@ -31,24 +32,63 @@ class ViewController: UIViewController {
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
 
+		// Here's a demonstration of TweakLibraryType.bind() - the underlying tweak value is immediately applied, and the binding is re-called each time the tweak changes.
 		ExampleTweaks.bind(ExampleTweaks.titleScreenShowHelperText) { self.bodyLabel.hidden = !$0 }
 
+		// Bind is useful when you want to keep something up to date easily. To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
+		ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 }
+		ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0 }
+
+		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
+		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
+		ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
+			self.titleLabel.font = UIFont.systemFontOfSize(fontSize)
+		}
+
+		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
+		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
+		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) in place of this closure.
+		// You'll note that inside the closure, we're calling `assign` to get the current value.
+		let layoutClosure: () -> Void = {
+			let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
+			let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)
+			let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
+			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.titleScreenGapBetweenTitleAndBody)
+
+			self.titleLabel.font = UIFont.systemFontOfSize(titleLabelFontSize)
+			self.titleLabel.sizeToFit()
+			self.titleLabel.frame = CGRect(
+				origin: CGPoint(x: horizontalMargins, y: 30),
+				size: CGSize(
+					width: self.view.bounds.width - horizontalMargins * 2,
+					height: self.titleLabel.bounds.height
+				)
+			)
+
+			self.bodyLabel.font = UIFont.systemFontOfSize(bodyLabelFontSize)
+			self.bodyLabel.frame = CGRect(
+				origin: CGPoint(
+					x: horizontalMargins,
+					y: CGRectGetMaxY(self.titleLabel.frame) + verticalGapBetweenLabels),
+				size: self.bodyLabel.sizeThatFits(
+					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.max)
+				)
+			)
+		}
+		ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { _ in layoutClosure() }
+		ExampleTweaks.bind(ExampleTweaks.fontSizeText2) { _ in layoutClosure() }
+		ExampleTweaks.bind(ExampleTweaks.horizontalMargins) { _ in layoutClosure() }
+		ExampleTweaks.bind(ExampleTweaks.titleScreenGapBetweenTitleAndBody) { _ in layoutClosure() }
 	}
 
 	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Use the `assign` value to get the currentValue of a tweak once.
+		// With `assign`, you get the value once - and when the tweak updates, you won't be notified.
+		// The benefit of this approach is that the
+		// Since this is in viewWillAppear, though, this re-application will update right before the view appears onscreen!
 		view.backgroundColor = ExampleTweaks.assign(ExampleTweaks.colorBackground)
-
-		titleLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText1)
-		titleLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText1))
-		titleLabel.sizeToFit()
-		titleLabel.frame = CGRect(origin: CGPoint(x: 0, y: 30), size: CGSizeMake(view.bounds.width, titleLabel.frame.height))
-
-//		bodyLabel.hidden = !ExampleTweaks.assign(ExampleTweaks.titleScreenShowHelperText)
-		bodyLabel.textColor = ExampleTweaks.assign(ExampleTweaks.colorText2)
-		bodyLabel.font = UIFont.systemFontOfSize(ExampleTweaks.assign(ExampleTweaks.fontSizeText2))
-		bodyLabel.frame = CGRect(
-			origin: CGPoint(x: ExampleTweaks.assign(ExampleTweaks.horizontalMargins), y: CGRectGetMaxY(titleLabel.frame) + ExampleTweaks.assign(ExampleTweaks.titleScreenGapBetweenTitleAndBody)),
-			size: bodyLabel.sizeThatFits(CGSize(width: view.bounds.width - ExampleTweaks.assign(ExampleTweaks.horizontalMargins)*2, height: CGFloat.max)))
 	}
 
 	override func didReceiveMemoryWarning() {
