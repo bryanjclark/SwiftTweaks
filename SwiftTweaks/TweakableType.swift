@@ -22,6 +22,10 @@ public enum TweakViewDataType {
 	case Integer
 	case CGFloat
 	case UIColor
+
+	public static let allTypes: [TweakViewDataType] = [
+		.Boolean, .Integer, .CGFloat, .UIColor
+	]
 }
 
 

@@ -54,3 +54,14 @@ extension AnyTweak: TweakIdentifiable {
 		return "\(collectionName)|\(groupName)|\(tweakName)"
 	}
 }
+
+/*
+backupName: CoolBackup
+
+nacho|cool|tweak: F(0.5)
+nacho|other|tweak: B(t)
+nacho|other|tweak2: #FF00FF00
+
+*/
+
+// mybackup.swifttweakbackup

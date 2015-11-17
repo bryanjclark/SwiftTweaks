@@ -35,8 +35,10 @@ public struct ExampleTweaks: TweakLibraryType {
 			fontSizeText2,
 
 			titleScreenGapBetweenTitleAndBody,
-			titleScreenShowHelperText
+			titleScreenShowHelperText,
 		]
-		return TweakStore(tweaks: allTweaks.map(AnyTweak.init))
+
+		// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
+		return TweakStore(tweaks: allTweaks.map(AnyTweak.init), storeName: "ExampleTweaks")
 	}()
 }

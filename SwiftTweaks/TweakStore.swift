@@ -12,9 +12,13 @@ import Foundation
 public class TweakStore {
 
 	private var tweakCollections: [String: TweakCollection] = [:]
-	private let persistence: TweakPersistency = TweakPersistency()
+	private let persistence: TweakPersistency
 
-	public init(tweaks: [AnyTweak]) {
+	/// Creates a TweakStore, with information persisted on-disk. 
+	/// If you want to have multiple TweakStores in your app, you can pass in a unique storeName to keep it separate from others on disk.
+	public init(tweaks: [AnyTweak], storeName: String = "Tweaks") {
+		self.persistence = TweakPersistency(identifier: storeName)
+
 		tweaks.forEach { tweak in
 			// Find or create its TweakCollection
 			var tweakCollection: TweakCollection
@@ -78,7 +82,7 @@ public class TweakStore {
 	}
 
 	internal func setValue(viewData: TweakViewData, forTweak tweak: AnyTweak) {
-		let value: AnyObject
+		let value: TweakableType
 		switch viewData {
 		case let .Boolean(value: boolValue, defaultValue: _):
 			value = boolValue
@@ -104,31 +108,5 @@ extension TweakStore {
 		return tweakCollections
 			.sort { $0.0 < $1.0 }
 			.map { return $0.1 }
-	}
-}
-
-/// Identifies tweaks in TweakPersistency
-internal protocol TweakIdentifiable {
-	var persistenceIdentifier: String { get }
-}
-
-/// Persists state for tweaks
-internal class TweakPersistency {
-	private var tweakPersistence: [String: AnyObject] = [:]
-
-	func currentValueForTweak<T>(tweak: Tweak<T>) -> T? {
-		return currentValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T
-	}
-
-	func currentValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> AnyObject? {
-		return tweakPersistence[tweakID.persistenceIdentifier]
-	}
-
-	func setValue(value: AnyObject?,  forTweakIdentifiable tweakID: TweakIdentifiable) {
-		tweakPersistence[tweakID.persistenceIdentifier] = value
-	}
-
-	func clearAllData() {
-		tweakPersistence = [:]
 	}
 }

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 
 	private let bodyLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here - well, someday, at least. For now, just uhhh shake your phone and look at the UI a bit? Working through some type-erasure bits in Swift at the moment."
+		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here! You can even force-quit the app and the changes will persist!"
 		label.numberOfLines = 0
 		label.lineBreakMode = .ByWordWrapping
 		return label
