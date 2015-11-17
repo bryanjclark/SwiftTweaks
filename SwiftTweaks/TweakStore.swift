@@ -12,6 +12,8 @@ import Foundation
 public class TweakStore {
 
 	private var tweakCollections: [String: TweakCollection] = [:]
+	private var tweakBindings: [String: [(TweakableType) -> Void]] = [:]
+
 	private let persistence: TweakPersistency
 
 	/// Creates a TweakStore, with information persisted on-disk. 
@@ -44,8 +46,20 @@ public class TweakStore {
 		}
 	}
 
+	/// Returns the current value for a given tweak
 	public func assign<T>(tweak: Tweak<T>) -> T {
 		return self.currentValueForTweak(tweak)
+	}
+
+	/// Immediately binds the currentValue of a given tweak, and then continues to update whenever the tweak changes.
+	public func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
+		// Cache the binding in our dictionary
+		let existingTweakBindings = tweakBindings[tweak.persistenceIdentifier] ?? []
+		let tweakableTypeBinding = binding as! (TweakableType) -> Void
+		tweakBindings[tweak.persistenceIdentifier] = existingTweakBindings + [tweakableTypeBinding]
+
+		// Then return the current value for the tweak
+		binding(currentValueForTweak(tweak))
 	}
 
 	// MARK: - Internal
@@ -92,6 +106,7 @@ public class TweakStore {
 			value = colorValue
 		}
 		persistence.setValue(value, forTweakIdentifiable: tweak)
+		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0(value) }
 	}
 
 	// MARK - Private
