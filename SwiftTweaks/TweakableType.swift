@@ -21,7 +21,12 @@ public enum TweakViewDataType {
 	case Boolean
 	case Integer
 	case CGFloat
+	case Double
 	case UIColor
+
+	public static let allTypes: [TweakViewDataType] = [
+		.Boolean, .Integer, .CGFloat, .Double, .UIColor
+	]
 }
 
 
@@ -29,14 +34,16 @@ public enum TweakDefaultData {
 	case Boolean(defaultValue: Bool)
 	case Integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
 	case Float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
+	case DoubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case Color(defaultValue: UIColor)
 }
 
 /// View data used to populate our table cells
-internal enum TweakViewData {
+public enum TweakViewData {
 	case Boolean(value: Bool, defaultValue: Bool)
 	case Integer(value: Int, defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
 	case Float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
+	case DoubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case Color(value: UIColor, defaultValue: UIColor)
 }
 
@@ -47,15 +54,21 @@ extension Bool: TweakableType {
 	}
 }
 
+extension Int: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .Integer
+	}
+}
+
 extension CGFloat: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
 		return .CGFloat
 	}
 }
 
-extension Int: TweakableType {
+extension Double: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .Integer
+		return .Double
 	}
 }
 
