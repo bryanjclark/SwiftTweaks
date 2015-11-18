@@ -153,6 +153,7 @@ private class TweakDiskPersistency {
 			case .Integer: return anyObject as? Int
 			case .Boolean: return anyObject as? Bool
 			case .CGFloat: return anyObject as? CGFloat
+			case .Double: return anyObject as? Double
 			case .UIColor: return anyObject as? UIColor
 			}
 		}
@@ -166,6 +167,7 @@ private extension TweakViewDataType {
 		case .Boolean: return "boolean"
 		case .Integer: return "integer"
 		case .CGFloat: return "cgfloat"
+		case .Double: return "double"
 		case .UIColor: return "uicolor"
 		}
 	}
@@ -178,6 +180,7 @@ private extension TweakableType {
 			case .Boolean: return self as! Bool
 			case .Integer: return self as! Int
 			case .CGFloat: return self as! CGFloat
+			case .Double: return self as! Double
 			case .UIColor: return self as! UIColor
 		}
 	}
