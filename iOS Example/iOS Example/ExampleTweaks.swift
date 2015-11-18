@@ -25,8 +25,8 @@ public struct ExampleTweaks: TweakLibraryType {
 
 	// Above, we used CGFloat(30) to tell the compiler that the tweak is for a CGFloat, and not an Int.
 	// You can also use Tweak<CGFloat> to accomplish this, like so:
-	public static let animationDuration = Tweak<CGFloat>("Animation", "Spring Animation", "Duration", 0.5, min: 0.0, max:1.0)
-	public static let animationDelay = Tweak<CGFloat>("Animation", "Spring Animation", "Delay", 0.0, min: 0.0, max: 1.0)
+	public static let animationDuration = Tweak<Double>("Animation", "Spring Animation", "Duration", 0.5, min: 0.0, max:1.0)
+	public static let animationDelay = Tweak<Double>("Animation", "Spring Animation", "Delay", 0.0, min: 0.0, max: 1.0)
 	public static let animationDamping = Tweak<CGFloat>("Animation", "Spring Animation", "Damping", 0.7, min: 0.0, max: 1.0)
 	public static let animationVelocity = Tweak<CGFloat>("Animation", "Spring Animation", "Velocity", 0.0)
 

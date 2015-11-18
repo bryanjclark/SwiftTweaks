@@ -105,6 +105,9 @@ public class TweakStore {
 		case let .Float(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? CGFloat ?? defaultValue
 			return .Float(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .DoubleTweak(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Double ?? defaultValue
+			return .DoubleTweak(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
 		case let .Color(defaultValue: defaultValue):
 			let currentValue = cachedValue as? UIColor ?? defaultValue
 			return .Color(value: currentValue, defaultValue: defaultValue)
@@ -120,6 +123,8 @@ public class TweakStore {
 			value = intValue
 		case let .Float(value: floatValue, defaultValue: _, min: _, max: _, stepSize: _):
 			value = floatValue
+		case let .DoubleTweak(value: doubleValue, defaultValue: _, min: _, max: _, stepSize: _):
+			value = doubleValue
 		case let .Color(value: colorValue, defaultValue: _):
 			value = colorValue
 		}

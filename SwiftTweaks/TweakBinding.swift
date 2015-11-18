@@ -19,13 +19,7 @@ internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 
 	func applyBindingWithValue(value: TweakableType) {
 		switch value.dynamicType.tweakViewDataType {
-		case .Boolean:
-			binding(value as! T)
-		case .Integer:
-			binding(value as! T)
-		case .CGFloat:
-			binding(value as! T)
-		case .UIColor:
+		case .Boolean, .Integer, .CGFloat, .Double, .UIColor:
 			binding(value as! T)
 		}
 	}

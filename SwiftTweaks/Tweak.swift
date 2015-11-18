@@ -54,6 +54,13 @@ extension Tweak: TweakType {
 				max: maximumValue as? CGFloat,
 				stepSize: stepSize as? CGFloat
 			)
+		case .Double:
+			return .DoubleTweak(
+				defaultValue: defaultValue as! Double,
+				min: minimumValue as? Double,
+				max: maximumValue as? Double,
+				stepSize: stepSize as? Double
+			)
 		case .UIColor:
 			return .Color(defaultValue: defaultValue as! UIColor)
 		}

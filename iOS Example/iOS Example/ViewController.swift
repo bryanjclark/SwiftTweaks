@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 
 	private let bounceButton: UIButton = {
 		let button = UIButton()
-		button.setTitle("Bounce", forState: .Normal)
+		button.setTitle("Animate", forState: .Normal)
 		ExampleTweaks.bind(ExampleTweaks.colorTint) { button.backgroundColor = $0 }
 		ExampleTweaks.bind(ExampleTweaks.colorButtonText) { button.setTitleColor($0, forState: .Normal) }
 		button.layer.cornerRadius = 5
@@ -129,11 +129,14 @@ class ViewController: UIViewController {
 		let velocity = ExampleTweaks.assign(ExampleTweaks.animationVelocity)
 		let originalFrame = self.bounceButton.frame
 
-		UIView.animateWithDuration(Double(duration), delay: Double(delay), usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+		UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState,
+			animations: { () -> Void in
 				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
-			}) { _ in
-				self.bounceButton.frame = originalFrame
-		}
-
+			}, completion: { _ in
+				UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState,
+					animations: { () -> Void in
+						self.bounceButton.frame = originalFrame
+					}, completion: nil)
+		})
 	}
 }
