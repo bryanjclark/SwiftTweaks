@@ -61,14 +61,14 @@ class ViewController: UIViewController {
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
 		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
 		// Note that inside this closure, we're calling `assign` to get the current value.
-		let tweaksToWatch = Set([
+		let tweaksToWatch: [TweakType] = [
 			ExampleTweaks.fontSizeText1,
 			ExampleTweaks.fontSizeText2,
 			ExampleTweaks.horizontalMargins,
 			ExampleTweaks.verticalMargins
-			].map(AnyTweak.init))
+			]
 
-		ExampleTweaks.bindTweakSet(tweaksToWatch) {
+		ExampleTweaks.bindMultiple(tweaksToWatch) {
 			// This closure will be called immediately, and then again each time *any* of the tweaksToWatch change.
 			let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
 			let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)

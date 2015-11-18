@@ -14,11 +14,11 @@ public class TweakStore {
 	/// The "tree structure" for our Tweaks UI.
 	private var tweakCollections: [String: TweakCollection] = [:]
 
-	/// Represents a "single" binding - when a tweak is updated, we'll call each of the corresponding bindings.
+	/// Caches "single" bindings - when a tweak is updated, we'll call each of the corresponding bindings.
 	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
-	/// Represents a "clustered" binding - when any tweak in the Set is updated, we'll call each of the corresponding bindings.
-	private var tweakClusterBindings: [Set<AnyTweak>: [() -> Void]] = [:]
+	/// Caches "multi" bindings - when any tweak in a Set is updated, we'll call each of the corresponding bindings.
+	private var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
 
 	/// Persists tweaks' currentValues and maintains them on disk.
 	private let persistence: TweakPersistency
@@ -71,10 +71,13 @@ public class TweakStore {
 		binding(currentValueForTweak(tweak))
 	}
 
-	public func bindTweakSet(tweaks: Set<AnyTweak>, binding: () -> Void) {
-		// Create and cache the cluster binding
-		let existingClusterBindings = tweakClusterBindings[tweaks] ?? []
-		tweakClusterBindings[tweaks] = existingClusterBindings + [binding]
+	public func bindMultiple(tweaks: [TweakType], binding: () -> Void) {
+		// Convert the array (which makes it easier to call a `bindTweakSet`) into a set (which makes it possible to cache the tweakSet)
+		let tweakSet = Set(tweaks.map(AnyTweak.init))
+
+		// Cache the cluster binding
+		let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
+		tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
 
 		// Immediately call the binding
 		binding()
@@ -134,7 +137,7 @@ public class TweakStore {
 		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0.applyBindingWithValue(value) }
 
 		// Find any cluster bindings and update them
-		for (tweakSet, bindingsArray) in tweakClusterBindings {
+		for (tweakSet, bindingsArray) in tweakSetBindings {
 			if tweakSet.contains(tweak) {
 				bindingsArray.forEach { $0() }
 			}
