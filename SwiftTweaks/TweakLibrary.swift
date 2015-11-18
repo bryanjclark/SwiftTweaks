@@ -19,51 +19,16 @@ public extension TweakLibraryType {
 		return self.defaultStore.currentValueForTweak(tweak)
 	}
 
+	/// Immediately binds the currentValue of a given tweak, and then continues to update whenever the tweak changes.
 	static func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
 		self.defaultStore.bind(tweak, binding: binding)
 	}
-}
 
-/// A type-erasure around Tweak<T>, so we can collect them together in TweakLibraryType.
-public struct AnyTweak: TweakType {
-	public let tweak: TweakType
-
-	public var collectionName: String { return tweak.collectionName }
-	public var groupName: String { return tweak.groupName }
-	public var tweakName: String { return tweak.tweakName }
-
-	public var tweakViewDataType: TweakViewDataType { return tweak.tweakViewDataType }
-	public var tweakDefaultData: TweakDefaultData { return tweak.tweakDefaultData }
-
-	public init(tweak: TweakType) {
-		self.tweak = tweak.tweak
+	/// Similar to `bind`, but for multiple tweaks.
+	//  Accepts a set of Tweaks, and immediately calls the updateHandler.
+	/// The updateHandler is then re-called each time any of the Set's tweaks change.
+	/// Inside the updateHandler, you'll need to use `assign` to get the tweaks' current values.
+	static func bindTweakSet(tweaks: Set<AnyTweak>, binding: () -> Void) {
+		self.defaultStore.bindTweakSet(tweaks, binding: binding)
 	}
-}
-
-/// When combined with AnyTweak, this provides our type-erasure around Tweak<T>
-public protocol TweakType {
-	var tweak: TweakType { get }
-
-	var collectionName: String { get }
-	var groupName: String { get }
-	var tweakName: String { get }
-
-	var tweakViewDataType: TweakViewDataType { get }
-	var tweakDefaultData: TweakDefaultData { get }
-}
-
-extension TweakType {
-	var tweakIdentifier: String {
-		return "\(collectionName)^\(groupName)^\(tweakName)"
-	}
-}
-
-/// Extend AnyTweak to support identification in persistence
-extension AnyTweak: TweakIdentifiable {
-	var persistenceIdentifier: String { return tweakIdentifier }
-}
-
-/// Extend Tweak to support identification in bindings
-extension Tweak: TweakIdentifiable {
-	var persistenceIdentifier: String { return tweakIdentifier }
 }

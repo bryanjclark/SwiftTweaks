@@ -26,14 +26,26 @@ class ViewController: UIViewController {
 		return label
 	}()
 
+	private let bounceButton: UIButton = {
+		let button = UIButton()
+		button.setTitle("Bounce", forState: .Normal)
+		ExampleTweaks.bind(ExampleTweaks.colorTint) { button.backgroundColor = $0 }
+		ExampleTweaks.bind(ExampleTweaks.colorButtonText) { button.setTitleColor($0, forState: .Normal) }
+		button.layer.cornerRadius = 5
+		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		return button
+	}()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		bounceButton.addTarget(self, action: "bounceButtonPressed:", forControlEvents: .TouchUpInside)
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
+		view.addSubview(bounceButton)
 
 		// Here's a demonstration of TweakLibraryType.bind() - the underlying tweak value is immediately applied, and the binding is re-called each time the tweak changes.
-		ExampleTweaks.bind(ExampleTweaks.titleScreenShowHelperText) { self.bodyLabel.hidden = !$0 }
+		ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.hidden = !$0 }
 
 		// Bind is useful when you want to keep something up to date easily. To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
 		ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 }
@@ -47,13 +59,21 @@ class ViewController: UIViewController {
 
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
-		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) in place of this closure.
-		// You'll note that inside the closure, we're calling `assign` to get the current value.
-		let layoutClosure: () -> Void = {
+		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
+		// Note that inside this closure, we're calling `assign` to get the current value.
+		let tweaksToWatch = Set([
+			ExampleTweaks.fontSizeText1,
+			ExampleTweaks.fontSizeText2,
+			ExampleTweaks.horizontalMargins,
+			ExampleTweaks.verticalMargins
+			].map(AnyTweak.init))
+
+		ExampleTweaks.bindTweakSet(tweaksToWatch) {
+			// This closure will be called immediately, and then again each time *any* of the tweaksToWatch change.
 			let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
 			let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)
 			let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
-			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.titleScreenGapBetweenTitleAndBody)
+			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.verticalMargins)
 
 			self.titleLabel.font = UIFont.systemFontOfSize(titleLabelFontSize)
 			self.titleLabel.sizeToFit()
@@ -74,19 +94,22 @@ class ViewController: UIViewController {
 					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.max)
 				)
 			)
+
+			self.bounceButton.sizeToFit()
+			self.bounceButton.frame = CGRect(
+				origin: CGPoint(
+					x: self.view.center.x - self.bounceButton.bounds.width / 2,
+					y: CGRectGetMaxY(self.bodyLabel.frame) + verticalGapBetweenLabels
+				), size: self.bounceButton.bounds.size
+			)
 		}
-		ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { _ in layoutClosure() }
-		ExampleTweaks.bind(ExampleTweaks.fontSizeText2) { _ in layoutClosure() }
-		ExampleTweaks.bind(ExampleTweaks.horizontalMargins) { _ in layoutClosure() }
-		ExampleTweaks.bind(ExampleTweaks.titleScreenGapBetweenTitleAndBody) { _ in layoutClosure() }
 	}
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Use the `assign` value to get the currentValue of a tweak once.
-		// With `assign`, you get the value once - and when the tweak updates, you won't be notified.
-		// The benefit of this approach is that the
+		// With `assign`, you get the value only once - when the tweak updates, you won't be notified.
 		// Since this is in viewWillAppear, though, this re-application will update right before the view appears onscreen!
 		view.backgroundColor = ExampleTweaks.assign(ExampleTweaks.colorBackground)
 	}
@@ -94,5 +117,23 @@ class ViewController: UIViewController {
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+
+
+	// MARK: Events
+
+	@objc private func bounceButtonPressed(sender: UIButton) {
+		let duration = ExampleTweaks.assign(ExampleTweaks.animationDuration)
+		let delay = ExampleTweaks.assign(ExampleTweaks.animationDelay)
+		let damping = ExampleTweaks.assign(ExampleTweaks.animationDamping)
+		let velocity = ExampleTweaks.assign(ExampleTweaks.animationVelocity)
+		let originalFrame = self.bounceButton.frame
+
+		UIView.animateWithDuration(Double(duration), delay: Double(delay), usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState, animations: { () -> Void in
+				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
+			}) { _ in
+				self.bounceButton.frame = originalFrame
+		}
+
 	}
 }

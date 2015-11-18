@@ -20,7 +20,7 @@ public struct Tweak<T: TweakableType> {
 	internal let maximumValue: T?	// Only supported for T: SignedNumberType
 	internal let stepSize: T?		// Only supported for T: SignedNumberType
 
-	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _	defaultValue: T, minimumValue: T? = nil, maximumValue: T? = nil, stepSize: T? = nil) {
+	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {
 		self.collectionName = collectionName
 		self.groupName = groupName
 		self.tweakName = tweakName
@@ -71,5 +71,10 @@ extension Tweak: Hashable {
 }
 
 public func ==<T>(lhs: Tweak<T>, rhs: Tweak<T>) -> Bool {
-	return lhs.collectionName == rhs.collectionName && lhs.groupName == rhs.groupName && lhs.tweakName == rhs.tweakName
+	return lhs.tweakIdentifier == rhs.tweakIdentifier
+}
+
+/// Extend Tweak to support identification in bindings
+extension Tweak: TweakIdentifiable {
+	var persistenceIdentifier: String { return tweakIdentifier }
 }

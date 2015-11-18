@@ -11,9 +11,16 @@ import Foundation
 /// Looks up the persisted state for tweaks.
 public class TweakStore {
 
+	/// The "tree structure" for our Tweaks UI.
 	private var tweakCollections: [String: TweakCollection] = [:]
+
+	/// Represents a "single" binding - when a tweak is updated, we'll call each of the corresponding bindings.
 	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
+	/// Represents a "clustered" binding - when any tweak in the Set is updated, we'll call each of the corresponding bindings.
+	private var tweakClusterBindings: [Set<AnyTweak>: [() -> Void]] = [:]
+
+	/// Persists tweaks' currentValues and maintains them on disk.
 	private let persistence: TweakPersistency
 
 	/// Creates a TweakStore, with information persisted on-disk. 
@@ -51,7 +58,6 @@ public class TweakStore {
 		return self.currentValueForTweak(tweak)
 	}
 
-	/// Immediately binds the currentValue of a given tweak, and then continues to update whenever the tweak changes.
 	public func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
 		// Create the TweakBinding<T>, and wrap it in our type-erasing AnyTweakBinding
 		let tweakBinding = TweakBinding(tweak: tweak, binding: binding)
@@ -65,14 +71,14 @@ public class TweakStore {
 		binding(currentValueForTweak(tweak))
 	}
 
-	// TODO (bryan): Build out bindTweakCluster
-	/// Similar to `bind`, this accepts an array of Tweaks, and returns an array of their current values in a binding. 
-	/// The binding is then re-called each time any of those tweaks change.
-	/// This function's API is a little more cumbersome, but it's pretty powerful!
-	// 	public func bindTweakCluster(tweakCluster: [AnyTweak], binding: [TweakableType] -> Void) {
-		// Cache the binding cluster.
-		// Then immediately apply the binding with our current value.
-	// }
+	public func bindTweakSet(tweaks: Set<AnyTweak>, binding: () -> Void) {
+		// Create and cache the cluster binding
+		let existingClusterBindings = tweakClusterBindings[tweaks] ?? []
+		tweakClusterBindings[tweaks] = existingClusterBindings + [binding]
+
+		// Immediately call the binding
+		binding()
+	}
 
 	// MARK: - Internal
 	
@@ -118,7 +124,16 @@ public class TweakStore {
 			value = colorValue
 		}
 		persistence.setValue(value, forTweakIdentifiable: tweak)
+
+		// Find any 1-to-1 bindings and update them
 		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0.applyBindingWithValue(value) }
+
+		// Find any cluster bindings and update them
+		for (tweakSet, bindingsArray) in tweakClusterBindings {
+			if tweakSet.contains(tweak) {
+				bindingsArray.forEach { $0() }
+			}
+		}
 	}
 
 	// MARK - Private
