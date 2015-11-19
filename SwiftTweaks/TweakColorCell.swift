@@ -19,38 +19,7 @@ internal class TweakColorCell: UITableViewCell {
 
 	internal var viewData: ColorComponent? {
 		didSet {
-
-			// No point in setting data if we don't have it.
-			guard let viewData = viewData else {
-				return
-			}
-
-			textLabel?.text = viewData.title
-
-			switch viewData {
-			case .HexComponent(let hexString):
-				slider.hidden = true
-				label.hidden = true
-				textField.hidden = false
-
-				textField.text = hexString
-			case .NumericalComponent(let numberComponent):
-				slider.hidden = false
-				label.hidden = false
-				textField.hidden = true
-
-				slider.minimumValue = numberComponent.type.minimumValue
-				slider.maximumValue = numberComponent.type.maximumValue
-				slider.value = numberComponent.value
-				slider.tintColor = numberComponent.type.tintColor ?? tintColor
-
-				let numberFormatter = NSNumberFormatter()
-				numberFormatter.numberStyle = .DecimalStyle
-				numberFormatter.minimumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
-				numberFormatter.maximumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
-				numberFormatter.minimumIntegerDigits = 1
-				label.text = numberFormatter.stringFromNumber(numberComponent.value)
-			}
+			updateData()
 		}
 	}
 
@@ -116,6 +85,41 @@ internal class TweakColorCell: UITableViewCell {
 		}
 	}
 
+	private func updateData() {
+		// No point in setting data if we don't have it.
+		guard let viewData = viewData else {
+			return
+		}
+
+		textLabel?.text = viewData.title
+
+		switch viewData {
+		case .HexComponent(let hexString):
+			slider.hidden = true
+			label.hidden = true
+			textField.hidden = false
+
+			textField.textColor = tintColor
+			textField.text = hexString
+		case .NumericalComponent(let numberComponent):
+			slider.hidden = false
+			label.hidden = false
+			textField.hidden = true
+
+			slider.minimumValue = numberComponent.type.minimumValue
+			slider.maximumValue = numberComponent.type.maximumValue
+			slider.value = numberComponent.value
+			slider.tintColor = numberComponent.type.tintColor ?? tintColor
+
+			let numberFormatter = NSNumberFormatter()
+			numberFormatter.numberStyle = .DecimalStyle
+			numberFormatter.minimumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
+			numberFormatter.maximumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
+			numberFormatter.minimumIntegerDigits = 1
+			label.text = numberFormatter.stringFromNumber(numberComponent.value)
+		}
+	}
+
 	// MARK: Events
 	@objc private func sliderValueChanged(sender: UISlider) {
 		switch viewData! {
@@ -140,6 +144,8 @@ extension TweakColorCell: UITextFieldDelegate {
 		if let text = textField.text, newValue = UIColor(hexString: text) {
 			viewData = .HexComponent(newValue.hexString)
 			delegate?.tweakColorCellDidChangeValue(self)
+		} else {
+			updateData()
 		}
 	}
 }
