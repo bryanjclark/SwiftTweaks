@@ -239,6 +239,7 @@ internal class TweakTableCell: UITableViewCell {
 			delegate?.tweakCellDidChangeCurrentValue(self)
 		case let .Float(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .CGFloat, value: CGFloat(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
+			delegate?.tweakCellDidChangeCurrentValue(self)
 		case let .DoubleTweak(value: _, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .Double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
 			delegate?.tweakCellDidChangeCurrentValue(self)

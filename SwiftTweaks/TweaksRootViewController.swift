@@ -118,6 +118,11 @@ extension TweaksRootViewController: TweaksCollectionsListViewControllerDelegate 
 		let tweakCollectionViewController = TweakCollectionViewController(tweakCollection: tweakCollection, tweakStore: tweakStore, delegate: self)
 		self.navigationController?.pushViewController(tweakCollectionViewController, animated: true)
 	}
+
+	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
+		let activityVC = UIActivityViewController(activityItems: [TweakStoreActivityItemSource(text: tweakStore.textRepresentation)], applicationActivities: nil)
+		presentViewController(activityVC, animated: true, completion: nil)
+	}
 }
 
 extension TweaksRootViewController: TweaksBackupsListViewControllerDelegate {
