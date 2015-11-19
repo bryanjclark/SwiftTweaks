@@ -45,6 +45,21 @@ public enum TweakViewData {
 	case Float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case DoubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case Color(value: UIColor, defaultValue: UIColor)
+
+	var value: TweakableType {
+		switch self {
+		case let .Boolean(value: boolValue, defaultValue: _):
+			return boolValue
+		case let .Integer(value: intValue, defaultValue: _, min: _, max: _, stepSize: _):
+			return intValue
+		case let .Float(value: floatValue, defaultValue: _, min: _, max: _, stepSize: _):
+			return floatValue
+		case let .DoubleTweak(value: doubleValue, defaultValue: _, min: _, max: _, stepSize: _):
+			return doubleValue
+		case let .Color(value: colorValue, defaultValue: _):
+			return colorValue
+		}
+	}
 }
 
 // The following types are supported as Tweaks.

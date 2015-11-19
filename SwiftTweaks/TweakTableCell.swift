@@ -43,16 +43,19 @@ internal class TweakTableCell: UITableViewCell {
 				textField.hidden = true
 				stepperControl.hidden = true
 				colorChit.hidden = true
+				disclosureArrow.hidden = true
 			case .Integer, .Float, .DoubleTweak:
 				switchControl.hidden = true
 				textField.hidden = false
 				stepperControl.hidden = false
 				colorChit.hidden = true
+				disclosureArrow.hidden = true
 			case .Color:
 				switchControl.hidden = true
 				textField.hidden = false
 				stepperControl.hidden = true
 				colorChit.hidden = false
+				disclosureArrow.hidden = false
 			}
 
 			// Update accessory internals based on viewData
@@ -67,6 +70,7 @@ internal class TweakTableCell: UITableViewCell {
 
 				textField.text = String(value)
 				textField.keyboardType = .NumberPad
+				textField.userInteractionEnabled = true
 			case let .Float(value: value, defaultValue: _, min: min, max: max, stepSize: step):
 				stepperControl.value = Double(value)
 				stepperControl.minimumValue = Double(min ?? 0)
@@ -86,27 +90,36 @@ internal class TweakTableCell: UITableViewCell {
 			case let .Color(value: value, defaultValue: _):
 				colorChit.backgroundColor = value
 				textField.text = value.hexString
+				textField.userInteractionEnabled = false
 			}
+
+			textField.textColor = textField.userInteractionEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
 		}
 	}
 	private var accessory = UIView()
-	private var switchControl = UISwitch()
-	private var stepperControl = UIStepper()
-	private var colorChit: UIView = {
+	private let switchControl = UISwitch()
+	private let stepperControl = UIStepper()
+	private let colorChit: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
 		return view
 	}()
-	private var textField: UITextField = {
+	private let textField: UITextField = {
 		let textField = UITextField()
 		textField.textAlignment = .Right
 		return textField
+	}()
+	private let disclosureArrow: UIImageView = {
+		let imageView = UIImageView(image: UIImage(named: "disclosure-indicator")!.imageWithRenderingMode(.AlwaysTemplate))
+		imageView.contentMode = .Center
+		imageView.tintColor = TweakTableCell.nonInteractiveGrayColor
+		return imageView
 	}()
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
 		stepperControl.addTarget(self, action: "stepperChanged:", forControlEvents: .ValueChanged)
@@ -123,6 +136,7 @@ internal class TweakTableCell: UITableViewCell {
 	private static let colorTextWidthFraction: CGFloat = 0.30
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
+	private static let nonInteractiveGrayColor = UIColor(white: 0.70, alpha: 1.0)
 
 	override func layoutSubviews() {
 
@@ -142,45 +156,67 @@ internal class TweakTableCell: UITableViewCell {
 			accessory.bounds = switchControl.bounds
 		case .Integer, .Float, .DoubleTweak:
 			stepperControl.sizeToFit()
-			let textWidth = bounds.width * TweakTableCell.numberTextWidthFraction
-			let (textFrame, stepperControlFrame) = layoutFramesForTextFieldAndControlWithControlSize(stepperControl.bounds.size, textFieldWidth: textWidth)
+
+			let textFrame = CGRect(
+				origin: CGPointZero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.numberTextWidthFraction,
+					height: bounds.height
+				)
+			)
+
+			let stepperControlFrame = CGRect(
+				origin: CGPoint(
+					x: textFrame.width + TweakTableCell.horizontalPadding,
+					y: (textFrame.height - stepperControl.bounds.height) / 2
+				),
+				size: stepperControl.bounds.size
+			)
+
 			textField.frame = textFrame
 			stepperControl.frame = stepperControlFrame
 
 			let accessoryFrame = CGRectUnion(textFrame, stepperControlFrame)
 			accessory.bounds = CGRectIntegral(accessoryFrame)
 		case .Color:
-			let textWidth = bounds.width * TweakTableCell.colorTextWidthFraction
-			let (textFrame, colorControlFrame) = layoutFramesForTextFieldAndControlWithControlSize(TweakTableCell.colorChitSize, textFieldWidth: textWidth)
+			let textFrame = CGRect(
+				origin: CGPointZero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.colorTextWidthFraction,
+					height: bounds.height
+				)
+			)
+
+			let colorControlFrame = CGRect(
+				origin: CGPoint(
+					x: textFrame.width + TweakTableCell.horizontalPadding,
+					y: (textFrame.height - stepperControl.bounds.height) / 2
+				),
+				size: TweakTableCell.colorChitSize
+			)
+
+			let disclosureArrowFrame = CGRect(
+				origin: CGPoint(
+					x: textFrame.width + colorControlFrame.width + 2 * TweakTableCell.horizontalPadding,
+					y: 0),
+				size: CGSize(
+					width: disclosureArrow.bounds.width,
+					height: bounds.height
+				)
+			)
+
 			textField.frame = textFrame
 			colorChit.frame = colorControlFrame
+			disclosureArrow.frame = disclosureArrowFrame
 
-			let accessoryFrame = CGRectUnion(colorControlFrame, textFrame)
+			let accessoryFrame = CGRectUnion(CGRectUnion(colorControlFrame, textFrame), disclosureArrowFrame)
 			accessory.bounds = CGRectIntegral(accessoryFrame)
 		}
 	}
 
-	private func layoutFramesForTextFieldAndControlWithControlSize(controlSize: CGSize, textFieldWidth: CGFloat) -> (textFrame: CGRect, controlFrame: CGRect) {
-		let textFrame = CGRect(
-			origin: CGPointZero,
-			size: CGSize(
-				width: textFieldWidth,
-				height: bounds.height
-			)
-		)
-
-		let controlFrame = CGRect(
-			origin: CGPoint(
-				x: textFrame.width + TweakTableCell.horizontalPadding,
-				y: (textFrame.height - controlSize.height) / 2
-			),
-			size: controlSize
-		)
-
-		return (textFrame, controlFrame)
-	}
 
 	// MARK: Events
+
 	@objc private func switchChanged(sender: UISwitch) {
 		switch viewData! {
 		case let .Boolean(value: _, defaultValue: defaultValue):

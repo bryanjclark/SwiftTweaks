@@ -55,13 +55,16 @@ internal extension UIColor {
 	internal var hexString: String {
 		assert(canProvideRGBComponents, "Must be an RGB color to use UIColor.hexValue")
 
-		let components = CGColorGetComponents(self.CGColor)
+		var red: CGFloat = 0
+		var green: CGFloat = 0
+		var blue: CGFloat = 0
+		var alpha: CGFloat = 0
+		getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-		return String(format: "#%02x%02x%02x%02x", arguments: [
-			Int(components[0] * 255.0),
-			Int(components[1] * 255.0),
-			Int(components[2] * 255.0),
-			Int(components[3] * 255.0)
+		return String(format: "#%02x%02x%02x", arguments: [
+			Int(red * 255.0),
+			Int(green * 255.0),
+			Int(blue * 255.0)
 			]).uppercaseString
 	}
 

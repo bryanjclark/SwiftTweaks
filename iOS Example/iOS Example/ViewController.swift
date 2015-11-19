@@ -50,6 +50,7 @@ class ViewController: UIViewController {
 		// Bind is useful when you want to keep something up to date easily. To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
 		ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 }
 		ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0 }
+		ExampleTweaks.bind(ExampleTweaks.colorText2) { self.bodyLabel.textColor = $0 }
 
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
