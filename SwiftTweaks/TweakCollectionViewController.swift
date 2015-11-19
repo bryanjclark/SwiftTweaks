@@ -49,6 +49,13 @@ internal class TweakCollectionViewController: UIViewController {
 		view.addSubview(tableView)
 	}
 
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Reload data (in case colors were changed on a divedown)
+		tableView.reloadData()
+	}
+
 
 	// MARK: Events
 
@@ -65,7 +72,14 @@ internal class TweakCollectionViewController: UIViewController {
 
 extension TweakCollectionViewController: UITableViewDelegate {
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		print("yay! You selected a thing")
+		let tweak = tweakAtIndexPath(indexPath)
+		switch tweak.tweakViewDataType {
+		case .UIColor:
+			let colorEditVC = TweakColorEditViewController(anyTweak: tweak, tweakStore: tweakStore, delegate: self)
+			navigationController?.pushViewController(colorEditVC, animated: true)
+		case .Boolean, .Integer, .CGFloat, .Double:
+			break
+		}
 	}
 }
 
@@ -79,7 +93,7 @@ extension TweakCollectionViewController: UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let tweak = tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
+		let tweak = tweakAtIndexPath(indexPath)
 
 		let cell = tableView.dequeueReusableCellWithIdentifier(TweakCollectionViewController.TweakTableViewCellIdentifer, forIndexPath: indexPath) as! TweakTableCell
 		cell.textLabel?.text = tweak.tweakName
@@ -91,6 +105,10 @@ extension TweakCollectionViewController: UITableViewDataSource {
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return tweakCollection.sortedTweakGroups[section].title
 	}
+
+	private func tweakAtIndexPath(indexPath: NSIndexPath) -> AnyTweak {
+		return tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
+	}
 }
 
 extension TweakCollectionViewController: TweakTableCellDelegate {
@@ -99,8 +117,14 @@ extension TweakCollectionViewController: TweakTableCellDelegate {
 			indexPath = tableView.indexPathForCell(tweakCell),
 			viewData = tweakCell.viewData
 		{
-			let tweak = tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
+			let tweak = tweakAtIndexPath(indexPath)
 			tweakStore.setValue(viewData, forTweak: tweak)
 		}
+	}
+}
+
+extension TweakCollectionViewController: TweakColorEditViewControllerDelegate {
+	func tweakColorEditViewControllerDidPressDismissButton(tweakColorEditViewController: TweakColorEditViewController) {
+		self.delegate.tweakCollectionViewControllerDidPressDismissButton(self)
 	}
 }

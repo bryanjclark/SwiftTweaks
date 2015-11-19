@@ -27,4 +27,10 @@ extension TweakCollection {
 	internal var numberOfTweaks: Int {
 		return sortedTweakGroups.reduce(0) { $0 + $1.sortedTweaks.count }
 	}
+
+	internal var allTweaks: [AnyTweak] {
+		return sortedTweakGroups.reduce([]) {
+			$0 + $1.sortedTweaks
+		}
+	}
 }

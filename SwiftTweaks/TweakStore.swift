@@ -88,6 +88,12 @@ public class TweakStore {
 	/// Resets all tweaks to their `defaultValue`
 	internal func reset() {
 		persistence.clearAllData()
+
+		// Go through all tweaks in our library, and call any bindings they're attached to.
+		tweakCollections.values.reduce([]) { $0 + $1.sortedTweakGroups.reduce([]) { $0 + $1.sortedTweaks } }
+			.forEach { updateBindingsForTweak($0)
+		}
+
 	}
 
 	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
@@ -118,23 +124,21 @@ public class TweakStore {
 	}
 
 	internal func setValue(viewData: TweakViewData, forTweak tweak: AnyTweak) {
-		let value: TweakableType
-		switch viewData {
-		case let .Boolean(value: boolValue, defaultValue: _):
-			value = boolValue
-		case let .Integer(value: intValue, defaultValue: _, min: _, max: _, stepSize: _):
-			value = intValue
-		case let .Float(value: floatValue, defaultValue: _, min: _, max: _, stepSize: _):
-			value = floatValue
-		case let .DoubleTweak(value: doubleValue, defaultValue: _, min: _, max: _, stepSize: _):
-			value = doubleValue
-		case let .Color(value: colorValue, defaultValue: _):
-			value = colorValue
-		}
-		persistence.setValue(value, forTweakIdentifiable: tweak)
+		persistence.setValue(viewData.value, forTweakIdentifiable: tweak)
+		updateBindingsForTweak(tweak)
+	}
 
+	// MARK - Private
+
+	private var shouldAllowTweaks: Bool {
+		return true // STOPSHIP (bryan): figure out whether we're in production or debug.
+	}
+
+	private func updateBindingsForTweak(tweak: AnyTweak) {
 		// Find any 1-to-1 bindings and update them
-		tweakBindings[tweak.persistenceIdentifier]?.forEach { $0.applyBindingWithValue(value) }
+		tweakBindings[tweak.persistenceIdentifier]?.forEach {
+			$0.applyBindingWithValue(currentViewDataForTweak(tweak).value)
+		}
 
 		// Find any cluster bindings and update them
 		for (tweakSet, bindingsArray) in tweakSetBindings {
@@ -142,12 +146,6 @@ public class TweakStore {
 				bindingsArray.forEach { $0() }
 			}
 		}
-	}
-
-	// MARK - Private
-
-	private var shouldAllowTweaks: Bool {
-		return true // STOPSHIP (bryan): figure out whether we're in production or debug.
 	}
 }
 
