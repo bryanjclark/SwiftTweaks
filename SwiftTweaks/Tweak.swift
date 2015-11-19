@@ -21,6 +21,11 @@ public struct Tweak<T: TweakableType> {
 	internal let stepSize: T?		// Only supported for T: SignedNumberType
 
 	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {
+
+		if collectionName.containsString("^") || groupName.containsString("^") || tweakName.containsString("^") {
+			assertionFailure("The character `^` can't be used in a tweak name, group name, or collection name.")
+		}
+
 		self.collectionName = collectionName
 		self.groupName = groupName
 		self.tweakName = tweakName
@@ -73,7 +78,7 @@ extension Tweak: TweakType {
 
 extension Tweak: Hashable {
 	public var hashValue: Int {
-		return collectionName.hashValue ^^^ groupName.hashValue ^^^ tweakName.hashValue
+		return tweakIdentifier.hashValue
 	}
 }
 
