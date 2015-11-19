@@ -11,6 +11,7 @@ import UIKit
 internal protocol TweaksCollectionsListViewControllerDelegate {
 	func tweaksCollectionsListViewControllerDidTapDismissButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 	func tweaksCollectionsListViewController(tweaksCollectionsListViewController: TweaksCollectionsListViewController, didSelectTweakCollection: TweakCollection)
+	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 }
 
 internal class TweaksCollectionsListViewController: UIViewController {
@@ -79,9 +80,7 @@ internal class TweaksCollectionsListViewController: UIViewController {
 	}
 
 	@objc private func actionButtonTapped() {
-		let alertController = UIAlertController(title: "Sharing Backups Not Yet Implemented", message: "Easy, tiger.", preferredStyle: .Alert)
-		alertController.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
-		presentViewController(alertController, animated: true, completion: nil)
+		delegate.tweaksCollectionsListViewControllerDidTapShareButton(self)
 	}
 
 	private static let TweakCollectionCellIdentifier = "TweakCollectionCellIdentifier"

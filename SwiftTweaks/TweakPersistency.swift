@@ -52,9 +52,9 @@ private class TweakDiskPersistency {
 	private let fileURL: NSURL
 
 	private static func fileURLForIdentifier(identifier: String) -> NSURL {
-		return NSURL(fileURLWithPath: NSHomeDirectory())
+		return try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 			.URLByAppendingPathComponent("SwiftTweaks")
-			.URLByAppendingPathComponent(identifier)
+			.URLByAppendingPathComponent("\(identifier)")
 			.URLByAppendingPathExtension("db")
 	}
 

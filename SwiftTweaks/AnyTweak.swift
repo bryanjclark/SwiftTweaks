@@ -38,7 +38,7 @@ public protocol TweakType {
 
 extension TweakType {
 	var tweakIdentifier: String {
-		return "\(collectionName)^\(groupName)^\(tweakName)"
+		return "\(collectionName)\(TweakIdentifierSeparator)\(groupName)\(TweakIdentifierSeparator)\(tweakName)"
 	}
 }
 

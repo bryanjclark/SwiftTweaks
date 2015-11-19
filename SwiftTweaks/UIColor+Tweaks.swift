@@ -52,6 +52,13 @@ internal extension UIColor {
 		)
 	}
 
+	internal var alphaValue: CGFloat {
+		var white: CGFloat = 0
+		var alpha: CGFloat = 0
+		getWhite(&white, alpha: &alpha)
+		return alpha
+	}
+
 	internal var hexString: String {
 		assert(canProvideRGBComponents, "Must be an RGB color to use UIColor.hexValue")
 

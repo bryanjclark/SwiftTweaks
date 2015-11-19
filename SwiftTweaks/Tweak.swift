@@ -22,8 +22,10 @@ public struct Tweak<T: TweakableType> {
 
 	internal init(collectionName: String, groupName: String, tweakName: String, defaultValue: T, minimumValue: T? = nil, maximumValue: T? = nil, stepSize: T? = nil) {
 
-		if collectionName.containsString("^") || groupName.containsString("^") || tweakName.containsString("^") {
-			assertionFailure("The character `^` can't be used in a tweak name, group name, or collection name.")
+		[collectionName, groupName, tweakName].forEach {
+			if $0.containsString(TweakIdentifierSeparator) {
+				assertionFailure("The substring `\(TweakIdentifierSeparator)` can't be used in a tweak name, group name, or collection name.")
+			}
 		}
 
 		self.collectionName = collectionName
@@ -35,6 +37,8 @@ public struct Tweak<T: TweakableType> {
 		self.stepSize = stepSize
 	}
 }
+
+internal let TweakIdentifierSeparator = "|"
 
 extension Tweak {
 	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValue: T) {
