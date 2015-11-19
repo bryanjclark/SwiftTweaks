@@ -181,9 +181,11 @@ internal class TweakTableCell: UITableViewCell {
 		}
 
 		// Update accessory internals based on viewData
+		let textFieldEnabled: Bool
 		switch viewData {
 		case let .Boolean(value: value, defaultValue: _):
 			switchControl.on = value
+			textFieldEnabled = false
 		case let .Integer(value: value, defaultValue: _, min: min, max: max, stepSize: step):
 			stepperControl.value = Double(value)
 			stepperControl.minimumValue = Double(min ?? 0)
@@ -192,15 +194,16 @@ internal class TweakTableCell: UITableViewCell {
 
 			textField.text = String(value)
 			textField.keyboardType = .NumberPad
-			textField.userInteractionEnabled = true
+			textFieldEnabled = true
 		case let .Float(value: value, defaultValue: _, min: min, max: max, stepSize: step):
 			stepperControl.value = Double(value)
 			stepperControl.minimumValue = Double(min ?? 0)
 			stepperControl.maximumValue = Double(max ?? 100)
-			stepperControl.stepValue = Double(step ?? 1)
+			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
 
 			textField.text = String(value)
 			textField.keyboardType = .DecimalPad
+			textFieldEnabled = true
 		case let .DoubleTweak(value: value, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			stepperControl.value = value
 			stepperControl.minimumValue = min ?? defaultValue / 10
@@ -209,13 +212,15 @@ internal class TweakTableCell: UITableViewCell {
 
 			textField.text = String(value)
 			textField.keyboardType = .DecimalPad
+			textFieldEnabled = true
 		case let .Color(value: value, defaultValue: _):
 			colorChit.backgroundColor = value
 			textField.text = value.hexString
-			textField.userInteractionEnabled = false
+			textFieldEnabled = false
 		}
 
-		textField.textColor = textField.userInteractionEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
+		textField.userInteractionEnabled = textFieldEnabled
+		textField.textColor = textFieldEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
 
 	}
 
