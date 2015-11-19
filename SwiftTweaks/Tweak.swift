@@ -20,7 +20,7 @@ public struct Tweak<T: TweakableType> {
 	internal let maximumValue: T?	// Only supported for T: SignedNumberType
 	internal let stepSize: T?		// Only supported for T: SignedNumberType
 
-	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {
+	internal init(collectionName: String, groupName: String, tweakName: String, defaultValue: T, minimumValue: T? = nil, maximumValue: T? = nil, stepSize: T? = nil) {
 
 		if collectionName.containsString("^") || groupName.containsString("^") || tweakName.containsString("^") {
 			assertionFailure("The character `^` can't be used in a tweak name, group name, or collection name.")
@@ -33,6 +33,37 @@ public struct Tweak<T: TweakableType> {
 		self.minimumValue = minimumValue
 		self.maximumValue = maximumValue
 		self.stepSize = stepSize
+	}
+}
+
+extension Tweak {
+	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValue: T) {
+		self.init(
+			collectionName: collectionName,
+			groupName: groupName,
+			tweakName: tweakName,
+			defaultValue: defaultValue
+		)
+	}
+}
+
+extension Tweak where T: SignedNumberType {
+	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {
+
+		// Assert that the tweak's defaultValue is between its min and max (if they exist)
+		if clip(defaultValue, minimumValue, maximumValue) != defaultValue {
+			assertionFailure("A tweak's default value must be between its min and max. Your tweak \"\(tweakName)\" doesn't meet this requirement.")
+		}
+
+		self.init(
+			collectionName: collectionName,
+			groupName: groupName,
+			tweakName: tweakName,
+			defaultValue: defaultValue,
+			minimumValue: minimumValue,
+			maximumValue: maximumValue,
+			stepSize: stepSize
+		)
 	}
 }
 

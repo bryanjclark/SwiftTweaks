@@ -19,7 +19,7 @@ internal class TweakColorCell: UITableViewCell {
 
 	internal var viewData: ColorComponent? {
 		didSet {
-			updateData()
+			updateSubviews()
 		}
 	}
 
@@ -85,7 +85,7 @@ internal class TweakColorCell: UITableViewCell {
 		}
 	}
 
-	private func updateData() {
+	private func updateSubviews() {
 		// No point in setting data if we don't have it.
 		guard let viewData = viewData else {
 			return
@@ -145,7 +145,7 @@ extension TweakColorCell: UITextFieldDelegate {
 			viewData = .HexComponent(newValue.hexString)
 			delegate?.tweakColorCellDidChangeValue(self)
 		} else {
-			updateData()
+			updateSubviews()
 		}
 	}
 }
