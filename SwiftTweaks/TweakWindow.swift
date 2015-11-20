@@ -23,18 +23,16 @@ import Foundation
 
 	/// By holding on to the TweaksViewController, we get easy state restoration!
 	private let tweaksViewController: TweaksViewController
+	private let tweaksEnabled: Bool
+	private let runningInSimulator: Bool
 
 	private var shaking: Bool = false
 
 	private var shouldPresentTweaks: Bool {
-		let runningInSimulator = true // STOPSHIP (bryan): Figure out if we're in the simulator
-		let tweaksEnabled = true // STOPSHIP (bryan): Read build settings to determine if tweaks should be enabled.
 
-		if runningInSimulator && tweaksEnabled {
-			return true
-		} else if tweaksEnabled {
+		if tweaksEnabled {
 			switch gestureType {
-			case .Shake: return shaking
+			case .Shake: return shaking || runningInSimulator
 			case .Gesture: return true
 			}
 		} else {
@@ -48,6 +46,8 @@ import Foundation
 		self.gestureType = gestureType
 
 		self.tweaksViewController = TweaksViewController(tweakStore: tweakStore)
+		self.tweaksEnabled = tweakStore.enabled
+		self.runningInSimulator = tweakStore.runningInSimulator
 
 		super.init(frame: frame)
 

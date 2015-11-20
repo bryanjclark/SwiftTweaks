@@ -53,7 +53,25 @@ public struct ExampleTweaks: TweakLibraryType {
 			featureFlagMainScreenHelperText
 		]
 
-		// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
-		return TweakStore(tweaks: allTweaks.map(AnyTweak.init), storeName: "ExampleTweaks")
+		// Since SwiftTweaks is a dynamic library, you'll need to determine whether tweaks are enabled, and whether the app is running in the simulator.
+		// This is fairly straightforward to do - you'll need to add "-D DEBUG" and "-D TARGET_OS_SIMULATOR"
+		#if DEBUG
+			let tweaksEnabled: Bool = true
+		#else
+			let tweaksEnabled: Bool = false
+		#endif
+
+		#if TARGET_OS_SIMULATOR
+			let runningInSimulator = true
+		#else
+			let runningInSimulator = false
+		#endif
+
+		return TweakStore(
+			tweaks: allTweaks.map(AnyTweak.init),
+			storeName: "ExampleTweaks", 	// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
+			enabled: tweaksEnabled,
+			runningInSimulator: runningInSimulator
+		)
 	}()
 }

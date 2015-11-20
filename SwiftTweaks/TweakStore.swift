@@ -23,10 +23,18 @@ public class TweakStore {
 	/// Persists tweaks' currentValues and maintains them on disk.
 	private let persistence: TweakPersistency
 
+	/// Determines whether tweaks are enabled, and whether the tweaks UI is accessible
+	internal let enabled: Bool
+
+	/// Used to assist the simulator in detecting shake gestures.
+	internal let runningInSimulator: Bool
+
 	/// Creates a TweakStore, with information persisted on-disk. 
 	/// If you want to have multiple TweakStores in your app, you can pass in a unique storeName to keep it separate from others on disk.
-	public init(tweaks: [AnyTweak], storeName: String = "Tweaks") {
+	public init(tweaks: [AnyTweak], storeName: String = "Tweaks", enabled: Bool, runningInSimulator: Bool) {
 		self.persistence = TweakPersistency(identifier: storeName)
+		self.enabled = enabled
+		self.runningInSimulator = runningInSimulator
 
 		tweaks.forEach { tweak in
 			// Find or create its TweakCollection
@@ -97,8 +105,7 @@ public class TweakStore {
 	}
 
 	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
-		// STOPSHIP (bryan): Return defaultValue in production, else return persistence.currentValue ?? defaultValue
-		return shouldAllowTweaks ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
+		return enabled ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
 	}
 
 	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {
@@ -128,11 +135,8 @@ public class TweakStore {
 		updateBindingsForTweak(tweak)
 	}
 
-	// MARK - Private
 
-	private var shouldAllowTweaks: Bool {
-		return true // STOPSHIP (bryan): figure out whether we're in production or debug.
-	}
+	// MARK - Private
 
 	private func updateBindingsForTweak(tweak: AnyTweak) {
 		// Find any 1-to-1 bindings and update them
