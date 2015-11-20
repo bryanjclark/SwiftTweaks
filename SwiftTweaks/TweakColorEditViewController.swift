@@ -42,6 +42,7 @@ internal class TweakColorEditViewController: UIViewController {
 	private let tableView: UITableView = {
 		let tableView = UITableView(frame: CGRectZero, style: .Plain)
 		tableView.allowsSelection = false
+		tableView.keyboardDismissMode = .OnDrag
 		return tableView
 	}()
 

@@ -13,12 +13,16 @@ internal protocol TweakCollectionViewControllerDelegate {
 }
 
 internal class TweakCollectionViewController: UIViewController {
-	private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
-
 	private let tweakCollection: TweakCollection
 	private let tweakStore: TweakStore
 
 	private let delegate: TweakCollectionViewControllerDelegate
+
+	private let tableView: UITableView = {
+		let tableView = UITableView(frame: CGRectZero, style: .Grouped)
+		tableView.keyboardDismissMode = .OnDrag
+		return tableView
+	}()
 
 	init(tweakCollection: TweakCollection, tweakStore: TweakStore, delegate: TweakCollectionViewControllerDelegate) {
 		self.tweakCollection = tweakCollection
