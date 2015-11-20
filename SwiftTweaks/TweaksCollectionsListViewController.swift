@@ -43,6 +43,7 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		super.viewDidLoad()
 
 		tableView.frame = view.bounds
+		tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 		tableView.registerClass(TweakCollectionCell.self, forCellReuseIdentifier: TweaksCollectionsListViewController.TweakCollectionCellIdentifier)
 		tableView.delegate = self
 		tableView.dataSource = self

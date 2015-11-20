@@ -124,6 +124,7 @@ internal class TweakColorEditViewController: UIViewController {
 		tableView.tableHeaderView = headerView
 
 		tableView.frame = view.bounds
+		tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 		tableView.dataSource = self
 		tableView.registerClass(TweakColorCell.self, forCellReuseIdentifier: TweakColorEditViewController.SliderCellIdentifier)
 		view.addSubview(tableView)

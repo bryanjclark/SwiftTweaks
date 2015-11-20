@@ -39,7 +39,7 @@ public class TweaksViewController: UIViewController {
 }
 
 extension TweaksViewController: TweaksRootViewControllerDelegate {
-	func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController) {
+	internal func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController) {
 		delegate?.tweaksViewControllerPressedDismiss(self)
 	}
 }
