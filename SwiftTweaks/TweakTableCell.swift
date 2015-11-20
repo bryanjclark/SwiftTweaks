@@ -42,6 +42,7 @@ internal class TweakTableCell: UITableViewCell {
 	private let textField: UITextField = {
 		let textField = UITextField()
 		textField.textAlignment = .Right
+		textField.returnKeyType = .Done
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {

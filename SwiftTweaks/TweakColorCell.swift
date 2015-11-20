@@ -33,6 +33,7 @@ internal class TweakColorCell: UITableViewCell {
 	private let textField: UITextField = {
 		let textField = UITextField()
 		textField.textAlignment = .Right
+		textField.returnKeyType = .Done
 		return textField
 	}()
 	private let accessory = UIView()
