@@ -55,7 +55,7 @@ public struct ExampleTweaks: TweakLibraryType {
 		]
 
 		// Since SwiftTweaks is a dynamic library, you'll need to determine whether tweaks are enabled, and whether the app is running in the simulator.
-		// This is fairly straightforward to do - you'll need to add "-D DEBUG" and "-D TARGET_OS_SIMULATOR"
+		// Try using the DEBUG and TARGET_OS_SIMULATOR flags - you can get them by adding "-D DEBUG" and "-D TARGET_OS_SIMULATOR" to "Other Swift Flags" in your project's Build Settings.
 		#if DEBUG
 			let tweaksEnabled: Bool = true
 		#else
