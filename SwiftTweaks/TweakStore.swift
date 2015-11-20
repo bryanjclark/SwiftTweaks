@@ -9,7 +9,7 @@
 import UIKit
 
 /// Looks up the persisted state for tweaks.
-public class TweakStore {
+public final class TweakStore {
 
 	/// The "tree structure" for our Tweaks UI.
 	private var tweakCollections: [String: TweakCollection] = [:]
