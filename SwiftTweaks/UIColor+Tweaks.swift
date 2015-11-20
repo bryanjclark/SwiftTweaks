@@ -6,7 +6,7 @@
 //  Copyright © 2015 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // info via http://arstechnica.com/apple/2009/02/iphone-development-accessing-uicolor-components/
 internal extension UIColor {

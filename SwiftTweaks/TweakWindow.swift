@@ -6,7 +6,7 @@
 //  Copyright © 2015 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// A UIWindow that handles the presentation and dismissal of a TweaksViewController automatically
 @objc public class TweakWindow: UIWindow {

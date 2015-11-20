@@ -6,7 +6,7 @@
 //  Copyright © 2015 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// Looks up the persisted state for tweaks.
 public class TweakStore {

@@ -53,14 +53,6 @@ public func ^^^<L: Hashable, R: Hashable>(left: [L]?, right: R) -> Int {
 }
 
 
-// MARK: Extensions
-
-extension CGSize: Hashable {
-	public var hashValue: Int {
-		return width ^^^ height
-	}
-}
-
 // MARK: Private functions
 
 private func hash<L: Hashable, R: Hashable>(left: L, _ right: R) -> Int {
