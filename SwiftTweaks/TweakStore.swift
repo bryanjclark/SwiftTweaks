@@ -14,6 +14,12 @@ public class TweakStore {
 	/// The "tree structure" for our Tweaks UI.
 	private var tweakCollections: [String: TweakCollection] = [:]
 
+	/// Useful when exporting or checking that a tweak exists in tweakCollections
+	private let allTweaks: Set<AnyTweak>
+
+	/// We hold a reference to the storeName so we can have a better error message if a tweak doesn't exist in allTweaks.
+	private let storeName: String
+
 	/// Caches "single" bindings - when a tweak is updated, we'll call each of the corresponding bindings.
 	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
@@ -33,8 +39,10 @@ public class TweakStore {
 	/// If you want to have multiple TweakStores in your app, you can pass in a unique storeName to keep it separate from others on disk.
 	public init(tweaks: [AnyTweak], storeName: String = "Tweaks", enabled: Bool, runningInSimulator: Bool) {
 		self.persistence = TweakPersistency(identifier: storeName)
+		self.storeName = storeName
 		self.enabled = enabled
 		self.runningInSimulator = runningInSimulator
+		self.allTweaks = Set(tweaks)
 
 		tweaks.forEach { tweak in
 			// Find or create its TweakCollection
@@ -105,7 +113,12 @@ public class TweakStore {
 	}
 
 	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
-		return enabled ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
+		if allTweaks.contains(AnyTweak(tweak: tweak)) {
+			return enabled ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
+		} else {
+			print("Error: the tweak \"\(tweak.tweakIdentifier)\" isn't included in the tweak store \"\(storeName)\". Returning the default value.")
+			return tweak.defaultValue
+		}
 	}
 
 	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {

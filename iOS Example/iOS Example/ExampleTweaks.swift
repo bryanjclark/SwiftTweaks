@@ -36,6 +36,7 @@ public struct ExampleTweaks: TweakLibraryType {
 		let allTweaks: [TweakType] = [
 			colorBackground,
 			colorTint,
+			colorButtonText,
 			horizontalMargins,
 			verticalMargins,
 
