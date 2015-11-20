@@ -56,7 +56,8 @@ internal class TweaksRootViewController: UIViewController {
 
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.titleView = segmentedControl
+		self.navigationItem.title = "Tweaks"
+//		self.navigationItem.titleView = segmentedControl
 
 		segmentedControl.selectedSegmentIndex = 0
 		segmentedControl.addTarget(self, action: "segmentedControlValueChanged:", forControlEvents: .ValueChanged)

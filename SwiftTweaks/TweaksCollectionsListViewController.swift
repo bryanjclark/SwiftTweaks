@@ -48,8 +48,9 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		tableView.dataSource = self
 		view.addSubview(tableView)
 
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: "resetStore")
-		navigationItem.leftBarButtonItem?.tintColor = UIColor.redColor()
+		let resetButton = UIBarButtonItem(title: "Reset All", style: .Plain, target: self, action: "resetStore")
+		resetButton.tintColor = UIColor.redColor()
+		navigationItem.rightBarButtonItem = resetButton
 
 		toolbarItems = [
 			UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonTapped"),
@@ -71,7 +72,7 @@ internal class TweaksCollectionsListViewController: UIViewController {
 	@objc private func resetStore() {
 		let confirmationAlert = UIAlertController(title: nil, message: "Reset all tweaks to their default values?", preferredStyle: .ActionSheet)
 		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-		confirmationAlert.addAction(UIAlertAction(title: "Reset", style: .Destructive, handler: { _ in self.tweakStore.reset() }))
+		confirmationAlert.addAction(UIAlertAction(title: "Reset All Tweaks", style: .Destructive, handler: { _ in self.tweakStore.reset() }))
 		presentViewController(confirmationAlert, animated: true, completion: nil)
 	}
 
