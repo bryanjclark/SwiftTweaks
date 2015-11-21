@@ -59,6 +59,9 @@
 		93AA34591BEC0EF9004B734B /* TweakableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34581BEC0EF9004B734B /* TweakableType.swift */; };
 		93C942591BFBDC550054811A /* TweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C942581BFBDC550054811A /* TweakBinding.swift */; };
 		93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB80341BFCE4E80031D61A /* AnyTweak.swift */; };
+		93E7683B1C0010720058FF63 /* disclosure-indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E768381C0010720058FF63 /* disclosure-indicator.png */; };
+		93E7683C1C0010720058FF63 /* disclosure-indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E768391C0010720058FF63 /* disclosure-indicator@2x.png */; };
+		93E7683D1C0010720058FF63 /* disclosure-indicator@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E7683A1C0010720058FF63 /* disclosure-indicator@3x.png */; };
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +107,9 @@
 		93AA34581BEC0EF9004B734B /* TweakableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakableType.swift; sourceTree = "<group>"; };
 		93C942581BFBDC550054811A /* TweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBinding.swift; sourceTree = "<group>"; };
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
+		93E768381C0010720058FF63 /* disclosure-indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "disclosure-indicator.png"; path = "Media.xcassets/disclosure-indicator.imageset/disclosure-indicator.png"; sourceTree = "<group>"; };
+		93E768391C0010720058FF63 /* disclosure-indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "disclosure-indicator@2x.png"; path = "Media.xcassets/disclosure-indicator.imageset/disclosure-indicator@2x.png"; sourceTree = "<group>"; };
+		93E7683A1C0010720058FF63 /* disclosure-indicator@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "disclosure-indicator@3x.png"; path = "Media.xcassets/disclosure-indicator.imageset/disclosure-indicator@3x.png"; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,6 +186,9 @@
 				93A84EFA1BEAE8940022D2F3 /* Model */,
 				93A84EFC1BEAE8AB0022D2F3 /* Utilities */,
 				93A84ED61BEAE86E0022D2F3 /* Info.plist */,
+				93E768381C0010720058FF63 /* disclosure-indicator.png */,
+				93E768391C0010720058FF63 /* disclosure-indicator@2x.png */,
+				93E7683A1C0010720058FF63 /* disclosure-indicator@3x.png */,
 				931A24751BFA7EEE00E40192 /* Media.xcassets */,
 			);
 			path = SwiftTweaks;
@@ -319,6 +328,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93E7683D1C0010720058FF63 /* disclosure-indicator@3x.png in Resources */,
+				93E7683C1C0010720058FF63 /* disclosure-indicator@2x.png in Resources */,
+				93E7683B1C0010720058FF63 /* disclosure-indicator.png in Resources */,
 				931A24761BFA7EEE00E40192 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
