@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 internal protocol TweakTableCellDelegate {
 	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell)
@@ -46,7 +47,8 @@ internal class TweakTableCell: UITableViewCell {
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
-		let imageView = UIImageView(image: UIImage(named: "disclosure-indicator")!.imageWithRenderingMode(.AlwaysTemplate))
+		let disclosureArrowImage = UIImage(named: "disclosure-indicator", inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
+		let imageView = UIImageView(image: disclosureArrowImage!.imageWithRenderingMode(.AlwaysTemplate))
 		imageView.contentMode = .Center
 		imageView.tintColor = TweakTableCell.nonInteractiveGrayColor
 		return imageView
