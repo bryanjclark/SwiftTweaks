@@ -17,7 +17,7 @@ internal extension TweakStore {
 				let (stringValue, differs) = currentViewDataForTweak($0).stringRepresentation
 				let linePrefix = differs ? "* " : ""
 				return "\(linePrefix)\($0.tweakIdentifier) = \(stringValue)"
-			}.reduce("Here are your tweaks!\nA * indicates a tweaked value.\n\n") { $0 + "\n" + $1 }
+			}.reduce("Here are your tweaks!\nA * indicates a tweaked value.") { $0 + "\n\n" + $1 }
 		return returnValue
 	}
 }

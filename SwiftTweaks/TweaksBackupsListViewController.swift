@@ -47,7 +47,7 @@ internal class TweaksBackupsListViewController: UIViewController {
 	// MARK: Events
 
 	@objc private func newButtonTapped() {
-		print("Tapped new button")
+		
 	}
 
 	@objc private func dismissButtonTapped() {
