@@ -62,17 +62,10 @@ public struct ExampleTweaks: TweakLibraryType {
 			let tweaksEnabled: Bool = false
 		#endif
 
-		#if TARGET_OS_SIMULATOR
-			let runningInSimulator = true
-		#else
-			let runningInSimulator = false
-		#endif
-
 		return TweakStore(
 			tweaks: allTweaks.map(AnyTweak.init),
 			storeName: "ExampleTweaks", 	// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
-			enabled: tweaksEnabled,
-			runningInSimulator: runningInSimulator
+			enabled: tweaksEnabled
 		)
 	}()
 }

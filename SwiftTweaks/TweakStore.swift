@@ -32,16 +32,12 @@ public final class TweakStore {
 	/// Determines whether tweaks are enabled, and whether the tweaks UI is accessible
 	internal let enabled: Bool
 
-	/// Used to assist the simulator in detecting shake gestures.
-	internal let runningInSimulator: Bool
-
 	/// Creates a TweakStore, with information persisted on-disk. 
 	/// If you want to have multiple TweakStores in your app, you can pass in a unique storeName to keep it separate from others on disk.
-	public init(tweaks: [AnyTweak], storeName: String = "Tweaks", enabled: Bool, runningInSimulator: Bool) {
+	public init(tweaks: [AnyTweak], storeName: String = "Tweaks", enabled: Bool) {
 		self.persistence = TweakPersistency(identifier: storeName)
 		self.storeName = storeName
 		self.enabled = enabled
-		self.runningInSimulator = runningInSimulator
 		self.allTweaks = Set(tweaks)
 
 		tweaks.forEach { tweak in

@@ -24,6 +24,8 @@ import UIKit
 	/// By holding on to the TweaksViewController, we get easy state restoration!
 	private let tweaksViewController: TweaksViewController
 	private let tweaksEnabled: Bool
+
+	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
 	private let runningInSimulator: Bool
 
 	private var shaking: Bool = false
@@ -47,7 +49,13 @@ import UIKit
 
 		self.tweaksViewController = TweaksViewController(tweakStore: tweakStore)
 		self.tweaksEnabled = tweakStore.enabled
-		self.runningInSimulator = tweakStore.runningInSimulator
+
+		// Are we running on a Mac? If so, then we're in a simulator!
+		#if (arch(i386) || arch(x86_64))
+			self.runningInSimulator = true
+		#else
+			self.runningInSimulator = false
+		#endif
 
 		super.init(frame: frame)
 
