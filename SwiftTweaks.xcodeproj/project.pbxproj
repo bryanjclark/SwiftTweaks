@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5752FEE21C05392300AEECD1 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEBF1C05392300AEECD1 /* Common.xcconfig */; };
+		5752FEE31C05392300AEECD1 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC11C05392300AEECD1 /* Debug.xcconfig */; };
+		5752FEE41C05392300AEECD1 /* Profile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC21C05392300AEECD1 /* Profile.xcconfig */; };
+		5752FEE51C05392300AEECD1 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC31C05392300AEECD1 /* Release.xcconfig */; };
+		5752FEE61C05392300AEECD1 /* Test.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC41C05392300AEECD1 /* Test.xcconfig */; };
+		5752FEE71C05392300AEECD1 /* Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC61C05392300AEECD1 /* Application.xcconfig */; };
+		5752FEE81C05392300AEECD1 /* Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC71C05392300AEECD1 /* Framework.xcconfig */; };
+		5752FEE91C05392300AEECD1 /* StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC81C05392300AEECD1 /* StaticLibrary.xcconfig */; };
+		5752FEEA1C05392300AEECD1 /* iOS-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECC1C05392300AEECD1 /* iOS-Application.xcconfig */; };
+		5752FEEB1C05392300AEECD1 /* iOS-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECD1C05392300AEECD1 /* iOS-Base.xcconfig */; };
+		5752FEEC1C05392300AEECD1 /* iOS-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */; };
+		5752FEED1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECF1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
 		9314724D1BFFB41700F66D20 /* TweaksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34561BEBC654004B734B /* TweaksViewController.swift */; };
@@ -74,6 +86,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5752FEBF1C05392300AEECD1 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		5752FEC11C05392300AEECD1 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		5752FEC21C05392300AEECD1 /* Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Profile.xcconfig; sourceTree = "<group>"; };
+		5752FEC31C05392300AEECD1 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		5752FEC41C05392300AEECD1 /* Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
+		5752FEC61C05392300AEECD1 /* Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Application.xcconfig; sourceTree = "<group>"; };
+		5752FEC71C05392300AEECD1 /* Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
+		5752FEC81C05392300AEECD1 /* StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = StaticLibrary.xcconfig; sourceTree = "<group>"; };
+		5752FECC1C05392300AEECD1 /* iOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Application.xcconfig"; sourceTree = "<group>"; };
+		5752FECD1C05392300AEECD1 /* iOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Base.xcconfig"; sourceTree = "<group>"; };
+		5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Framework.xcconfig"; sourceTree = "<group>"; };
+		5752FECF1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
 		931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+TweaksTests.swift"; sourceTree = "<group>"; };
 		931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakColorEditViewController.swift; sourceTree = "<group>"; };
 		931A24731BFA7A3800E40192 /* TweakColorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakColorCell.swift; sourceTree = "<group>"; };
@@ -128,6 +152,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5752FEBC1C05392300AEECD1 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				5752FEBE1C05392300AEECD1 /* Base */,
+				5752FECB1C05392300AEECD1 /* iOS */,
+			);
+			name = Configuration;
+			path = Carthage/Checkouts/xcconfigs;
+			sourceTree = SOURCE_ROOT;
+		};
+		5752FEBE1C05392300AEECD1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				5752FEBF1C05392300AEECD1 /* Common.xcconfig */,
+				5752FEC01C05392300AEECD1 /* Configurations */,
+				5752FEC51C05392300AEECD1 /* Targets */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		5752FEC01C05392300AEECD1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				5752FEC11C05392300AEECD1 /* Debug.xcconfig */,
+				5752FEC21C05392300AEECD1 /* Profile.xcconfig */,
+				5752FEC31C05392300AEECD1 /* Release.xcconfig */,
+				5752FEC41C05392300AEECD1 /* Test.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		5752FEC51C05392300AEECD1 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+				5752FEC61C05392300AEECD1 /* Application.xcconfig */,
+				5752FEC71C05392300AEECD1 /* Framework.xcconfig */,
+				5752FEC81C05392300AEECD1 /* StaticLibrary.xcconfig */,
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
+		5752FECB1C05392300AEECD1 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5752FECC1C05392300AEECD1 /* iOS-Application.xcconfig */,
+				5752FECD1C05392300AEECD1 /* iOS-Base.xcconfig */,
+				5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */,
+				5752FECF1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
 		9345EC0C1BF2B9040086AB5D /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +257,7 @@
 				93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */,
 				93A84EFB1BEAE8A20022D2F3 /* Interface */,
 				93A84EFA1BEAE8940022D2F3 /* Model */,
+				5752FEBC1C05392300AEECD1 /* Configuration */,
 				93A84EFC1BEAE8AB0022D2F3 /* Utilities */,
 				93A84ED61BEAE86E0022D2F3 /* Info.plist */,
 				931A24751BFA7EEE00E40192 /* Media.xcassets */,
@@ -322,7 +399,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5752FEEC1C05392300AEECD1 /* iOS-Framework.xcconfig in Resources */,
+				5752FEE61C05392300AEECD1 /* Test.xcconfig in Resources */,
+				5752FEE31C05392300AEECD1 /* Debug.xcconfig in Resources */,
+				5752FEE81C05392300AEECD1 /* Framework.xcconfig in Resources */,
+				5752FEE91C05392300AEECD1 /* StaticLibrary.xcconfig in Resources */,
+				5752FEEA1C05392300AEECD1 /* iOS-Application.xcconfig in Resources */,
+				5752FEE51C05392300AEECD1 /* Release.xcconfig in Resources */,
+				5752FEED1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig in Resources */,
 				931A24761BFA7EEE00E40192 /* Media.xcassets in Resources */,
+				5752FEE21C05392300AEECD1 /* Common.xcconfig in Resources */,
+				5752FEE41C05392300AEECD1 /* Profile.xcconfig in Resources */,
+				5752FEE71C05392300AEECD1 /* Application.xcconfig in Resources */,
+				5752FEEB1C05392300AEECD1 /* iOS-Base.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
