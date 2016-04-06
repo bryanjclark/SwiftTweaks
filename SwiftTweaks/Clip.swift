@@ -8,14 +8,16 @@
 
 import Foundation
 
-func clip<U: SignedNumberType>(var value: U, _ minimum: U?, _ maximum: U?) -> U {
+func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
+	var result = value
+
 	if let minimum = minimum {
-		value = max(minimum, value)
+		result = max(minimum, value)
 	}
 
 	if let maximum = maximum {
-		value = min(maximum, value)
+		result = min(maximum, value)
 	}
 
-	return value
+	return result
 }
