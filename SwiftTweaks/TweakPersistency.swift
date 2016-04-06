@@ -29,7 +29,15 @@ internal class TweakPersistency {
 	}
 
 	func currentValueForTweak<T>(tweak: Tweak<T>) -> T? {
-		return currentValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T
+
+		if let currentValue = currentValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T {
+				// If the tweak can be clipped, then we'll need to clip it - because
+				// the tweak might've been persisted without a min / max, but we've since added those values.
+				// example: you tweaked it to 11, then set a max of 10 - the persisted value is still 11!
+				return tweak.clipIfSignedNumberType(currentValue)
+		}
+
+		return nil
 	}
 
 	func currentValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> TweakableType? {
