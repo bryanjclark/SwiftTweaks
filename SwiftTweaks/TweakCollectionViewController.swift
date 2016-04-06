@@ -51,6 +51,7 @@ internal class TweakCollectionViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.registerClass(TweakTableCell.self, forCellReuseIdentifier: TweakCollectionViewController.TweakTableViewCellIdentifer)
+		tableView.registerClass(TweakGroupSectionHeader.self, forHeaderFooterViewReuseIdentifier: TweakGroupSectionHeader.identifier)
 		view.addSubview(tableView)
 	}
 
@@ -107,8 +108,21 @@ extension TweakCollectionViewController: UITableViewDataSource {
 		return cell
 	}
 
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return tweakCollection.sortedTweakGroups[section].title
+	private static let sectionFooterHeight: CGFloat = 27
+
+	func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return TweakCollectionViewController.sectionFooterHeight
+	}
+
+	func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return TweakGroupSectionHeader.height
+	}
+
+	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(TweakGroupSectionHeader.identifier) as! TweakGroupSectionHeader
+		headerView.tweakGroup = tweakCollection.sortedTweakGroups[section]
+		headerView.delegate = self
+		return headerView
 	}
 
 	private func tweakAtIndexPath(indexPath: NSIndexPath) -> AnyTweak {
@@ -131,5 +145,91 @@ extension TweakCollectionViewController: TweakTableCellDelegate {
 extension TweakCollectionViewController: TweakColorEditViewControllerDelegate {
 	func tweakColorEditViewControllerDidPressDismissButton(tweakColorEditViewController: TweakColorEditViewController) {
 		self.delegate.tweakCollectionViewControllerDidPressDismissButton(self)
+	}
+}
+
+extension TweakCollectionViewController: TweakGroupSectionHeaderDelegate {
+	private func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader) {
+		let alert = UIAlertController(title: "Floating button tapped", message: "Not yet implemented - but soon!", preferredStyle: .Alert)
+		alert.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+		presentViewController(alert, animated: true, completion: nil)
+	}
+}
+
+private protocol TweakGroupSectionHeaderDelegate {
+	func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader)
+}
+
+private class TweakGroupSectionHeader: UITableViewHeaderFooterView {
+	static let identifier = "TweakGroupSectionHeader"
+
+	private let floatingButton: UIButton = {
+		let button = UIButton(type: .Custom)
+		let buttonImage = UIImage(swiftTweaksImage: .FloatingPlusButton).imageWithRenderingMode(.AlwaysTemplate)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), forState: .Normal)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), forState: .Highlighted)
+		return button
+	}()
+
+	private let titleLabel: UILabel = {
+		let label = UILabel()
+		label.textColor = AppTheme.Colors.sectionHeaderTitleColor
+		label.font = AppTheme.Fonts.sectionHeaderTitleFont
+
+		return label
+	}()
+
+	var delegate: TweakGroupSectionHeaderDelegate?
+
+	var tweakGroup: TweakGroup? {
+		didSet {
+			titleLabel.text = tweakGroup?.title
+		}
+	}
+
+	override init(reuseIdentifier: String?) {
+		super.init(reuseIdentifier: reuseIdentifier)
+
+		floatingButton.addTarget(self, action: #selector(TweakGroupSectionHeader.floatingButtonTapped), forControlEvents: .TouchUpInside)
+
+		contentView.addSubview(floatingButton)
+		contentView.addSubview(titleLabel)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	static let height: CGFloat = 38
+	private static let horizontalMargin: CGFloat = 12
+	private static let floatingButtonSize = CGSize(width: 46, height: TweakGroupSectionHeader.height)
+
+	override private func layoutSubviews() {
+		super.layoutSubviews()
+
+		let floatingButtonFrame = CGRect(
+			origin: CGPoint(
+				x: self.contentView.bounds.maxX - TweakGroupSectionHeader.floatingButtonSize.width,
+				y: 0
+			),
+			size: TweakGroupSectionHeader.floatingButtonSize
+		)
+		floatingButton.frame = floatingButtonFrame
+
+		let titleLabelFrame = CGRect(
+			origin: CGPoint(
+				x: TweakGroupSectionHeader.horizontalMargin,
+				y: 0
+			),
+			size: CGSize(
+				width: self.contentView.bounds.width - floatingButtonFrame.width - TweakGroupSectionHeader.horizontalMargin,
+				height: TweakGroupSectionHeader.height
+			)
+		)
+		titleLabel.frame = titleLabelFrame
+	}
+
+	@objc private func floatingButtonTapped() {
+		delegate?.tweakGroupSectionHeaderDidPressFloatingButton(self)
 	}
 }
