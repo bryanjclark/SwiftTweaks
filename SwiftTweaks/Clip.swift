@@ -8,7 +8,7 @@
 
 import Foundation
 
-func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
+internal func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
 	var result = value
 
 	if let minimum = minimum {
@@ -20,4 +20,17 @@ func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
 	}
 
 	return result
+}
+
+extension Tweak where T: SignedNumberType {
+	internal func clipIfSignedNumberType(value: T) -> T {
+		return clip(value, minimumValue, maximumValue)
+	}
+}
+
+extension Tweak {
+	internal func clipIfSignedNumberType(value: T) -> T {
+		/// Since we're not a SignedNumberType, this just returns the value.
+		return value
+	}
 }
