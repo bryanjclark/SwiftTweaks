@@ -59,6 +59,8 @@ import UIKit
 
 		super.init(frame: frame)
 
+		tintColor = AppTheme.Colors.controlTinted
+
 		switch gestureType {
 		case .Gesture(let gestureRecognizer):
 			gestureRecognizer.addTarget(self, action: #selector(TweakWindow.presentTweaks))

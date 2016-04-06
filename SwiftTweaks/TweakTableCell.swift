@@ -33,8 +33,19 @@ internal class TweakTableCell: UITableViewCell {
 		}
 	}
 	private var accessory = UIView()
-	private let switchControl = UISwitch()
-	private let stepperControl = UIStepper()
+
+	private let switchControl: UISwitch = {
+		let switchControl = UISwitch()
+		switchControl.tintColor = AppTheme.Colors.controlTinted
+		return switchControl
+	}()
+
+	private let stepperControl: UIStepper = {
+		let stepper = UIStepper()
+		stepper.tintColor = AppTheme.Colors.controlTinted
+		return stepper
+	}()
+
 	private let colorChit: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
@@ -47,8 +58,8 @@ internal class TweakTableCell: UITableViewCell {
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
-		let disclosureArrowImage = UIImage(named: "disclosure-indicator", inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
-		let imageView = UIImageView(image: disclosureArrowImage!.imageWithRenderingMode(.AlwaysTemplate))
+		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
+		let imageView = UIImageView(image: disclosureArrowImage.imageWithRenderingMode(.AlwaysTemplate))
 		imageView.contentMode = .Center
 		imageView.tintColor = TweakTableCell.nonInteractiveGrayColor
 		return imageView
