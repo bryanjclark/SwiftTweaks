@@ -59,8 +59,8 @@ internal class TweakTableCell: UITableViewCell {
 
 		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
-		switchControl.addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
-		stepperControl.addTarget(self, action: "stepperChanged:", forControlEvents: .ValueChanged)
+		switchControl.addTarget(self, action: #selector(TweakTableCell.switchChanged(_:)), forControlEvents: .ValueChanged)
+		stepperControl.addTarget(self, action: #selector(TweakTableCell.stepperChanged(_:)), forControlEvents: .ValueChanged)
 		textField.delegate = self
 
 		detailTextLabel?.textColor = UIColor.blackColor()

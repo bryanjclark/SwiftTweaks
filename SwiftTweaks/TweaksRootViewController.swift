@@ -1,3 +1,4 @@
+
 //
 //  TweaksRootViewController.swift
 //  SwiftTweaks
@@ -60,7 +61,7 @@ internal class TweaksRootViewController: UIViewController {
 //		self.navigationItem.titleView = segmentedControl
 
 		segmentedControl.selectedSegmentIndex = 0
-		segmentedControl.addTarget(self, action: "segmentedControlValueChanged:", forControlEvents: .ValueChanged)
+		segmentedControl.addTarget(self, action: #selector(TweaksRootViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
 	}
 
 	override func viewDidLoad() {

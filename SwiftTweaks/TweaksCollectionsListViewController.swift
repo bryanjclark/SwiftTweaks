@@ -49,14 +49,14 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		tableView.dataSource = self
 		view.addSubview(tableView)
 
-		let resetButton = UIBarButtonItem(title: "Reset All", style: .Plain, target: self, action: "resetStore")
+		let resetButton = UIBarButtonItem(title: "Reset All", style: .Plain, target: self, action: #selector(TweaksCollectionsListViewController.resetStore))
 		resetButton.tintColor = UIColor.redColor()
 		navigationItem.rightBarButtonItem = resetButton
 
 		toolbarItems = [
-			UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonTapped"),
+			UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(TweaksCollectionsListViewController.actionButtonTapped)),
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: "dismissButtonTapped")
+			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: #selector(TweaksCollectionsListViewController.dismissButtonTapped))
 		]
 	}
 

@@ -26,9 +26,9 @@ internal class TweaksBackupsListViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 
 		toolbarItems = [
-			UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newButtonTapped"),
+			UIBarButtonItem(title: "New", style: .Plain, target: self, action: #selector(TweaksBackupsListViewController.newButtonTapped)),
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: "dismissButtonTapped")
+			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: #selector(TweaksBackupsListViewController.dismissButtonTapped))
 		]
 	}
 

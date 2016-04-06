@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		bounceButton.addTarget(self, action: "bounceButtonPressed:", forControlEvents: .TouchUpInside)
+		bounceButton.addTarget(self, action: #selector(ViewController.bounceButtonPressed(_:)), forControlEvents: .TouchUpInside)
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
 		view.addSubview(bounceButton)

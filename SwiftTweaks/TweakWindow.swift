@@ -61,7 +61,7 @@ import UIKit
 
 		switch gestureType {
 		case .Gesture(let gestureRecognizer):
-			gestureRecognizer.addTarget(self, action: "presentTweaks")
+			gestureRecognizer.addTarget(self, action: #selector(TweakWindow.presentTweaks))
 		case .Shake:
 			break
 		}
