@@ -28,28 +28,31 @@ internal class TweakPersistency {
 		self.tweakCache = self.diskPersistency.loadFromDisk()
 	}
 
-	func currentValueForTweak<T>(tweak: Tweak<T>) -> T? {
+	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T? {
+		return persistedValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T
+	}
 
-		if let currentValue = currentValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T {
+	internal func currentValueForTweak<T where T: SignedNumberType>(tweak: Tweak<T>) -> T? {
+		if let currentValue = persistedValueForTweakIdentifiable(AnyTweak(tweak: tweak)) as? T {
 				// If the tweak can be clipped, then we'll need to clip it - because
-				// the tweak might've been persisted without a min / max, but we've since added those values.
+				// the tweak might've been persisted without a min / max, but then you changed the tweak definition.
 				// example: you tweaked it to 11, then set a max of 10 - the persisted value is still 11!
-				return tweak.clipIfSignedNumberType(currentValue)
+				return clip(currentValue, tweak.minimumValue, tweak.maximumValue)
 		}
 
 		return nil
 	}
 
-	func currentValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> TweakableType? {
+	internal func persistedValueForTweakIdentifiable(tweakID: TweakIdentifiable) -> TweakableType? {
 		return tweakCache[tweakID.persistenceIdentifier]
 	}
 
-	func setValue(value: TweakableType?,  forTweakIdentifiable tweakID: TweakIdentifiable) {
+	internal func setValue(value: TweakableType?,  forTweakIdentifiable tweakID: TweakIdentifiable) {
 		tweakCache[tweakID.persistenceIdentifier] = value
 		self.diskPersistency.saveToDisk(tweakCache)
 	}
 
-	func clearAllData() {
+	internal func clearAllData() {
 		tweakCache = [:]
 		self.diskPersistency.saveToDisk(tweakCache)
 	}

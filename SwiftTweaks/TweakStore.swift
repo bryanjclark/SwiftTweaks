@@ -118,7 +118,7 @@ public final class TweakStore {
 	}
 
 	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {
-		let cachedValue = persistence.currentValueForTweakIdentifiable(tweak)
+		let cachedValue = persistence.persistedValueForTweakIdentifiable(tweak)
 
 		switch tweak.tweakDefaultData {
 		case let .Boolean(defaultValue: defaultValue):
