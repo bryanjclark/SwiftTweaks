@@ -8,8 +8,8 @@
 
 import UIKit
 
-public protocol TweaksViewControllerDelegate {
-	func tweaksViewControllerPressedDismiss(tweaksViewController: TweaksViewController)
+public protocol TweaksViewControllerDelegate: class {
+	func tweaksViewControllerRequestsDismiss(tweaksViewController: TweaksViewController, completion: (() -> ())?)
 }
 
 public class TweaksViewController: UIViewController {
@@ -18,12 +18,14 @@ public class TweaksViewController: UIViewController {
 
 	private var navController: UINavigationController! // self required for init
 
-	public var delegate: TweaksViewControllerDelegate?
+	public unowned var delegate: TweaksViewControllerDelegate
+	internal var floatingTweaksWindowPresenter: FloatingTweaksWindowPresenter?
 
 	internal static let dismissButtonTitle = NSLocalizedString("Dismiss", comment: "Button to dismiss TweaksViewController.")
 
-	public init(tweakStore: TweakStore) {
+	public init(tweakStore: TweakStore, delegate: TweaksViewControllerDelegate) {
 		self.tweakStore = tweakStore
+		self.delegate = delegate
 
 		super.init(nibName: nil, bundle: nil)
 
@@ -40,6 +42,12 @@ public class TweaksViewController: UIViewController {
 
 extension TweaksViewController: TweaksRootViewControllerDelegate {
 	internal func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController) {
-		delegate?.tweaksViewControllerPressedDismiss(self)
+		delegate.tweaksViewControllerRequestsDismiss(self, completion: nil)
+	}
+
+	internal func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup) {
+		delegate.tweaksViewControllerRequestsDismiss(self) {
+			self.floatingTweaksWindowPresenter?.presentFloatingTweaksUIForTweakGroup(tweakGroup)
+		}
 	}
 }

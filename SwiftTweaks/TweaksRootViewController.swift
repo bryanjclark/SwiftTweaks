@@ -11,6 +11,7 @@ import UIKit
 
 internal protocol TweaksRootViewControllerDelegate {
 	func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController)
+	func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup)
 }
 
 internal class TweaksRootViewController: UIViewController {
@@ -61,7 +62,7 @@ internal class TweaksRootViewController: UIViewController {
 //		self.navigationItem.titleView = segmentedControl
 
 		segmentedControl.selectedSegmentIndex = 0
-		segmentedControl.addTarget(self, action: #selector(TweaksRootViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
+		segmentedControl.addTarget(self, action: #selector(self.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
 	}
 
 	override func viewDidLoad() {
@@ -136,5 +137,9 @@ extension TweaksRootViewController: TweaksBackupsListViewControllerDelegate {
 extension TweaksRootViewController: TweakCollectionViewControllerDelegate {
 	func tweakCollectionViewControllerDidPressDismissButton(tweakCollectionViewController: TweakCollectionViewController) {
 		delegate.tweaksRootViewControllerDidPressDismissButton(self)
+	}
+
+	func tweakCollectionViewController(tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup) {
+		delegate.tweaksRootViewController(self, requestsFloatingUIForTweakGroup: tweakGroup)
 	}
 }

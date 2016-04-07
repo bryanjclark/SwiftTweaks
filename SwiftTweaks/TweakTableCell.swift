@@ -9,13 +9,13 @@
 import UIKit
 import Foundation
 
-internal protocol TweakTableCellDelegate {
+internal protocol TweakTableCellDelegate: class {
 	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell)
 }
 
 
 internal class TweakTableCell: UITableViewCell {
-	internal var delegate: TweakTableCellDelegate?
+	internal weak var delegate: TweakTableCellDelegate?
 
 	internal var viewData: TweakViewData? {
 		didSet {
@@ -32,9 +32,24 @@ internal class TweakTableCell: UITableViewCell {
 			updateSubviews()
 		}
 	}
+
+	internal var isInFloatingTweakGroupWindow = false
+
 	private var accessory = UIView()
-	private let switchControl = UISwitch()
-	private let stepperControl = UIStepper()
+
+	private let switchControl: UISwitch = {
+		let switchControl = UISwitch()
+		switchControl.onTintColor = AppTheme.Colors.controlTinted
+		switchControl.tintColor = AppTheme.Colors.controlDisabled
+		return switchControl
+	}()
+
+	private let stepperControl: UIStepper = {
+		let stepper = UIStepper()
+		stepper.tintColor = AppTheme.Colors.controlTinted
+		return stepper
+	}()
+
 	private let colorChit: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
@@ -47,8 +62,8 @@ internal class TweakTableCell: UITableViewCell {
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
-		let disclosureArrowImage = UIImage(named: "disclosure-indicator", inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
-		let imageView = UIImageView(image: disclosureArrowImage!.imageWithRenderingMode(.AlwaysTemplate))
+		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
+		let imageView = UIImageView(image: disclosureArrowImage.imageWithRenderingMode(.AlwaysTemplate))
 		imageView.contentMode = .Center
 		imageView.tintColor = TweakTableCell.nonInteractiveGrayColor
 		return imageView
@@ -59,8 +74,8 @@ internal class TweakTableCell: UITableViewCell {
 
 		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
-		switchControl.addTarget(self, action: #selector(TweakTableCell.switchChanged(_:)), forControlEvents: .ValueChanged)
-		stepperControl.addTarget(self, action: #selector(TweakTableCell.stepperChanged(_:)), forControlEvents: .ValueChanged)
+		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), forControlEvents: .ValueChanged)
+		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), forControlEvents: .ValueChanged)
 		textField.delegate = self
 
 		detailTextLabel?.textColor = UIColor.blackColor()
@@ -184,7 +199,7 @@ internal class TweakTableCell: UITableViewCell {
 		}
 
 		// Update accessory internals based on viewData
-		let textFieldEnabled: Bool
+		var textFieldEnabled: Bool
 		switch viewData {
 		case let .Boolean(value: value, defaultValue: _):
 			switchControl.on = value
@@ -222,6 +237,8 @@ internal class TweakTableCell: UITableViewCell {
 			textFieldEnabled = false
 		}
 
+		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
+
 		textField.userInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
 
@@ -258,6 +275,10 @@ internal class TweakTableCell: UITableViewCell {
 }
 
 extension TweakTableCell: UITextFieldDelegate {
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		return !isInFloatingTweakGroupWindow
+	}
+
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true
