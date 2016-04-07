@@ -8,11 +8,13 @@
 
 import Foundation
 
-extension UIImage {
+internal extension UIImage {
 
 	enum SwiftTweaksImage: String {
 		case DisclosureIndicator = "disclosure-indicator"
 		case FloatingPlusButton = "floating-plus-button"
+		case FloatingCloseButton = "floating-ui-close"
+		case FloatingMinimizedArrow = "floating-ui-minimized-arrow"
 	}
 
 	convenience init(swiftTweaksImage: SwiftTweaksImage) {

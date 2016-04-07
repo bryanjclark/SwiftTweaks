@@ -32,11 +32,15 @@ internal class TweakTableCell: UITableViewCell {
 			updateSubviews()
 		}
 	}
+
+	internal var isInFloatingTweakGroupWindow = false
+
 	private var accessory = UIView()
 
 	private let switchControl: UISwitch = {
 		let switchControl = UISwitch()
-		switchControl.tintColor = AppTheme.Colors.controlTinted
+		switchControl.onTintColor = AppTheme.Colors.controlTinted
+		switchControl.tintColor = AppTheme.Colors.controlDisabled
 		return switchControl
 	}()
 
@@ -195,7 +199,7 @@ internal class TweakTableCell: UITableViewCell {
 		}
 
 		// Update accessory internals based on viewData
-		let textFieldEnabled: Bool
+		var textFieldEnabled: Bool
 		switch viewData {
 		case let .Boolean(value: value, defaultValue: _):
 			switchControl.on = value
@@ -233,6 +237,8 @@ internal class TweakTableCell: UITableViewCell {
 			textFieldEnabled = false
 		}
 
+		textFieldEnabled = textFieldEnabled && !isInFloatingTweakGroupWindow
+
 		textField.userInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
 
@@ -269,6 +275,10 @@ internal class TweakTableCell: UITableViewCell {
 }
 
 extension TweakTableCell: UITextFieldDelegate {
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		return !isInFloatingTweakGroupWindow
+	}
+
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true

@@ -10,6 +10,7 @@ import UIKit
 
 internal protocol TweakCollectionViewControllerDelegate {
 	func tweakCollectionViewControllerDidPressDismissButton(tweakCollectionViewController: TweakCollectionViewController)
+	func tweakCollectionViewController(tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
 }
 
 internal class TweakCollectionViewController: UIViewController {
@@ -150,9 +151,9 @@ extension TweakCollectionViewController: TweakColorEditViewControllerDelegate {
 
 extension TweakCollectionViewController: TweakGroupSectionHeaderDelegate {
 	private func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader) {
-		let alert = UIAlertController(title: "Floating button tapped", message: "Not yet implemented - but soon!", preferredStyle: .Alert)
-		alert.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
-		presentViewController(alert, animated: true, completion: nil)
+		guard let tweakGroup = sectionHeader.tweakGroup else { return }
+
+		delegate.tweakCollectionViewController(self, didTapFloatingTweakGroupButtonForTweakGroup: tweakGroup)
 	}
 }
 

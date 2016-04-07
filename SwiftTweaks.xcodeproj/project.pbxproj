@@ -59,6 +59,8 @@
 		9379628F1BFE509F0046E4CE /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379628E1BFE509F0046E4CE /* Clip.swift */; };
 		937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937962921BFE7B0A0046E4CE /* TweakViewData.swift */; };
 		937962951BFE7B2C0046E4CE /* TweakStore+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937962941BFE7B2C0046E4CE /* TweakStore+Sharing.swift */; };
+		937AA36F1CB5D6DA000928C5 /* HitTransparentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */; };
+		937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */; };
 		939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939482B81BFFD89400ADBFE0 /* TweakBackup.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -118,6 +120,8 @@
 		9379628E1BFE509F0046E4CE /* Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
 		937962921BFE7B0A0046E4CE /* TweakViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakViewData.swift; sourceTree = "<group>"; };
 		937962941BFE7B2C0046E4CE /* TweakStore+Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweakStore+Sharing.swift"; sourceTree = "<group>"; };
+		937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitTransparentWindow.swift; sourceTree = "<group>"; };
+		937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingTweakGroupViewController.swift; sourceTree = "<group>"; };
 		938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollectionViewController.swift; sourceTree = "<group>"; };
 		939482B81BFFD89400ADBFE0 /* TweakBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBackup.swift; sourceTree = "<group>"; };
 		93A3AF311BF1677B00CAD43B /* TweakWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakWindow.swift; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 				9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */,
 				9345EC061BF296350086AB5D /* TweaksBackupsListViewController.swift */,
 				939482B81BFFD89400ADBFE0 /* TweakBackup.swift */,
+				937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */,
+				937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 				93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */,
 				9345EC091BF2A0490086AB5D /* TweaksRootViewController.swift in Sources */,
 				93A84EF01BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
+				937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */,
 				93C942591BFBDC550054811A /* TweakBinding.swift in Sources */,
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
@@ -459,6 +466,7 @@
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
 				937962951BFE7B2C0046E4CE /* TweakStore+Sharing.swift in Sources */,
 				931A24741BFA7A3800E40192 /* TweakColorCell.swift in Sources */,
+				937AA36F1CB5D6DA000928C5 /* HitTransparentWindow.swift in Sources */,
 				93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */,
 				932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */,
 				9379628F1BFE509F0046E4CE /* Clip.swift in Sources */,
