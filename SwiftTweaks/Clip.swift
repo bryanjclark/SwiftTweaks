@@ -8,7 +8,7 @@
 
 import Foundation
 
-func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
+internal func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
 	var result = value
 
 	if let minimum = minimum {
