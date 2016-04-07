@@ -65,6 +65,7 @@
 		939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939482B81BFFD89400ADBFE0 /* TweakBackup.swift */; };
 		939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9EC1CB575AF002A92BE /* AppTheme.swift */; };
 		939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */; };
+		939F2CCC1CB715E800345E03 /* Clipping+TweaksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */; };
 		939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */; };
 		939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -128,6 +129,7 @@
 		937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingTweakGroupViewController.swift; sourceTree = "<group>"; };
 		938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollectionViewController.swift; sourceTree = "<group>"; };
 		939482B81BFFD89400ADBFE0 /* TweakBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBackup.swift; sourceTree = "<group>"; };
+		939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Clipping+TweaksTest.swift"; sourceTree = "<group>"; };
 		93A3AF311BF1677B00CAD43B /* TweakWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakWindow.swift; sourceTree = "<group>"; };
 		93A84ED11BEAE86E0022D2F3 /* SwiftTweaks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftTweaks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftTweaks.h; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			children = (
 				93A84EE01BEAE86E0022D2F3 /* SwiftTweaksTests.swift */,
 				931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */,
+				939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */,
 				93A84EE21BEAE86E0022D2F3 /* Info.plist */,
 			);
 			path = SwiftTweaksTests;
@@ -510,6 +513,7 @@
 				931472531BFFB41700F66D20 /* TweakColorCell.swift in Sources */,
 				931472501BFFB41700F66D20 /* TweakCollectionViewController.swift in Sources */,
 				9314725A1BFFB41700F66D20 /* TweakBinding.swift in Sources */,
+				939F2CCC1CB715E800345E03 /* Clipping+TweaksTest.swift in Sources */,
 				931472601BFFB41700F66D20 /* UIColor+Tweaks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
