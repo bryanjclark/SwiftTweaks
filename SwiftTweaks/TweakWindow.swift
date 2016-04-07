@@ -9,7 +9,7 @@
 import UIKit
 
 /// A UIWindow that handles the presentation and dismissal of a TweaksViewController automatically
-@objc public class TweakWindow: UIWindow {
+@objc public final class TweakWindow: UIWindow {
 
 	public enum GestureType {
 		case Shake

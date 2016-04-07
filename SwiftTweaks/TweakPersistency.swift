@@ -18,7 +18,7 @@ internal typealias TweakCache = [String: TweakableType]
 
 
 /// Persists state for tweaks in a TweakCache
-internal class TweakPersistency {
+internal final class TweakPersistency {
 	private let diskPersistency: TweakDiskPersistency
 
 	private var tweakCache: TweakCache = [:]
@@ -59,7 +59,7 @@ internal class TweakPersistency {
 }
 
 /// Persists a TweakCache on disk using NSCoding
-private class TweakDiskPersistency {
+private final class TweakDiskPersistency {
 	private let fileURL: NSURL
 
 	private static func fileURLForIdentifier(identifier: String) -> NSURL {

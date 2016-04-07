@@ -14,7 +14,7 @@ internal protocol TweaksRootViewControllerDelegate {
 	func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup)
 }
 
-internal class TweaksRootViewController: UIViewController {
+internal final class TweaksRootViewController: UIViewController {
 
 	private let segmentedControl: UISegmentedControl
 	private let tweakStore: TweakStore

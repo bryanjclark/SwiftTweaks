@@ -12,7 +12,7 @@ internal protocol TweakColorEditViewControllerDelegate {
 	func tweakColorEditViewControllerDidPressDismissButton(tweakColorEditViewController: TweakColorEditViewController)
 }
 
-internal class TweakColorEditViewController: UIViewController {
+internal final class TweakColorEditViewController: UIViewController {
 	private let tweak: Tweak<UIColor>
 	private let tweakStore: TweakStore
 	private let delegate: TweakColorEditViewControllerDelegate

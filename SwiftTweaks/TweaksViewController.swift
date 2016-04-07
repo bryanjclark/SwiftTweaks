@@ -12,7 +12,7 @@ public protocol TweaksViewControllerDelegate: class {
 	func tweaksViewControllerRequestsDismiss(tweaksViewController: TweaksViewController, completion: (() -> ())?)
 }
 
-public class TweaksViewController: UIViewController {
+public final class TweaksViewController: UIViewController {
 
 	private let tweakStore: TweakStore
 

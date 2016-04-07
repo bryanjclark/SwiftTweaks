@@ -12,7 +12,7 @@ internal protocol TweaksBackupsListViewControllerDelegate {
 	func tweaksBackupsListDidPressDismiss(tweaksBackupsListViewController: TweaksBackupsListViewController)
 }
 
-internal class TweaksBackupsListViewController: UIViewController {
+internal final class TweaksBackupsListViewController: UIViewController {
 	private let tableView: UITableView
 	private let tweakStore: TweakStore
 	private let delegate: TweaksBackupsListViewControllerDelegate

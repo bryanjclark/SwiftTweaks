@@ -14,7 +14,7 @@ internal protocol TweakTableCellDelegate: class {
 }
 
 
-internal class TweakTableCell: UITableViewCell {
+internal final class TweakTableCell: UITableViewCell {
 	internal weak var delegate: TweakTableCellDelegate?
 
 	internal var viewData: TweakViewData? {

@@ -14,7 +14,7 @@ internal protocol TweaksCollectionsListViewControllerDelegate {
 	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 }
 
-internal class TweaksCollectionsListViewController: UIViewController {
+internal final class TweaksCollectionsListViewController: UIViewController {
 	private let tableView: UITableView
 
 	private let tweakStore: TweakStore

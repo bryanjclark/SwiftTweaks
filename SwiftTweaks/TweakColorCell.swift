@@ -12,7 +12,7 @@ internal protocol TweakColorCellDelegate {
 	func tweakColorCellDidChangeValue(cell: TweakColorCell)
 }
 
-internal class TweakColorCell: UITableViewCell {
+internal final class TweakColorCell: UITableViewCell {
 	internal static let cellHeight: CGFloat = 50
 
 	internal var delegate: TweakColorCellDelegate?

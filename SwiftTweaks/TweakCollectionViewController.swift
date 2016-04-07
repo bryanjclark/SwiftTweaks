@@ -13,7 +13,7 @@ internal protocol TweakCollectionViewControllerDelegate {
 	func tweakCollectionViewController(tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
 }
 
-internal class TweakCollectionViewController: UIViewController {
+internal final class TweakCollectionViewController: UIViewController {
 	private let tweakCollection: TweakCollection
 	private let tweakStore: TweakStore
 
@@ -161,7 +161,7 @@ private protocol TweakGroupSectionHeaderDelegate: class {
 	func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader)
 }
 
-private class TweakGroupSectionHeader: UITableViewHeaderFooterView {
+private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	static let identifier = "TweakGroupSectionHeader"
 
 	private let floatingButton: UIButton = {

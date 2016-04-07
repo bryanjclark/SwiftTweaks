@@ -18,7 +18,7 @@ internal protocol FloatingTweaksWindowPresenter {
 
 // MARK: - FloatingTweakGroupViewController
 
-final internal class FloatingTweakGroupViewController: UIViewController {
+internal final class FloatingTweakGroupViewController: UIViewController {
 	var tweakGroup: TweakGroup? {
 		didSet {
 			titleLabel.text = tweakGroup?.title
