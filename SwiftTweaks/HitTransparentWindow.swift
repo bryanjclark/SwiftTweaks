@@ -6,7 +6,7 @@
 //  Copyright © 2016 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // Inspired by the *super-handy* TunableSpec: https://github.com/kongtomorrow/TunableSpec/blob/master/KFTunableSpec.m
 

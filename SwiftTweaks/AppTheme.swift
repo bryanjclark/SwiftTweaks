@@ -6,7 +6,7 @@
 //  Copyright © 2016 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 internal struct AppTheme {
 	struct Colors {

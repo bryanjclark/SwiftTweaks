@@ -63,6 +63,10 @@
 		937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */; };
 		939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939482B81BFFD89400ADBFE0 /* TweakBackup.swift */; };
+		939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9EC1CB575AF002A92BE /* AppTheme.swift */; };
+		939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */; };
+		939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */; };
+		939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
 		93A84ED51BEAE86E0022D2F3 /* SwiftTweaks.h in Headers */ = {isa = PBXBuildFile; fileRef = 93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		93A84EDC1BEAE86E0022D2F3 /* SwiftTweaks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A84ED11BEAE86E0022D2F3 /* SwiftTweaks.framework */; };
@@ -479,8 +483,10 @@
 			files = (
 				931472521BFFB41700F66D20 /* ColorRepresentation.swift in Sources */,
 				93A84EE11BEAE86E0022D2F3 /* SwiftTweaksTests.swift in Sources */,
+				939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */,
 				931472511BFFB41700F66D20 /* TweakColorEditViewController.swift in Sources */,
 				931472611BFFB41700F66D20 /* Clip.swift in Sources */,
+				939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */,
 				9314725B1BFFB41700F66D20 /* TweakViewData.swift in Sources */,
 				9314724D1BFFB41700F66D20 /* TweaksViewController.swift in Sources */,
 				931472561BFFB41700F66D20 /* TweakableType.swift in Sources */,
@@ -489,12 +495,14 @@
 				93A84EF31BEAE88D0022D2F3 /* Tweak.swift in Sources */,
 				931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */,
 				931472551BFFB41700F66D20 /* TweaksBackupsListViewController.swift in Sources */,
+				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
 				93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				931472581BFFB41700F66D20 /* TweakLibrary.swift in Sources */,
 				9314725E1BFFB41700F66D20 /* TweakGroup.swift in Sources */,
 				9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */,
+				939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */,
 				931472591BFFB41700F66D20 /* TweakStore.swift in Sources */,
 				931472571BFFB41700F66D20 /* AnyTweak.swift in Sources */,
 				9314725F1BFFB41700F66D20 /* TweakStore+Sharing.swift in Sources */,
