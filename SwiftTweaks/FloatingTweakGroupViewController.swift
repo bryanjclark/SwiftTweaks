@@ -8,7 +8,9 @@
 
 import Foundation
 
+
 // MARK: - FloatingTweaksWindowPresenter
+
 internal protocol FloatingTweaksWindowPresenter {
 	func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup)
 	func dismissFloatingTweaksUI()
@@ -16,11 +18,7 @@ internal protocol FloatingTweaksWindowPresenter {
 
 // MARK: - FloatingTweakGroupViewController
 
-internal class FloatingTweakGroupViewController: UIViewController {
-	internal static let height: CGFloat = 168
-	internal static let margins: CGFloat = 5
-	private static let minimizedWidth: CGFloat = 30
-
+final internal class FloatingTweakGroupViewController: UIViewController {
 	var tweakGroup: TweakGroup? {
 		didSet {
 			titleLabel.text = tweakGroup?.title
@@ -30,12 +28,16 @@ internal class FloatingTweakGroupViewController: UIViewController {
 
 	private let presenter: FloatingTweaksWindowPresenter
 	private let tweakStore: TweakStore
+	private let fullFrame: CGRect
 
-	internal init(tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
+	internal init(frame: CGRect, tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
 		self.tweakStore = tweakStore
 		self.presenter = presenter
+		self.fullFrame = frame
 
 		super.init(nibName: nil, bundle: nil)
+
+		view.frame = frame
 
 		installSubviews()
 	}
@@ -44,22 +46,17 @@ internal class FloatingTweakGroupViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	internal var fullFrame: CGRect? {
-		didSet {
-			guard let fullFrame = fullFrame else { return }
-			view.frame = fullFrame
-		}
+	internal var minimizedFrameOriginX: CGFloat {
+		return fullFrame.size.width - FloatingTweakGroupViewController.minimizedWidth + FloatingTweakGroupViewController.margins * 2
 	}
 
-	internal var minimizedFrameOriginX: CGFloat? {
-		if let fullFrame = fullFrame {
-			return fullFrame.size.width - FloatingTweakGroupViewController.minimizedWidth + fullFrame.origin.x*2
-		} else {
-			return nil
-		}
-	}
 
 	// MARK: Subviews
+
+	internal static let height: CGFloat = 168
+	internal static let margins: CGFloat = 5
+	private static let minimizedWidth: CGFloat = 30
+
 	private static let closeButtonSize = CGSize(width: 42, height: 32)
 	private static let navBarHeight: CGFloat = 32
 	private static let windowCornerRadius: CGFloat = 5
@@ -138,17 +135,17 @@ internal class FloatingTweakGroupViewController: UIViewController {
 		view.addSubview(tableView)
 
 		// The "fake nav bar"
-		closeButton.addTarget(self, action: #selector(FloatingTweakGroupViewController.closeButtonTapped), forControlEvents: .TouchUpInside)
+		closeButton.addTarget(self, action: #selector(self.closeButtonTapped), forControlEvents: .TouchUpInside)
 		navBar.addSubview(closeButton)
 		navBar.addSubview(titleLabel)
 		view.addSubview(navBar)
 
 		// The restore button
-		restoreButton.addTarget(self, action: #selector(FloatingTweakGroupViewController.restore), forControlEvents: .TouchUpInside)
+		restoreButton.addTarget(self, action: #selector(self.restore), forControlEvents: .TouchUpInside)
 		view.addSubview(restoreButton)
 
 		// The pan gesture recognizer
-		let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(FloatingTweakGroupViewController.moveWindowPanGestureRecognized(_:)))
+		let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.moveWindowPanGestureRecognized(_:)))
 		panGestureRecognizer.delegate = self
 		view.addGestureRecognizer(panGestureRecognizer)
 	}
@@ -201,6 +198,9 @@ internal class FloatingTweakGroupViewController: UIViewController {
 		presenter.dismissFloatingTweaksUI()
 	}
 
+	private static let gestureSpeedBreakpoint: CGFloat = 10
+	private static let gesturePositionBreakpoint: CGFloat = 30
+
 	@objc private func moveWindowPanGestureRecognized(gestureRecognizer: UIPanGestureRecognizer) {
 		switch (gestureRecognizer.state) {
 		case .Began:
@@ -208,8 +208,8 @@ internal class FloatingTweakGroupViewController: UIViewController {
 		case .Changed:
 			view.frame.origin.x = gestureRecognizer.translationInView(self.view).x
 		case .Possible, .Ended, .Cancelled, .Failed:
-			let gestureIsMovingToTheRight = (gestureRecognizer.velocityInView(nil).x > 10)
-			let viewIsKindaNearTheRight = view.frame.origin.x > 30
+			let gestureIsMovingToTheRight = (gestureRecognizer.velocityInView(nil).x > FloatingTweakGroupViewController.gestureSpeedBreakpoint)
+			let viewIsKindaNearTheRight = view.frame.origin.x > FloatingTweakGroupViewController.gesturePositionBreakpoint
 			if gestureIsMovingToTheRight && viewIsKindaNearTheRight {
 				minimize()
 			} else {
@@ -218,70 +218,71 @@ internal class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
+	private static let minimizeAnimationDuration: Double = 0.3
+	private static let minimizeAnimationDamping: CGFloat = 0.8
+
 	private func minimize() {
 		// TODO map the continuous gesture's velocity into the animation.
-		guard let minimizedFrameOriginX = minimizedFrameOriginX else { return }
-
 		self.restoreButton.alpha = 0
 		self.restoreButton.hidden = false
 
 		UIView.animateWithDuration(
-			0.3,
+			FloatingTweakGroupViewController.minimizeAnimationDuration,
 			delay: 0,
-			usingSpringWithDamping: 0.8,
+			usingSpringWithDamping: FloatingTweakGroupViewController.minimizeAnimationDamping,
 			initialSpringVelocity: 0,
 			options: .BeginFromCurrentState,
 			animations: {
-				self.view.frame.origin.x = minimizedFrameOriginX
+				self.view.frame.origin.x = self.minimizedFrameOriginX
 				self.tableView.alpha = 0
 				self.navBar.alpha = 0
 				self.restoreButton.alpha = 1
-		}) { _ in
-
-		}
+			},
+			completion: nil
+		)
 	}
 
 	@objc private func restore() {
 		// TODO map the continuous gesture's velocity into the animation
-		guard let fullFrame = fullFrame else { return }
 
 		UIView.animateWithDuration(
-			0.3,
-		   delay: 0,
-		   usingSpringWithDamping: 0.8,
-		   initialSpringVelocity: 0,
-		   options: .BeginFromCurrentState,
-		   animations: {
-			self.view.frame.origin.x = fullFrame.origin.x
-			self.tableView.alpha = 1
-			self.navBar.alpha = 1
-			self.restoreButton.alpha = 0
-		}) { _ in
-			self.restoreButton.hidden = true
-		}
+			FloatingTweakGroupViewController.minimizeAnimationDuration,
+			delay: 0,
+			usingSpringWithDamping: FloatingTweakGroupViewController.minimizeAnimationDamping,
+			initialSpringVelocity: 0,
+			options: .BeginFromCurrentState,
+			animations: {
+				self.view.frame.origin.x = self.fullFrame.origin.x
+				self.tableView.alpha = 1
+				self.navBar.alpha = 1
+				self.restoreButton.alpha = 0
+			},
+			completion: { _ in
+				self.restoreButton.hidden = true
+			}
+		)
 	}
 }
 
 extension FloatingTweakGroupViewController: UIGestureRecognizerDelegate {
-	func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+	@objc func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
 		guard let hitView = gestureRecognizer.view?.hitTest(gestureRecognizer.locationInView(gestureRecognizer.view), withEvent: nil) else {
 			return true
 		}
 
 		// We don't want to move the window if you're trying to drag a slider or a switch!
 		// But if you're dragging on the restore button, that's what we do want!
-		if hitView.isKindOfClass(UIControl.self) && hitView != restoreButton {
-			return false
-		} else {
-			return true
-		}
+		let gestureIsNotOnAControl = !hitView.isKindOfClass(UIControl.self)
+		let gestureIsOnTheRestoreButton = hitView == restoreButton
+
+		return gestureIsNotOnAControl || gestureIsOnTheRestoreButton
 	}
 }
 
 // MARK: Table View
 
 extension FloatingTweakGroupViewController: UITableViewDelegate {
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	@objc func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		guard let tweak = tweakAtIndexPath(indexPath) else { return }
 		switch tweak.tweakViewDataType {
 		case .UIColor:
@@ -309,7 +310,7 @@ extension FloatingTweakGroupViewController: UITableViewDataSource {
 
 		let cell = tableView.dequeueReusableCellWithIdentifier(FloatingTweakGroupViewController.TweakTableViewCellIdentifer, forIndexPath: indexPath) as! TweakTableCell
 
-		guard let tweak = tweakAtIndexPath(indexPath) else { return cell }
+		let tweak = tweakAtIndexPath(indexPath)!
 
 		cell.textLabel?.text = tweak.tweakName
 		cell.isInFloatingTweakGroupWindow = true

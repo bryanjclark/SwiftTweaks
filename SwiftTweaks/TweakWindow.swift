@@ -22,7 +22,7 @@ import UIKit
 	private let gestureType: GestureType
 
 	/// By holding on to the TweaksViewController, we get easy state restoration!
-	private let tweaksViewController: TweaksViewController
+	private var tweaksViewController: TweaksViewController! // requires self for init
 
 	/// Represents the "floating tweaks UI"
 	private var floatingTweakGroupUIWindow: HitTransparentWindow?
@@ -50,7 +50,6 @@ import UIKit
 	public init(frame: CGRect, gestureType: GestureType = .Shake, tweakStore: TweakStore) {
 		self.gestureType = gestureType
 
-		self.tweaksViewController = TweaksViewController(tweakStore: tweakStore)
 		self.tweakStore = tweakStore
 
 		// Are we running on a Mac? If so, then we're in a simulator!
@@ -66,12 +65,12 @@ import UIKit
 
 		switch gestureType {
 		case .Gesture(let gestureRecognizer):
-			gestureRecognizer.addTarget(self, action: #selector(TweakWindow.presentTweaks))
+			gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
 		case .Shake:
 			break
 		}
 
-		tweaksViewController.delegate = self
+		tweaksViewController = TweaksViewController(tweakStore: tweakStore, delegate: self)
 		tweaksViewController.floatingTweaksWindowPresenter = self
 	}
 
@@ -132,18 +131,21 @@ extension TweakWindow: TweaksViewControllerDelegate {
 }
 
 extension TweakWindow: FloatingTweaksWindowPresenter {
+
+	private static let presentationDuration: Double = 0.2
+	private static let presentationDamping: CGFloat = 0.8
+	private static let presentationVelocity: CGFloat = 5
+
+	private static let dismissalDuration: Double = 0.2
+
+
 	func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup) {
 		if (floatingTweakGroupUIWindow == nil) {
-			let floatingTweaksVC = FloatingTweakGroupViewController(tweakStore: tweakStore, presenter: self)
-			floatingTweaksVC.tweakGroup = tweakGroup
-
 			let window = HitTransparentWindow()
-			window.frame = UIScreen.mainScreen().applicationFrame;
-			window.rootViewController = floatingTweaksVC
+			window.frame = UIScreen.mainScreen().applicationFrame
 			window.backgroundColor = UIColor.clearColor()
-			window.addSubview(floatingTweaksVC.view)
 
-			floatingTweaksVC.fullFrame = CGRect(
+			let floatingTweakGroupFrame = CGRect(
 				origin: CGPoint(
 					x: FloatingTweakGroupViewController.margins,
 					y: window.frame.size.height - FloatingTweakGroupViewController.height - FloatingTweakGroupViewController.margins
@@ -154,23 +156,30 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 				)
 			)
 
+			let floatingTweaksVC = FloatingTweakGroupViewController(frame: floatingTweakGroupFrame, tweakStore: tweakStore, presenter: self)
+			floatingTweaksVC.tweakGroup = tweakGroup
+			window.rootViewController = floatingTweaksVC
+			window.addSubview(floatingTweaksVC.view)
+
 			window.alpha = 0
-			let initialWindowFrame = CGRectOffset(window.frame, 0, floatingTweaksVC.fullFrame!.height)
+			let initialWindowFrame = CGRectOffset(window.frame, 0, floatingTweaksVC.view.bounds.height)
 			let destinationWindowFrame = window.frame
 			window.makeKeyAndVisible()
 			floatingTweakGroupUIWindow = window
 
 			window.frame = initialWindowFrame
 			UIView.animateWithDuration(
-				0.2,
+				TweakWindow.presentationDuration,
 				delay: 0,
-				usingSpringWithDamping: 0.8,
-				initialSpringVelocity: 5,
+				usingSpringWithDamping: TweakWindow.presentationDamping,
+				initialSpringVelocity: TweakWindow.presentationVelocity,
 				options: .BeginFromCurrentState,
 				animations: { 
 					window.frame = destinationWindowFrame
 					window.alpha = 1
-				}, completion: nil)
+				},
+				completion: nil
+			)
 		}
 	}
 
@@ -179,15 +188,17 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 		guard let floatingTweakGroupUIWindow = floatingTweakGroupUIWindow else { return }
 
 		UIView.animateWithDuration(
-			0.2,
+			TweakWindow.dismissalDuration,
 			delay: 0,
 			options: .CurveEaseIn,
 			animations: { 
 				floatingTweakGroupUIWindow.alpha = 0
 				floatingTweakGroupUIWindow.frame = CGRectOffset(floatingTweakGroupUIWindow.frame, 0, floatingTweakGroupUIWindow.frame.height)
-			}) { _ in
+			},
+			completion: { _ in
 				floatingTweakGroupUIWindow.hidden = true
 				self.floatingTweakGroupUIWindow = nil
-		}
+			}
+		)
 	}
 }

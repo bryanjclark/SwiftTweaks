@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		bounceButton.addTarget(self, action: #selector(ViewController.bounceButtonPressed(_:)), forControlEvents: .TouchUpInside)
+		bounceButton.addTarget(self, action: #selector(self.bounceButtonPressed(_:)), forControlEvents: .TouchUpInside)
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
 		view.addSubview(bounceButton)
@@ -134,10 +134,17 @@ class ViewController: UIViewController {
 			animations: { () -> Void in
 				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
 			}, completion: { _ in
-				UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState,
+				UIView.animateWithDuration(
+					duration,
+					delay: delay,
+					usingSpringWithDamping: damping,
+					initialSpringVelocity: velocity,
+					options: UIViewAnimationOptions.BeginFromCurrentState,
 					animations: { () -> Void in
 						self.bounceButton.frame = originalFrame
-					}, completion: nil)
+					},
+					completion: nil
+				)
 		})
 	}
 }

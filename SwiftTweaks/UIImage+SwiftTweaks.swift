@@ -21,37 +21,16 @@ internal extension UIImage {
 		self.init(inThisBundleNamed: swiftTweaksImage.rawValue)!
 	}
 
-	/// NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps! This takes care of the issue.
+	// NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
+	// (Why? Because by default, iOS searches in your app's bundle, but we need to redirect that to the bundle associated with SwiftTweaks
 	private convenience init?(inThisBundleNamed imageName: String) {
 		self.init(named: imageName, inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
-	}
-
-	/**
-	Returns the image, tinted with the color and blend mode. Useful for press states where a "multiply" blend mode is called for!
-	*/
-	internal func imageWithColorOverlay(color: UIColor, blendMode: CGBlendMode = .Normal) -> UIImage {
-		let rect = CGRect(origin: CGPointZero, size: size)
-
-		UIGraphicsBeginImageContextWithOptions(size, true, 0)
-		let context = UIGraphicsGetCurrentContext()
-
-		drawInRect(rect)
-
-		CGContextSetBlendMode(context, blendMode)
-		CGContextSetFillColorWithColor(context, color.CGColor)
-		CGContextFillRect(context, rect)
-
-		let outputImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-
-		return outputImage
 	}
 
 	/**
 	Returns the image, tinted to the given color.
 	*/
 	internal func imageTintedWithColor(color: UIColor) -> UIImage {
-
 		let imageRect = CGRect(origin: CGPoint.zero, size: self.size)
 
 		UIGraphicsBeginImageContextWithOptions(imageRect.size, false, 0.0) // Retina aware.
@@ -65,23 +44,4 @@ internal extension UIImage {
 
 		return image
 	}
-
-	/**
-	Returns a single-point image, useful for setting the background color of UIButtons for different press states.
-	*/
-	internal static func imageWithColor(color: UIColor) -> UIImage {
-		let rect = CGRect(origin: CGPointZero, size: CGSize(width: 1, height: 1))
-
-		UIGraphicsBeginImageContext(rect.size)
-		let context = UIGraphicsGetCurrentContext()
-
-		CGContextSetFillColorWithColor(context, color.CGColor)
-		CGContextFillRect(context, rect)
-
-		let outputImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-
-		return outputImage
-	}
-
 }

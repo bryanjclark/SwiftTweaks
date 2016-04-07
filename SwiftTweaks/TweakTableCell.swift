@@ -9,13 +9,13 @@
 import UIKit
 import Foundation
 
-internal protocol TweakTableCellDelegate {
+internal protocol TweakTableCellDelegate: class {
 	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell)
 }
 
 
 internal class TweakTableCell: UITableViewCell {
-	internal var delegate: TweakTableCellDelegate?
+	internal weak var delegate: TweakTableCellDelegate?
 
 	internal var viewData: TweakViewData? {
 		didSet {
@@ -74,8 +74,8 @@ internal class TweakTableCell: UITableViewCell {
 
 		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
-		switchControl.addTarget(self, action: #selector(TweakTableCell.switchChanged(_:)), forControlEvents: .ValueChanged)
-		stepperControl.addTarget(self, action: #selector(TweakTableCell.stepperChanged(_:)), forControlEvents: .ValueChanged)
+		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), forControlEvents: .ValueChanged)
+		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), forControlEvents: .ValueChanged)
 		textField.delegate = self
 
 		detailTextLabel?.textColor = UIColor.blackColor()
@@ -237,7 +237,7 @@ internal class TweakTableCell: UITableViewCell {
 			textFieldEnabled = false
 		}
 
-		textFieldEnabled = textFieldEnabled && !isInFloatingTweakGroupWindow
+		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
 
 		textField.userInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor

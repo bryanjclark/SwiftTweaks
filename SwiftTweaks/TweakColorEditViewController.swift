@@ -76,14 +76,14 @@ internal class TweakColorEditViewController: UIViewController {
 		title = tweak.tweakName
 		toolbarItems = [
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(TweakColorEditViewController.dismissButtonTapped))
+			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 		view.tintColor = UIColor.darkGrayColor()
 
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: #selector(TweakColorEditViewController.restoreDefaultColor))
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.redColor()
 
-		segmentedControl.addTarget(self, action: #selector(TweakColorEditViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
+		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
 	}
 
 	required init?(coder aDecoder: NSCoder) {

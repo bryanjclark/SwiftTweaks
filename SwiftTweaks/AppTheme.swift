@@ -39,7 +39,7 @@ internal struct AppTheme {
 	}
 
 	struct Fonts {
-		static let sectionHeaderTitleFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+		static let sectionHeaderTitleFont: UIFont = .preferredFontForTextStyle(UIFontTextStyleBody)
 	}
 
 	struct Shadows {

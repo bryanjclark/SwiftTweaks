@@ -36,7 +36,7 @@ internal class TweakCollectionViewController: UIViewController {
 
 		toolbarItems = [
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(TweakCollectionViewController.dismissButtonTapped))
+			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 	}
 
@@ -157,7 +157,7 @@ extension TweakCollectionViewController: TweakGroupSectionHeaderDelegate {
 	}
 }
 
-private protocol TweakGroupSectionHeaderDelegate {
+private protocol TweakGroupSectionHeaderDelegate: class {
 	func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader)
 }
 
@@ -180,7 +180,7 @@ private class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 		return label
 	}()
 
-	var delegate: TweakGroupSectionHeaderDelegate?
+	private weak var delegate: TweakGroupSectionHeaderDelegate?
 
 	var tweakGroup: TweakGroup? {
 		didSet {
@@ -191,7 +191,7 @@ private class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 
-		floatingButton.addTarget(self, action: #selector(TweakGroupSectionHeader.floatingButtonTapped), forControlEvents: .TouchUpInside)
+		floatingButton.addTarget(self, action: #selector(self.floatingButtonTapped), forControlEvents: .TouchUpInside)
 
 		contentView.addSubview(floatingButton)
 		contentView.addSubview(titleLabel)
@@ -231,6 +231,6 @@ private class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	}
 
 	@objc private func floatingButtonTapped() {
-		delegate?.tweakGroupSectionHeaderDidPressFloatingButton(self)
+		delegate!.tweakGroupSectionHeaderDidPressFloatingButton(self)
 	}
 }

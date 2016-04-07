@@ -41,7 +41,7 @@ internal class TweakColorCell: UITableViewCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
 
-		slider.addTarget(self, action: #selector(TweakColorCell.sliderValueChanged(_:)), forControlEvents: .ValueChanged)
+		slider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), forControlEvents: .ValueChanged)
 
 		textField.delegate = self
 
