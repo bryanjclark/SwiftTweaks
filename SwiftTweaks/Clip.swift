@@ -12,11 +12,11 @@ internal func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) 
 	var result = value
 
 	if let minimum = minimum {
-		result = max(minimum, value)
+		result = max(minimum, result)
 	}
 
 	if let maximum = maximum {
-		result = min(maximum, value)
+		result = min(maximum, result)
 	}
 
 	return result
