@@ -78,10 +78,10 @@ internal class TweakColorEditViewController: UIViewController {
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
 			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(self.dismissButtonTapped))
 		]
-		view.tintColor = UIColor.darkGrayColor()
+		view.tintColor = AppTheme.Colors.controlSecondary
 
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: #selector(TweakColorEditViewController.restoreDefaultColor))
-		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.redColor()
+		self.navigationItem.rightBarButtonItem?.tintColor = AppTheme.Colors.controlDestructive
 
 		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
 	}
@@ -145,7 +145,7 @@ internal class TweakColorEditViewController: UIViewController {
 	}
 
 	private func updateColorPreview() {
-		colorPreviewView.backgroundColor = UIColor.clearColor()
+		colorPreviewView.backgroundColor = .clearColor()
 		colorPreviewSolidView.backgroundColor = viewData.color.colorWithAlphaComponent(1.0)
 		colorPreviewAlphaView.backgroundColor = viewData.color
 	}

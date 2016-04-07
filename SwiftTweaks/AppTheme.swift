@@ -19,16 +19,21 @@ internal struct AppTheme {
 			static let tintColorPressed = UIColor(hex: 0x084BC1)
 			static let secondaryControl = UIColor(hex: 0xC8C7CC)
 			static let secondaryControlPressed = UIColor(hex: 0xAFAFB3)
+			static let destructiveRed = UIColor(hex: 0xC90911)
 		}
 
 		static let sectionHeaderTitleColor = Palette.grayColor
+
+		static let textPrimary = Palette.blackColor
+
 		static let controlTinted = Palette.tintColor
 		static let controlTintedPressed = Palette.tintColorPressed
 		static let controlDisabled = Palette.secondaryControl
+		static let controlDestructive = Palette.destructiveRed
+		static let controlSecondary = Palette.secondaryControl
+		static let controlSecondaryPressed = Palette.secondaryControlPressed
 
 		static let floatingTweakGroupNavBG = Palette.pageBackground1
-		static let secondaryControl = Palette.secondaryControl
-		static let secondaryControlPressed = Palette.secondaryControlPressed
 
 		static let tableSeparator = Palette.secondaryControl
 

@@ -65,7 +65,7 @@ internal class TweakTableCell: UITableViewCell {
 		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
 		let imageView = UIImageView(image: disclosureArrowImage.imageWithRenderingMode(.AlwaysTemplate))
 		imageView.contentMode = .Center
-		imageView.tintColor = TweakTableCell.nonInteractiveGrayColor
+		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
 
@@ -78,7 +78,7 @@ internal class TweakTableCell: UITableViewCell {
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), forControlEvents: .ValueChanged)
 		textField.delegate = self
 
-		detailTextLabel?.textColor = UIColor.blackColor()
+		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -89,7 +89,6 @@ internal class TweakTableCell: UITableViewCell {
 	private static let colorTextWidthFraction: CGFloat = 0.30
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
-	private static let nonInteractiveGrayColor = UIColor(white: 0.70, alpha: 1.0)
 
 	override func layoutSubviews() {
 
@@ -240,7 +239,7 @@ internal class TweakTableCell: UITableViewCell {
 		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
 
 		textField.userInteractionEnabled = textFieldEnabled
-		textField.textColor = textFieldEnabled ? UIColor.blackColor() : TweakTableCell.nonInteractiveGrayColor
+		textField.textColor = textFieldEnabled ? AppTheme.Colors.textPrimary : AppTheme.Colors.controlSecondary
 
 	}
 

@@ -50,7 +50,7 @@ internal class TweaksCollectionsListViewController: UIViewController {
 		view.addSubview(tableView)
 
 		let resetButton = UIBarButtonItem(title: "Reset All", style: .Plain, target: self, action: #selector(self.resetStore))
-		resetButton.tintColor = UIColor.redColor()
+		resetButton.tintColor = AppTheme.Colors.controlDestructive
 		navigationItem.rightBarButtonItem = resetButton
 
 		toolbarItems = [

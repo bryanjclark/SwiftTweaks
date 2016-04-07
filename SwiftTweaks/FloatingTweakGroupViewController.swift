@@ -101,8 +101,8 @@ final internal class FloatingTweakGroupViewController: UIViewController {
 	private let restoreButton: UIButton = {
 		let button = UIButton()
 		let buttonImage = UIImage(swiftTweaksImage: .FloatingMinimizedArrow).imageWithRenderingMode(.AlwaysTemplate)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.secondaryControl), forState: .Normal)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.secondaryControlPressed), forState: .Highlighted)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondary), forState: .Normal)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondaryPressed), forState: .Highlighted)
 		button.hidden = true
 		return button
 	}()
