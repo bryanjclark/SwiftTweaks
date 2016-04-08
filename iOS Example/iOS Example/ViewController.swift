@@ -124,16 +124,47 @@ class ViewController: UIViewController {
 	// MARK: Events
 
 	@objc private func bounceButtonPressed(sender: UIButton) {
-		let duration = ExampleTweaks.assign(ExampleTweaks.animationDuration)
-		let delay = ExampleTweaks.assign(ExampleTweaks.animationDelay)
-		let damping = ExampleTweaks.assign(ExampleTweaks.animationDamping)
-		let velocity = ExampleTweaks.assign(ExampleTweaks.animationVelocity)
+
 		let originalFrame = self.bounceButton.frame
 
-		UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: UIViewAnimationOptions.BeginFromCurrentState,
+		// To help make TweakGroupTemplateSpringAnimation even more useful - check this out:
+		UIView.animateWithSpringAnimationTweakTemplate(
+			ExampleTweaks.buttonAnimation,
+			tweakStore: ExampleTweaks.defaultStore,
+			options: .BeginFromCurrentState,
+			animations: { 
+				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
+			},
+			completion: { _ in
+				UIView.animateWithSpringAnimationTweakTemplate(
+					ExampleTweaks.buttonAnimation,
+					tweakStore: ExampleTweaks.defaultStore,
+					options: .BeginFromCurrentState,
+					animations: {
+						self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
+					},
+					completion: nil
+				)
+			}
+		)
+
+		/* Of course, you don't *have* to use the helper method; you can grab the individual tweaks quite easily:
+
+		let duration = ExampleTweaks.assign(ExampleTweaks.buttonAnimation.duration)
+		let delay = ExampleTweaks.assign(ExampleTweaks.buttonAnimation.delay)
+		let damping = ExampleTweaks.assign(ExampleTweaks.buttonAnimation.damping)
+		let velocity = ExampleTweaks.assign(ExampleTweaks.buttonAnimation.initialSpringVelocity)
+
+		UIView.animateWithDuration(
+			duration, 
+			delay: delay,
+			usingSpringWithDamping: damping,
+			initialSpringVelocity: velocity,
+			options: UIViewAnimationOptions.BeginFromCurrentState,
 			animations: { () -> Void in
 				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
-			}, completion: { _ in
+			}, 
+			completion: { _ in
 				UIView.animateWithDuration(
 					duration,
 					delay: delay,
@@ -145,6 +176,9 @@ class ViewController: UIViewController {
 					},
 					completion: nil
 				)
-		})
+			}
+		)
+
+		*/
 	}
 }

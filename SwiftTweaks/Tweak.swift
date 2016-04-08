@@ -130,3 +130,8 @@ public func ==<T>(lhs: Tweak<T>, rhs: Tweak<T>) -> Bool {
 extension Tweak: TweakIdentifiable {
 	var persistenceIdentifier: String { return tweakIdentifier }
 }
+
+/// Extend Tweak to support easy initialization of a TweakStore
+extension Tweak: TweakClusterType {
+	public var tweakCluster: [AnyTweak] { return [AnyTweak.init(tweak: self)] }
+}

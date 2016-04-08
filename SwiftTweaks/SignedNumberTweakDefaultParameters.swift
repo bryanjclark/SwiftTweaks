@@ -1,5 +1,5 @@
 //
-//  SignedNumberTweakParameters.swift
+//  SignedNumberTweakDefaultParameters.swift
 //  SwiftTweaks
 //
 //  Created by Bryan Clark on 4/8/16.

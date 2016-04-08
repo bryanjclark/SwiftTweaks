@@ -25,7 +25,7 @@ public struct AnyTweak: TweakType {
 }
 
 /// When combined with AnyTweak, this provides our type-erasure around Tweak<T>
-public protocol TweakType {
+public protocol TweakType: TweakClusterType {
 	var tweak: TweakType { get }
 
 	var collectionName: String { get }
@@ -56,4 +56,9 @@ public func ==(lhs: AnyTweak, rhs: AnyTweak) -> Bool {
 /// Extend AnyTweak to support identification in disk persistence
 extension AnyTweak: TweakIdentifiable {
 	var persistenceIdentifier: String { return tweakIdentifier }
+}
+
+/// Extend AnyTweak to support easy initialization of a TweakStore
+extension AnyTweak: TweakClusterType {
+	public var tweakCluster: [AnyTweak] { return [self] }
 }

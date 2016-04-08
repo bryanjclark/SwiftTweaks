@@ -9,9 +9,9 @@
 import Foundation
 
 /// Use this protocol to create your own commonly-used TweakGroups.
-/// For example, tweaks are often used for animations, so we've built out TweakGroupTemplateSpringAnimation to make it *really* easy to tweak animations!
-public protocol TweakGroupTemplateType {
+/// For example, tweaks are often used for animations, so we've built out TweakGroupTemplateSpringAnimation to make it *really* easy to tweak spring animations!
+public protocol TweakGroupTemplateType: TweakClusterType {
 	var collectionName: String { get }
 	var groupName: String { get }
-	var tweaks: [AnyTweak] { get }
+	var tweakCluster: [AnyTweak] { get }
 }

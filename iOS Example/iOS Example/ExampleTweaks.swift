@@ -14,29 +14,36 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
 	public static let colorButtonText = Tweak("General", "Colors", "Button Text", UIColor.whiteColor())
 
+	// Tweaks work *great* with numbers, you just need to tell the compiler
+	// what kind of number you're using (Int, CGFloat, or Double)
+	public static let fontSizeText1 = Tweak<CGFloat>("Text", "Font Sizes", "title", 30)
+	public static let fontSizeText2 = Tweak<CGFloat>("Text", "Font Sizes", "body", 15)
+
+	// If the tweak is for a number, you can optionally add default / min / max / stepSize options to restrict the values.
+	// Maybe you've got a number that must be non-negative, for example:
 	public static let horizontalMargins = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
 	public static let verticalMargins = Tweak<CGFloat>("General", "Layout", "V. Margins", defaultValue: 10, min: 0)
 
 	public static let colorText1 = Tweak("Text", "Color", "text-1", UIColor(white: 0.05, alpha: 1.0))
 	public static let colorText2 = Tweak("Text", "Color", "text-2", UIColor(white: 0.15, alpha: 1.0))
 
-	public static let fontSizeText1 = Tweak("Text", "Font Sizes", "title", CGFloat(30))
-	public static let fontSizeText2 = Tweak("Text", "Font Sizes", "body", CGFloat(15))
-
-	// Above, we used CGFloat(30) to tell the compiler that the tweak is for a CGFloat, and not an Int.
-	// You can also use Tweak<CGFloat> to accomplish this, like so:
-	public static let animationDuration = Tweak<Double>("Animation", "Spring Animation", "Duration", defaultValue: 0.5, min: 0.0)
-	public static let animationDelay = Tweak<Double>("Animation", "Spring Animation", "Delay", defaultValue: 0.0, min: 0.0, max: 1.0)
-	public static let animationDamping = Tweak<CGFloat>("Animation", "Spring Animation", "Damping", defaultValue: 0.7, min: 0.0, max: 1.0)
-	public static let animationVelocity = Tweak<CGFloat>("Animation", "Spring Animation", "Velocity", 0.0)
-
 	// Tweaks are often used in combination with each other, so we have some templates available for ease-of-use:
-	public static let buttonAnimation = TweakGroupTemplateSpringAnimation("Animation", "Button Animation") // seriously this is the greatest, use it.
+	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation", duration: 0.5) // Note: "duration" is optional, if you don't provide it, there's a sensible default!
+
+	/*
+	Seriously, SpringAnimationTweakTemplate is *THE BEST* - here's what the equivalent would be if you were to make that by hand:
+
+	public static let animationDuration = Tweak<Double>("Animation", "Button Animation", "Duration", defaultValue: 0.5, min: 0.0)
+	public static let animationDelay = Tweak<Double>("Animation", "Button Animation", "Delay", defaultValue: 0.0, min: 0.0, max: 1.0)
+	public static let animationDamping = Tweak<CGFloat>("Animation", "Button Animation", "Damping", defaultValue: 0.7, min: 0.0, max: 1.0)
+	public static let animationVelocity = Tweak<CGFloat>("Animation", "Button Animation", "Initial V.", 0.0)
+
+	*/
 
 	public static let featureFlagMainScreenHelperText = Tweak("Feature Flags", "Main Screen", "Show Body Text", true)
 
 	public static let defaultStore: TweakStore = {
-		let allTweaks: [TweakType] = [
+		let allTweaks: [TweakClusterType] = [
 			colorBackground,
 			colorTint,
 			colorButtonText,
@@ -49,10 +56,7 @@ public struct ExampleTweaks: TweakLibraryType {
 			fontSizeText1,
 			fontSizeText2,
 
-			animationDuration,
-			animationDelay,
-			animationDamping,
-			animationVelocity,
+			buttonAnimation,
 
 			featureFlagMainScreenHelperText
 		]
@@ -66,7 +70,7 @@ public struct ExampleTweaks: TweakLibraryType {
 		#endif
 
 		return TweakStore(
-			tweaks: allTweaks.map(AnyTweak.init),
+			tweaks: allTweaks,
 			storeName: "ExampleTweaks", 	// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
 			enabled: tweaksEnabled
 		)

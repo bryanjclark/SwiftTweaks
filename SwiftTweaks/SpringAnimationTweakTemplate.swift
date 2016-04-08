@@ -1,5 +1,5 @@
 //
-//  TweakGroupTemplateSpringAnimation.swift
+//  SpringAnimationTweakTemplate.swift
 //  SwiftTweaks
 //
 //  Created by Bryan Clark on 4/8/16.
@@ -13,7 +13,7 @@ import Foundation
 /// A shortcut to create a TweakGroup for an iOS-style spring animation.
 /// Creates a collection of Tweak<T> with sensible defaults for a spring animation.
 /// You can optionally provide a default value for each parameter, but the min / max / stepSize are automatically created with sensible defaults.
-public struct TweakGroupTemplateSpringAnimation {
+public struct SpringAnimationTweakTemplate: TweakGroupTemplateType {
 	public let collectionName: String
 	public let groupName: String
 	
@@ -22,7 +22,7 @@ public struct TweakGroupTemplateSpringAnimation {
 	public let damping: Tweak<CGFloat>
 	public let initialSpringVelocity: Tweak<CGFloat>
 
-	public var tweaks: [AnyTweak] {
+	public var tweakCluster: [AnyTweak] {
 		return [duration, delay, damping, initialSpringVelocity].map(AnyTweak.init)
 	}
 
@@ -41,7 +41,7 @@ public struct TweakGroupTemplateSpringAnimation {
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: "Duration",
-			defaultParameters: TweakGroupTemplateSpringAnimation.durationDefaults,
+			defaultParameters: SpringAnimationTweakTemplate.durationDefaults,
 			customDefaultValue: duration
 		)
 
@@ -49,7 +49,7 @@ public struct TweakGroupTemplateSpringAnimation {
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: "Delay",
-			defaultParameters: TweakGroupTemplateSpringAnimation.delayDefaults,
+			defaultParameters: SpringAnimationTweakTemplate.delayDefaults,
 			customDefaultValue: delay
 		)
 
@@ -57,7 +57,7 @@ public struct TweakGroupTemplateSpringAnimation {
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: "Damping",
-			defaultParameters: TweakGroupTemplateSpringAnimation.dampingDefaults,
+			defaultParameters: SpringAnimationTweakTemplate.dampingDefaults,
 			customDefaultValue: damping
 		)
 
@@ -65,7 +65,7 @@ public struct TweakGroupTemplateSpringAnimation {
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: "Initial V.",
-			defaultParameters: TweakGroupTemplateSpringAnimation.initialSpringVelocityDefaults,
+			defaultParameters: SpringAnimationTweakTemplate.initialSpringVelocityDefaults,
 			customDefaultValue: initialSpringVelocity
 		)
 	}
