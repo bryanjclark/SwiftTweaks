@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// A collection of Tweak<T>
+/// These are represented in the UI as a UITableView section,
+/// and can be "floated" onscreen as a group.
 internal struct TweakGroup {
 	let title: String
 	var tweaks: [String: AnyTweak] = [:]

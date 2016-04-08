@@ -9,7 +9,10 @@
 import UIKit
 
 // info via http://arstechnica.com/apple/2009/02/iphone-development-accessing-uicolor-components/
+
 internal extension UIColor {
+
+	/// Creates a UIColor with a given hex string (e.g. "#FF00FF")
 	internal convenience init?(hexString: String) {
 		// Strip whitespace, "#", "0x", and make uppercase
 		let hexString = hexString

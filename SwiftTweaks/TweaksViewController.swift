@@ -12,6 +12,8 @@ public protocol TweaksViewControllerDelegate: class {
 	func tweaksViewControllerRequestsDismiss(tweaksViewController: TweaksViewController, completion: (() -> ())?)
 }
 
+/// The main UI for Tweaks. 
+/// You can init and present TweaksViewController yourself, if you'd prefer to not use TweakWindow.
 public final class TweaksViewController: UIViewController {
 
 	private let tweakStore: TweakStore

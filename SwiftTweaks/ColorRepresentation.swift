@@ -118,9 +118,10 @@ extension ColorRepresentation {
 	}
 }
 
+/// Represents a component of a ColorRepresentation
 internal enum ColorComponent {
-	case HexComponent(String)
-	case NumericalComponent(ColorComponentNumerical)
+	case HexComponent(String) // e.g. #FFFFFF = white
+	case NumericalComponent(ColorComponentNumerical) // e.g. RGB, HSB, alpha
 
 	var title: String {
 		switch self {
@@ -150,6 +151,7 @@ internal enum ColorComponent {
 	}
 }
 
+/// Represents an instance of a ColorComponent's numerical component.
 internal struct ColorComponentNumerical {
 	let type: ColorComponentNumericalType
 	let value: Float
@@ -177,6 +179,7 @@ internal struct ColorComponentNumerical {
 	}
 }
 
+/// A list of the types of numerical color components, and describes their behavior.
 internal enum ColorComponentNumericalType {
 	case Hue
 	case Saturation

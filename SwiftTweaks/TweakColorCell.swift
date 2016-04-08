@@ -12,6 +12,7 @@ internal protocol TweakColorCellDelegate {
 	func tweakColorCellDidChangeValue(cell: TweakColorCell)
 }
 
+/// a UITableViewCell that contains a slider & text field for editing a ColorComponent.
 internal final class TweakColorCell: UITableViewCell {
 	internal static let cellHeight: CGFloat = 50
 

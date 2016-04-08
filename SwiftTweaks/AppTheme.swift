@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A central "palette" so to help keep our design consistent.
 internal struct AppTheme {
 	struct Colors {
 		private struct Palette {

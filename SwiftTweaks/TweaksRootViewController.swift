@@ -14,6 +14,7 @@ internal protocol TweaksRootViewControllerDelegate {
 	func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup)
 }
 
+/// A "container" view controller with two states: listing out the TweakCollections, or displaying the TweakBackups
 internal final class TweaksRootViewController: UIViewController {
 
 	private let segmentedControl: UISegmentedControl

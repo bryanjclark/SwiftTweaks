@@ -8,7 +8,9 @@
 
 import UIKit
 
-/// A UIWindow that handles the presentation and dismissal of a TweaksViewController automatically
+/// A UIWindow that handles the presentation and dismissal of a TweaksViewController automatically.
+/// By default, the SwiftTweaks UI appears when you shake your device - but you can supply an alternate gesture, too!
+/// If you'd prefer to not use this, you can also init and present a TweaksViewController yourself.
 @objc public final class TweakWindow: UIWindow {
 
 	public enum GestureType {
@@ -19,6 +21,7 @@ import UIKit
 	/// The amount of time you need to shake your device to bring up the Tweaks UI
 	private static let shakeWindowTimeInterval: Double = 0.4
 
+	/// The GestureType used to determine when to present the UI.
 	private let gestureType: GestureType
 
 	/// By holding on to the TweaksViewController, we get easy state restoration!
@@ -31,10 +34,10 @@ import UIKit
 	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
 	private let runningInSimulator: Bool
 
+	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
 	private var shaking: Bool = false
 
 	private var shouldPresentTweaks: Bool {
-
 		if tweakStore.enabled {
 			switch gestureType {
 			case .Shake: return shaking || runningInSimulator
@@ -139,7 +142,8 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 	private static let dismissalDuration: Double = 0.2
 
 
-	func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup) {
+	/// Presents a floating TweakGroup over your app's UI, so you don't have to hop in and out of the full-modal Tweak UI.
+	internal func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup) {
 		if (floatingTweakGroupUIWindow == nil) {
 			let window = HitTransparentWindow()
 			window.frame = UIScreen.mainScreen().applicationFrame
@@ -183,6 +187,7 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 		}
 	}
 
+	/// Dismisses the floating TweakGroup
 	func dismissFloatingTweaksUI() {
 
 		guard let floatingTweakGroupUIWindow = floatingTweakGroupUIWindow else { return }

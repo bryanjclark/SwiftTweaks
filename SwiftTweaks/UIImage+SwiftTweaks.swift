@@ -27,9 +27,7 @@ internal extension UIImage {
 		self.init(named: imageName, inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
 	}
 
-	/**
-	Returns the image, tinted to the given color.
-	*/
+	/// Returns the image, tinted to the given color.
 	internal func imageTintedWithColor(color: UIColor) -> UIImage {
 		let imageRect = CGRect(origin: CGPoint.zero, size: self.size)
 

@@ -8,8 +8,6 @@
 
 import Foundation
 
-/// Check out KAHashingUtilities.h for the Objective-C equivalent of these functions
-
 infix operator ^^^ { associativity left precedence 160 }
 
 public func ^^^<L: Hashable, R: Hashable>(left: L, right: R) -> Int {

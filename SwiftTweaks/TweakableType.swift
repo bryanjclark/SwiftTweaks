@@ -10,13 +10,14 @@ import Foundation
 import CoreGraphics
 import UIKit
 
-/// Declares what types are supported as Tweaks.
-/// For a type to be supported, it must specify whether it
+/// To add a new <T> to our Tweak<T>, make T conform to this protocol.
 public protocol TweakableType {
 	static var tweakViewDataType: TweakViewDataType { get }
 }
 
-/// The data types that are currently supported for SwiftTweaks
+/// The data types that are currently supported for SwiftTweaks.
+/// While Tweak<T> is generic, we have to build UI for editing each kind of <T> - hence the need for a protocol to restrict what can be tweaked.
+/// Of course, we can add new TweakViewDataTypes over time, too!
 public enum TweakViewDataType {
 	case Boolean
 	case Integer
@@ -29,7 +30,9 @@ public enum TweakViewDataType {
 	]
 }
 
-
+/// An enum for use inside Tweaks' editing UI.
+/// Our public type-erasure (AnyTweak) means that this has to be public, unfortunately
+/// ...but there's no need for you to directly use this enum.
 public enum TweakDefaultData {
 	case Boolean(defaultValue: Bool)
 	case Integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
@@ -38,7 +41,8 @@ public enum TweakDefaultData {
 	case Color(defaultValue: UIColor)
 }
 
-// The following types are supported as Tweaks.
+// MARK: Types that conform to TweakableType
+
 extension Bool: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
 		return .Boolean

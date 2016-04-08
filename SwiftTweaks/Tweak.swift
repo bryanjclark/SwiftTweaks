@@ -11,6 +11,8 @@ import CoreGraphics
 import UIKit
 
 /// Tweaks let you adjust things on the fly.
+/// Because each T needs a UI component, we have to restrict what T can be - hence T: TweakableType.
+/// If T: SignedNumberType, you can declare a min / max / stepSize for a Tweak.
 public struct Tweak<T: TweakableType> {
 	public let collectionName: String
 	public let groupName: String
@@ -52,6 +54,9 @@ extension Tweak {
 }
 
 extension Tweak where T: SignedNumberType {
+	/// Creates a Tweak<T> where T: SignedNumberType
+	/// You can optionally provide a min / max / stepSize to restrict the bounds and behavior of a tweak.
+	/// The step size is "how much does the value change when I tap the UIStepper"
 	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {
 
 		// Assert that the tweak's defaultValue is between its min and max (if they exist)

@@ -18,6 +18,7 @@ internal protocol FloatingTweaksWindowPresenter {
 
 // MARK: - FloatingTweakGroupViewController
 
+/// A "floating" UI for a particular TweakGroup.
 internal final class FloatingTweakGroupViewController: UIViewController {
 	var tweakGroup: TweakGroup? {
 		didSet {

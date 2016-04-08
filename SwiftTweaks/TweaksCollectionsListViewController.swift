@@ -14,6 +14,7 @@ internal protocol TweaksCollectionsListViewControllerDelegate {
 	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 }
 
+/// Displays a list of TweakCollections in a table.
 internal final class TweaksCollectionsListViewController: UIViewController {
 	private let tableView: UITableView
 

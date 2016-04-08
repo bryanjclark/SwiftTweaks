@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Represents a Tweak and a closure that should be run whenever the Tweak changes.
 internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 	let tweak: Tweak<T>
 	let binding: (T) -> Void

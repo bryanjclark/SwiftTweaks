@@ -13,6 +13,7 @@ internal protocol TweakCollectionViewControllerDelegate {
 	func tweakCollectionViewController(tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
 }
 
+/// Displays the contents of a TweakCollection in a table - each child TweakGroup gets a section, each Tweak<T> gets a cell.
 internal final class TweakCollectionViewController: UIViewController {
 	private let tweakCollection: TweakCollection
 	private let tweakStore: TweakStore
@@ -161,6 +162,7 @@ private protocol TweakGroupSectionHeaderDelegate: class {
 	func tweakGroupSectionHeaderDidPressFloatingButton(sectionHeader: TweakGroupSectionHeader)
 }
 
+/// Displays the name of a tweak group, and includes a (+) button to present the floating TweakGroup UI when tapped.
 private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	static let identifier = "TweakGroupSectionHeader"
 

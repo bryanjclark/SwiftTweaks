@@ -12,6 +12,7 @@ internal protocol TweakColorEditViewControllerDelegate {
 	func tweakColorEditViewControllerDidPressDismissButton(tweakColorEditViewController: TweakColorEditViewController)
 }
 
+/// A fullscreen color editor with hex, RGBa, and HSBa controls
 internal final class TweakColorEditViewController: UIViewController {
 	private let tweak: Tweak<UIColor>
 	private let tweakStore: TweakStore

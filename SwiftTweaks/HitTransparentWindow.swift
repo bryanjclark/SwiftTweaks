@@ -8,9 +8,10 @@
 
 import UIKit
 
-// Inspired by the *super-handy* TunableSpec: https://github.com/kongtomorrow/TunableSpec/blob/master/KFTunableSpec.m
 
-/// A UIWindow that ignores touch events; enables SwiftTweaks' floating UI
+/// A UIWindow that ignores touch events outside of its bounds, allowing it to float over another interactive UI.
+/// Enables SwiftTweaks' floating UI.
+/// Inspired by the *super-handy* TunableSpec: https://github.com/kongtomorrow/TunableSpec/blob/master/KFTunableSpec.m
 internal final class HitTransparentWindow: UIWindow {
 	override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
 		let result = super.hitTest(point, withEvent: event)

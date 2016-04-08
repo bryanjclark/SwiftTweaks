@@ -13,7 +13,7 @@ internal protocol TweakTableCellDelegate: class {
 	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell)
 }
 
-
+/// A UITableViewCell that represents a single Tweak<T> in our UI.
 internal final class TweakTableCell: UITableViewCell {
 	internal weak var delegate: TweakTableCellDelegate?
 

@@ -12,6 +12,7 @@ internal protocol TweaksBackupsListViewControllerDelegate {
 	func tweaksBackupsListDidPressDismiss(tweaksBackupsListViewController: TweaksBackupsListViewController)
 }
 
+/// Lists out the TweakBackups in a given TweakStore.
 internal final class TweaksBackupsListViewController: UIViewController {
 	private let tableView: UITableView
 	private let tweakStore: TweakStore
