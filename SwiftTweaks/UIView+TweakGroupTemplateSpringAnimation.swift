@@ -25,8 +25,7 @@ public extension UIView {
 			usingSpringWithDamping: tweakStore.assign(springAnimationTweakTemplate.damping),
 			initialSpringVelocity: tweakStore.assign(springAnimationTweakTemplate.initialSpringVelocity),
 			options: options,
-			animations:
-			animations,
+			animations: animations,
 			completion: completion)
 	}
 }
