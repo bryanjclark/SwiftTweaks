@@ -30,6 +30,9 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let animationDamping = Tweak<CGFloat>("Animation", "Spring Animation", "Damping", defaultValue: 0.7, min: 0.0, max: 1.0)
 	public static let animationVelocity = Tweak<CGFloat>("Animation", "Spring Animation", "Velocity", 0.0)
 
+	// Tweaks are often used in combination with each other, so we have some templates available for ease-of-use:
+	public static let buttonAnimation = TweakGroupTemplateSpringAnimation("Animation", "Button Animation") // seriously this is the greatest, use it.
+
 	public static let featureFlagMainScreenHelperText = Tweak("Feature Flags", "Main Screen", "Show Body Text", true)
 
 	public static let defaultStore: TweakStore = {
