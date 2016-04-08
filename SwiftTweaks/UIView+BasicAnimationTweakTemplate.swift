@@ -23,8 +23,8 @@ public extension UIView {
 			tweakStore.assign(basicAnimationTweakTemplate.duration),
 			delay: tweakStore.assign(basicAnimationTweakTemplate.delay),
 			options: options,
-			animations:
-			animations,
-			completion: completion)
+			animations: animations,
+			completion: completion
+		)
 	}
 }
