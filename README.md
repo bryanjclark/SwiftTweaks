@@ -39,6 +39,7 @@ There are three parts to using a `Tweak`:
 
 ### Step One: Make your TweakLibrary
 A tweak library is responsible for listing out a bunch of `public static` tweaks, and building a `TweakStore`. A tweak library  looks like this:
+
 	public struct ExampleTweaks: TweakLibraryType {
 		public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
 		public static let marginHorizontal = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
