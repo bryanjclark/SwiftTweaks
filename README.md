@@ -70,6 +70,7 @@ public struct ExampleTweaks: TweakLibraryType {
 		)
 	}()
 }
+```
 
 Let’s break down what happened here:
  - We have four tweaks in `ExampleTweaks`: a tint color, two `CGFloat`s for layout, and a `Bool` that toggles an in-development feature.
