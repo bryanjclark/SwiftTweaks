@@ -54,7 +54,7 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
 
 	public static let defaultStore: TweakStore = {
-		let allTweaks: [TweakType] = [colorTint, marginHorizontal, marginVertical, featureFlagMainScreenHelperText]
+		let allTweaks: [TweakClusterType] = [colorTint, marginHorizontal, marginVertical, featureFlagMainScreenHelperText, buttonAnimation]
 
 		// Since SwiftTweaks is a dynamic library, you'll need to determine whether tweaks are enabled.
 		// Try using the DEBUG flag (add "-D DEBUG" to "Other Swift Flags" in your project's Build Settings).
@@ -65,7 +65,7 @@ public struct ExampleTweaks: TweakLibraryType {
 		#endif
 
 		return TweakStore(
-			tweaks: allTweaks.map(AnyTweak.init),
+			tweaks: allTweaks,
 			enabled: tweaksEnabled
 		)
 	}()
@@ -122,10 +122,10 @@ public struct FirstTweaksLibrary: TweakLibraryType {
 	// ...
 
 	public static let defaultStore: TweakStore = {
-		let allTweaks = //...
+		let allTweaks: [TweakClusterType] = //...
 
 		return TweakStore(
-			tweaks: allTweaks.map(AnyTweak.init),
+			tweaks: allTweaks,
 			storeName: "FirstTweaksLibrary", 	// Here's the identifier
 			enabled: tweaksEnabled
 		)
