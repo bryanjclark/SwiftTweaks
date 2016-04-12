@@ -73,10 +73,11 @@ public struct ExampleTweaks: TweakLibraryType {
 ```
 
 Let’s break down what happened here:
+
  - We have four tweaks in `ExampleTweaks`: a tint color, two `CGFloat`s for layout, and a `Bool` that toggles an in-development feature.
-- The compiler can get confused between `Int`, `CGFloat`, and `Double` - so you might find it necessary to tell the `Tweak<T>` what type its `T` is - as we do here with our margin tweaks.
-- We create a `defaultStore` by creating a `TweakStore`, which needs to know whether tweaks are `enabled`, and a list of all `tweaks`.
-- The `enabled` flag on `TweakStore` exists so that `SwiftTweaks` isn’t accessible by your users in production. You can set it however you like; we enjoy using the `DEBUG` flag from our project’s Build Settings.
+ - The compiler can get confused between `Int`, `CGFloat`, and `Double` - so you might find it necessary to tell the `Tweak<T>` what type its `T` is - as we do here with our margin tweaks.
+ - We create a `defaultStore` by creating a `TweakStore`, which needs to know whether tweaks are `enabled`, and a list of all `tweaks`.
+ - The `enabled` flag on `TweakStore` exists so that `SwiftTweaks` isn’t accessible by your users in production. You can set it however you like; we enjoy using the `DEBUG` flag from our project’s Build Settings.
 
 ### Step Two: Using Your TweakLibrary
 To use a tweak, you replace a number or `UIColor`s in your code with a `Tweak` reference, like this:
