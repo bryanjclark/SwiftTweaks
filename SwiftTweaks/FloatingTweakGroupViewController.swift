@@ -39,8 +39,6 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 
 		view.frame = frame
-
-		installSubviews()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -51,6 +49,24 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		return fullFrame.size.width - FloatingTweakGroupViewController.minimizedWidth + FloatingTweakGroupViewController.margins * 2
 	}
 
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		installSubviews()
+		layoutSubviews()
+	}
+
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+
+		tableView.flashScrollIndicators()
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		layoutSubviews()
+	}
 
 	// MARK: Subviews
 
@@ -95,7 +111,6 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		tableView.registerClass(TweakTableCell.self, forCellReuseIdentifier: FloatingTweakGroupViewController.TweakTableViewCellIdentifer)
 		tableView.contentInset = UIEdgeInsets(top: FloatingTweakGroupViewController.navBarHeight, left: 0, bottom: 0, right: 0)
 		tableView.separatorColor = AppTheme.Colors.tableSeparator
-		tableView.separatorInset = tableView.contentInset
 		return tableView
 	}()
 
@@ -109,12 +124,6 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	}()
 
 	private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-
-		layoutSubviews()
-	}
 
 	private func installSubviews() {
 		// Create the rounded corners and shadows
@@ -155,6 +164,13 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		backgroundView.frame = self.view.bounds
 
 		tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: FloatingTweakGroupViewController.height))
+
+		tableView.scrollIndicatorInsets = UIEdgeInsets(
+			top: tableView.contentInset.top,
+			left: 0,
+			bottom: 0,
+			right: 0
+		)
 
 		navBar.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: FloatingTweakGroupViewController.navBarHeight))
 
