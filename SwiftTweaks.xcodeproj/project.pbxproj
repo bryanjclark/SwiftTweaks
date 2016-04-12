@@ -48,6 +48,10 @@
 		931A247E1BFA8F8000E40192 /* ColorRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931A247D1BFA8F8000E40192 /* ColorRepresentation.swift */; };
 		931A24801BFA95B000E40192 /* TweakPersistency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931A247F1BFA95B000E40192 /* TweakPersistency.swift */; };
 		932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */; };
+		933223541CB83F0C002D586B /* BasicAnimationTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933223531CB83F0C002D586B /* BasicAnimationTweakTemplate.swift */; };
+		933223561CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933223551CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift */; };
+		933223591CB842D2002D586B /* EdgeInsetsTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933223581CB842D2002D586B /* EdgeInsetsTweakTemplate.swift */; };
+		9332235B1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9332235A1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift */; };
 		9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */; };
 		9338E9E71CB57068002A92BE /* UIImage+SwiftTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */; };
 		9338E9ED1CB575AF002A92BE /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9EC1CB575AF002A92BE /* AppTheme.swift */; };
@@ -69,6 +73,11 @@
 		939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */; };
 		939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		939F2CD21CB71AC900345E03 /* Tweak+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */; };
+		939F2CD51CB8097D00345E03 /* TweakGroupTemplateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */; };
+		939F2CD91CB810D300345E03 /* SpringAnimationTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD81CB810D300345E03 /* SpringAnimationTweakTemplate.swift */; };
+		939F2CDB1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */; };
+		939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDD1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift */; };
+		939F2CE01CB81ED400345E03 /* TweakClusterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
 		93A84ED51BEAE86E0022D2F3 /* SwiftTweaks.h in Headers */ = {isa = PBXBuildFile; fileRef = 93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		93A84EDC1BEAE86E0022D2F3 /* SwiftTweaks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A84ED11BEAE86E0022D2F3 /* SwiftTweaks.framework */; };
@@ -115,6 +124,10 @@
 		931A247D1BFA8F8000E40192 /* ColorRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRepresentation.swift; sourceTree = "<group>"; };
 		931A247F1BFA95B000E40192 /* TweakPersistency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakPersistency.swift; sourceTree = "<group>"; };
 		932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Tweaks.swift"; sourceTree = "<group>"; };
+		933223531CB83F0C002D586B /* BasicAnimationTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAnimationTweakTemplate.swift; sourceTree = "<group>"; };
+		933223551CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+BasicAnimationTweakTemplate.swift"; sourceTree = "<group>"; };
+		933223581CB842D2002D586B /* EdgeInsetsTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeInsetsTweakTemplate.swift; sourceTree = "<group>"; };
+		9332235A1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+EdgeInsetsTweakTemplate.swift"; sourceTree = "<group>"; };
 		9338787D1BF6A4C5007DF1B4 /* TweakTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakTableCell.swift; sourceTree = "<group>"; };
 		9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SwiftTweaks.swift"; sourceTree = "<group>"; };
 		9338E9EC1CB575AF002A92BE /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -132,6 +145,11 @@
 		939482B81BFFD89400ADBFE0 /* TweakBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBackup.swift; sourceTree = "<group>"; };
 		939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Clipping+TweaksTest.swift"; sourceTree = "<group>"; };
 		939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tweak+TweaksTests.swift"; sourceTree = "<group>"; };
+		939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakGroupTemplateType.swift; sourceTree = "<group>"; };
+		939F2CD81CB810D300345E03 /* SpringAnimationTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringAnimationTweakTemplate.swift; sourceTree = "<group>"; };
+		939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignedNumberTweakDefaultParameters.swift; sourceTree = "<group>"; };
+		939F2CDD1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+TweakGroupTemplateSpringAnimation.swift"; sourceTree = "<group>"; };
+		939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakClusterType.swift; sourceTree = "<group>"; };
 		93A3AF311BF1677B00CAD43B /* TweakWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakWindow.swift; sourceTree = "<group>"; };
 		93A84ED11BEAE86E0022D2F3 /* SwiftTweaks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftTweaks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftTweaks.h; sourceTree = "<group>"; };
@@ -220,6 +238,33 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		933223521CB83993002D586B /* iOS Spring Animation Template */ = {
+			isa = PBXGroup;
+			children = (
+				939F2CD81CB810D300345E03 /* SpringAnimationTweakTemplate.swift */,
+				939F2CDD1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift */,
+			);
+			name = "iOS Spring Animation Template";
+			sourceTree = "<group>";
+		};
+		933223571CB840C8002D586B /* iOS Basic Animation Template */ = {
+			isa = PBXGroup;
+			children = (
+				933223531CB83F0C002D586B /* BasicAnimationTweakTemplate.swift */,
+				933223551CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift */,
+			);
+			name = "iOS Basic Animation Template";
+			sourceTree = "<group>";
+		};
+		9332235C1CB84B96002D586B /* Edge Insets Template */ = {
+			isa = PBXGroup;
+			children = (
+				933223581CB842D2002D586B /* EdgeInsetsTweakTemplate.swift */,
+				9332235A1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift */,
+			);
+			name = "Edge Insets Template";
+			sourceTree = "<group>";
+		};
 		9345EC0C1BF2B9040086AB5D /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +294,17 @@
 				937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */,
 			);
 			name = Internal;
+			sourceTree = "<group>";
+		};
+		939F2CDC1CB817ED00345E03 /* TweakGroupTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */,
+				9332235C1CB84B96002D586B /* Edge Insets Template */,
+				933223571CB840C8002D586B /* iOS Basic Animation Template */,
+				933223521CB83993002D586B /* iOS Spring Animation Template */,
+			);
+			name = TweakGroupTemplate;
 			sourceTree = "<group>";
 		};
 		93A84EC71BEAE86E0022D2F3 = {
@@ -300,6 +356,9 @@
 			children = (
 				93AA34581BEC0EF9004B734B /* TweakableType.swift */,
 				93A84EEC1BEAE88D0022D2F3 /* Tweak.swift */,
+				939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */,
+				939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */,
+				939F2CDC1CB817ED00345E03 /* TweakGroupTemplate */,
 				93DB80341BFCE4E80031D61A /* AnyTweak.swift */,
 				93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */,
 				93AA344E1BEBBD2D004B734B /* TweakStore.swift */,
@@ -453,6 +512,7 @@
 			files = (
 				93AA344F1BEBBD2D004B734B /* TweakStore.swift in Sources */,
 				931A24721BFA77FB00E40192 /* TweakColorEditViewController.swift in Sources */,
+				939F2CD91CB810D300345E03 /* SpringAnimationTweakTemplate.swift in Sources */,
 				939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */,
 				9345EC071BF296350086AB5D /* TweaksBackupsListViewController.swift in Sources */,
 				9338E9E71CB57068002A92BE /* UIImage+SwiftTweaks.swift in Sources */,
@@ -461,8 +521,11 @@
 				931A247E1BFA8F8000E40192 /* ColorRepresentation.swift in Sources */,
 				9345EC101BF2B95C0086AB5D /* TweakGroup.swift in Sources */,
 				93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */,
+				933223591CB842D2002D586B /* EdgeInsetsTweakTemplate.swift in Sources */,
 				938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */,
 				937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */,
+				939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */,
+				939F2CDB1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift in Sources */,
 				9338E9ED1CB575AF002A92BE /* AppTheme.swift in Sources */,
 				931A24801BFA95B000E40192 /* TweakPersistency.swift in Sources */,
 				93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */,
@@ -471,14 +534,19 @@
 				937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */,
 				93C942591BFBDC550054811A /* TweakBinding.swift in Sources */,
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
+				9332235B1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
+				933223541CB83F0C002D586B /* BasicAnimationTweakTemplate.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
+				933223561CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift in Sources */,
 				937962951BFE7B2C0046E4CE /* TweakStore+Sharing.swift in Sources */,
 				931A24741BFA7A3800E40192 /* TweakColorCell.swift in Sources */,
 				937AA36F1CB5D6DA000928C5 /* HitTransparentWindow.swift in Sources */,
 				93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */,
 				932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */,
+				939F2CD51CB8097D00345E03 /* TweakGroupTemplateType.swift in Sources */,
+				939F2CE01CB81ED400345E03 /* TweakClusterType.swift in Sources */,
 				9379628F1BFE509F0046E4CE /* Clip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

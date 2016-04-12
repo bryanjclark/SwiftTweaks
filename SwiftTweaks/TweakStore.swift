@@ -34,13 +34,13 @@ public final class TweakStore {
 
 	/// Creates a TweakStore, with information persisted on-disk. 
 	/// If you want to have multiple TweakStores in your app, you can pass in a unique storeName to keep it separate from others on disk.
-	public init(tweaks: [AnyTweak], storeName: String = "Tweaks", enabled: Bool) {
+	public init(tweaks: [TweakClusterType], storeName: String = "Tweaks", enabled: Bool) {
 		self.persistence = TweakPersistency(identifier: storeName)
 		self.storeName = storeName
 		self.enabled = enabled
-		self.allTweaks = Set(tweaks)
+		self.allTweaks = Set(tweaks.reduce([]) { $0 + $1.tweakCluster })
 
-		tweaks.forEach { tweak in
+		self.allTweaks.forEach { tweak in
 			// Find or create its TweakCollection
 			var tweakCollection: TweakCollection
 			if let existingCollection = tweakCollections[tweak.collectionName] {
