@@ -79,7 +79,8 @@ internal final class TweakColorEditViewController: UIViewController {
 			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
 			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(self.dismissButtonTapped))
 		]
-		view.tintColor = AppTheme.Colors.controlSecondary
+
+		view.tintColor = AppTheme.Colors.controlGrayscale
 
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: #selector(TweakColorEditViewController.restoreDefaultColor))
 		self.navigationItem.rightBarButtonItem?.tintColor = AppTheme.Colors.controlDestructive

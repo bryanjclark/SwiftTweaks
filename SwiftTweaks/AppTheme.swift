@@ -16,10 +16,14 @@ internal struct AppTheme {
 			static let blackColor = UIColor.blackColor()
 			static let grayColor = UIColor(hex: 0x8E8E93)
 			static let pageBackground1 = UIColor(hex: 0xF8F8F8)
+
 			static let tintColor = UIColor(hex: 0x007AFF)
 			static let tintColorPressed = UIColor(hex: 0x084BC1)
+			static let controlGrayscale = UIColor.darkGrayColor()
+
 			static let secondaryControl = UIColor(hex: 0xC8C7CC)
 			static let secondaryControlPressed = UIColor(hex: 0xAFAFB3)
+
 			static let destructiveRed = UIColor(hex: 0xC90911)
 		}
 
@@ -33,6 +37,7 @@ internal struct AppTheme {
 		static let controlDestructive = Palette.destructiveRed
 		static let controlSecondary = Palette.secondaryControl
 		static let controlSecondaryPressed = Palette.secondaryControlPressed
+		static let controlGrayscale = Palette.controlGrayscale
 
 		static let floatingTweakGroupNavBG = Palette.pageBackground1
 
