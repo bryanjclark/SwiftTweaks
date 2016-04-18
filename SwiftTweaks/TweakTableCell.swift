@@ -203,28 +203,25 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .Boolean(value: value, defaultValue: _):
 			switchControl.on = value
 			textFieldEnabled = false
-		case let .Integer(value: value, defaultValue: _, min: min, max: max, stepSize: step):
+		case let .Integer(value: value, defaultValue: _, min: _, max: _, stepSize: step):
 			stepperControl.value = Double(value)
-			stepperControl.minimumValue = Double(min ?? 0)
-			stepperControl.maximumValue = Double(max ?? 100)
-			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
+			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
+			stepperControl.stepValue = Double(step ?? 1)
 
 			textField.text = String(value)
 			textField.keyboardType = .NumberPad
 			textFieldEnabled = true
-		case let .Float(value: value, defaultValue: _, min: min, max: max, stepSize: step):
+		case let .Float(value: value, defaultValue: _, min: _, max: _, stepSize: step):
 			stepperControl.value = Double(value)
-			stepperControl.minimumValue = Double(min ?? 0)
-			stepperControl.maximumValue = Double(max ?? 100)
+			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
 			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
 
 			textField.text = String(value)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
-		case let .DoubleTweak(value: value, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+		case let .DoubleTweak(value: value, defaultValue: _, min: _, max: _, stepSize: step):
 			stepperControl.value = value
-			stepperControl.minimumValue = min ?? defaultValue / 10
-			stepperControl.maximumValue = max ?? defaultValue * 10
+			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
 			stepperControl.stepValue = step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
 
 			textField.text = String(value)

@@ -89,6 +89,7 @@
 		93AA344F1BEBBD2D004B734B /* TweakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA344E1BEBBD2D004B734B /* TweakStore.swift */; };
 		93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34561BEBC654004B734B /* TweaksViewController.swift */; };
 		93AA34591BEC0EF9004B734B /* TweakableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34581BEC0EF9004B734B /* TweakableType.swift */; };
+		93B058ED1CC58EA600AB2759 /* TweakClusterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */; };
 		93C942591BFBDC550054811A /* TweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C942581BFBDC550054811A /* TweakBinding.swift */; };
 		93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB80341BFCE4E80031D61A /* AnyTweak.swift */; };
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
@@ -571,6 +572,7 @@
 				931472551BFFB41700F66D20 /* TweaksBackupsListViewController.swift in Sources */,
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
+				93B058ED1CC58EA600AB2759 /* TweakClusterType.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
 				93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				931472581BFFB41700F66D20 /* TweakLibrary.swift in Sources */,
