@@ -218,7 +218,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.maximumValue = Double(max ?? 100)
 			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
 
-			textField.text = String(value)
+			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
 		case let .DoubleTweak(value: value, defaultValue: defaultValue, min: min, max: max, stepSize: step):
@@ -227,7 +227,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.maximumValue = max ?? defaultValue * 10
 			stepperControl.stepValue = step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
 
-			textField.text = String(value)
+			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
 		case let .Color(value: value, defaultValue: _):
@@ -294,14 +294,15 @@ extension TweakTableCell: UITextFieldDelegate {
 			}
 		case let .Float(value: _, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, newValue = Float(text) {
-				viewData = TweakViewData(type: .CGFloat, value: CGFloat(newValue), defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
+				let roundedValue = CGFloat(newValue).roundToNearest(.Thousandth)
+				viewData = TweakViewData(type: .CGFloat, value: roundedValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
 			}
 		case let .DoubleTweak(value: _, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, newValue = Double(text) {
-				viewData = TweakViewData(type: .Double, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
+				viewData = TweakViewData(type: .Double, value: newValue.roundToNearest(.Thousandth), defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
