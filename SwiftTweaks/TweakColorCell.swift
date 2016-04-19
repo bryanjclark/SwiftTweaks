@@ -143,7 +143,7 @@ extension TweakColorCell: UITextFieldDelegate {
 	}
 
 	func textFieldDidEndEditing(textField: UITextField) {
-		if let text = textField.text, newValue = UIColor(hexString: text) {
+		if let text = textField.text, newValue = UIColor.colorWitHHexString(text) {
 			viewData = .HexComponent(newValue.hexString)
 			delegate?.tweakColorCellDidChangeValue(self)
 		} else {

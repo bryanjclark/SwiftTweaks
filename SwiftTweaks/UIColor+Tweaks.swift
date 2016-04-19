@@ -13,7 +13,8 @@ import UIKit
 internal extension UIColor {
 
 	/// Creates a UIColor with a given hex string (e.g. "#FF00FF")
-	internal convenience init?(hexString: String) {
+	// NOTE: Would use a failable init (e.g. `UIColor(hexString: _)` but have to wait until Swift 2.2.1 https://github.com/Khan/SwiftTweaks/issues/38
+	internal static func colorWitHHexString(hexString: String) -> UIColor? {
 		// Strip whitespace, "#", "0x", and make uppercase
 		let hexString = hexString
 			.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
@@ -43,7 +44,7 @@ internal extension UIColor {
 			return CGFloat(componentInt) / CGFloat(255.0)
 		}
 
-		self.init(red: colorFloats[0], green: colorFloats[1], blue: colorFloats[2], alpha: colorFloats[3])
+		return UIColor(red: colorFloats[0], green: colorFloats[1], blue: colorFloats[2], alpha: colorFloats[3])
 	}
 
 	internal convenience init(hex: UInt32, alpha: CGFloat = 1) {
