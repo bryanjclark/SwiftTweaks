@@ -218,7 +218,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.maximumValue = Double(max ?? 100)
 			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
 
-			textField.text = String(value)
+			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
 		case let .DoubleTweak(value: value, defaultValue: defaultValue, min: min, max: max, stepSize: step):
@@ -227,7 +227,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.maximumValue = max ?? defaultValue * 10
 			stepperControl.stepValue = step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
 
-			textField.text = String(value)
+			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
 		case let .Color(value: value, defaultValue: _):

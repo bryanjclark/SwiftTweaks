@@ -18,7 +18,7 @@ class UIColor_TweaksTests: XCTestCase {
 		let string: String
 		let expectedColor: UIColor?
 
-		static func confirmTest(testCase: HexToColorTestCase) {
+		static func verify(testCase: HexToColorTestCase) {
 			if let generatedColor = UIColor(hexString: testCase.string) {
 				if let expectedColor = testCase.expectedColor {
 					XCTAssertEqual(generatedColor.hexString, expectedColor.hexString, "Generated color with hex \(generatedColor.hexString) from test string \(testCase.string), but expected color with hex \(expectedColor.hexString)")
@@ -56,12 +56,12 @@ class UIColor_TweaksTests: XCTestCase {
 			HexToColorTestCase(string: "111", expectedColor: nil),
 		]
 
-		testCases.forEach { HexToColorTestCase.confirmTest($0) }
+		testCases.forEach { HexToColorTestCase.verify($0) }
 
 		// Re-run tests, prepending a "#" to each string.
 		testCases
 			.map { return HexToColorTestCase(string: "#"+$0.string, expectedColor: $0.expectedColor) }
-			.forEach { HexToColorTestCase.confirmTest($0) }
+			.forEach { HexToColorTestCase.verify($0) }
 	}
 
 
@@ -70,7 +70,7 @@ class UIColor_TweaksTests: XCTestCase {
 		let color: UIColor
 		let expectedHex: String
 
-		static func confirmTest(testCase: ColorToHexTestCase) {
+		static func verify(testCase: ColorToHexTestCase) {
 			XCTAssertEqual(testCase.color.hexString, testCase.expectedHex, "Expected color \(testCase.color) to generate #\(testCase.expectedHex)")
 		}
 	}
@@ -89,7 +89,7 @@ class UIColor_TweaksTests: XCTestCase {
 			ColorToHexTestCase(color: UIColor.whiteColor().colorWithAlphaComponent(1.0), expectedHex: "#FFFFFF")
 		]
 
-		testCases.forEach { ColorToHexTestCase.confirmTest($0) }
+		testCases.forEach { ColorToHexTestCase.verify($0) }
 
 	}
 }

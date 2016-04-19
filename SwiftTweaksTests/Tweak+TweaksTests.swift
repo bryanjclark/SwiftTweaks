@@ -15,7 +15,7 @@ private struct ClippingTweakTestCase<T where T: SignedNumberType, T: TweakableTy
 	let max: T?
 	let expected: T
 
-	static func confirmTest(testCase: ClippingTweakTestCase) {
+	static func verify(testCase: ClippingTweakTestCase) {
 		let tweak: Tweak<T> = Tweak("a", "b", "c",
 		                            defaultValue: testCase.defaultValue,
 		                            min: testCase.min,
@@ -49,7 +49,7 @@ class Tweaks_TweaksTest: XCTestCase {
 			ClippingTweakTestCase(defaultValue: 10, min: 0, max: 100, expected: 10),
 			ClippingTweakTestCase(defaultValue: 10, min: -100, max: 100, expected: 10),
 			ClippingTweakTestCase(defaultValue: 10, min: 10, max: 100, expected: 10),
-			].forEach(ClippingTweakTestCase.confirmTest)
+			].forEach(ClippingTweakTestCase.verify)
 
 		/* NOTE: I'd love to test these - but we can't simultaneously have:
 		- crashing-inits for Tweak<T> *and*

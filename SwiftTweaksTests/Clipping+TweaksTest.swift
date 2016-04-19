@@ -14,7 +14,7 @@ private struct ClippingTestCase<T where T: SignedNumberType> {
 	let max: T?
 	let expected: T
 
-	static func confirmTest(testCase: ClippingTestCase) {
+	static func verify(testCase: ClippingTestCase) {
 		let clipped = clip(testCase.inputValue, testCase.min, testCase.max)
 
 		XCTAssertEqual(testCase.expected, clipped)
@@ -49,6 +49,6 @@ class Clipping_TweaksTests: XCTestCase {
 				ClippingTestCase(inputValue: 100, min: 0, max: 90, expected: 90),
 				ClippingTestCase(inputValue: 10, min: 20, max: 100, expected: 20),
 
-			].forEach(ClippingTestCase.confirmTest)
+			].forEach(ClippingTestCase.verify)
 	}
 }

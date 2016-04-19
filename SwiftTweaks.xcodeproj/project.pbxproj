@@ -59,6 +59,7 @@
 		9345EC091BF2A0490086AB5D /* TweaksRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */; };
 		9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC0D1BF2B9100086AB5D /* TweakCollection.swift */; };
 		9345EC101BF2B95C0086AB5D /* TweakGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345EC0F1BF2B95C0086AB5D /* TweakGroup.swift */; };
+		93478C7C1CBDF03A0064D8AD /* Precision+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93478C7B1CBDF03A0064D8AD /* Precision+TweaksTests.swift */; };
 		9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9356CD1E1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift */; };
 		9379628F1BFE509F0046E4CE /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379628E1BFE509F0046E4CE /* Clip.swift */; };
 		937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937962921BFE7B0A0046E4CE /* TweakViewData.swift */; };
@@ -89,6 +90,9 @@
 		93AA344F1BEBBD2D004B734B /* TweakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA344E1BEBBD2D004B734B /* TweakStore.swift */; };
 		93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34561BEBC654004B734B /* TweaksViewController.swift */; };
 		93AA34591BEC0EF9004B734B /* TweakableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34581BEC0EF9004B734B /* TweakableType.swift */; };
+		93B058D71CBDF58500AB2759 /* TweakClusterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */; };
+		93B058E31CC44D8900AB2759 /* Precision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B058E21CC44D8900AB2759 /* Precision.swift */; };
+		93B058E51CC53AD100AB2759 /* Precision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B058E21CC44D8900AB2759 /* Precision.swift */; };
 		93C942591BFBDC550054811A /* TweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C942581BFBDC550054811A /* TweakBinding.swift */; };
 		93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB80341BFCE4E80031D61A /* AnyTweak.swift */; };
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
@@ -135,6 +139,7 @@
 		9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksRootViewController.swift; sourceTree = "<group>"; };
 		9345EC0D1BF2B9100086AB5D /* TweakCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollection.swift; sourceTree = "<group>"; };
 		9345EC0F1BF2B95C0086AB5D /* TweakGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakGroup.swift; sourceTree = "<group>"; };
+		93478C7B1CBDF03A0064D8AD /* Precision+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Precision+TweaksTests.swift"; sourceTree = "<group>"; };
 		9356CD1E1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksCollectionsListViewController.swift; sourceTree = "<group>"; };
 		9379628E1BFE509F0046E4CE /* Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
 		937962921BFE7B0A0046E4CE /* TweakViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakViewData.swift; sourceTree = "<group>"; };
@@ -162,6 +167,7 @@
 		93AA344E1BEBBD2D004B734B /* TweakStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakStore.swift; sourceTree = "<group>"; };
 		93AA34561BEBC654004B734B /* TweaksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweaksViewController.swift; sourceTree = "<group>"; };
 		93AA34581BEC0EF9004B734B /* TweakableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakableType.swift; sourceTree = "<group>"; };
+		93B058E21CC44D8900AB2759 /* Precision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Precision.swift; sourceTree = "<group>"; };
 		93C942581BFBDC550054811A /* TweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBinding.swift; sourceTree = "<group>"; };
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
@@ -345,6 +351,7 @@
 				93A84EE01BEAE86E0022D2F3 /* SwiftTweaksTests.swift */,
 				931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */,
 				939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */,
+				93478C7B1CBDF03A0064D8AD /* Precision+TweaksTests.swift */,
 				939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */,
 				93A84EE21BEAE86E0022D2F3 /* Info.plist */,
 			);
@@ -383,6 +390,7 @@
 				93A84EEB1BEAE88D0022D2F3 /* HashingUtilities.swift */,
 				932BA9D31BFA398A001ADFC6 /* UIColor+Tweaks.swift */,
 				9379628E1BFE509F0046E4CE /* Clip.swift */,
+				93B058E21CC44D8900AB2759 /* Precision.swift */,
 				9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */,
 				9338E9EC1CB575AF002A92BE /* AppTheme.swift */,
 			);
@@ -536,6 +544,7 @@
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
 				9332235B1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
+				93B058E31CC44D8900AB2759 /* Precision.swift in Sources */,
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
 				933223541CB83F0C002D586B /* BasicAnimationTweakTemplate.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
@@ -555,8 +564,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93B058E51CC53AD100AB2759 /* Precision.swift in Sources */,
 				931472521BFFB41700F66D20 /* ColorRepresentation.swift in Sources */,
 				93A84EE11BEAE86E0022D2F3 /* SwiftTweaksTests.swift in Sources */,
+				93B058D71CBDF58500AB2759 /* TweakClusterType.swift in Sources */,
 				939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */,
 				931472511BFFB41700F66D20 /* TweakColorEditViewController.swift in Sources */,
 				931472611BFFB41700F66D20 /* Clip.swift in Sources */,
@@ -582,6 +593,7 @@
 				9314725F1BFFB41700F66D20 /* TweakStore+Sharing.swift in Sources */,
 				9314725D1BFFB41700F66D20 /* TweakCollection.swift in Sources */,
 				931472531BFFB41700F66D20 /* TweakColorCell.swift in Sources */,
+				93478C7C1CBDF03A0064D8AD /* Precision+TweaksTests.swift in Sources */,
 				939F2CD21CB71AC900345E03 /* Tweak+TweaksTests.swift in Sources */,
 				931472501BFFB41700F66D20 /* TweakCollectionViewController.swift in Sources */,
 				9314725A1BFFB41700F66D20 /* TweakBinding.swift in Sources */,
