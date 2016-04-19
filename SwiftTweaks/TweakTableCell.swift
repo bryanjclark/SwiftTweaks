@@ -200,37 +200,42 @@ internal final class TweakTableCell: UITableViewCell {
 		// Update accessory internals based on viewData
 		var textFieldEnabled: Bool
 		switch viewData {
-		case let .Boolean(value: value, _:
+		case let .Boolean(value: value, _):
 			switchControl.on = value
 			textFieldEnabled = false
+
 		case let .Integer(value: value, _, _, _, stepSize: step):
 			stepperControl.value = Double(value)
-			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
+			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
 			stepperControl.stepValue = Double(step ?? 1)
 
 			textField.text = String(value)
 			textField.keyboardType = .NumberPad
 			textFieldEnabled = true
+
 		case let .Float(value: value, _, _, _, stepSize: step):
 			stepperControl.value = Double(value)
-			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
+			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
 			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
 
 			textField.text = String(value)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
+
 		case let .DoubleTweak(value: value, _, _, _, stepSize: step):
 			stepperControl.value = value
-			(stepperControl.minimumValue, stepperControl.maximumValue) = TweakViewData.stepperLimitsForTweakViewData(viewData)!
+			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
 			stepperControl.stepValue = step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
 
 			textField.text = String(value)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
+
 		case let .Color(value: value, _):
 			colorChit.backgroundColor = value
 			textField.text = value.hexString
 			textFieldEnabled = false
+
 		}
 
 		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow

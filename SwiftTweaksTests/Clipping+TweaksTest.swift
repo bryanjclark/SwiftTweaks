@@ -53,7 +53,7 @@ private struct StepperTestCase {
 			stepSize: nil
 		)
 
-		let (derivedMin, derivedMax) = TweakViewData.stepperLimitsForTweakViewData(tweakViewData)!
+		let (derivedMin, derivedMax) = tweakViewData.stepperLimits!
 		let (expectedMin, expectedMax) = testCase.expected
 		XCTAssertEqual(derivedMin, expectedMin, "Derived minimum didn't match expected.")
 		XCTAssertEqual(derivedMax, expectedMax, "Derived maximum didn't match expected.")

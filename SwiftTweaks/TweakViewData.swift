@@ -90,15 +90,15 @@ internal enum TweakViewData {
 
 	/// UISteppers *require* a maximum value (ugh) and they default to 100 (ughhhh)
 	/// ...so let's set something sensible.
-	static func stepperLimitsForTweakViewData(tweakViewData: TweakViewData) -> (stepperMin: Double, stepperMax: Double)? {
-		precondition(tweakViewData.isSignedNumberType)
+	var stepperLimits: (stepperMin: Double, stepperMax: Double)? {
+		precondition(self.isSignedNumberType)
 
 		let currentValue: Double
 		let defaultValue: Double
 		let minimum: Double?
 		let maximum: Double?
 
-		switch tweakViewData {
+		switch self {
 		case .Boolean, .Color:
 			return nil
 
@@ -148,4 +148,5 @@ internal enum TweakViewData {
 
 		return (resultMin, resultMax)
 	}
+
 }
