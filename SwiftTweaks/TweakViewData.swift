@@ -38,11 +38,11 @@ internal enum TweakViewData {
 		switch self {
 		case let .Boolean(value: boolValue, defaultValue: _):
 			return boolValue
-		case let .Integer(value: intValue, defaultValue: _, min: _, max: _, stepSize: _):
+		case let .Integer(value: intValue, _, _, _, _):
 			return intValue
-		case let .Float(value: floatValue, defaultValue: _, min: _, max: _, stepSize: _):
+		case let .Float(value: floatValue, _, _, _, _):
 			return floatValue
-		case let .DoubleTweak(value: doubleValue, defaultValue: _, min: _, max: _, stepSize: _):
+		case let .DoubleTweak(value: doubleValue, _, _, _, _):
 			return doubleValue
 		case let .Color(value: colorValue, defaultValue: _):
 			return colorValue
@@ -56,13 +56,13 @@ internal enum TweakViewData {
 		case let .Boolean(value: value, defaultValue: defaultValue):
 			string = value ? "Bool(true)" : "Bool(false)"
 			differsFromDefault = (value != defaultValue)
-		case let .Integer(value: value, defaultValue: defaultValue, min: _, max: _, stepSize: _):
+		case let .Integer(value: value, defaultValue: defaultValue, _, _, _):
 			string = "Int(\(value))"
 			differsFromDefault = (value != defaultValue)
-		case let .Float(value: value, defaultValue: defaultValue, min: _, max: _, stepSize: _):
+		case let .Float(value: value, defaultValue: defaultValue, _, _, _):
 			string = "Float(\(value))"
 			differsFromDefault = (value != defaultValue)
-		case let .DoubleTweak(value: value, defaultValue: defaultValue, min: _, max: _, stepSize: _):
+		case let .DoubleTweak(value: value, defaultValue: defaultValue, _, _, _):
 			string = "Double(\(value))"
 			differsFromDefault = (value != defaultValue)
 		case let .Color(value: value, defaultValue: defaultValue):
