@@ -582,6 +582,7 @@
 				931472551BFFB41700F66D20 /* TweaksBackupsListViewController.swift in Sources */,
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
+				93B058ED1CC58EA600AB2759 /* TweakClusterType.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
 				93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				931472581BFFB41700F66D20 /* TweakLibrary.swift in Sources */,
