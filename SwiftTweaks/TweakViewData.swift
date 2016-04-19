@@ -72,6 +72,15 @@ internal enum TweakViewData {
 		return (string, differsFromDefault)
 	}
 
+	private var isSignedNumberType: Bool {
+		switch self {
+		case .Integer, .Float, .DoubleTweak:
+			return true
+		case .Boolean, .Color:
+			return false
+		}
+	}
+
 	// These are the defaults that UIKit has for the UIStepper min and max
 	internal static let stepperDefaultMinimum: Double = 0
 	internal static let stepperDefaultMaximum: Double = 100
@@ -80,8 +89,10 @@ internal enum TweakViewData {
 	internal static let stepperBoundsMultiplier: Double = 2
 
 	/// UISteppers *require* a maximum value (ugh) and they default to 100 (ughhhh)
-	/// ...so let's set something sensible
+	/// ...so let's set something sensible.
 	static func stepperLimitsForTweakViewData(tweakViewData: TweakViewData) -> (stepperMin: Double, stepperMax: Double)? {
+		precondition(tweakViewData.isSignedNumberType)
+
 		let currentValue: Double
 		let defaultValue: Double
 		let minimum: Double?
@@ -90,17 +101,18 @@ internal enum TweakViewData {
 		switch tweakViewData {
 		case .Boolean, .Color:
 			return nil
+
 		case let .Integer(intValue, intDefaultValue, intMin, intMax, _):
 			currentValue = Double(intValue)
 			defaultValue = Double(intDefaultValue)
-			minimum = (intMin == nil) ? nil : Double(intMin!)
-			maximum = (intMax == nil) ? nil : Double(intMax!)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
 
 		case let .Float(floatValue, floatDefaultValue, floatMin, floatMax, _):
 			currentValue = Double(floatValue)
 			defaultValue = Double(floatDefaultValue)
-			minimum = (floatMin == nil) ? nil : Double(floatMin!)
-			maximum = (floatMax == nil) ? nil : Double(floatMax!)
+			minimum = floatMin.map(Double.init)
+			maximum = floatMax.map(Double.init)
 
 		case let .DoubleTweak(doubleValue, doubleDefaultValue, doubleMin, doubleMax, _):
 			currentValue = doubleValue
@@ -111,29 +123,29 @@ internal enum TweakViewData {
 		}
 
 		// UIStepper defaults to 0 and 100, so we'll use those as a fallback.
-		var returnMin: Double = TweakViewData.stepperDefaultMinimum
-		var returnMax: Double = TweakViewData.stepperDefaultMaximum
+		var resultMin: Double = TweakViewData.stepperDefaultMinimum
+		var resultMax: Double = TweakViewData.stepperDefaultMaximum
 
 		// If we have a currentValue or defaultValue that's outside the bounds, we'll want to give some space to 'em.
-		if (defaultValue < returnMin) || (currentValue < returnMin) {
+		if (defaultValue < resultMin) || (currentValue < resultMin) {
 			let lowerValue = min(currentValue, defaultValue)
-			returnMin = (lowerValue < 0) ?
+			resultMin = (lowerValue < 0) ?
 				lowerValue * TweakViewData.stepperBoundsMultiplier :
 				lowerValue / TweakViewData.stepperBoundsMultiplier
 		}
 
-		if (defaultValue > returnMax) || (currentValue > returnMax) {
+		if (defaultValue > resultMax) || (currentValue > resultMax) {
 			let upperValue = max(currentValue, defaultValue)
-			returnMax = (upperValue < 0) ?
+			resultMax = (upperValue < 0) ?
 				upperValue / TweakViewData.stepperBoundsMultiplier :
 				upperValue * TweakViewData.stepperBoundsMultiplier
 		}
 
 		// Lastly, to override any above work: if an explicit minimum or maximum were given,
 		// we'd want to use that instead.
-		returnMin = minimum ?? returnMin
-		returnMax = maximum ?? returnMax
+		resultMin = minimum ?? resultMin
+		resultMax = maximum ?? resultMax
 
-		return (returnMin, returnMax)
+		return (resultMin, resultMax)
 	}
 }
