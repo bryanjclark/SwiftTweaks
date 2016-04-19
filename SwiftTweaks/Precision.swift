@@ -9,6 +9,8 @@
 import Foundation
 import CoreGraphics
 
+/// A measure of precision for decimal numbers.
+/// The rawValue is the number of decimals, e.g. .Thousandth = 3 for 0.001
 internal enum PrecisionLevel: Int {
 	case Integer = 0
 	case Tenth = 1
@@ -30,6 +32,8 @@ internal enum PrecisionLevel: Int {
 /// Helps to avoid "0.5999999999999" from showing up in yer Tweaks
 internal protocol Roundable {
 	var doubleValue: Double { get }
+
+	/// Returns the value, rounded to the given precision level.
 	func roundToNearest(precisionLevel: PrecisionLevel) -> Self
 }
 
@@ -37,7 +41,7 @@ extension Roundable {
 	func stringValueRoundedToNearest(precisionLevel: PrecisionLevel) -> String {
 		let numberFormatter = NSNumberFormatter()
 		numberFormatter.maximumFractionDigits = precisionLevel.maximumFractionDigits
-		return numberFormatter.stringFromNumber(NSNumber(double: doubleValue))!
+		return numberFormatter.stringFromNumber(doubleValue)!
 	}
 }
 
@@ -48,7 +52,7 @@ extension Double: Roundable {
 		// I'd tried using Foundation's NSDecimalNumberHandler, but it wasn't working out as well!
 		// This is goofy, but it works:
 		// For .Thousandth, multiply times 1000, then round, then divide by 1000. Boom! Rounded to the required precision value.
-		return Double(round(doubleValue/precisionLevel.precision))*precisionLevel.precision
+		return Double(round(doubleValue / precisionLevel.precision)) * precisionLevel.precision
 	}
 }
 
@@ -56,7 +60,6 @@ extension CGFloat: Roundable {
 	var doubleValue: Double { return Double(self) }
 
 	func roundToNearest(precisionLevel: PrecisionLevel) -> CGFloat {
-		let roundedDouble = Double(self).roundToNearest(precisionLevel)
-		return CGFloat(roundedDouble)
+		return CGFloat(Double(self).roundToNearest(precisionLevel))
 	}
 }
