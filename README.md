@@ -19,12 +19,16 @@ Currently, you can tweak the following types:
 - `UIColor`
 
 A `Tweak` looks like this:
-	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
+```swift
+public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
+```
 
 There are also *really* nifty `TweakGroupTemplate` types, like this one for iOS spring animations:
-		public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
+```swift
+public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
+```
 
-There are also templates for “basic” iOS animations, UIEdgeInsets, and best of all - you can create your own `TweakGroupTemplate` type and contribute ‘em back here!
+There are also templates for “basic” `UIView` animations, `UIEdgeInsets`, and best of all - you can create your own `TweakGroupTemplate` type and contribute ‘em back here!
 
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Demo.gif?raw=true)
 
@@ -84,16 +88,16 @@ To use a tweak, you replace a number or `UIColor`s in your code with a `Tweak` r
 
 Here’s our original code:
 ```swift
-	button.tintColor = UIColor.greenColor()
+button.tintColor = UIColor.greenColor()
 ```
 
 **assign** returns the current value of the tweak:
 ```swift	
-	button.tintColor = ExampleTweaks.assign(ExampleTweaks.colorTint)
+button.tintColor = ExampleTweaks.assign(ExampleTweaks.colorTint)
 ```
 **bind** calls its closure immediately, and again each time the tweak changes:
 ```swift	
-	ExampleTweaks.bind(ExampleTweaks.colorTint) { button.tintColor = $0 }
+ExampleTweaks.bind(ExampleTweaks.colorTint) { button.tintColor = $0 }
 ```
 **bindMultiple** calls its closure immediately, and again each time any of its tweaks change:
 ```swift	
