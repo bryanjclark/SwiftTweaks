@@ -141,7 +141,7 @@ class ViewController: UIViewController {
 					tweakStore: ExampleTweaks.defaultStore,
 					options: .BeginFromCurrentState,
 					animations: {
-						self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
+						self.bounceButton.frame = originalFrame
 					},
 					completion: nil
 				)
