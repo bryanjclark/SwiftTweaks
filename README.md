@@ -1,4 +1,7 @@
 # SwiftTweaks
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases) ![Swift 2.2.x](https://img.shields.io/badge/Swift-2.2.x-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg)
+
 Adjust your iOS app on the fly without needing to compile!
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)
 
@@ -114,6 +117,13 @@ For more examples, check out the example project’s `ViewController.swift` file
 
 ### Step Three: Set TweakWindow as your Root View Controller
 By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture if you prefer it!
+
+## Getting started
+
+To add `SwiftTweaks` to your application, add it to your `Cartfile`:
+```
+github "Khan/SwiftTweaks"
+```
 
 ## FAQ
 #### Do I *have* to set TweakWindow as the root of my app?
