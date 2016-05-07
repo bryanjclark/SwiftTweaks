@@ -14,7 +14,7 @@ internal extension UIColor {
 
 	/// Creates a UIColor with a given hex string (e.g. "#FF00FF")
 	// NOTE: Would use a failable init (e.g. `UIColor(hexString: _)` but have to wait until Swift 2.2.1 https://github.com/Khan/SwiftTweaks/issues/38
-	internal static func colorWitHHexString(hexString: String) -> UIColor? {
+	internal static func colorWithHexString(hexString: String) -> UIColor? {
 		// Strip whitespace, "#", "0x", and make uppercase
 		let hexString = hexString
 			.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())

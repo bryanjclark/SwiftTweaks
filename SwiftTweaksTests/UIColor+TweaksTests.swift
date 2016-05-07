@@ -19,7 +19,7 @@ class UIColor_TweaksTests: XCTestCase {
 		let expectedColor: UIColor?
 
 		static func verify(testCase: HexToColorTestCase) {
-			if let generatedColor = UIColor.colorWitHHexString(testCase.string) {
+			if let generatedColor = UIColor.colorWithHexString(testCase.string) {
 				if let expectedColor = testCase.expectedColor {
 					XCTAssertEqual(generatedColor.hexString, expectedColor.hexString, "Generated color with hex \(generatedColor.hexString) from test string \(testCase.string), but expected color with hex \(expectedColor.hexString)")
 				} else {

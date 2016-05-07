@@ -41,7 +41,7 @@ extension ColorRepresentation {
 	var color: UIColor {
 		switch self {
 		case let .Hex(hex: hex, alpha: alpha):
-			return UIColor.colorWitHHexString(hex)!.colorWithAlphaComponent(CGFloat(alpha.rawValue))
+			return UIColor.colorWithHexString(hex)!.colorWithAlphaComponent(CGFloat(alpha.rawValue))
 		case let .RGBa(r: r, g: g, b: b, a: a):
 			return UIColor(red: r.rawValue, green: g.rawValue, blue: b.rawValue, alpha: a.rawValue)
 		case let .HSBa(h: h, s: s, b: b, a: a):
