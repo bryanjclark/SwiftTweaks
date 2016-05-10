@@ -146,7 +146,7 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 	internal func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup) {
 		if (floatingTweakGroupUIWindow == nil) {
 			let window = HitTransparentWindow()
-			window.frame = UIScreen.mainScreen().applicationFrame
+			window.frame = UIScreen.mainScreen().bounds
 			window.backgroundColor = UIColor.clearColor()
 
 			let floatingTweakGroupFrame = CGRect(

@@ -309,7 +309,7 @@ extension TweakTableCell: UITextFieldDelegate {
 				updateSubviews()
 			}
 		case let .Color(_, defaultValue: defaultValue):
-			if let text = textField.text, newValue = UIColor.colorWitHHexString(text) {
+			if let text = textField.text, newValue = UIColor.colorWithHexString(text) {
 				viewData = TweakViewData(type: .UIColor, value: newValue, defaultValue: defaultValue, minimum: nil, maximum: nil, stepSize: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
