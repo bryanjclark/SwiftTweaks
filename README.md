@@ -41,12 +41,13 @@ Good question! I’m glad you asked. **The whole reason SwiftTweaks exists is be
 But Swift doesn’t support this macro-wizardry, so FBTweaks is burdensome to use in Swift code. Our app is nearly all Swift, so we wanted to see if we could make something that was a little easier!
 
 ## Steps to Tweaking
-There are four steps to using SwiftTweaks:
+There are three steps to add SwiftTweaks to your project:
 
 1. Create a `TweakLibraryType`, which contains a set of `Tweak`s and a `TweakStore` to persist them.
 2. Reference that `TweakLibraryType` in your code to use a `Tweak`.
 3. In your AppDelegate, make the `TweakWindow` the root view controller of your app (there are other options, but this is the most straightforward! More on that later.)
-4. Build-and-run, then shake your phone to bring up the Tweaks UI! Adjust tweaks, and when you’re satisfied with what you’ve got, share your tweaks with others from within the Tweaks UI.
+
+Now build-and-run, then shake your phone to bring up the Tweaks UI! Adjust tweaks, and when you’re satisfied with what you’ve got, share your tweaks with others from within the Tweaks UI.
 
 ### Step One: Make your TweakLibrary
 A tweak library is responsible for listing out a bunch of `public static` tweaks, and building a `TweakStore`. A tweak library  looks like this:
@@ -118,16 +119,18 @@ For more examples, check out the example project’s `ViewController.swift` file
 ### Step Three: Set TweakWindow as your Root View Controller
 By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture if you prefer it!
 
-## Getting started with Carthage
+## Installation
 
+#### Carthage
 To add `SwiftTweaks` to your application, add it to your `Cartfile`:
+
 ```
 github "Khan/SwiftTweaks" ~> 1.0
 ```
 
-### Getting started with [CocoaPods](http://cocoapods.org/?q=SwiftTweaks)
+#### [CocoaPods](http://cocoapods.org/?q=SwiftTweaks)
+
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
 pod 'SwiftTweaks', '~> 1.0'
 ```
 
