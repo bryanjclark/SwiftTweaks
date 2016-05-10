@@ -122,7 +122,7 @@ By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can als
 
 To add `SwiftTweaks` to your application, add it to your `Cartfile`:
 ```
-github "Khan/SwiftTweaks"
+github "Khan/SwiftTweaks" ~> 1.0
 ```
 
 ## FAQ
