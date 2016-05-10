@@ -1,0 +1,5 @@
+language: objective-c
+osx_image: xcode7.3
+script:
+  - set -o pipefail
+  - xcodebuild clean test -project SwiftTweaks.xcodeproj -scheme 'SwiftTweaks' -sdk iphonesimulator -configuration Release ENABLE_TESTABILITY=YES | xcpretty
