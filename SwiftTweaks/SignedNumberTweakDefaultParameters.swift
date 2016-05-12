@@ -15,6 +15,13 @@ public struct SignedNumberTweakDefaultParameters<T: SignedNumberType> {
 	public let minValue: T?
 	public let maxValue: T?
 	public let stepSize: T?
+
+	public init(defaultValue: T, minValue: T? = nil, maxValue: T? = nil, stepSize: T? = nil) {
+		self.defaultValue = defaultValue
+		self.minValue = minValue
+		self.maxValue = maxValue
+		self.stepSize = stepSize
+	}
 }
 
 public extension Tweak where T: SignedNumberType {
