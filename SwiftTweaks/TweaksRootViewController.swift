@@ -123,8 +123,9 @@ extension TweaksRootViewController: TweaksCollectionsListViewControllerDelegate 
 		self.navigationController?.pushViewController(tweakCollectionViewController, animated: true)
 	}
 
-	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
+	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController, shareButton: UIBarButtonItem) {
 		let activityVC = UIActivityViewController(activityItems: [TweakStoreActivityItemSource(text: tweakStore.textRepresentation)], applicationActivities: nil)
+		activityVC.popoverPresentationController?.barButtonItem = shareButton
 		presentViewController(activityVC, animated: true, completion: nil)
 	}
 }

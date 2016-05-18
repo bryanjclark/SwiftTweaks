@@ -11,7 +11,7 @@ import UIKit
 internal protocol TweaksCollectionsListViewControllerDelegate {
 	func tweaksCollectionsListViewControllerDidTapDismissButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 	func tweaksCollectionsListViewController(tweaksCollectionsListViewController: TweaksCollectionsListViewController, didSelectTweakCollection: TweakCollection)
-	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController)
+	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController, shareButton: UIBarButtonItem)
 }
 
 /// Displays a list of TweakCollections in a table.
@@ -71,10 +71,11 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc private func resetStore() {
+	@objc private func resetStore(sender: UIBarButtonItem) {
 		let confirmationAlert = UIAlertController(title: nil, message: "Reset all tweaks to their default values?", preferredStyle: .ActionSheet)
 		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		confirmationAlert.addAction(UIAlertAction(title: "Reset All Tweaks", style: .Destructive, handler: { _ in self.tweakStore.reset() }))
+		confirmationAlert.popoverPresentationController?.barButtonItem = sender
 		presentViewController(confirmationAlert, animated: true, completion: nil)
 	}
 
@@ -82,8 +83,8 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		delegate.tweaksCollectionsListViewControllerDidTapDismissButton(self)
 	}
 
-	@objc private func actionButtonTapped() {
-		delegate.tweaksCollectionsListViewControllerDidTapShareButton(self)
+	@objc private func actionButtonTapped(sender: UIBarButtonItem) {
+		delegate.tweaksCollectionsListViewControllerDidTapShareButton(self, shareButton: sender)
 	}
 
 	private static let TweakCollectionCellIdentifier = "TweakCollectionCellIdentifier"
