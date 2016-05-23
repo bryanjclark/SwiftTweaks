@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "8.0"
   s.ios.deployment_target = 8.0
 
-  s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v1.0" }
+  s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v1.0", :submodules => true }
   s.source_files = "SwiftTweaks/**/*.swift"
   s.resources = "SwiftTweaks/*.xcassets"
   
