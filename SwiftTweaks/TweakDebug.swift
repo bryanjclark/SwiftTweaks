@@ -9,7 +9,6 @@
 import Foundation
 
 public struct TweakDebug {
-    
     public static var isActive: Bool = {
         #if DEBUG
             return true
