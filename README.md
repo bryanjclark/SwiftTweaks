@@ -64,13 +64,7 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let defaultStore: TweakStore = {
 		let allTweaks: [TweakClusterType] = [colorTint, marginHorizontal, marginVertical, featureFlagMainScreenHelperText, buttonAnimation]
 
-		// Since SwiftTweaks is a dynamic library, you'll need to determine whether tweaks are enabled.
-		// Try using the DEBUG flag (add "-D DEBUG" to "Other Swift Flags" in your project's Build Settings).
-		#if DEBUG
-			let tweaksEnabled: Bool = true
-		#else
-			let tweaksEnabled: Bool = false
-		#endif
+		let tweaksEnabled = TweakDebug.isActive
 
 		return TweakStore(
 			tweaks: allTweaks,
@@ -128,10 +122,25 @@ To add `SwiftTweaks` to your application, add it to your `Cartfile`:
 github "Khan/SwiftTweaks" ~> 1.0
 ```
 
+In addition, add `-DDEBUG` to **Other Swift Flags** in your project's Build Settings for your *Debug* configuration.
+
 #### [CocoaPods](http://cocoapods.org/?q=SwiftTweaks)
 
 ```ruby
 pod 'SwiftTweaks', '~> 1.0'
+
+# Enable DEBUG flag in Swift for SwiftTweaks
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == 'SwiftTweaks'
+            target.build_configurations.each do |config|
+                if config.name == 'Debug'
+                    config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG'
+                end
+            end
+        end
+    end
+end
 ```
 
 ## FAQ

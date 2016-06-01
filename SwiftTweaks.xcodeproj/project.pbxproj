@@ -98,6 +98,8 @@
 		93C942591BFBDC550054811A /* TweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C942581BFBDC550054811A /* TweakBinding.swift */; };
 		93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB80341BFCE4E80031D61A /* AnyTweak.swift */; };
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
+		B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
+		B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +177,7 @@
 		93C942581BFBDC550054811A /* TweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBinding.swift; sourceTree = "<group>"; };
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
+		B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakDebug.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +386,7 @@
 				93DB80341BFCE4E80031D61A /* AnyTweak.swift */,
 				93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */,
 				93AA344E1BEBBD2D004B734B /* TweakStore.swift */,
+				B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */,
 				9345EC0C1BF2B9040086AB5D /* Internal */,
 			);
 			name = Model;
@@ -570,6 +574,7 @@
 				93212CB21CEE258900AA85D0 /* CALayer+ShadowTweakTemplate.swift in Sources */,
 				93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */,
 				932BA9D41BFA398A001ADFC6 /* UIColor+Tweaks.swift in Sources */,
+				B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */,
 				939F2CD51CB8097D00345E03 /* TweakGroupTemplateType.swift in Sources */,
 				939F2CE01CB81ED400345E03 /* TweakClusterType.swift in Sources */,
 				9379628F1BFE509F0046E4CE /* Clip.swift in Sources */,
@@ -594,6 +599,7 @@
 				9314724E1BFFB41700F66D20 /* TweaksRootViewController.swift in Sources */,
 				9314725C1BFFB41700F66D20 /* TweakPersistency.swift in Sources */,
 				93A84EF31BEAE88D0022D2F3 /* Tweak.swift in Sources */,
+				B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */,
 				931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */,
 				931472551BFFB41700F66D20 /* TweaksBackupsListViewController.swift in Sources */,
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
