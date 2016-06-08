@@ -143,6 +143,10 @@ post_install do |installer|
 end
 ```
 
+#### Manually
+1. Download and drop ```/SwiftTweaks``` folder in your project.  
+2. Congratulations!  
+
 ## FAQ
 #### Do I *have* to set TweakWindow as the root of my app?
 Nope! Wherever/however you prefer, just create a `TweaksViewController` like so:
