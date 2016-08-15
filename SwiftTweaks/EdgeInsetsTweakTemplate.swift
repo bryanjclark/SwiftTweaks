@@ -6,7 +6,8 @@
 //  Copyright © 2016 Khan Academy. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CoreGraphics
 
 /// A shortcut to create UIEdgeInsets using Tweaks.
 public struct EdgeInsetsTweakTemplate: TweakGroupTemplateType {
