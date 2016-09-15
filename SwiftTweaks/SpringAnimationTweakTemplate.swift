@@ -6,9 +6,7 @@
 //  Copyright © 2016 Khan Academy. All rights reserved.
 //
 
-import Foundation
-
-
+import CoreGraphics
 
 /// A shortcut to create a TweakGroup for an iOS-style spring animation.
 /// Creates a collection of Tweak<T> with sensible defaults for a spring animation.
