@@ -64,9 +64,9 @@ private final class TweakDiskPersistency {
 
 	private static func fileURLForIdentifier(identifier: String) -> NSURL {
 		return try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-			.URLByAppendingPathComponent("SwiftTweaks")
-			.URLByAppendingPathComponent("\(identifier)")
-			.URLByAppendingPathExtension("db")
+			.URLByAppendingPathComponent("SwiftTweaks")!
+			.URLByAppendingPathComponent("\(identifier)")!
+			.URLByAppendingPathExtension("db")!
 	}
 
 	private let queue = dispatch_queue_create("org.khanacademy.swift_tweaks.disk_persistency", DISPATCH_QUEUE_SERIAL)

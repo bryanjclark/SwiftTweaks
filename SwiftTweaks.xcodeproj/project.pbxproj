@@ -7,18 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5752FEE21C05392300AEECD1 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEBF1C05392300AEECD1 /* Common.xcconfig */; };
-		5752FEE31C05392300AEECD1 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC11C05392300AEECD1 /* Debug.xcconfig */; };
-		5752FEE41C05392300AEECD1 /* Profile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC21C05392300AEECD1 /* Profile.xcconfig */; };
-		5752FEE51C05392300AEECD1 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC31C05392300AEECD1 /* Release.xcconfig */; };
-		5752FEE61C05392300AEECD1 /* Test.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC41C05392300AEECD1 /* Test.xcconfig */; };
-		5752FEE71C05392300AEECD1 /* Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC61C05392300AEECD1 /* Application.xcconfig */; };
-		5752FEE81C05392300AEECD1 /* Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC71C05392300AEECD1 /* Framework.xcconfig */; };
-		5752FEE91C05392300AEECD1 /* StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FEC81C05392300AEECD1 /* StaticLibrary.xcconfig */; };
-		5752FEEA1C05392300AEECD1 /* iOS-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECC1C05392300AEECD1 /* iOS-Application.xcconfig */; };
-		5752FEEB1C05392300AEECD1 /* iOS-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECD1C05392300AEECD1 /* iOS-Base.xcconfig */; };
-		5752FEEC1C05392300AEECD1 /* iOS-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */; };
-		5752FEED1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5752FECF1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
 		9314724D1BFFB41700F66D20 /* TweaksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA34561BEBC654004B734B /* TweaksViewController.swift */; };
@@ -472,14 +460,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Khan Academy";
 				TargetAttributes = {
 					93A84ED01BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 					};
 					93A84EDA1BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -506,19 +496,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5752FEEC1C05392300AEECD1 /* iOS-Framework.xcconfig in Resources */,
-				5752FEE61C05392300AEECD1 /* Test.xcconfig in Resources */,
-				5752FEE31C05392300AEECD1 /* Debug.xcconfig in Resources */,
-				5752FEE81C05392300AEECD1 /* Framework.xcconfig in Resources */,
-				5752FEE91C05392300AEECD1 /* StaticLibrary.xcconfig in Resources */,
-				5752FEEA1C05392300AEECD1 /* iOS-Application.xcconfig in Resources */,
-				5752FEE51C05392300AEECD1 /* Release.xcconfig in Resources */,
-				5752FEED1C05392300AEECD1 /* iOS-StaticLibrary.xcconfig in Resources */,
 				931A24761BFA7EEE00E40192 /* Media.xcassets in Resources */,
-				5752FEE21C05392300AEECD1 /* Common.xcconfig in Resources */,
-				5752FEE41C05392300AEECD1 /* Profile.xcconfig in Resources */,
-				5752FEE71C05392300AEECD1 /* Application.xcconfig in Resources */,
-				5752FEEB1C05392300AEECD1 /* iOS-Base.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,8 +627,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -698,8 +678,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -732,6 +714,7 @@
 			baseConfigurationReference = 5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -741,6 +724,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -749,6 +733,7 @@
 			baseConfigurationReference = 5752FECE1C05392300AEECD1 /* iOS-Framework.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -758,6 +743,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -769,6 +755,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaksTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -780,6 +767,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaksTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

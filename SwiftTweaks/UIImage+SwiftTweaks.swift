@@ -37,7 +37,7 @@ internal extension UIImage {
 		color.set()
 		UIRectFillUsingBlendMode(imageRect, .SourceIn)
 
-		let image = UIGraphicsGetImageFromCurrentImageContext()
+		let image = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
 
 		return image

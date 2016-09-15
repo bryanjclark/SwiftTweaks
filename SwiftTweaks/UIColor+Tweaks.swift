@@ -80,7 +80,7 @@ internal extension UIColor {
 	}
 
 	private var canProvideRGBComponents: Bool {
-		switch CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor)) {
+		switch CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor)!) {
 		case .RGB, .Monochrome:
 			return true
 		default:
