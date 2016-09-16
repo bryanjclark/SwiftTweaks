@@ -12,7 +12,7 @@ import UIKit
 // MARK: - FloatingTweaksWindowPresenter
 
 internal protocol FloatingTweaksWindowPresenter {
-	func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup)
+	func presentFloatingTweaksUIForTweakGroup(_ tweakGroup: TweakGroup)
 	func dismissFloatingTweaksUI()
 }
 
@@ -27,9 +27,9 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
-	private let presenter: FloatingTweaksWindowPresenter
-	private let tweakStore: TweakStore
-	private let fullFrame: CGRect
+	fileprivate let presenter: FloatingTweaksWindowPresenter
+	fileprivate let tweakStore: TweakStore
+	fileprivate let fullFrame: CGRect
 
 	internal init(frame: CGRect, tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
 		self.tweakStore = tweakStore
@@ -56,7 +56,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		layoutSubviews()
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		tableView.flashScrollIndicators()
@@ -72,13 +72,13 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	internal static let height: CGFloat = 168
 	internal static let margins: CGFloat = 5
-	private static let minimizedWidth: CGFloat = 30
+	fileprivate static let minimizedWidth: CGFloat = 30
 
-	private static let closeButtonSize = CGSize(width: 42, height: 32)
-	private static let navBarHeight: CGFloat = 32
-	private static let windowCornerRadius: CGFloat = 5
+	fileprivate static let closeButtonSize = CGSize(width: 42, height: 32)
+	fileprivate static let navBarHeight: CGFloat = 32
+	fileprivate static let windowCornerRadius: CGFloat = 5
 
-	private let navBar: UIView = {
+	fileprivate let navBar: UIView = {
 		let view = UIView()
 		view.backgroundColor = AppTheme.Colors.floatingTweakGroupNavBG
 
@@ -90,42 +90,42 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		return view
 	}()
 
-	private let titleLabel: UILabel = {
+	fileprivate let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = AppTheme.Colors.sectionHeaderTitleColor
 		label.font = AppTheme.Fonts.sectionHeaderTitleFont
 		return label
 	}()
 
-	private let closeButton: UIButton = {
+	fileprivate let closeButton: UIButton = {
 		let button = UIButton()
-		let buttonImage = UIImage(swiftTweaksImage: .FloatingCloseButton).imageWithRenderingMode(.AlwaysTemplate)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), forState: .Normal)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), forState: .Highlighted)
+		let buttonImage = UIImage(swiftTweaksImage: .FloatingCloseButton).withRenderingMode(.alwaysTemplate)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
 		return button
 	}()
 
-	private let tableView: UITableView = {
-		let tableView = UITableView(frame: .zero, style: .Plain)
-		tableView.backgroundColor = .clearColor()
-		tableView.registerClass(TweakTableCell.self, forCellReuseIdentifier: FloatingTweakGroupViewController.TweakTableViewCellIdentifer)
+	fileprivate let tableView: UITableView = {
+		let tableView = UITableView(frame: .zero, style: .plain)
+		tableView.backgroundColor = .clear
+		tableView.register(TweakTableCell.self, forCellReuseIdentifier: FloatingTweakGroupViewController.TweakTableViewCellIdentifer)
 		tableView.contentInset = UIEdgeInsets(top: FloatingTweakGroupViewController.navBarHeight, left: 0, bottom: 0, right: 0)
 		tableView.separatorColor = AppTheme.Colors.tableSeparator
 		return tableView
 	}()
 
-	private let restoreButton: UIButton = {
+	fileprivate let restoreButton: UIButton = {
 		let button = UIButton()
-		let buttonImage = UIImage(swiftTweaksImage: .FloatingMinimizedArrow).imageWithRenderingMode(.AlwaysTemplate)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondary), forState: .Normal)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondaryPressed), forState: .Highlighted)
-		button.hidden = true
+		let buttonImage = UIImage(swiftTweaksImage: .FloatingMinimizedArrow).withRenderingMode(.alwaysTemplate)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondary), for: UIControlState())
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondaryPressed), for: .highlighted)
+		button.isHidden = true
 		return button
 	}()
 
-	private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+	fileprivate let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 
-	private func installSubviews() {
+	fileprivate func installSubviews() {
 		// Create the rounded corners and shadows
 		view.layer.cornerRadius = FloatingTweakGroupViewController.windowCornerRadius
 		view.layer.shadowColor = AppTheme.Shadows.floatingShadowColor
@@ -134,7 +134,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		view.layer.shadowOpacity = AppTheme.Shadows.floatingShadowOpacity
 
 		// Set up the blurry background
-		view.backgroundColor = .clearColor()
+		view.backgroundColor = .clear
 		backgroundView.layer.cornerRadius = FloatingTweakGroupViewController.windowCornerRadius
 		backgroundView.clipsToBounds = true
 		self.view.addSubview(backgroundView)
@@ -145,13 +145,13 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		view.addSubview(tableView)
 
 		// The "fake nav bar"
-		closeButton.addTarget(self, action: #selector(self.closeButtonTapped), forControlEvents: .TouchUpInside)
+		closeButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
 		navBar.addSubview(closeButton)
 		navBar.addSubview(titleLabel)
 		view.addSubview(navBar)
 
 		// The restore button
-		restoreButton.addTarget(self, action: #selector(self.restore), forControlEvents: .TouchUpInside)
+		restoreButton.addTarget(self, action: #selector(self.restore), for: .touchUpInside)
 		view.addSubview(restoreButton)
 
 		// The pan gesture recognizer
@@ -160,7 +160,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		view.addGestureRecognizer(panGestureRecognizer)
 	}
 
-	private func layoutSubviews() {
+	fileprivate func layoutSubviews() {
 		backgroundView.frame = self.view.bounds
 
 		tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: FloatingTweakGroupViewController.height))
@@ -178,11 +178,11 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		navBar.layer.mask = {
 			let maskPath = UIBezierPath(
 				roundedRect: view.bounds,
-				byRoundingCorners: [.TopLeft, .TopRight],
+				byRoundingCorners: [.topLeft, .topRight],
 				cornerRadii: CGSize(
 					width: FloatingTweakGroupViewController.windowCornerRadius,
 					height: FloatingTweakGroupViewController.windowCornerRadius
-				)).CGPath
+				)).cgPath
 			let mask = CAShapeLayer()
 			mask.path = maskPath
 			return mask
@@ -211,21 +211,21 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	// MARK: Actions
 
-	@objc private func closeButtonTapped() {
+	@objc fileprivate func closeButtonTapped() {
 		presenter.dismissFloatingTweaksUI()
 	}
 
-	private static let gestureSpeedBreakpoint: CGFloat = 10
-	private static let gesturePositionBreakpoint: CGFloat = 30
+	fileprivate static let gestureSpeedBreakpoint: CGFloat = 10
+	fileprivate static let gesturePositionBreakpoint: CGFloat = 30
 
-	@objc private func moveWindowPanGestureRecognized(gestureRecognizer: UIPanGestureRecognizer) {
+	@objc fileprivate func moveWindowPanGestureRecognized(_ gestureRecognizer: UIPanGestureRecognizer) {
 		switch (gestureRecognizer.state) {
-		case .Began:
-			gestureRecognizer.setTranslation(self.view.frame.origin, inView: self.view)
-		case .Changed:
-			view.frame.origin.x = gestureRecognizer.translationInView(self.view).x
-		case .Possible, .Ended, .Cancelled, .Failed:
-			let gestureIsMovingToTheRight = (gestureRecognizer.velocityInView(nil).x > FloatingTweakGroupViewController.gestureSpeedBreakpoint)
+		case .began:
+			gestureRecognizer.setTranslation(self.view.frame.origin, in: self.view)
+		case .changed:
+			view.frame.origin.x = gestureRecognizer.translation(in: self.view).x
+		case .possible, .ended, .cancelled, .failed:
+			let gestureIsMovingToTheRight = (gestureRecognizer.velocity(in: nil).x > FloatingTweakGroupViewController.gestureSpeedBreakpoint)
 			let viewIsKindaNearTheRight = view.frame.origin.x > FloatingTweakGroupViewController.gesturePositionBreakpoint
 			if gestureIsMovingToTheRight && viewIsKindaNearTheRight {
 				minimize()
@@ -235,20 +235,20 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
-	private static let minimizeAnimationDuration: Double = 0.3
-	private static let minimizeAnimationDamping: CGFloat = 0.8
+	fileprivate static let minimizeAnimationDuration: Double = 0.3
+	fileprivate static let minimizeAnimationDamping: CGFloat = 0.8
 
-	private func minimize() {
+	fileprivate func minimize() {
 		// TODO map the continuous gesture's velocity into the animation.
 		self.restoreButton.alpha = 0
-		self.restoreButton.hidden = false
+		self.restoreButton.isHidden = false
 
-		UIView.animateWithDuration(
-			FloatingTweakGroupViewController.minimizeAnimationDuration,
+		UIView.animate(
+			withDuration: FloatingTweakGroupViewController.minimizeAnimationDuration,
 			delay: 0,
 			usingSpringWithDamping: FloatingTweakGroupViewController.minimizeAnimationDamping,
 			initialSpringVelocity: 0,
-			options: .BeginFromCurrentState,
+			options: .beginFromCurrentState,
 			animations: {
 				self.view.frame.origin.x = self.minimizedFrameOriginX
 				self.tableView.alpha = 0
@@ -259,15 +259,15 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		)
 	}
 
-	@objc private func restore() {
+	@objc fileprivate func restore() {
 		// TODO map the continuous gesture's velocity into the animation
 
-		UIView.animateWithDuration(
-			FloatingTweakGroupViewController.minimizeAnimationDuration,
+		UIView.animate(
+			withDuration: FloatingTweakGroupViewController.minimizeAnimationDuration,
 			delay: 0,
 			usingSpringWithDamping: FloatingTweakGroupViewController.minimizeAnimationDamping,
 			initialSpringVelocity: 0,
-			options: .BeginFromCurrentState,
+			options: .beginFromCurrentState,
 			animations: {
 				self.view.frame.origin.x = self.fullFrame.origin.x
 				self.tableView.alpha = 1
@@ -275,21 +275,21 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 				self.restoreButton.alpha = 0
 			},
 			completion: { _ in
-				self.restoreButton.hidden = true
+				self.restoreButton.isHidden = true
 			}
 		)
 	}
 }
 
 extension FloatingTweakGroupViewController: UIGestureRecognizerDelegate {
-	@objc func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-		guard let hitView = gestureRecognizer.view?.hitTest(gestureRecognizer.locationInView(gestureRecognizer.view), withEvent: nil) else {
+	@objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+		guard let hitView = gestureRecognizer.view?.hitTest(gestureRecognizer.location(in: gestureRecognizer.view), with: nil) else {
 			return true
 		}
 
 		// We don't want to move the window if you're trying to drag a slider or a switch!
 		// But if you're dragging on the restore button, that's what we do want!
-		let gestureIsNotOnAControl = !hitView.isKindOfClass(UIControl.self)
+		let gestureIsNotOnAControl = !hitView.isKind(of: UIControl.self)
 		let gestureIsOnTheRestoreButton = hitView == restoreButton
 
 		return gestureIsNotOnAControl || gestureIsOnTheRestoreButton
@@ -299,33 +299,33 @@ extension FloatingTweakGroupViewController: UIGestureRecognizerDelegate {
 // MARK: Table View
 
 extension FloatingTweakGroupViewController: UITableViewDelegate {
-	@objc func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	@objc func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let tweak = tweakAtIndexPath(indexPath) else { return }
 		switch tweak.tweakViewDataType {
-		case .UIColor:
-			let alert = UIAlertController(title: "Can't edit colors here.", message: "Sorry, haven't built out the floating UI for it yet!", preferredStyle: .Alert)
-			alert.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
-			presentViewController(alert, animated: true, completion: nil)
-		case .Boolean, .Integer, .CGFloat, .Double:
+		case .uiColor:
+			let alert = UIAlertController(title: "Can't edit colors here.", message: "Sorry, haven't built out the floating UI for it yet!", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+			present(alert, animated: true, completion: nil)
+		case .boolean, .integer, .cgFloat, .double:
 			break
 		}
 	}
 }
 
 extension FloatingTweakGroupViewController: UITableViewDataSource {
-	private static let TweakTableViewCellIdentifer = "TweakTableViewCellIdentifer"
+	fileprivate static let TweakTableViewCellIdentifer = "TweakTableViewCellIdentifer"
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return tweakGroup?.tweaks.count ?? 0
 	}
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-		let cell = tableView.dequeueReusableCellWithIdentifier(FloatingTweakGroupViewController.TweakTableViewCellIdentifer, forIndexPath: indexPath) as! TweakTableCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: FloatingTweakGroupViewController.TweakTableViewCellIdentifer, for: indexPath) as! TweakTableCell
 
 		let tweak = tweakAtIndexPath(indexPath)!
 
@@ -333,25 +333,25 @@ extension FloatingTweakGroupViewController: UITableViewDataSource {
 		cell.isInFloatingTweakGroupWindow = true
 		cell.viewData = tweakStore.currentViewDataForTweak(tweak)
 		cell.delegate = self
-		cell.backgroundColor = .clearColor()
-		cell.contentView.backgroundColor = .clearColor()
+		cell.backgroundColor = .clear
+		cell.contentView.backgroundColor = .clear
 
 		return cell
 	}
 
-	private func tweakAtIndexPath(indexPath: NSIndexPath) -> AnyTweak? {
-		return tweakGroup?.sortedTweaks[indexPath.row]
+	fileprivate func tweakAtIndexPath(_ indexPath: IndexPath) -> AnyTweak? {
+		return tweakGroup?.sortedTweaks[(indexPath as NSIndexPath).row]
 	}
 }
 
 // MARK: TweakTableCellDelegate
 
 extension FloatingTweakGroupViewController: TweakTableCellDelegate {
-	func tweakCellDidChangeCurrentValue(tweakCell: TweakTableCell) {
+	func tweakCellDidChangeCurrentValue(_ tweakCell: TweakTableCell) {
 		if let
-			indexPath = tableView.indexPathForCell(tweakCell),
-			viewData = tweakCell.viewData,
-			tweak = tweakAtIndexPath(indexPath)
+			indexPath = tableView.indexPath(for: tweakCell),
+			let viewData = tweakCell.viewData,
+			let tweak = tweakAtIndexPath(indexPath)
 		{
 			tweakStore.setValue(viewData, forTweak: tweak)
 		}

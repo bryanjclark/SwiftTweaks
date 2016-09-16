@@ -9,7 +9,7 @@
 import Foundation
 
 /// Clips a value to be between the given min / max values, if provided.
-internal func clip<U: SignedNumberType>(value: U, _ minimum: U?, _ maximum: U?) -> U {
+internal func clip<U: SignedNumber>(_ value: U, _ minimum: U?, _ maximum: U?) -> U {
 	var result = value
 
 	if let minimum = minimum {

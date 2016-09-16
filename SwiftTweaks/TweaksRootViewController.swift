@@ -10,29 +10,29 @@
 import UIKit
 
 internal protocol TweaksRootViewControllerDelegate {
-	func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController)
-	func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup)
+	func tweaksRootViewControllerDidPressDismissButton(_ tweaksRootViewController: TweaksRootViewController)
+	func tweaksRootViewController(_ tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup)
 }
 
 /// A "container" view controller with two states: listing out the TweakCollections, or displaying the TweakBackups
 internal final class TweaksRootViewController: UIViewController {
 
-	private let segmentedControl: UISegmentedControl
-	private let tweakStore: TweakStore
-	private let delegate: TweaksRootViewControllerDelegate
+	fileprivate let segmentedControl: UISegmentedControl
+	fileprivate let tweakStore: TweakStore
+	fileprivate let delegate: TweaksRootViewControllerDelegate
 
-	private var content: Content? {
+	fileprivate var content: Content? {
 		didSet {
 			if let newContent = content {
 				let newContentViewController = newContent.viewController
 				let newContentView = newContentViewController.view
 
-				newContentView.frame = view.bounds
-				newContentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+				newContentView?.frame = view.bounds
+				newContentView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-				view.addSubview(newContentView)
+				view.addSubview(newContentView!)
 				addChildViewController(newContentViewController)
-				newContentViewController.didMoveToParentViewController(self)
+				newContentViewController.didMove(toParentViewController: self)
 
 				toolbarItems = newContentViewController.toolbarItems
 				navigationItem.leftBarButtonItem = newContentViewController.navigationItem.leftBarButtonItem
@@ -63,7 +63,7 @@ internal final class TweaksRootViewController: UIViewController {
 //		self.navigationItem.titleView = segmentedControl
 
 		segmentedControl.selectedSegmentIndex = 0
-		segmentedControl.addTarget(self, action: #selector(self.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
+		segmentedControl.addTarget(self, action: #selector(self.segmentedControlValueChanged(_:)), for: .valueChanged)
 	}
 
 	override func viewDidLoad() {
@@ -75,7 +75,7 @@ internal final class TweaksRootViewController: UIViewController {
 	    fatalError("init(coder:) has not been implemented")
 	}
 
-	@objc private func segmentedControlValueChanged(sender: UISegmentedControl) {
+	@objc fileprivate func segmentedControlValueChanged(_ sender: UISegmentedControl) {
 		assert(sender == segmentedControl)
 		switch sender.selectedSegmentIndex {
 		case 0:
@@ -90,58 +90,58 @@ internal final class TweaksRootViewController: UIViewController {
 
 	// MARK: Content
 
-	private enum Content {
-		case CollectionsList(UIViewController)
-		case BackupsList(UIViewController)
+	fileprivate enum Content {
+		case collectionsList(UIViewController)
+		case backupsList(UIViewController)
 
 		var viewController: UIViewController {
 			switch self {
-			case .CollectionsList(let viewController):
+			case .collectionsList(let viewController):
 				return viewController
-			case .BackupsList(let viewController):
+			case .backupsList(let viewController):
 				return viewController
 			}
 		}
 
-		private static func collectionsListWithTweakStore(tweakStore: TweakStore, delegate: TweaksCollectionsListViewControllerDelegate) -> Content {
-			return .CollectionsList(TweaksCollectionsListViewController(tweakStore: tweakStore, delegate: delegate))
+		fileprivate static func collectionsListWithTweakStore(_ tweakStore: TweakStore, delegate: TweaksCollectionsListViewControllerDelegate) -> Content {
+			return .collectionsList(TweaksCollectionsListViewController(tweakStore: tweakStore, delegate: delegate))
 		}
 
-		private static func backupsListWithTweaksStore(tweakStore: TweakStore, delegate: TweaksBackupsListViewControllerDelegate) -> Content {
-			return .BackupsList(TweaksBackupsListViewController(tweakStore: tweakStore, delegate: delegate))
+		fileprivate static func backupsListWithTweaksStore(_ tweakStore: TweakStore, delegate: TweaksBackupsListViewControllerDelegate) -> Content {
+			return .backupsList(TweaksBackupsListViewController(tweakStore: tweakStore, delegate: delegate))
 		}
 	}
 }
 
 extension TweaksRootViewController: TweaksCollectionsListViewControllerDelegate {
-	func tweaksCollectionsListViewControllerDidTapDismissButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
+	func tweaksCollectionsListViewControllerDidTapDismissButton(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
 		delegate.tweaksRootViewControllerDidPressDismissButton(self)
 	}
 
-	func tweaksCollectionsListViewController(tweaksCollectionsListViewController: TweaksCollectionsListViewController, didSelectTweakCollection tweakCollection: TweakCollection) {
+	func tweaksCollectionsListViewController(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController, didSelectTweakCollection tweakCollection: TweakCollection) {
 		let tweakCollectionViewController = TweakCollectionViewController(tweakCollection: tweakCollection, tweakStore: tweakStore, delegate: self)
 		self.navigationController?.pushViewController(tweakCollectionViewController, animated: true)
 	}
 
-	func tweaksCollectionsListViewControllerDidTapShareButton(tweaksCollectionsListViewController: TweaksCollectionsListViewController, shareButton: UIBarButtonItem) {
+	func tweaksCollectionsListViewControllerDidTapShareButton(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController, shareButton: UIBarButtonItem) {
 		let activityVC = UIActivityViewController(activityItems: [TweakStoreActivityItemSource(text: tweakStore.textRepresentation)], applicationActivities: nil)
 		activityVC.popoverPresentationController?.barButtonItem = shareButton
-		presentViewController(activityVC, animated: true, completion: nil)
+		present(activityVC, animated: true, completion: nil)
 	}
 }
 
 extension TweaksRootViewController: TweaksBackupsListViewControllerDelegate {
-	func tweaksBackupsListDidPressDismiss(tweaksBackupsListViewController: TweaksBackupsListViewController) {
+	func tweaksBackupsListDidPressDismiss(_ tweaksBackupsListViewController: TweaksBackupsListViewController) {
 		delegate.tweaksRootViewControllerDidPressDismissButton(self)
 	}
 }
 
 extension TweaksRootViewController: TweakCollectionViewControllerDelegate {
-	func tweakCollectionViewControllerDidPressDismissButton(tweakCollectionViewController: TweakCollectionViewController) {
+	func tweakCollectionViewControllerDidPressDismissButton(_ tweakCollectionViewController: TweakCollectionViewController) {
 		delegate.tweaksRootViewControllerDidPressDismissButton(self)
 	}
 
-	func tweakCollectionViewController(tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup) {
+	func tweakCollectionViewController(_ tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup) {
 		delegate.tweaksRootViewController(self, requestsFloatingUIForTweakGroup: tweakGroup)
 	}
 }

@@ -14,34 +14,34 @@ import UIKit
 @objc public final class TweakWindow: UIWindow {
 
 	public enum GestureType {
-		case Shake
-		case Gesture(UIGestureRecognizer)
+		case shake
+		case gesture(UIGestureRecognizer)
 	}
 
 	/// The amount of time you need to shake your device to bring up the Tweaks UI
-	private static let shakeWindowTimeInterval: Double = 0.4
+	fileprivate static let shakeWindowTimeInterval: Double = 0.4
 
 	/// The GestureType used to determine when to present the UI.
-	private let gestureType: GestureType
+	fileprivate let gestureType: GestureType
 
 	/// By holding on to the TweaksViewController, we get easy state restoration!
-	private var tweaksViewController: TweaksViewController! // requires self for init
+	fileprivate var tweaksViewController: TweaksViewController! // requires self for init
 
 	/// Represents the "floating tweaks UI"
-	private var floatingTweakGroupUIWindow: HitTransparentWindow?
-	private let tweakStore: TweakStore
+	fileprivate var floatingTweakGroupUIWindow: HitTransparentWindow?
+	fileprivate let tweakStore: TweakStore
 
 	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
-	private let runningInSimulator: Bool
+	fileprivate let runningInSimulator: Bool
 
 	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
-	private var shaking: Bool = false
+	fileprivate var shaking: Bool = false
 
-	private var shouldPresentTweaks: Bool {
+	fileprivate var shouldPresentTweaks: Bool {
 		if tweakStore.enabled {
 			switch gestureType {
-			case .Shake: return shaking || runningInSimulator
-			case .Gesture: return true
+			case .shake: return shaking || runningInSimulator
+			case .gesture: return true
 			}
 		} else {
 			return false
@@ -50,7 +50,7 @@ import UIKit
 
 	// MARK: Init
 
-	public init(frame: CGRect, gestureType: GestureType = .Shake, tweakStore: TweakStore) {
+	public init(frame: CGRect, gestureType: GestureType = .shake, tweakStore: TweakStore) {
 		self.gestureType = gestureType
 
 		self.tweakStore = tweakStore
@@ -67,9 +67,9 @@ import UIKit
 		tintColor = AppTheme.Colors.controlTinted
 
 		switch gestureType {
-		case .Gesture(let gestureRecognizer):
+		case .gesture(let gestureRecognizer):
 			gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
-		case .Shake:
+		case .shake:
 			break
 		}
 
@@ -82,31 +82,31 @@ import UIKit
 	}
 
 	// MARK: Shaking & Gestures
-	public override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent?) {
-		if motion == .MotionShake {
+	public override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
+		if motion == .motionShake {
 			shaking = true
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(TweakWindow.shakeWindowTimeInterval * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(TweakWindow.shakeWindowTimeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
 				if self.shouldPresentTweaks {
 					self.presentTweaks()
 				}
 			}
 		}
 
-		super.motionBegan(motion, withEvent: event)
+		super.motionBegan(motion, with: event)
 	}
 
-	public override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-		if motion == .MotionShake {
+	public override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+		if motion == .motionShake {
 			shaking = false
 		}
 
-		super.motionEnded(motion, withEvent: event)
+		super.motionEnded(motion, with: event)
 	}
 
 
 	// MARK: Presenting & Dismissing
 
-	@objc private func presentTweaks() {
+	@objc fileprivate func presentTweaks() {
 		guard let rootViewController = rootViewController else {
 			return
 		}
@@ -117,37 +117,37 @@ import UIKit
 		}
 
 		if !(visibleViewController is TweaksViewController) {
-			visibleViewController.presentViewController(tweaksViewController, animated: true, completion: nil)
+			visibleViewController.present(tweaksViewController, animated: true, completion: nil)
 		}
 
 	}
 
-	private func dismissTweaks(completion: (() -> ())? = nil) {
-		tweaksViewController.dismissViewControllerAnimated(true, completion: completion)
+	fileprivate func dismissTweaks(_ completion: (() -> ())? = nil) {
+		tweaksViewController.dismiss(animated: true, completion: completion)
 	}
 }
 
 extension TweakWindow: TweaksViewControllerDelegate {
-	public func tweaksViewControllerRequestsDismiss(tweaksViewController: TweaksViewController, completion: (() -> ())? = nil) {
+	public func tweaksViewControllerRequestsDismiss(_ tweaksViewController: TweaksViewController, completion: (() -> ())? = nil) {
 		dismissTweaks(completion)
 	}
 }
 
 extension TweakWindow: FloatingTweaksWindowPresenter {
 
-	private static let presentationDuration: Double = 0.2
-	private static let presentationDamping: CGFloat = 0.8
-	private static let presentationVelocity: CGFloat = 5
+	fileprivate static let presentationDuration: Double = 0.2
+	fileprivate static let presentationDamping: CGFloat = 0.8
+	fileprivate static let presentationVelocity: CGFloat = 5
 
-	private static let dismissalDuration: Double = 0.2
+	fileprivate static let dismissalDuration: Double = 0.2
 
 
 	/// Presents a floating TweakGroup over your app's UI, so you don't have to hop in and out of the full-modal Tweak UI.
-	internal func presentFloatingTweaksUIForTweakGroup(tweakGroup: TweakGroup) {
+	internal func presentFloatingTweaksUIForTweakGroup(_ tweakGroup: TweakGroup) {
 		if (floatingTweakGroupUIWindow == nil) {
 			let window = HitTransparentWindow()
-			window.frame = UIScreen.mainScreen().bounds
-			window.backgroundColor = UIColor.clearColor()
+			window.frame = UIScreen.main.bounds
+			window.backgroundColor = UIColor.clear
 
 			let floatingTweakGroupFrame = CGRect(
 				origin: CGPoint(
@@ -166,18 +166,18 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 			window.addSubview(floatingTweaksVC.view)
 
 			window.alpha = 0
-			let initialWindowFrame = CGRectOffset(window.frame, 0, floatingTweaksVC.view.bounds.height)
+			let initialWindowFrame = window.frame.offsetBy(dx: 0, dy: floatingTweaksVC.view.bounds.height)
 			let destinationWindowFrame = window.frame
 			window.makeKeyAndVisible()
 			floatingTweakGroupUIWindow = window
 
 			window.frame = initialWindowFrame
-			UIView.animateWithDuration(
-				TweakWindow.presentationDuration,
+			UIView.animate(
+				withDuration: TweakWindow.presentationDuration,
 				delay: 0,
 				usingSpringWithDamping: TweakWindow.presentationDamping,
 				initialSpringVelocity: TweakWindow.presentationVelocity,
-				options: .BeginFromCurrentState,
+				options: .beginFromCurrentState,
 				animations: { 
 					window.frame = destinationWindowFrame
 					window.alpha = 1
@@ -192,16 +192,16 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 
 		guard let floatingTweakGroupUIWindow = floatingTweakGroupUIWindow else { return }
 
-		UIView.animateWithDuration(
-			TweakWindow.dismissalDuration,
+		UIView.animate(
+			withDuration: TweakWindow.dismissalDuration,
 			delay: 0,
-			options: .CurveEaseIn,
+			options: .curveEaseIn,
 			animations: { 
 				floatingTweakGroupUIWindow.alpha = 0
-				floatingTweakGroupUIWindow.frame = CGRectOffset(floatingTweakGroupUIWindow.frame, 0, floatingTweakGroupUIWindow.frame.height)
+				floatingTweakGroupUIWindow.frame = floatingTweakGroupUIWindow.frame.offsetBy(dx: 0, dy: floatingTweakGroupUIWindow.frame.height)
 			},
 			completion: { _ in
-				floatingTweakGroupUIWindow.hidden = true
+				floatingTweakGroupUIWindow.isHidden = true
 				self.floatingTweakGroupUIWindow = nil
 			}
 		)

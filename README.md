@@ -1,6 +1,6 @@
 # SwiftTweaks
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks) [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases) ![Swift 2.2.x](https://img.shields.io/badge/Swift-2.2.x-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg) [![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks) [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases) ![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg) [![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
 
 Adjust your iOS app on the fly without needing to compile!
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)

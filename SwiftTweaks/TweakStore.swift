@@ -12,22 +12,22 @@ import UIKit
 public final class TweakStore {
 
 	/// The "tree structure" for our Tweaks UI.
-	private var tweakCollections: [String: TweakCollection] = [:]
+	fileprivate var tweakCollections: [String: TweakCollection] = [:]
 
 	/// Useful when exporting or checking that a tweak exists in tweakCollections
-	private let allTweaks: Set<AnyTweak>
+	fileprivate let allTweaks: Set<AnyTweak>
 
 	/// We hold a reference to the storeName so we can have a better error message if a tweak doesn't exist in allTweaks.
-	private let storeName: String
+	fileprivate let storeName: String
 
 	/// Caches "single" bindings - when a tweak is updated, we'll call each of the corresponding bindings.
-	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
+	fileprivate var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
 	/// Caches "multi" bindings - when any tweak in a Set is updated, we'll call each of the corresponding bindings.
-	private var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
+	fileprivate var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
 
 	/// Persists tweaks' currentValues and maintains them on disk.
-	private let persistence: TweakPersistency
+	fileprivate let persistence: TweakPersistency
 
 	/// Determines whether tweaks are enabled, and whether the tweaks UI is accessible
 	internal let enabled: Bool
@@ -66,11 +66,11 @@ public final class TweakStore {
 	}
 
 	/// Returns the current value for a given tweak
-	public func assign<T>(tweak: Tweak<T>) -> T {
+	public func assign<T>(_ tweak: Tweak<T>) -> T {
 		return self.currentValueForTweak(tweak)
 	}
 
-	public func bind<T>(tweak: Tweak<T>, binding: (T) -> Void) {
+	public func bind<T>(_ tweak: Tweak<T>, binding: @escaping (T) -> Void) {
 		// Create the TweakBinding<T>, and wrap it in our type-erasing AnyTweakBinding
 		let tweakBinding = TweakBinding(tweak: tweak, binding: binding)
 		let anyTweakBinding = AnyTweakBinding(tweakBinding: tweakBinding)
@@ -83,13 +83,13 @@ public final class TweakStore {
 		binding(currentValueForTweak(tweak))
 	}
 
-	public func bindMultiple(tweaks: [TweakType], binding: () -> Void) {
+	public func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) {
 		// Convert the array (which makes it easier to call a `bindTweakSet`) into a set (which makes it possible to cache the tweakSet)
 		let tweakSet = Set(tweaks.map(AnyTweak.init))
 
 		// Cache the cluster binding
-		let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
-		tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
+        let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
+        tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
 
 		// Immediately call the binding
 		binding()
@@ -108,7 +108,7 @@ public final class TweakStore {
 
 	}
 
-	internal func currentValueForTweak<T>(tweak: Tweak<T>) -> T {
+	internal func currentValueForTweak<T>(_ tweak: Tweak<T>) -> T {
 		if allTweaks.contains(AnyTweak(tweak: tweak)) {
 			return enabled ? persistence.currentValueForTweak(tweak) ?? tweak.defaultValue : tweak.defaultValue
 		} else {
@@ -117,29 +117,29 @@ public final class TweakStore {
 		}
 	}
 
-	internal func currentViewDataForTweak(tweak: AnyTweak) -> TweakViewData {
+	internal func currentViewDataForTweak(_ tweak: AnyTweak) -> TweakViewData {
 		let cachedValue = persistence.persistedValueForTweakIdentifiable(tweak)
 
 		switch tweak.tweakDefaultData {
-		case let .Boolean(defaultValue: defaultValue):
+		case let .boolean(defaultValue: defaultValue):
 			let currentValue = cachedValue as? Bool ?? defaultValue
-			return .Boolean(value: currentValue, defaultValue: defaultValue)
-		case let .Integer(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			return .boolean(value: currentValue, defaultValue: defaultValue)
+		case let .integer(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? Int ?? defaultValue
-			return .Integer(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
-		case let .Float(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			return .integer(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .float(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? CGFloat ?? defaultValue
-			return .Float(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
-		case let .DoubleTweak(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			return .float(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .doubleTweak(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? Double ?? defaultValue
-			return .DoubleTweak(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
-		case let .Color(defaultValue: defaultValue):
+			return .doubleTweak(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .color(defaultValue: defaultValue):
 			let currentValue = cachedValue as? UIColor ?? defaultValue
-			return .Color(value: currentValue, defaultValue: defaultValue)
+			return .color(value: currentValue, defaultValue: defaultValue)
 		}
 	}
 
-	internal func setValue(viewData: TweakViewData, forTweak tweak: AnyTweak) {
+	internal func setValue(_ viewData: TweakViewData, forTweak tweak: AnyTweak) {
 		persistence.setValue(viewData.value, forTweakIdentifiable: tweak)
 		updateBindingsForTweak(tweak)
 	}
@@ -147,7 +147,7 @@ public final class TweakStore {
 
 	// MARK - Private
 
-	private func updateBindingsForTweak(tweak: AnyTweak) {
+	fileprivate func updateBindingsForTweak(_ tweak: AnyTweak) {
 		// Find any 1-to-1 bindings and update them
 		tweakBindings[tweak.persistenceIdentifier]?.forEach {
 			$0.applyBindingWithValue(currentViewDataForTweak(tweak).value)
@@ -165,7 +165,7 @@ public final class TweakStore {
 extension TweakStore {
 	internal var sortedTweakCollections: [TweakCollection] {
 		return tweakCollections
-			.sort { $0.0 < $1.0 }
+			.sorted { $0.0 < $1.0 }
 			.map { return $0.1 }
 	}
 }

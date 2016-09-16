@@ -11,26 +11,26 @@ import SwiftTweaks
 
 class ViewController: UIViewController {
 
-	private let titleLabel: UILabel = {
+	fileprivate let titleLabel: UILabel = {
 		let label = UILabel()
-		label.textAlignment = NSTextAlignment.Center
+		label.textAlignment = NSTextAlignment.center
 		label.text = "SwiftTweaks"
 		return label
 	}()
 
-	private let bodyLabel: UILabel = {
+	fileprivate let bodyLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here! You can even force-quit the app and the changes will persist!"
 		label.numberOfLines = 0
-		label.lineBreakMode = .ByWordWrapping
+		label.lineBreakMode = .byWordWrapping
 		return label
 	}()
 
-	private let bounceButton: UIButton = {
+	fileprivate let bounceButton: UIButton = {
 		let button = UIButton()
-		button.setTitle("Animate", forState: .Normal)
+		button.setTitle("Animate", for: UIControlState())
 		ExampleTweaks.bind(ExampleTweaks.colorTint) { button.backgroundColor = $0 }
-		ExampleTweaks.bind(ExampleTweaks.colorButtonText) { button.setTitleColor($0, forState: .Normal) }
+		ExampleTweaks.bind(ExampleTweaks.colorButtonText) { button.setTitleColor($0, for: .normal) }
 		button.layer.cornerRadius = 5
 		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		return button
@@ -39,13 +39,13 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		bounceButton.addTarget(self, action: #selector(self.bounceButtonPressed(_:)), forControlEvents: .TouchUpInside)
+		bounceButton.addTarget(self, action: #selector(self.bounceButtonPressed(_:)), for: .touchUpInside)
 		view.addSubview(titleLabel)
 		view.addSubview(bodyLabel)
 		view.addSubview(bounceButton)
 
 		// Here's a demonstration of TweakLibraryType.bind() - the underlying tweak value is immediately applied, and the binding is re-called each time the tweak changes.
-		ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.hidden = !$0 }
+		ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.isHidden = !$0 }
 
 		// Bind is useful when you want to keep something up to date easily. To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
 		ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 }
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
 		ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
-			self.titleLabel.font = UIFont.systemFontOfSize(fontSize)
+			self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
 		}
 
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
 			let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
 			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.verticalMargins)
 
-			self.titleLabel.font = UIFont.systemFontOfSize(titleLabelFontSize)
+			self.titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize)
 			self.titleLabel.sizeToFit()
 			self.titleLabel.frame = CGRect(
 				origin: CGPoint(x: horizontalMargins, y: 30),
@@ -86,13 +86,13 @@ class ViewController: UIViewController {
 				)
 			)
 
-			self.bodyLabel.font = UIFont.systemFontOfSize(bodyLabelFontSize)
+			self.bodyLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
 			self.bodyLabel.frame = CGRect(
 				origin: CGPoint(
 					x: horizontalMargins,
-					y: CGRectGetMaxY(self.titleLabel.frame) + verticalGapBetweenLabels),
+					y: self.titleLabel.frame.maxY + verticalGapBetweenLabels),
 				size: self.bodyLabel.sizeThatFits(
-					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.max)
+					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.greatestFiniteMagnitude)
 				)
 			)
 
@@ -100,13 +100,13 @@ class ViewController: UIViewController {
 			self.bounceButton.frame = CGRect(
 				origin: CGPoint(
 					x: self.view.center.x - self.bounceButton.bounds.width / 2,
-					y: CGRectGetMaxY(self.bodyLabel.frame) + verticalGapBetweenLabels
+					y: self.bodyLabel.frame.maxY + verticalGapBetweenLabels
 				), size: self.bounceButton.bounds.size
 			)
 		}
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Use the `assign` value to get the currentValue of a tweak once.
@@ -123,7 +123,7 @@ class ViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc private func bounceButtonPressed(sender: UIButton) {
+	@objc fileprivate func bounceButtonPressed(_ sender: UIButton) {
 
 		let originalFrame = self.bounceButton.frame
 
@@ -131,15 +131,15 @@ class ViewController: UIViewController {
 		UIView.animateWithSpringAnimationTweakTemplate(
 			ExampleTweaks.buttonAnimation,
 			tweakStore: ExampleTweaks.defaultStore,
-			options: .BeginFromCurrentState,
+			options: .beginFromCurrentState,
 			animations: { 
-				self.bounceButton.frame = CGRectOffset(originalFrame, 0, 200)
+				self.bounceButton.frame = originalFrame.offsetBy(dx: 0, dy: 200)
 			},
 			completion: { _ in
 				UIView.animateWithSpringAnimationTweakTemplate(
 					ExampleTweaks.buttonAnimation,
 					tweakStore: ExampleTweaks.defaultStore,
-					options: .BeginFromCurrentState,
+					options: .beginFromCurrentState,
 					animations: {
 						self.bounceButton.frame = originalFrame
 					},

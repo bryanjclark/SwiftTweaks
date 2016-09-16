@@ -14,9 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-		window = TweakWindow(frame: UIScreen.mainScreen().bounds, tweakStore: ExampleTweaks.defaultStore)
+		window = TweakWindow(frame: UIScreen.main.bounds, tweakStore: ExampleTweaks.defaultStore)
 		window!.rootViewController = ViewController()
 		window!.makeKeyAndVisible()
 

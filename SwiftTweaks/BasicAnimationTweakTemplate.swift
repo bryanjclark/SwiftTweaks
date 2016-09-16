@@ -48,14 +48,14 @@ public struct BasicAnimationTweakTemplate: TweakGroupTemplateType {
 		)
 	}
 
-	private static let durationDefaults = SignedNumberTweakDefaultParameters<Double>(
+	fileprivate static let durationDefaults = SignedNumberTweakDefaultParameters<Double>(
 		defaultValue: 0.3,
 		minValue: 0.0,
 		maxValue: 2.0,
 		stepSize: 0.01
 	)
 
-	private static let delayDefaults = SignedNumberTweakDefaultParameters<Double>(
+	fileprivate static let delayDefaults = SignedNumberTweakDefaultParameters<Double>(
 		defaultValue: 0.0,
 		minValue: 0.0,
 		maxValue: 5.0,

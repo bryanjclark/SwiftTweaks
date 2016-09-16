@@ -9,29 +9,29 @@
 import UIKit
 
 internal protocol TweakColorEditViewControllerDelegate {
-	func tweakColorEditViewControllerDidPressDismissButton(tweakColorEditViewController: TweakColorEditViewController)
+	func tweakColorEditViewControllerDidPressDismissButton(_ tweakColorEditViewController: TweakColorEditViewController)
 }
 
 /// A fullscreen color editor with hex, RGBa, and HSBa controls
 internal final class TweakColorEditViewController: UIViewController {
-	private let tweak: Tweak<UIColor>
-	private let tweakStore: TweakStore
-	private let delegate: TweakColorEditViewControllerDelegate
+	fileprivate let tweak: Tweak<UIColor>
+	fileprivate let tweakStore: TweakStore
+	fileprivate let delegate: TweakColorEditViewControllerDelegate
 
-	private var viewData: ColorRepresentation {
+	fileprivate var viewData: ColorRepresentation {
 		didSet {
 			if oldValue.type != viewData.type {
 				segmentedControl.selectedSegmentIndex = viewData.type.rawValue
 				tableView.reloadData()
 			}
 
-			tweakStore.setValue(.Color(value: viewData.color, defaultValue: tweak.defaultValue), forTweak: AnyTweak(tweak: tweak))
+			tweakStore.setValue(.color(value: viewData.color, defaultValue: tweak.defaultValue), forTweak: AnyTweak(tweak: tweak))
 
 			updateColorPreview()
 		}
 	}
 
-	private var colorRepresentationType: ColorRepresentationType {
+	fileprivate var colorRepresentationType: ColorRepresentationType {
 		set {
 			viewData = ColorRepresentation(type: newValue, color: viewData.color)
 		}
@@ -40,24 +40,24 @@ internal final class TweakColorEditViewController: UIViewController {
 		}
 	}
 
-	private let tableView: UITableView = {
-		let tableView = UITableView(frame: CGRectZero, style: .Plain)
+	fileprivate let tableView: UITableView = {
+		let tableView = UITableView(frame: CGRect.zero, style: .plain)
 		tableView.allowsSelection = false
-		tableView.keyboardDismissMode = .OnDrag
+		tableView.keyboardDismissMode = .onDrag
 		return tableView
 	}()
 
-	private let headerView: UIView = UIView()
-	private let colorPreviewView: UIView = {
+	fileprivate let headerView: UIView = UIView()
+	fileprivate let colorPreviewView: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
 		view.clipsToBounds = true
 		return view
 	}()
-	private let colorPreviewSolidView = UIView()
-	private let colorPreviewAlphaView = UIView()
+	fileprivate let colorPreviewSolidView = UIView()
+	fileprivate let colorPreviewAlphaView = UIView()
 
-	private let segmentedControl: UISegmentedControl = {
+	fileprivate let segmentedControl: UISegmentedControl = {
 		let control = UISegmentedControl(items: ColorRepresentationType.titles)
 		return control
 	}()
@@ -65,42 +65,42 @@ internal final class TweakColorEditViewController: UIViewController {
 	// MARK: Init
 
 	init(anyTweak: AnyTweak, tweakStore: TweakStore, delegate: TweakColorEditViewControllerDelegate) {
-		assert(anyTweak.tweakViewDataType == .UIColor, "Can only edit colors in TweakColorEditViewController")
+		assert(anyTweak.tweakViewDataType == .uiColor, "Can only edit colors in TweakColorEditViewController")
 
 		self.tweak = anyTweak.tweak as! Tweak<UIColor>
 		self.tweakStore = tweakStore
-		self.viewData = ColorRepresentation(type: .Hex, color: tweakStore.currentValueForTweak(tweak))
+		self.viewData = ColorRepresentation(type: .hex, color: tweakStore.currentValueForTweak(tweak))
 		self.delegate = delegate
 
 		super.init(nibName:nil, bundle: nil)
 
 		title = tweak.tweakName
 		toolbarItems = [
-			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .Done, target: self, action: #selector(self.dismissButtonTapped))
+			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 
 		view.tintColor = AppTheme.Colors.controlGrayscale
 
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .Plain, target: self, action: #selector(TweakColorEditViewController.restoreDefaultColor))
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(TweakColorEditViewController.restoreDefaultColor))
 		self.navigationItem.rightBarButtonItem?.tintColor = AppTheme.Colors.controlDestructive
 
-		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
+		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), for: .valueChanged)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	private static let headerHeight: CGFloat = 122
-	private static let colorPreviewHeight: CGFloat = 64
-	private static let headerHorizontalMargin: CGFloat = 10
-	private static let headerVerticalMargin: CGFloat = 10
+	fileprivate static let headerHeight: CGFloat = 122
+	fileprivate static let colorPreviewHeight: CGFloat = 64
+	fileprivate static let headerHorizontalMargin: CGFloat = 10
+	fileprivate static let headerVerticalMargin: CGFloat = 10
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		headerView.bounds = CGRect(origin: CGPointZero, size: CGSize(width: view.bounds.width, height: 122))
+		headerView.bounds = CGRect(origin: CGPoint.zero, size: CGSize(width: view.bounds.width, height: 122))
 
 		colorPreviewView.frame = CGRect(
 			x: TweakColorEditViewController.headerVerticalMargin,
@@ -108,10 +108,10 @@ internal final class TweakColorEditViewController: UIViewController {
 			width: view.bounds.width - 2 * TweakColorEditViewController.headerHorizontalMargin,
 			height: TweakColorEditViewController.colorPreviewHeight
 		)
-		var solidFrame = CGRect()
-		var remainder = CGRect()
-		CGRectDivide(colorPreviewView.bounds, &solidFrame, &remainder, colorPreviewView.bounds.width/2, CGRectEdge.MinXEdge)
-		colorPreviewSolidView.frame = CGRectIntegral(solidFrame)
+        let frames = colorPreviewView.bounds.divided(atDistance: colorPreviewView.bounds.width/2, from: .minYEdge)
+        let solidFrame = frames.0
+        
+		colorPreviewSolidView.frame = solidFrame.integral
 		colorPreviewAlphaView.frame = colorPreviewView.bounds
 		colorPreviewView.addSubview(colorPreviewAlphaView)
 		colorPreviewView.addSubview(colorPreviewSolidView)
@@ -119,108 +119,108 @@ internal final class TweakColorEditViewController: UIViewController {
 
 		segmentedControl.sizeToFit()
 		segmentedControl.frame = CGRect(
-			origin: CGPoint(x: CGRectGetMinX(colorPreviewView.frame), y: CGRectGetMaxY(colorPreviewView.frame) + TweakColorEditViewController.headerVerticalMargin),
+			origin: CGPoint(x: colorPreviewView.frame.minX, y: colorPreviewView.frame.maxY + TweakColorEditViewController.headerVerticalMargin),
 			size: CGSize(width: headerView.bounds.width - 2 * TweakColorEditViewController.headerHorizontalMargin, height: segmentedControl.bounds.height)
 		)
 		headerView.addSubview(segmentedControl)
 		tableView.tableHeaderView = headerView
 
 		tableView.frame = view.bounds
-		tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+		tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		tableView.dataSource = self
-		tableView.registerClass(TweakColorCell.self, forCellReuseIdentifier: TweakColorEditViewController.SliderCellIdentifier)
+		tableView.register(TweakColorCell.self, forCellReuseIdentifier: TweakColorEditViewController.SliderCellIdentifier)
 		view.addSubview(tableView)
 
 		updateColorPreview()
 		segmentedControl.selectedSegmentIndex = viewData.type.rawValue
 	}
 
-	private static let SliderCellIdentifier = "SliderCellIdentifier"
+	fileprivate static let SliderCellIdentifier = "SliderCellIdentifier"
 
-	@objc private func segmentedControlChanged(sender: UISegmentedControl) {
+	@objc fileprivate func segmentedControlChanged(_ sender: UISegmentedControl) {
 		assert(sender == segmentedControl, "Unknown sender in segmentedControlChanged:")
 		colorRepresentationType = ColorRepresentationType(rawValue: sender.selectedSegmentIndex)!
 	}
 
-	@objc private func dismissButtonTapped() {
+	@objc fileprivate func dismissButtonTapped() {
 		delegate.tweakColorEditViewControllerDidPressDismissButton(self)
 	}
 
-	private func updateColorPreview() {
-		colorPreviewView.backgroundColor = .clearColor()
-		colorPreviewSolidView.backgroundColor = viewData.color.colorWithAlphaComponent(1.0)
+	fileprivate func updateColorPreview() {
+		colorPreviewView.backgroundColor = .clear
+		colorPreviewSolidView.backgroundColor = viewData.color.withAlphaComponent(1.0)
 		colorPreviewAlphaView.backgroundColor = viewData.color
 	}
 
-	@objc private func restoreDefaultColor() {
-		let confirmationAlert = UIAlertController(title: "Reset This Color to Default?", message: "Your other tweaks will be left alone.", preferredStyle: .ActionSheet)
-		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-		confirmationAlert.addAction(UIAlertAction(title: "Reset This Color", style: .Destructive, handler: { _ in
-			self.viewData = ColorRepresentation(type: .Hex, color: self.tweak.defaultValue)
+	@objc fileprivate func restoreDefaultColor() {
+		let confirmationAlert = UIAlertController(title: "Reset This Color to Default?", message: "Your other tweaks will be left alone.", preferredStyle: .actionSheet)
+		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		confirmationAlert.addAction(UIAlertAction(title: "Reset This Color", style: .destructive, handler: { _ in
+			self.viewData = ColorRepresentation(type: .hex, color: self.tweak.defaultValue)
 		}))
-		presentViewController(confirmationAlert, animated: true, completion: nil)
+		present(confirmationAlert, animated: true, completion: nil)
 	}
 }
 
 extension TweakColorEditViewController: UITableViewDelegate {
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return TweakColorCell.cellHeight
 	}
 }
 
 extension TweakColorEditViewController: UITableViewDataSource {
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return viewData.numberOfComponents ?? 0
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return viewData.numberOfComponents 
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(TweakColorEditViewController.SliderCellIdentifier, forIndexPath: indexPath) as! TweakColorCell
-		cell.viewData = viewData[indexPath.row]
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: TweakColorEditViewController.SliderCellIdentifier, for: indexPath) as! TweakColorCell
+		cell.viewData = viewData[(indexPath as NSIndexPath).row]
 		cell.delegate = self
 		return cell
 	}
 }
 
 extension TweakColorEditViewController: TweakColorCellDelegate {
-	func tweakColorCellDidChangeValue(cell: TweakColorCell) {
+	func tweakColorCellDidChangeValue(_ cell: TweakColorCell) {
 		let changedValue = cell.viewData!
 
 		switch viewData {
-		case let .Hex(hex: oldHex, alpha: oldAlpha):
+		case let .hex(hex: oldHex, alpha: oldAlpha):
 			switch changedValue {
-			case let .HexComponent(newHex):
-				viewData = .Hex(hex: newHex, alpha: oldAlpha)
-			case let .NumericalComponent(newNumber):
-				viewData = .Hex(hex: oldHex, alpha: newNumber)
+			case let .hexComponent(newHex):
+				viewData = .hex(hex: newHex, alpha: oldAlpha)
+			case let .numericalComponent(newNumber):
+				viewData = .hex(hex: oldHex, alpha: newNumber)
 			}
-		case let .RGBa(r: oldR, g: oldG, b: oldB, a: oldA):
+		case let .rgBa(r: oldR, g: oldG, b: oldB, a: oldA):
 			switch changedValue.numericType! {
-			case .Red:
-				viewData = .RGBa(r: changedValue.numericValue!, g: oldG, b: oldB, a: oldA)
-			case .Green:
-				viewData = .RGBa(r: oldR, g: changedValue.numericValue!, b: oldB, a: oldA)
-			case .Blue:
-				viewData = .RGBa(r: oldR, g: oldG, b: changedValue.numericValue!, a: oldA)
-			case .Alpha:
-				viewData = .RGBa(r: oldR, g: oldG, b: oldB, a: changedValue.numericValue!)
-			case .Hue, .Saturation, .Brightness:
+			case .red:
+				viewData = .rgBa(r: changedValue.numericValue!, g: oldG, b: oldB, a: oldA)
+			case .green:
+				viewData = .rgBa(r: oldR, g: changedValue.numericValue!, b: oldB, a: oldA)
+			case .blue:
+				viewData = .rgBa(r: oldR, g: oldG, b: changedValue.numericValue!, a: oldA)
+			case .alpha:
+				viewData = .rgBa(r: oldR, g: oldG, b: oldB, a: changedValue.numericValue!)
+			case .hue, .saturation, .brightness:
 				break
 			}
-		case let .HSBa(h: oldH, s: oldS, b: oldB, a: oldA):
+		case let .hsBa(h: oldH, s: oldS, b: oldB, a: oldA):
 			switch changedValue.numericType! {
-			case .Hue:
-				viewData = .HSBa(h: changedValue.numericValue!, s: oldS, b: oldB, a: oldA)
-			case .Saturation:
-				viewData = .HSBa(h: oldH, s: changedValue.numericValue!, b: oldB, a: oldA)
-			case .Brightness:
-				viewData = .HSBa(h: oldH, s: oldS, b: changedValue.numericValue!, a: oldA)
-			case .Alpha:
-				viewData = .HSBa(h: oldH, s: oldS, b: oldB, a: changedValue.numericValue!)
-			case .Red, .Green, .Blue:
+			case .hue:
+				viewData = .hsBa(h: changedValue.numericValue!, s: oldS, b: oldB, a: oldA)
+			case .saturation:
+				viewData = .hsBa(h: oldH, s: changedValue.numericValue!, b: oldB, a: oldA)
+			case .brightness:
+				viewData = .hsBa(h: oldH, s: oldS, b: changedValue.numericValue!, a: oldA)
+			case .alpha:
+				viewData = .hsBa(h: oldH, s: oldS, b: oldB, a: changedValue.numericValue!)
+			case .red, .green, .blue:
 				break
 			}
 		}

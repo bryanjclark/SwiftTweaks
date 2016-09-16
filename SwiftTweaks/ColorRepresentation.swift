@@ -9,108 +9,108 @@
 import UIKit
 
 internal enum ColorRepresentationType: Int {
-	case Hex = 0
-	case RGBa = 1
-	case HSBa = 2
+	case hex = 0
+	case rgBa = 1
+	case hsBa = 2
 
 	static let titles: [String] = ["Hex", "RGBa", "HSBa"]
 }
 
 internal enum ColorRepresentation {
-	case Hex(hex: String, alpha: ColorComponentNumerical)
-	case RGBa(r: ColorComponentNumerical, g: ColorComponentNumerical, b: ColorComponentNumerical, a: ColorComponentNumerical)
-	case HSBa(h: ColorComponentNumerical, s: ColorComponentNumerical, b: ColorComponentNumerical, a: ColorComponentNumerical)
+	case hex(hex: String, alpha: ColorComponentNumerical)
+	case rgBa(r: ColorComponentNumerical, g: ColorComponentNumerical, b: ColorComponentNumerical, a: ColorComponentNumerical)
+	case hsBa(h: ColorComponentNumerical, s: ColorComponentNumerical, b: ColorComponentNumerical, a: ColorComponentNumerical)
 }
 
 extension ColorRepresentation {
 	var type: ColorRepresentationType {
 		switch self {
-		case .Hex: return .Hex
-		case .RGBa: return .RGBa
-		case .HSBa: return .HSBa
+		case .hex: return .hex
+		case .rgBa: return .rgBa
+		case .hsBa: return .hsBa
 		}
 	}
 
 	var numberOfComponents: Int {
 		switch self {
-		case .Hex: return 2
-		case .RGBa, .HSBa: return 4
+		case .hex: return 2
+		case .rgBa, .hsBa: return 4
 		}
 	}
 
 	var color: UIColor {
 		switch self {
-		case let .Hex(hex: hex, alpha: alpha):
-			return UIColor.colorWithHexString(hex)!.colorWithAlphaComponent(CGFloat(alpha.rawValue))
-		case let .RGBa(r: r, g: g, b: b, a: a):
+		case let .hex(hex: hex, alpha: alpha):
+			return UIColor.colorWithHexString(hex)!.withAlphaComponent(CGFloat(alpha.rawValue))
+		case let .rgBa(r: r, g: g, b: b, a: a):
 			return UIColor(red: r.rawValue, green: g.rawValue, blue: b.rawValue, alpha: a.rawValue)
-		case let .HSBa(h: h, s: s, b: b, a: a):
+		case let .hsBa(h: h, s: s, b: b, a: a):
 			return UIColor(hue: h.rawValue, saturation: s.rawValue, brightness: b.rawValue, alpha: a.rawValue)
 		}
 	}
 
 	init(type: ColorRepresentationType, color: UIColor) {
 		switch type {
-		case .Hex:
+		case .hex:
 			var white: CGFloat = 0
 			var alpha: CGFloat = 0
 			color.getWhite(&white, alpha: &alpha)
 
-			self = .Hex(
+			self = .hex(
 				hex: color.hexString,
-				alpha: ColorComponentNumerical(type: .Alpha, rawValue: alpha)
+				alpha: ColorComponentNumerical(type: .alpha, rawValue: alpha)
 			)
-		case .RGBa:
+		case .rgBa:
 			var red: CGFloat = 0
 			var green: CGFloat = 0
 			var blue: CGFloat = 0
 			var alpha: CGFloat = 0
 			color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-			self = .RGBa(
-				r: ColorComponentNumerical(type: .Red, rawValue: red),
-				g: ColorComponentNumerical(type: .Green, rawValue: green),
-				b: ColorComponentNumerical(type: .Blue, rawValue: blue),
-				a: ColorComponentNumerical(type: .Alpha, rawValue: alpha)
+			self = .rgBa(
+				r: ColorComponentNumerical(type: .red, rawValue: red),
+				g: ColorComponentNumerical(type: .green, rawValue: green),
+				b: ColorComponentNumerical(type: .blue, rawValue: blue),
+				a: ColorComponentNumerical(type: .alpha, rawValue: alpha)
 			)
-		case .HSBa:
+		case .hsBa:
 			var hue: CGFloat = 0
 			var saturation: CGFloat = 0
 			var brightness: CGFloat = 0
 			var alpha: CGFloat = 0
 			color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
 
-			self = .HSBa(
-				h: ColorComponentNumerical(type: .Hue, rawValue: hue),
-				s: ColorComponentNumerical(type: .Saturation, rawValue: saturation),
-				b: ColorComponentNumerical(type: .Brightness, rawValue: brightness),
-				a: ColorComponentNumerical(type: .Alpha, rawValue: alpha)
+			self = .hsBa(
+				h: ColorComponentNumerical(type: .hue, rawValue: hue),
+				s: ColorComponentNumerical(type: .saturation, rawValue: saturation),
+				b: ColorComponentNumerical(type: .brightness, rawValue: brightness),
+				a: ColorComponentNumerical(type: .alpha, rawValue: alpha)
 			)
 		}
 	}
 
 	subscript(index: Int) -> ColorComponent? {
 		switch self {
-		case let .Hex(hex: hex, alpha: alpha):
+		case let .hex(hex: hex, alpha: alpha):
 			switch index {
-			case 0: return .HexComponent(hex)
-			case 1: return .NumericalComponent(alpha)
+			case 0: return .hexComponent(hex)
+			case 1: return .numericalComponent(alpha)
 			default: break
 			}
-		case let .RGBa(r: r, g: g, b: b, a: a):
+		case let .rgBa(r: r, g: g, b: b, a: a):
 			switch index {
-			case 0: return .NumericalComponent(r)
-			case 1: return .NumericalComponent(g)
-			case 2: return .NumericalComponent(b)
-			case 3: return .NumericalComponent(a)
+			case 0: return .numericalComponent(r)
+			case 1: return .numericalComponent(g)
+			case 2: return .numericalComponent(b)
+			case 3: return .numericalComponent(a)
 			default: break
 			}
-		case let .HSBa(h: h, s: s, b: b, a: a):
+		case let .hsBa(h: h, s: s, b: b, a: a):
 			switch index {
-			case 0: return .NumericalComponent(h)
-			case 1: return .NumericalComponent(s)
-			case 2: return .NumericalComponent(b)
-			case 3: return .NumericalComponent(a)
+			case 0: return .numericalComponent(h)
+			case 1: return .numericalComponent(s)
+			case 2: return .numericalComponent(b)
+			case 3: return .numericalComponent(a)
 			default: break
 			}
 		}
@@ -120,32 +120,32 @@ extension ColorRepresentation {
 
 /// Represents a component of a ColorRepresentation
 internal enum ColorComponent {
-	case HexComponent(String) // e.g. #FFFFFF = white
-	case NumericalComponent(ColorComponentNumerical) // e.g. RGB, HSB, alpha
+	case hexComponent(String) // e.g. #FFFFFF = white
+	case numericalComponent(ColorComponentNumerical) // e.g. RGB, HSB, alpha
 
 	var title: String {
 		switch self {
-		case .HexComponent:
+		case .hexComponent:
 			return "Hex"
-		case .NumericalComponent(let colorComponentNumerical):
+		case .numericalComponent(let colorComponentNumerical):
 			return colorComponentNumerical.title
 		}
 	}
 	
 	var numericType: ColorComponentNumericalType? {
 		switch self {
-		case .NumericalComponent(let numericComponent):
+		case .numericalComponent(let numericComponent):
 			return numericComponent.type
-		case .HexComponent:
+		case .hexComponent:
 			return nil
 		}
 	}
 
 	var numericValue: ColorComponentNumerical? {
 		switch self {
-		case .NumericalComponent(let numericComponent):
+		case .numericalComponent(let numericComponent):
 			return numericComponent
-		case .HexComponent:
+		case .hexComponent:
 			return nil
 		}
 	}
@@ -181,27 +181,27 @@ internal struct ColorComponentNumerical {
 
 /// A list of the types of numerical color components, and describes their behavior.
 internal enum ColorComponentNumericalType {
-	case Hue
-	case Saturation
-	case Brightness
+	case hue
+	case saturation
+	case brightness
 
-	case Red
-	case Green
-	case Blue
+	case red
+	case green
+	case blue
 
-	case Alpha
+	case alpha
 
 	var title: String {
 		switch self {
-		case .Hue: return "H"
-		case .Saturation: return "S"
-		case .Brightness: return "B"
+		case .hue: return "H"
+		case .saturation: return "S"
+		case .brightness: return "B"
 
-		case .Red: return "R"
-		case .Green: return "G"
-		case .Blue: return "B"
+		case .red: return "R"
+		case .green: return "G"
+		case .blue: return "B"
 
-		case .Alpha: return "A"
+		case .alpha: return "A"
 		}
 	}
 
@@ -211,13 +211,13 @@ internal enum ColorComponentNumericalType {
 
 	var maximumValue: Float {
 		switch self {
-		case .Hue:
+		case .hue:
 			return 360
-		case .Saturation, .Brightness:
+		case .saturation, .brightness:
 			return 100
-		case .Red, .Green, .Blue:
+		case .red, .green, .blue:
 			return 255
-		case .Alpha:
+		case .alpha:
 			return 1
 
 		}
@@ -225,19 +225,19 @@ internal enum ColorComponentNumericalType {
 
 	var roundsToInteger: Bool {
 		switch self {
-		case .Hue, .Saturation, .Brightness, .Red, .Green, .Blue:
+		case .hue, .saturation, .brightness, .red, .green, .blue:
 			return true
-		case .Alpha:
+		case .alpha:
 			return false
 		}
 	}
 
 	var tintColor: UIColor? {
 		switch self {
-		case .Red: return UIColor.redColor()
-		case .Green: return UIColor.greenColor()
-		case .Blue: return UIColor.blueColor()
-		case .Hue, .Saturation, .Brightness, .Alpha: return nil
+		case .red: return UIColor.red
+		case .green: return UIColor.green
+		case .blue: return UIColor.blue
+		case .hue, .saturation, .brightness, .alpha: return nil
 		}
 	}
 }

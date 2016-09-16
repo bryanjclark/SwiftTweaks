@@ -8,13 +8,13 @@
 
 import XCTest
 
-private struct ClippingTestCase<T where T: SignedNumberType> {
+private struct ClippingTestCase<T> where T: SignedNumber {
 	let inputValue: T
 	let min: T?
 	let max: T?
 	let expected: T
 
-	static func confirmTest(testCase: ClippingTestCase) {
+	static func confirmTest(_ testCase: ClippingTestCase) {
 		let clipped = clip(testCase.inputValue, testCase.min, testCase.max)
 
 		XCTAssertEqual(testCase.expected, clipped)
@@ -44,8 +44,8 @@ private struct StepperTestCase {
 		self.expected = expected
 	}
 
-	static func confirmTest(testCase: StepperTestCase) {
-		let tweakViewData = TweakViewData.DoubleTweak(
+	static func confirmTest(_ testCase: StepperTestCase) {
+		let tweakViewData = TweakViewData.doubleTweak(
 			value: testCase.currentValue,
 			defaultValue: testCase.defaultValue,
 			min: testCase.min,
