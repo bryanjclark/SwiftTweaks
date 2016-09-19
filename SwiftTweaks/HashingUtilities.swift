@@ -8,7 +8,11 @@
 
 import Foundation
 
-infix operator ^^^ { associativity left precedence 160 }
+infix operator ^^^ : HashingPrecedence
+precedencegroup HashingPrecedence {
+    associativity: left
+    higherThan: AssignmentPrecedence
+}
 
 public func ^^^<L: Hashable, R: Hashable>(left: L, right: R) -> Int {
 	return hash(left, right)
