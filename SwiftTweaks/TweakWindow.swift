@@ -19,25 +19,25 @@ import UIKit
 	}
 
 	/// The amount of time you need to shake your device to bring up the Tweaks UI
-	fileprivate static let shakeWindowTimeInterval: Double = 0.4
+	private static let shakeWindowTimeInterval: Double = 0.4
 
 	/// The GestureType used to determine when to present the UI.
-	fileprivate let gestureType: GestureType
+	private let gestureType: GestureType
 
 	/// By holding on to the TweaksViewController, we get easy state restoration!
-	fileprivate var tweaksViewController: TweaksViewController! // requires self for init
+	private var tweaksViewController: TweaksViewController! // requires self for init
 
 	/// Represents the "floating tweaks UI"
 	fileprivate var floatingTweakGroupUIWindow: HitTransparentWindow?
 	fileprivate let tweakStore: TweakStore
 
 	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
-	fileprivate let runningInSimulator: Bool
+	private let runningInSimulator: Bool
 
 	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
-	fileprivate var shaking: Bool = false
+	private var shaking: Bool = false
 
-	fileprivate var shouldPresentTweaks: Bool {
+	private var shouldPresentTweaks: Bool {
 		if tweakStore.enabled {
 			switch gestureType {
 			case .shake: return shaking || runningInSimulator
@@ -106,7 +106,7 @@ import UIKit
 
 	// MARK: Presenting & Dismissing
 
-	@objc fileprivate func presentTweaks() {
+	@objc private func presentTweaks() {
 		guard let rootViewController = rootViewController else {
 			return
 		}
@@ -135,11 +135,11 @@ extension TweakWindow: TweaksViewControllerDelegate {
 
 extension TweakWindow: FloatingTweaksWindowPresenter {
 
-	fileprivate static let presentationDuration: Double = 0.2
-	fileprivate static let presentationDamping: CGFloat = 0.8
-	fileprivate static let presentationVelocity: CGFloat = 5
+	private static let presentationDuration: Double = 0.2
+	private static let presentationDamping: CGFloat = 0.8
+	private static let presentationVelocity: CGFloat = 5
 
-	fileprivate static let dismissalDuration: Double = 0.2
+	private static let dismissalDuration: Double = 0.2
 
 
 	/// Presents a floating TweakGroup over your app's UI, so you don't have to hop in and out of the full-modal Tweak UI.

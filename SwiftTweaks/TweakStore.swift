@@ -15,19 +15,19 @@ public final class TweakStore {
 	fileprivate var tweakCollections: [String: TweakCollection] = [:]
 
 	/// Useful when exporting or checking that a tweak exists in tweakCollections
-	fileprivate let allTweaks: Set<AnyTweak>
+	private let allTweaks: Set<AnyTweak>
 
 	/// We hold a reference to the storeName so we can have a better error message if a tweak doesn't exist in allTweaks.
-	fileprivate let storeName: String
+	private let storeName: String
 
 	/// Caches "single" bindings - when a tweak is updated, we'll call each of the corresponding bindings.
-	fileprivate var tweakBindings: [String: [AnyTweakBinding]] = [:]
+	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
 
 	/// Caches "multi" bindings - when any tweak in a Set is updated, we'll call each of the corresponding bindings.
-	fileprivate var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
+	private var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
 
 	/// Persists tweaks' currentValues and maintains them on disk.
-	fileprivate let persistence: TweakPersistency
+	private let persistence: TweakPersistency
 
 	/// Determines whether tweaks are enabled, and whether the tweaks UI is accessible
 	internal let enabled: Bool
@@ -147,7 +147,7 @@ public final class TweakStore {
 
 	// MARK - Private
 
-	fileprivate func updateBindingsForTweak(_ tweak: AnyTweak) {
+	private func updateBindingsForTweak(_ tweak: AnyTweak) {
 		// Find any 1-to-1 bindings and update them
 		tweakBindings[tweak.persistenceIdentifier]?.forEach {
 			$0.applyBindingWithValue(currentViewDataForTweak(tweak).value)

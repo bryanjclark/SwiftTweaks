@@ -78,7 +78,7 @@ internal extension UIColor {
 			]).uppercased()
 	}
 
-	fileprivate var canProvideRGBComponents: Bool {
+	private var canProvideRGBComponents: Bool {
 		switch self.cgColor.colorSpace!.model {
 		case .rgb, .monochrome:
 			return true

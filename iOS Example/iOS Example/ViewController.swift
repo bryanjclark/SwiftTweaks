@@ -11,14 +11,14 @@ import SwiftTweaks
 
 class ViewController: UIViewController {
 
-	fileprivate let titleLabel: UILabel = {
+	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = NSTextAlignment.center
 		label.text = "SwiftTweaks"
 		return label
 	}()
 
-	fileprivate let bodyLabel: UILabel = {
+	private let bodyLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here! You can even force-quit the app and the changes will persist!"
 		label.numberOfLines = 0
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 		return label
 	}()
 
-	fileprivate let bounceButton: UIButton = {
+	private let bounceButton: UIButton = {
 		let button = UIButton()
 		button.setTitle("Animate", for: UIControlState())
 		ExampleTweaks.bind(ExampleTweaks.colorTint) { button.backgroundColor = $0 }
@@ -123,7 +123,7 @@ class ViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc fileprivate func bounceButtonPressed(_ sender: UIButton) {
+	@objc private func bounceButtonPressed(_ sender: UIButton) {
 
 		let originalFrame = self.bounceButton.frame
 

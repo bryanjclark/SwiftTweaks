@@ -14,7 +14,7 @@ class UIColor_TweaksTests: XCTestCase {
 
 	// MARK: Hex-To-Color
 
-	fileprivate struct HexToColorTestCase {
+	private struct HexToColorTestCase {
 		let string: String
 		let expectedColor: UIColor?
 
@@ -66,7 +66,7 @@ class UIColor_TweaksTests: XCTestCase {
 
 
 	// MARK: Color-To-Hex
-	fileprivate struct ColorToHexTestCase {
+	private struct ColorToHexTestCase {
 		let color: UIColor
 		let expectedHex: String
 

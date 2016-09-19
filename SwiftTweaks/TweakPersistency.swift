@@ -19,9 +19,9 @@ internal typealias TweakCache = [String: TweakableType]
 
 /// Persists state for tweaks in a TweakCache
 internal final class TweakPersistency {
-	fileprivate let diskPersistency: TweakDiskPersistency
+	private let diskPersistency: TweakDiskPersistency
 
-	fileprivate var tweakCache: TweakCache = [:]
+	private var tweakCache: TweakCache = [:]
 
 	init(identifier: String) {
 		self.diskPersistency = TweakDiskPersistency(identifier: identifier)
@@ -60,16 +60,16 @@ internal final class TweakPersistency {
 
 /// Persists a TweakCache on disk using NSCoding
 private final class TweakDiskPersistency {
-	fileprivate let fileURL: URL
+	private let fileURL: URL
 
-	fileprivate static func fileURLForIdentifier(_ identifier: String) -> URL {
+	private static func fileURLForIdentifier(_ identifier: String) -> URL {
 		return try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 			.appendingPathComponent("SwiftTweaks")
 			.appendingPathComponent("\(identifier)")
 			.appendingPathExtension("db")
 	}
 
-	fileprivate let queue = DispatchQueue(label: "org.khanacademy.swift_tweaks.disk_persistency", attributes: [])
+	private let queue = DispatchQueue(label: "org.khanacademy.swift_tweaks.disk_persistency", attributes: [])
 
 	init(identifier: String) {
 		self.fileURL = TweakDiskPersistency.fileURLForIdentifier(identifier)
@@ -77,7 +77,7 @@ private final class TweakDiskPersistency {
 	}
 
 	/// Creates a directory (if needed) for our persisted TweakCache on disk
-	fileprivate func ensureDirectoryExists() {
+	private func ensureDirectoryExists() {
 		self.queue.async {
 			try! FileManager.default.createDirectory(at: self.fileURL.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
 		}
@@ -108,7 +108,7 @@ private final class TweakDiskPersistency {
 	/// TweakCache a flat dictionary: [String: TweakableType]. 
 	/// However, because re-hydrating TweakableType from its underlying NSNumber gets Bool & Int mixed up, we have to persist a different structure on disk: [TweakViewDataType: [String: AnyObject]]
 	/// This ensures that if something was saved as a Bool, it's read back as a Bool.
-	@objc fileprivate final class Data: NSObject, NSCoding {
+	@objc private final class Data: NSObject, NSCoding {
 		let cache: TweakCache
 
 		init(cache: TweakCache) {
@@ -159,7 +159,7 @@ private final class TweakDiskPersistency {
 		}
 
 		// Reads from the cache, casting to the appropriate TweakViewDataType
-		fileprivate static func tweakableTypeWithAnyObject(_ anyObject: AnyObject, withType type: TweakViewDataType) -> TweakableType? {
+		private static func tweakableTypeWithAnyObject(_ anyObject: AnyObject, withType type: TweakViewDataType) -> TweakableType? {
 			switch type {
 			case .integer: return anyObject as? Int
 			case .boolean: return anyObject as? Bool

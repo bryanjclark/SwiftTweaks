@@ -16,7 +16,7 @@ internal protocol TweaksCollectionsListViewControllerDelegate {
 
 /// Displays a list of TweakCollections in a table.
 internal final class TweaksCollectionsListViewController: UIViewController {
-	fileprivate let tableView: UITableView
+	private let tableView: UITableView
 
 	fileprivate let tweakStore: TweakStore
 	fileprivate let delegate: TweaksCollectionsListViewControllerDelegate
@@ -71,7 +71,7 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc fileprivate func resetStore(_ sender: UIBarButtonItem) {
+	@objc private func resetStore(_ sender: UIBarButtonItem) {
 		let confirmationAlert = UIAlertController(title: nil, message: "Reset all tweaks to their default values?", preferredStyle: .actionSheet)
 		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		confirmationAlert.addAction(UIAlertAction(title: "Reset All Tweaks", style: .destructive, handler: { _ in self.tweakStore.reset() }))
@@ -79,16 +79,16 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		present(confirmationAlert, animated: true, completion: nil)
 	}
 
-	@objc fileprivate func dismissButtonTapped() {
+	@objc private func dismissButtonTapped() {
 		delegate.tweaksCollectionsListViewControllerDidTapDismissButton(self)
 	}
 
-	@objc fileprivate func actionButtonTapped(_ sender: UIBarButtonItem) {
+	@objc private func actionButtonTapped(_ sender: UIBarButtonItem) {
 		delegate.tweaksCollectionsListViewControllerDidTapShareButton(self, shareButton: sender)
 	}
 
 	fileprivate static let TweakCollectionCellIdentifier = "TweakCollectionCellIdentifier"
-	fileprivate class TweakCollectionCell: UITableViewCell {
+	private class TweakCollectionCell: UITableViewCell {
 		override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 			super.init(style: UITableViewCellStyle.value1, reuseIdentifier: reuseIdentifier)
 			accessoryType = .disclosureIndicator

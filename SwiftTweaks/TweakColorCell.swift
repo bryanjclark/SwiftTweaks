@@ -24,20 +24,20 @@ internal final class TweakColorCell: UITableViewCell {
 		}
 	}
 
-	fileprivate let slider = UISlider()
-	fileprivate let label: UILabel = {
+	private let slider = UISlider()
+	private let label: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .right
 		label.textColor = UIColor.lightGray
 		return label
 	}()
-	fileprivate let textField: UITextField = {
+	private let textField: UITextField = {
 		let textField = UITextField()
 		textField.textAlignment = .right
 		textField.returnKeyType = .done
 		return textField
 	}()
-	fileprivate let accessory = UIView()
+	private let accessory = UIView()
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
@@ -123,7 +123,7 @@ internal final class TweakColorCell: UITableViewCell {
 	}
 
 	// MARK: Events
-	@objc fileprivate func sliderValueChanged(_ sender: UISlider) {
+	@objc private func sliderValueChanged(_ sender: UISlider) {
 		switch viewData! {
 		case .numericalComponent(let oldValue):
 			let newValue = ColorComponentNumerical(type: oldValue.type, value: slider.value)

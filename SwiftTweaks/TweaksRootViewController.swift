@@ -17,11 +17,11 @@ internal protocol TweaksRootViewControllerDelegate {
 /// A "container" view controller with two states: listing out the TweakCollections, or displaying the TweakBackups
 internal final class TweaksRootViewController: UIViewController {
 
-	fileprivate let segmentedControl: UISegmentedControl
+	private let segmentedControl: UISegmentedControl
 	fileprivate let tweakStore: TweakStore
 	fileprivate let delegate: TweaksRootViewControllerDelegate
 
-	fileprivate var content: Content? {
+	private var content: Content? {
 		didSet {
 			if let newContent = content {
 				let newContentViewController = newContent.viewController
@@ -75,7 +75,7 @@ internal final class TweaksRootViewController: UIViewController {
 	    fatalError("init(coder:) has not been implemented")
 	}
 
-	@objc fileprivate func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+	@objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
 		assert(sender == segmentedControl)
 		switch sender.selectedSegmentIndex {
 		case 0:
@@ -90,7 +90,7 @@ internal final class TweaksRootViewController: UIViewController {
 
 	// MARK: Content
 
-	fileprivate enum Content {
+	private enum Content {
 		case collectionsList(UIViewController)
 		case backupsList(UIViewController)
 

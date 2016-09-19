@@ -28,7 +28,7 @@ internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 
 // A type-erasure around TweakBinding<T>, so we can gather them together in TweakStore.tweakBindings
 internal struct AnyTweakBinding: TweakBindingType {
-	fileprivate let tweakBinding: TweakBindingType
+	private let tweakBinding: TweakBindingType
 
 	init(tweakBinding: TweakBindingType) {
 		self.tweakBinding = tweakBinding

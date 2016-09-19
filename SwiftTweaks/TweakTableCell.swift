@@ -35,33 +35,33 @@ internal final class TweakTableCell: UITableViewCell {
 
 	internal var isInFloatingTweakGroupWindow = false
 
-	fileprivate var accessory = UIView()
+	private var accessory = UIView()
 
-	fileprivate let switchControl: UISwitch = {
+	private let switchControl: UISwitch = {
 		let switchControl = UISwitch()
 		switchControl.onTintColor = AppTheme.Colors.controlTinted
 		switchControl.tintColor = AppTheme.Colors.controlDisabled
 		return switchControl
 	}()
 
-	fileprivate let stepperControl: UIStepper = {
+	private let stepperControl: UIStepper = {
 		let stepper = UIStepper()
 		stepper.tintColor = AppTheme.Colors.controlTinted
 		return stepper
 	}()
 
-	fileprivate let colorChit: UIView = {
+	private let colorChit: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
 		return view
 	}()
-	fileprivate let textField: UITextField = {
+	private let textField: UITextField = {
 		let textField = UITextField()
 		textField.textAlignment = .right
 		textField.returnKeyType = .done
 		return textField
 	}()
-	fileprivate let disclosureArrow: UIImageView = {
+	private let disclosureArrow: UIImageView = {
 		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
 		let imageView = UIImageView(image: disclosureArrowImage.withRenderingMode(.alwaysTemplate))
 		imageView.contentMode = .center
@@ -85,10 +85,10 @@ internal final class TweakTableCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	fileprivate static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
-	fileprivate static let colorTextWidthFraction: CGFloat = 0.30
-	fileprivate static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
-	fileprivate static let colorChitSize = CGSize(width: 29, height: 29)
+	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
+	private static let colorTextWidthFraction: CGFloat = 0.30
+	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
+	private static let colorChitSize = CGSize(width: 29, height: 29)
 
 	override func layoutSubviews() {
 
@@ -253,7 +253,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 	// MARK: Events
 
-	@objc fileprivate func switchChanged(_ sender: UISwitch) {
+	@objc private func switchChanged(_ sender: UISwitch) {
 		switch viewData! {
 		case let .boolean(_, defaultValue: defaultValue):
 			viewData = .boolean(value: switchControl.isOn, defaultValue: defaultValue)
@@ -263,7 +263,7 @@ internal final class TweakTableCell: UITableViewCell {
 		}
 	}
 
-	@objc fileprivate func stepperChanged(_ sender: UIStepper) {
+	@objc private func stepperChanged(_ sender: UIStepper) {
 		switch viewData! {
 		case let .integer(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .integer, value: Int(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)

@@ -27,9 +27,9 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
-	fileprivate let presenter: FloatingTweaksWindowPresenter
+	private let presenter: FloatingTweaksWindowPresenter
 	fileprivate let tweakStore: TweakStore
-	fileprivate let fullFrame: CGRect
+	private let fullFrame: CGRect
 
 	internal init(frame: CGRect, tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
 		self.tweakStore = tweakStore
@@ -72,13 +72,13 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	internal static let height: CGFloat = 168
 	internal static let margins: CGFloat = 5
-	fileprivate static let minimizedWidth: CGFloat = 30
+	private static let minimizedWidth: CGFloat = 30
 
-	fileprivate static let closeButtonSize = CGSize(width: 42, height: 32)
-	fileprivate static let navBarHeight: CGFloat = 32
-	fileprivate static let windowCornerRadius: CGFloat = 5
+	private static let closeButtonSize = CGSize(width: 42, height: 32)
+	private static let navBarHeight: CGFloat = 32
+	private static let windowCornerRadius: CGFloat = 5
 
-	fileprivate let navBar: UIView = {
+	private let navBar: UIView = {
 		let view = UIView()
 		view.backgroundColor = AppTheme.Colors.floatingTweakGroupNavBG
 
@@ -90,14 +90,14 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		return view
 	}()
 
-	fileprivate let titleLabel: UILabel = {
+	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = AppTheme.Colors.sectionHeaderTitleColor
 		label.font = AppTheme.Fonts.sectionHeaderTitleFont
 		return label
 	}()
 
-	fileprivate let closeButton: UIButton = {
+	private let closeButton: UIButton = {
 		let button = UIButton()
 		let buttonImage = UIImage(swiftTweaksImage: .FloatingCloseButton).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
@@ -123,9 +123,9 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		return button
 	}()
 
-	fileprivate let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+	private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 
-	fileprivate func installSubviews() {
+	private func installSubviews() {
 		// Create the rounded corners and shadows
 		view.layer.cornerRadius = FloatingTweakGroupViewController.windowCornerRadius
 		view.layer.shadowColor = AppTheme.Shadows.floatingShadowColor
@@ -160,7 +160,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		view.addGestureRecognizer(panGestureRecognizer)
 	}
 
-	fileprivate func layoutSubviews() {
+	private func layoutSubviews() {
 		backgroundView.frame = self.view.bounds
 
 		tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: FloatingTweakGroupViewController.height))
@@ -211,14 +211,14 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	// MARK: Actions
 
-	@objc fileprivate func closeButtonTapped() {
+	@objc private func closeButtonTapped() {
 		presenter.dismissFloatingTweaksUI()
 	}
 
-	fileprivate static let gestureSpeedBreakpoint: CGFloat = 10
-	fileprivate static let gesturePositionBreakpoint: CGFloat = 30
+	private static let gestureSpeedBreakpoint: CGFloat = 10
+	private static let gesturePositionBreakpoint: CGFloat = 30
 
-	@objc fileprivate func moveWindowPanGestureRecognized(_ gestureRecognizer: UIPanGestureRecognizer) {
+	@objc private func moveWindowPanGestureRecognized(_ gestureRecognizer: UIPanGestureRecognizer) {
 		switch (gestureRecognizer.state) {
 		case .began:
 			gestureRecognizer.setTranslation(self.view.frame.origin, in: self.view)
@@ -235,10 +235,10 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
-	fileprivate static let minimizeAnimationDuration: Double = 0.3
-	fileprivate static let minimizeAnimationDamping: CGFloat = 0.8
+	private static let minimizeAnimationDuration: Double = 0.3
+	private static let minimizeAnimationDamping: CGFloat = 0.8
 
-	fileprivate func minimize() {
+	private func minimize() {
 		// TODO map the continuous gesture's velocity into the animation.
 		self.restoreButton.alpha = 0
 		self.restoreButton.isHidden = false
@@ -259,7 +259,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		)
 	}
 
-	@objc fileprivate func restore() {
+	@objc private func restore() {
 		// TODO map the continuous gesture's velocity into the animation
 
 		UIView.animate(

@@ -67,7 +67,7 @@ internal final class TweakCollectionViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc fileprivate func dismissButtonTapped() {
+	@objc private func dismissButtonTapped() {
 		delegate.tweakCollectionViewControllerDidPressDismissButton(self)
 	}
 
@@ -110,7 +110,7 @@ extension TweakCollectionViewController: UITableViewDataSource {
 		return cell
 	}
 
-	fileprivate static let sectionFooterHeight: CGFloat = 27
+	private static let sectionFooterHeight: CGFloat = 27
 
     private func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return TweakCollectionViewController.sectionFooterHeight
@@ -163,10 +163,10 @@ private protocol TweakGroupSectionHeaderDelegate: class {
 }
 
 /// Displays the name of a tweak group, and includes a (+) button to present the floating TweakGroup UI when tapped.
-private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
+fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	static let identifier = "TweakGroupSectionHeader"
 
-	fileprivate let floatingButton: UIButton = {
+	private let floatingButton: UIButton = {
 		let button = UIButton(type: .custom)
 		let buttonImage = UIImage(swiftTweaksImage: .FloatingPlusButton).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
@@ -174,7 +174,7 @@ private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 		return button
 	}()
 
-	fileprivate let titleLabel: UILabel = {
+	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = AppTheme.Colors.sectionHeaderTitleColor
 		label.font = AppTheme.Fonts.sectionHeaderTitleFont
@@ -204,8 +204,8 @@ private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	}
 
 	static let height: CGFloat = 38
-	fileprivate static let horizontalMargin: CGFloat = 12
-	fileprivate static let floatingButtonSize = CGSize(width: 46, height: TweakGroupSectionHeader.height)
+	private static let horizontalMargin: CGFloat = 12
+	private static let floatingButtonSize = CGSize(width: 46, height: TweakGroupSectionHeader.height)
 
 	override fileprivate func layoutSubviews() {
 		super.layoutSubviews()
@@ -232,7 +232,7 @@ private final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 		titleLabel.frame = titleLabelFrame
 	}
 
-	@objc fileprivate func floatingButtonTapped() {
+	@objc private func floatingButtonTapped() {
 		delegate!.tweakGroupSectionHeaderDidPressFloatingButton(self)
 	}
 }

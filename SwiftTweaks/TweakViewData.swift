@@ -72,7 +72,7 @@ internal enum TweakViewData {
 		return (string, differsFromDefault)
 	}
 
-	fileprivate var isSignedNumberType: Bool {
+	private var isSignedNumberType: Bool {
 		switch self {
 		case .integer, .float, .doubleTweak:
 			return true

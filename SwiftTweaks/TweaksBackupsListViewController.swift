@@ -14,9 +14,9 @@ internal protocol TweaksBackupsListViewControllerDelegate {
 
 /// Lists out the TweakBackups in a given TweakStore.
 internal final class TweaksBackupsListViewController: UIViewController {
-	fileprivate let tableView: UITableView
-	fileprivate let tweakStore: TweakStore
-	fileprivate let delegate: TweaksBackupsListViewControllerDelegate
+	private let tableView: UITableView
+	private let tweakStore: TweakStore
+	private let delegate: TweaksBackupsListViewControllerDelegate
 
 	init(tweakStore: TweakStore, delegate: TweaksBackupsListViewControllerDelegate) {
 		self.tweakStore = tweakStore
@@ -47,11 +47,11 @@ internal final class TweaksBackupsListViewController: UIViewController {
 
 	// MARK: Events
 
-	@objc fileprivate func newButtonTapped() {
+	@objc private func newButtonTapped() {
 		
 	}
 
-	@objc fileprivate func dismissButtonTapped() {
+	@objc private func dismissButtonTapped() {
 		delegate.tweaksBackupsListDidPressDismiss(self)
 	}
 }

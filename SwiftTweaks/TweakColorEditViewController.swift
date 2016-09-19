@@ -14,9 +14,9 @@ internal protocol TweakColorEditViewControllerDelegate {
 
 /// A fullscreen color editor with hex, RGBa, and HSBa controls
 internal final class TweakColorEditViewController: UIViewController {
-	fileprivate let tweak: Tweak<UIColor>
-	fileprivate let tweakStore: TweakStore
-	fileprivate let delegate: TweakColorEditViewControllerDelegate
+	private let tweak: Tweak<UIColor>
+	private let tweakStore: TweakStore
+	private let delegate: TweakColorEditViewControllerDelegate
 
 	fileprivate var viewData: ColorRepresentation {
 		didSet {
@@ -31,7 +31,7 @@ internal final class TweakColorEditViewController: UIViewController {
 		}
 	}
 
-	fileprivate var colorRepresentationType: ColorRepresentationType {
+	private var colorRepresentationType: ColorRepresentationType {
 		set {
 			viewData = ColorRepresentation(type: newValue, color: viewData.color)
 		}
@@ -40,24 +40,24 @@ internal final class TweakColorEditViewController: UIViewController {
 		}
 	}
 
-	fileprivate let tableView: UITableView = {
+	private let tableView: UITableView = {
 		let tableView = UITableView(frame: CGRect.zero, style: .plain)
 		tableView.allowsSelection = false
 		tableView.keyboardDismissMode = .onDrag
 		return tableView
 	}()
 
-	fileprivate let headerView: UIView = UIView()
-	fileprivate let colorPreviewView: UIView = {
+	private let headerView: UIView = UIView()
+	private let colorPreviewView: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 4
 		view.clipsToBounds = true
 		return view
 	}()
-	fileprivate let colorPreviewSolidView = UIView()
-	fileprivate let colorPreviewAlphaView = UIView()
+	private let colorPreviewSolidView = UIView()
+	private let colorPreviewAlphaView = UIView()
 
-	fileprivate let segmentedControl: UISegmentedControl = {
+	private let segmentedControl: UISegmentedControl = {
 		let control = UISegmentedControl(items: ColorRepresentationType.titles)
 		return control
 	}()
@@ -92,10 +92,10 @@ internal final class TweakColorEditViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	fileprivate static let headerHeight: CGFloat = 122
-	fileprivate static let colorPreviewHeight: CGFloat = 64
-	fileprivate static let headerHorizontalMargin: CGFloat = 10
-	fileprivate static let headerVerticalMargin: CGFloat = 10
+	private static let headerHeight: CGFloat = 122
+	private static let colorPreviewHeight: CGFloat = 64
+	private static let headerHorizontalMargin: CGFloat = 10
+	private static let headerVerticalMargin: CGFloat = 10
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -137,22 +137,22 @@ internal final class TweakColorEditViewController: UIViewController {
 
 	fileprivate static let SliderCellIdentifier = "SliderCellIdentifier"
 
-	@objc fileprivate func segmentedControlChanged(_ sender: UISegmentedControl) {
+	@objc private func segmentedControlChanged(_ sender: UISegmentedControl) {
 		assert(sender == segmentedControl, "Unknown sender in segmentedControlChanged:")
 		colorRepresentationType = ColorRepresentationType(rawValue: sender.selectedSegmentIndex)!
 	}
 
-	@objc fileprivate func dismissButtonTapped() {
+	@objc private func dismissButtonTapped() {
 		delegate.tweakColorEditViewControllerDidPressDismissButton(self)
 	}
 
-	fileprivate func updateColorPreview() {
+	private func updateColorPreview() {
 		colorPreviewView.backgroundColor = .clear
 		colorPreviewSolidView.backgroundColor = viewData.color.withAlphaComponent(1.0)
 		colorPreviewAlphaView.backgroundColor = viewData.color
 	}
 
-	@objc fileprivate func restoreDefaultColor() {
+	@objc private func restoreDefaultColor() {
 		let confirmationAlert = UIAlertController(title: "Reset This Color to Default?", message: "Your other tweaks will be left alone.", preferredStyle: .actionSheet)
 		confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		confirmationAlert.addAction(UIAlertAction(title: "Reset This Color", style: .destructive, handler: { _ in

@@ -23,7 +23,7 @@ internal extension UIImage {
 
 	// NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
 	// (Why? Because by default, iOS searches in your app's bundle, but we need to redirect that to the bundle associated with SwiftTweaks
-	fileprivate convenience init?(inThisBundleNamed imageName: String) {
+	private convenience init?(inThisBundleNamed imageName: String) {
 		self.init(named: imageName, in: Bundle(for: TweakTableCell.self), compatibleWith: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
 	}
 

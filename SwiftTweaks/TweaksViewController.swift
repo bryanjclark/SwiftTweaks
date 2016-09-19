@@ -16,9 +16,9 @@ public protocol TweaksViewControllerDelegate: class {
 /// You can init and present TweaksViewController yourself, if you'd prefer to not use TweakWindow.
 public final class TweaksViewController: UIViewController {
 
-	fileprivate let tweakStore: TweakStore
+	private let tweakStore: TweakStore
 
-	fileprivate var navController: UINavigationController! // self required for init
+	private var navController: UINavigationController! // self required for init
 
 	public unowned var delegate: TweaksViewControllerDelegate
 	internal var floatingTweaksWindowPresenter: FloatingTweaksWindowPresenter?
