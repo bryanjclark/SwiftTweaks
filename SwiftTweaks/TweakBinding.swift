@@ -13,14 +13,14 @@ internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 	let tweak: Tweak<T>
 	let binding: (T) -> Void
 
-	init(tweak: Tweak<T>, binding: (T) -> Void) {
+	init(tweak: Tweak<T>, binding: @escaping (T) -> Void) {
 		self.tweak = tweak
 		self.binding = binding
 	}
 
-	func applyBindingWithValue(value: TweakableType) {
-		switch value.dynamicType.tweakViewDataType {
-		case .Boolean, .Integer, .CGFloat, .Double, .UIColor:
+	func applyBindingWithValue(_ value: TweakableType) {
+		switch type(of: value).tweakViewDataType {
+		case .boolean, .integer, .cgFloat, .double, .uiColor:
 			binding(value as! T)
 		}
 	}
@@ -34,12 +34,12 @@ internal struct AnyTweakBinding: TweakBindingType {
 		self.tweakBinding = tweakBinding
 	}
 
-	func applyBindingWithValue(value: TweakableType) {
+	func applyBindingWithValue(_ value: TweakableType) {
 		tweakBinding.applyBindingWithValue(value)
 	}
 }
 
 // When combined with AnyTweakBinding, this provides our type-erasure around TweakBinding<T>
 internal protocol TweakBindingType {
-	func applyBindingWithValue(value: TweakableType)
+	func applyBindingWithValue(_ value: TweakableType)
 }

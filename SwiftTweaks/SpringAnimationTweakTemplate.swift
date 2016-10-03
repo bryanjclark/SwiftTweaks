@@ -70,28 +70,28 @@ public struct SpringAnimationTweakTemplate: TweakGroupTemplateType {
 		)
 	}
 
-	private static let durationDefaults = SignedNumberTweakDefaultParameters<Double>(
+	fileprivate static let durationDefaults = SignedNumberTweakDefaultParameters<Double>(
 		defaultValue: 0.3,
 		minValue: 0.0,
 		maxValue: 2.0,
 		stepSize: 0.01
 	)
 
-	private static let delayDefaults = SignedNumberTweakDefaultParameters<Double>(
+	fileprivate static let delayDefaults = SignedNumberTweakDefaultParameters<Double>(
 		defaultValue: 0.0,
 		minValue: 0.0,
 		maxValue: 5.0,
 		stepSize: 0.01
 	)
 
-	private static let dampingDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	fileprivate static let dampingDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
 		defaultValue: 0.8,
 		minValue: 0.0,
 		maxValue: 1.0,
 		stepSize: 0.01
 	)
 
-	private static let initialSpringVelocityDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	fileprivate static let initialSpringVelocityDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
 		defaultValue: 0.0,
 		minValue: nil,
 		maxValue: nil,

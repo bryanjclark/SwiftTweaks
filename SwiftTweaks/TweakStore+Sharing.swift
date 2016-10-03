@@ -23,7 +23,7 @@ internal extension TweakStore {
 }
 
 @objc internal class TweakStoreActivityItemSource: NSObject {
-	private let textRepresentation: String
+	fileprivate let textRepresentation: String
 
 	init(text: String) {
 		self.textRepresentation = text
@@ -31,15 +31,15 @@ internal extension TweakStore {
 }
 
 extension TweakStoreActivityItemSource: UIActivityItemSource {
-	@objc func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject {
+	@objc func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
 		return textRepresentation
 	}
 
-	@objc func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
+	@objc func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivityType?) -> String {
 		return "SwiftTweaks Backup"
 	}
 
-	@objc func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
+	@objc func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivityType) -> Any? {
 		return textRepresentation
 	}
 }

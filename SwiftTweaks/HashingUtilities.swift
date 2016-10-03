@@ -8,7 +8,11 @@
 
 import Foundation
 
-infix operator ^^^ { associativity left precedence 160 }
+infix operator ^^^ : HashingPrecedence
+precedencegroup HashingPrecedence {
+        associativity: left
+        higherThan: AssignmentPrecedence
+    }
 
 public func ^^^<L: Hashable, R: Hashable>(left: L, right: R) -> Int {
 	return hash(left, right)
@@ -53,11 +57,11 @@ public func ^^^<L: Hashable, R: Hashable>(left: [L]?, right: R) -> Int {
 
 // MARK: Private functions
 
-private func hash<L: Hashable, R: Hashable>(left: L, _ right: R) -> Int {
+private func hash<L: Hashable, R: Hashable>(_ left: L, _ right: R) -> Int {
 	return hash(left.hashValue, right)
 }
 
-private func hash<L: Hashable, R: Hashable>(left: L, _ right: R?) -> Int {
+private func hash<L: Hashable, R: Hashable>(_ left: L, _ right: R?) -> Int {
 	if let right = right {
 		return hash(left, right)
 	} else {
@@ -65,11 +69,11 @@ private func hash<L: Hashable, R: Hashable>(left: L, _ right: R?) -> Int {
 	}
 }
 
-private func hash<L: Hashable, R: Hashable>(left: L, _ right: [R]) -> Int {
+private func hash<L: Hashable, R: Hashable>(_ left: L, _ right: [R]) -> Int {
 	return hash(left, hash(right))
 }
 
-private func hash<L: Hashable, R: Hashable>(left: L, _ right: [R]?) -> Int {
+private func hash<L: Hashable, R: Hashable>(_ left: L, _ right: [R]?) -> Int {
 	if let right = right {
 		return hash(left, right)
 	} else {
@@ -77,11 +81,11 @@ private func hash<L: Hashable, R: Hashable>(left: L, _ right: [R]?) -> Int {
 	}
 }
 
-private func hash<T: Hashable>(array: [T]) -> Int {
-	return array.reduce(0, combine: ^^^)
+private func hash<T: Hashable>(_ array: [T]) -> Int {
+	return array.reduce(0, ^^^)
 }
 
-private func hash<R: Hashable>(left: Int, _ right: R) -> Int {
+private func hash<R: Hashable>(_ left: Int, _ right: R) -> Int {
 	return Int.addWithOverflow(Int.multiplyWithOverflow(left, HashingPrime).0, right.hashValue).0
 }
 

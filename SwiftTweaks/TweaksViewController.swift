@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol TweaksViewControllerDelegate: class {
-	func tweaksViewControllerRequestsDismiss(tweaksViewController: TweaksViewController, completion: (() -> ())?)
+	func tweaksViewControllerRequestsDismiss(_ tweaksViewController: TweaksViewController, completion: (() -> ())?)
 }
 
 /// The main UI for Tweaks. 
@@ -33,7 +33,7 @@ public final class TweaksViewController: UIViewController {
 
 		let tweakRootVC = TweaksRootViewController(tweakStore: tweakStore, delegate: self)
 		navController = UINavigationController(rootViewController: tweakRootVC)
-		navController.toolbarHidden = false
+		navController.isToolbarHidden = false
 		view.addSubview(navController.view)
 	}
 
@@ -43,11 +43,11 @@ public final class TweaksViewController: UIViewController {
 }
 
 extension TweaksViewController: TweaksRootViewControllerDelegate {
-	internal func tweaksRootViewControllerDidPressDismissButton(tweaksRootViewController: TweaksRootViewController) {
+	internal func tweaksRootViewControllerDidPressDismissButton(_ tweaksRootViewController: TweaksRootViewController) {
 		delegate.tweaksViewControllerRequestsDismiss(self, completion: nil)
 	}
 
-	internal func tweaksRootViewController(tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup) {
+	internal func tweaksRootViewController(_ tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup) {
 		delegate.tweaksViewControllerRequestsDismiss(self) {
 			self.floatingTweaksWindowPresenter?.presentFloatingTweaksUIForTweakGroup(tweakGroup)
 		}
