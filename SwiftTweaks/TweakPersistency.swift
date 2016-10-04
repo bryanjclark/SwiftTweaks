@@ -83,27 +83,30 @@ private final class TweakDiskPersistency {
 		}
 	}
 
-	func loadFromDisk() -> TweakCache {
-		var result: TweakCache!
+    func loadFromDisk() -> TweakCache {
+        var result: TweakCache!
 
-		self.queue.sync {
-			result = (try? Foundation.Data(contentsOf: self.fileURL))
-				.flatMap(NSKeyedUnarchiver.unarchiveObject(with:))
-				.flatMap { $0 as? Data }
-				.map { $0.cache }
-				?? [:]
-		}
+        self.queue.sync {
+            NSKeyedUnarchiver.setClass(Data.self, forClassName: "Data")
+            result = (try? Foundation.Data(contentsOf: self.fileURL))
+                .flatMap(NSKeyedUnarchiver.unarchiveObject(with:))
+                .flatMap { $0 as? Data }
+                .map { $0.cache }
+                ?? [:]
+        }
 
-		return result
-	}
+        return result
+    }
 
-	func saveToDisk(_ data: TweakCache) {
-		self.queue.async {
-			let nsData = NSKeyedArchiver.archivedData(withRootObject: Data(cache: data))
-			try? nsData.write(to: self.fileURL, options: [.atomic])
-		}
-	}
-
+    func saveToDisk(_ data: TweakCache) {
+        self.queue.async {
+            let data = Data(cache: data)
+            NSKeyedArchiver.setClassName("Data", for: type(of: data))
+            let nsData = NSKeyedArchiver.archivedData(withRootObject: data)
+            try? nsData.write(to: self.fileURL, options: [.atomic])
+        }
+    }
+    
 	/// Implements NSCoding for TweakCache.
 	/// TweakCache a flat dictionary: [String: TweakableType]. 
 	/// However, because re-hydrating TweakableType from its underlying NSNumber gets Bool & Int mixed up, we have to persist a different structure on disk: [TweakViewDataType: [String: AnyObject]]
