@@ -32,7 +32,7 @@ public struct EdgeInsetsTweakTemplate: TweakGroupTemplateType {
 		self.collectionName = collectionName
 		self.groupName = groupName
 
-		func createInsetTweak(tweakName: String, customDefaultValue: CGFloat?) -> Tweak<CGFloat> {
+		func createInsetTweak(_ tweakName: String, customDefaultValue: CGFloat?) -> Tweak<CGFloat> {
 			return Tweak(
 				collectionName: collectionName,
 				groupName: groupName,

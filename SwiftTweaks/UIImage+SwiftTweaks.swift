@@ -24,18 +24,18 @@ internal extension UIImage {
 	// NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
 	// (Why? Because by default, iOS searches in your app's bundle, but we need to redirect that to the bundle associated with SwiftTweaks
 	private convenience init?(inThisBundleNamed imageName: String) {
-		self.init(named: imageName, inBundle: NSBundle(forClass: TweakTableCell.self), compatibleWithTraitCollection: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
+		self.init(named: imageName, in: Bundle(for: TweakTableCell.self), compatibleWith: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
 	}
 
 	/// Returns the image, tinted to the given color.
-	internal func imageTintedWithColor(color: UIColor) -> UIImage {
+	internal func imageTintedWithColor(_ color: UIColor) -> UIImage {
 		let imageRect = CGRect(origin: CGPoint.zero, size: self.size)
 
 		UIGraphicsBeginImageContextWithOptions(imageRect.size, false, 0.0) // Retina aware.
 
-		drawInRect(imageRect)
+		draw(in: imageRect)
 		color.set()
-		UIRectFillUsingBlendMode(imageRect, .SourceIn)
+		UIRectFillUsingBlendMode(imageRect, .sourceIn)
 
 		let image = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()

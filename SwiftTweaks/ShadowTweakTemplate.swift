@@ -71,7 +71,7 @@ public struct ShadowTweakTemplate: TweakGroupTemplateType {
 		)
 	}
 
-	private static let colorDefault = UIColor.blackColor()
+	private static let colorDefault = UIColor.black
 
 	private static let opacityDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
 		defaultValue: 0.2,

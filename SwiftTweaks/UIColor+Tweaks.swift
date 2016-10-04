@@ -14,13 +14,12 @@ internal extension UIColor {
 
 	/// Creates a UIColor with a given hex string (e.g. "#FF00FF")
 	// NOTE: Would use a failable init (e.g. `UIColor(hexString: _)` but have to wait until Swift 2.2.1 https://github.com/Khan/SwiftTweaks/issues/38
-	internal static func colorWithHexString(hexString: String) -> UIColor? {
+	internal static func colorWithHexString(_ hexString: String) -> UIColor? {
 		// Strip whitespace, "#", "0x", and make uppercase
 		let hexString = hexString
-			.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-			.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "#"))
-			.stringByReplacingOccurrencesOfString("0x", withString: "")
-			.uppercaseString
+			.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+            .replacingOccurrences(of: "0x", with: "").uppercased()
 
 		// We should have 6 or 8 characters now.
 		let hexStringLength = hexString.characters.count
@@ -31,16 +30,16 @@ internal extension UIColor {
 		// Break the string into its components
 		let hexStringContainsAlpha = (hexStringLength == 8)
 		let colorStrings: [String] = [
-			hexString[hexString.startIndex...hexString.startIndex.advancedBy(1)],
-			hexString[hexString.startIndex.advancedBy(2)...hexString.startIndex.advancedBy(3)],
-			hexString[hexString.startIndex.advancedBy(4)...hexString.startIndex.advancedBy(5)],
-			hexStringContainsAlpha ? hexString[hexString.startIndex.advancedBy(6)...hexString.startIndex.advancedBy(7)] : "FF"
+			hexString[hexString.startIndex...hexString.characters.index(hexString.startIndex, offsetBy: 1)],
+			hexString[hexString.characters.index(hexString.startIndex, offsetBy: 2)...hexString.characters.index(hexString.startIndex, offsetBy: 3)],
+			hexString[hexString.characters.index(hexString.startIndex, offsetBy: 4)...hexString.characters.index(hexString.startIndex, offsetBy: 5)],
+			hexStringContainsAlpha ? hexString[hexString.characters.index(hexString.startIndex, offsetBy: 6)...hexString.characters.index(hexString.startIndex, offsetBy: 7)] : "FF"
 		]
 
 		// Convert string components into their CGFloat (r,g,b,a) components
 		let colorFloats: [CGFloat] = colorStrings.map {
 			var componentInt: CUnsignedInt = 0
-			NSScanner(string: $0).scanHexInt(&componentInt)
+			Scanner(string: $0).scanHexInt32(&componentInt)
 			return CGFloat(componentInt) / CGFloat(255.0)
 		}
 
@@ -72,16 +71,12 @@ internal extension UIColor {
 		var alpha: CGFloat = 0
 		getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-		return String(format: "#%02x%02x%02x", arguments: [
-			Int(red * 255.0),
-			Int(green * 255.0),
-			Int(blue * 255.0)
-			]).uppercaseString
+		return "#\(Int(red * 255.0))\(Int(green * 255.0))\(Int(blue * 255.0))".uppercased()
 	}
 
 	private var canProvideRGBComponents: Bool {
-		switch CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor)!) {
-		case .RGB, .Monochrome:
+		switch self.cgColor.colorSpace!.model {
+		case .rgb, .monochrome:
 			return true
 		default:
 			return false

@@ -10,7 +10,7 @@ import Foundation
 
 /// A struct you can use to represent default / min / max / stepSize values.
 /// (You'll probably only want to use this in creating custom TweakGroupTemplateTypes)
-public struct SignedNumberTweakDefaultParameters<T: SignedNumberType> {
+public struct SignedNumberTweakDefaultParameters<T: SignedNumber> {
 	public let defaultValue: T
 	public let minValue: T?
 	public let maxValue: T?
@@ -24,7 +24,7 @@ public struct SignedNumberTweakDefaultParameters<T: SignedNumberType> {
 	}
 }
 
-public extension Tweak where T: SignedNumberType {
+public extension Tweak where T: SignedNumber {
 	init(collectionName: String, groupName: String, tweakName: String, defaultParameters: SignedNumberTweakDefaultParameters<T>, customDefaultValue: T?) {
 		self.init(
 			collectionName: collectionName,

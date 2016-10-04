@@ -22,7 +22,7 @@ extension TweakCollection {
 	/// The child TweakGroups, sorted alphabetically.
 	internal var sortedTweakGroups: [TweakGroup] {
 		return tweakGroups
-			.sort { $0.0 < $1.0 }
+			.sorted { $0.0 < $1.0 }
 			.map { return $0.1 }
 	}
 
