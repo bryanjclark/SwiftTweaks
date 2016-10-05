@@ -100,7 +100,7 @@ private final class TweakDiskPersistency {
 	func saveToDisk(_ data: TweakCache) {
 		self.queue.async {
 			let nsData = NSKeyedArchiver.archivedData(withRootObject: Data(cache: data))
-			try? nsData.write(to: self.fileURL, options: [.atomic])
+			try! nsData.write(to: self.fileURL, options: [.atomic])
 		}
 	}
 
