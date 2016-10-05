@@ -205,27 +205,33 @@ internal final class TweakTableCell: UITableViewCell {
 			textFieldEnabled = false
 
 		case let .Integer(value: value, _, _, _, stepSize: step):
-			stepperControl.value = Double(value)
-			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
-			stepperControl.stepValue = Double(step ?? 1)
+			self.updateStepper(
+				value: Double(value),
+				stepperLimits: viewData.stepperLimits!,
+				stepSize: Double(step ?? 1)
+			)
 
 			textField.text = String(value)
 			textField.keyboardType = .NumberPad
 			textFieldEnabled = true
 
 		case let .Float(value: value, _, _, _, stepSize: step):
-			stepperControl.value = Double(value)
-			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
-			stepperControl.stepValue = Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
+			self.updateStepper(
+				value: Double(value),
+				stepperLimits: viewData.stepperLimits!,
+				stepSize: Double(step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100)
+			)
 
 			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
 			textFieldEnabled = true
 
 		case let .DoubleTweak(value: value, _, _, _, stepSize: step):
-			stepperControl.value = value
-			(stepperControl.minimumValue, stepperControl.maximumValue) = viewData.stepperLimits!
-			stepperControl.stepValue = step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
+			self.updateStepper(
+				value: value,
+				stepperLimits: viewData.stepperLimits!,
+				stepSize: step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
+			)
 
 			textField.text = value.stringValueRoundedToNearest(.Thousandth)
 			textField.keyboardType = .DecimalPad
@@ -243,6 +249,12 @@ internal final class TweakTableCell: UITableViewCell {
 		textField.userInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? AppTheme.Colors.textPrimary : AppTheme.Colors.controlSecondary
 
+	}
+
+	private func updateStepper(value value: Double, stepperLimits: (stepperMin: Double, stepperMax: Double), stepSize: Double) {
+		(stepperControl.minimumValue, stepperControl.maximumValue) = stepperLimits
+		stepperControl.value = value
+		stepperControl.stepValue = stepSize
 	}
 
 
