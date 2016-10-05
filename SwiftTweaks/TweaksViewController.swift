@@ -49,7 +49,7 @@ extension TweaksViewController: TweaksRootViewControllerDelegate {
 
 	internal func tweaksRootViewController(_ tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup) {
 		delegate.tweaksViewControllerRequestsDismiss(self) {
-			self.floatingTweaksWindowPresenter?.presentFloatingTweaksUIForTweakGroup(tweakGroup)
+			self.floatingTweaksWindowPresenter?.presentFloatingTweaksUI(forTweakGroup: tweakGroup)
 		}
 	}
 }

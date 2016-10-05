@@ -143,7 +143,7 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 
 
 	/// Presents a floating TweakGroup over your app's UI, so you don't have to hop in and out of the full-modal Tweak UI.
-	internal func presentFloatingTweaksUIForTweakGroup(_ tweakGroup: TweakGroup) {
+	internal func presentFloatingTweaksUI(forTweakGroup tweakGroup: TweakGroup) {
 		if (floatingTweakGroupUIWindow == nil) {
 			let window = HitTransparentWindow()
 			window.frame = UIScreen.main.bounds

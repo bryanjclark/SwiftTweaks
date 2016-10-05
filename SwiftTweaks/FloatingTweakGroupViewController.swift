@@ -12,7 +12,7 @@ import UIKit
 // MARK: - FloatingTweaksWindowPresenter
 
 internal protocol FloatingTweaksWindowPresenter {
-	func presentFloatingTweaksUIForTweakGroup(_ tweakGroup: TweakGroup)
+	func presentFloatingTweaksUI(forTweakGroup tweakGroup: TweakGroup)
 	func dismissFloatingTweaksUI()
 }
 
