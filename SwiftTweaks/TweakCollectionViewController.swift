@@ -128,7 +128,7 @@ extension TweakCollectionViewController: UITableViewDataSource {
 	}
 
 	fileprivate func tweakAtIndexPath(_ indexPath: IndexPath) -> AnyTweak {
-		return tweakCollection.sortedTweakGroups[(indexPath as NSIndexPath).section].sortedTweaks[(indexPath as NSIndexPath).row]
+		return tweakCollection.sortedTweakGroups[indexPath.section].sortedTweaks[indexPath.row]
 	}
 }
 
