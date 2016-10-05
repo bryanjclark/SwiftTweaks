@@ -134,8 +134,8 @@ extension TweakCollectionViewController: UITableViewDataSource {
 
 extension TweakCollectionViewController: TweakTableCellDelegate {
 	func tweakCellDidChangeCurrentValue(_ tweakCell: TweakTableCell) {
-		if let
-			indexPath = tableView.indexPath(for: tweakCell),
+		if
+			let indexPath = tableView.indexPath(for: tweakCell),
 			let viewData = tweakCell.viewData
 		{
 			let tweak = tweakAtIndexPath(indexPath)
