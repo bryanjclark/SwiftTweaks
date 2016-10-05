@@ -1,6 +1,6 @@
 # SwiftTweaks
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks) [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases) ![Swift 2.2.x](https://img.shields.io/badge/Swift-2.2.x-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg) [![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks) [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases) ![Swift 2.3.x](https://img.shields.io/badge/Swift-2.3.x-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg) [![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
 
 Adjust your iOS app on the fly without needing to compile!
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)
@@ -26,12 +26,26 @@ A `Tweak` looks like this:
 public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
 ```
 
-There are also helpful `TweakGroupTemplate` types, like this one for iOS spring animations:
+There are also helpful `TweakGroupTemplate` types, so you can quickly declare commonly-used-together combos. They all have sensible defaults, but of course, you can set your own!
 ```swift
-public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
+// Controls delay and duration for UIView.animate
+// Use it with UIView.animateWithBasicAnimationTweakTemplate
+public static let basicAnimation = BasicAnimationTweakTemplate("Animation", "Basic Animation")
+
+// Controls delay, duration, damping, and initial spring velocity for UIView.animate
+// Use it with UIView.animateWithSpringAnimationTweakTemplate
+public static let springAnimation = SpringAnimationTweakTemplate("Animation", "Spring Animation")
+
+// Controls shadow color, radius, offset, and opacity for CALayer
+// Use it with CALayer.applyShadowTweakTemplate
+public static let shadowTweak = ShadowTweakTemplate("Shadows", "Button Shadow")
+
+// Controls top/right/bottom/left for UIEdgeInsets
+// Use it with UIEdgeInsets.init(edgeInsetsTweakTemplate)
+public static let edgeInsets = EdgeInsetsTweakTemplate("Layout", "Screen Edge Insets")
 ```
 
-There are templates for “basic” `UIView` animations, `UIEdgeInsets`, and best of all - you can create your own `TweakGroupTemplate` type and contribute ‘em back here!
+Of course, you can create your own `TweakGroupTemplate` type if you'd like - they're handy whenever you have a cluster of tweaks that need to be used together to get a desired effect. They can be built out of any combination of `Tweak`s.
 
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Demo.gif?raw=true)
 
@@ -108,18 +122,18 @@ ExampleTweaks.bindMultiple(tweaksToWatch) {
 }
 ```
 
-For more examples, check out the example project’s `ViewController.swift` file - it’s got lots of different use cases.
+For more examples, check out the example project’s `ViewController.swift` file.
 
 ### Step Three: Set TweakWindow as your Root View Controller
-By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture if you prefer it!
+By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture!
 
 ## Installation
 
-#### Carthage
+#### [Carthage](https://github.com/carthage/carthage)
 To add `SwiftTweaks` to your application, add it to your `Cartfile`:
 
 ```
-github "Khan/SwiftTweaks" ~> 1.0
+github "Khan/SwiftTweaks" ~> 1.1
 ```
 
 In addition, add `-DDEBUG` to **Other Swift Flags** in your project's Build Settings for your *Debug* configuration.
@@ -127,7 +141,7 @@ In addition, add `-DDEBUG` to **Other Swift Flags** in your project's Build Sett
 #### [CocoaPods](http://cocoapods.org/?q=SwiftTweaks)
 
 ```ruby
-pod 'SwiftTweaks', '~> 1.0'
+pod 'SwiftTweaks', '~> 1.1'
 
 # Enable DEBUG flag in Swift for SwiftTweaks
 post_install do |installer|
@@ -146,6 +160,7 @@ end
 ## FAQ
 #### Do I *have* to set TweakWindow as the root of my app?
 Nope! Wherever/however you prefer, just create a `TweaksViewController` like so:
+
 	let tweaksVC = TweaksViewController(tweakStore: ExampleTweaks.defaultStore)
 
 #### Can I have multiple `TweakLibraryType`s in my app?
@@ -173,6 +188,6 @@ While `Tweak<T>` is generic, we have to restrict `T` to be `TweakableType` so th
 If you’d like to extend `TweakableType`, you’ll need to extend some internal components, like `TweakViewDataType`, `TweakDefaultData`, `TweakViewData`, and `TweakPersistency`. Feel free to open a pull request if you’d like to add a new type!
 
 #### How do I create a new TweakGroupTemplate?
-Maybe you’re a different animation framework, or want a template for `CGRect` or something like that - great! As long as the tweakable “components” of your template conform to `TweakableType` then you’re all set. Create a new `TweakGroupTemplateType`, and take a look at the existing templates for implementation suggestions. (You’ll probably want to use `SignedNumberTweakDefaultParameters` too - they’re very helpful!)
+Maybe you’re using a different animation framework, or want a template for `CGRect` or something like that - great! As long as the tweakable “components” of your template conform to `TweakableType` then you’re all set. Create a new `TweakGroupTemplateType`, and take a look at the existing templates for implementation suggestions. (You’ll probably want to use `SignedNumberTweakDefaultParameters` too - they’re very helpful!)
 
 If you think your `TweakGroupTemplateType` would help out others, please make a pull request!
