@@ -19,7 +19,8 @@ internal extension UIColor {
 		let hexString = hexString
 			.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
 			.trimmingCharacters(in: NSCharacterSet(charactersIn: "#") as CharacterSet)
-            .replacingOccurrences(of: "0x", with: "").uppercased()
+            .replacingOccurrences(of: "0x", with: "")
+			.uppercased()
 
 		// We should have 6 or 8 characters now.
 		let hexStringLength = hexString.characters.count
