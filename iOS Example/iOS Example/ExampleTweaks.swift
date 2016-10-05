@@ -63,16 +63,12 @@ public struct ExampleTweaks: TweakLibraryType {
 
 		// Since SwiftTweaks is a dynamic library, you'll need to determine whether tweaks are enabled.
 		// Try using the DEBUG flag (add "-D DEBUG" to "Other Swift Flags" in your project's Build Settings).
-		#if DEBUG
-			let tweaksEnabled: Bool = true
-		#else
-			let tweaksEnabled: Bool = false
-		#endif
+		// Below, we'll use TweakDebug.isActive, which is a shortcut to check the DEBUG flag.
 
 		return TweakStore(
 			tweaks: allTweaks,
 			storeName: "ExampleTweaks", 	// NOTE: You can omit the `storeName` parameter if you only have one TweakLibraryType in your application.
-			enabled: tweaksEnabled
+			enabled: TweakDebug.isActive
 		)
 	}()
 }
