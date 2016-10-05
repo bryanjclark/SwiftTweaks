@@ -33,26 +33,6 @@ public struct EdgeInsetsTweakTemplate: TweakGroupTemplateType {
 		self.groupName = groupName
 
 		func createInsetTweak(_ tweakName: String, customDefaultValue: CGFloat?) -> Tweak<CGFloat> {
-            
-//            if let customDefaultValue = customDefaultValue {
-//                return Tweak(
-//                    collectionName: collectionName,
-//                    groupName: groupName,
-//                    tweakName: tweakName,
-//                    defaultValue: EdgeInsetsTweakTemplate.edgeInsetDefaultParameters as! TweakableType,
-//                    minimumValue: customDefaultValue
-//                )
-//            }
-            
-            
-//            Tweak(
-//                collectionName,
-//                groupName,
-//                "Color",
-//                color ?? ShadowTweakTemplate.colorDefault
-//            
-//            )
-            
             return Tweak(
                 collectionName: collectionName,
                 groupName: groupName,
