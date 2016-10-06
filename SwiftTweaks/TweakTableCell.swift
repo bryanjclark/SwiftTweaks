@@ -204,36 +204,19 @@ internal final class TweakTableCell: UITableViewCell {
 			switchControl.isOn = value
 			textFieldEnabled = false
 
-		case let .integer(value: value, _, _, _, stepSize: step):
-			self.updateStepper(
-				value: Double(value),
-				stepperLimits: viewData.stepperLimits!,
-				stepSize: Double(step ?? 1)
-			)
+		case .integer:
+			let doubleValue = viewData.doubleValue!
+			self.updateStepper(value: doubleValue, stepperValues: viewData.stepperValues!)
 
-			textField.text = String(value)
+			textField.text = String(doubleValue)
 			textField.keyboardType = .numberPad
 			textFieldEnabled = true
 
-		case let .float(value: value, _, _, _, stepSize: step):
-			self.updateStepper(
-				value: Double(value),
-				stepperLimits: viewData.stepperLimits!,
-				stepSize: step.flatMap(Double.init) ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
-			)
+		case .float, .doubleTweak:
+			let doubleValue = viewData.doubleValue!
+			self.updateStepper(value: doubleValue, stepperValues: viewData.stepperValues!)
 
-			textField.text = value.stringValueRoundedToNearest(.thousandth)
-			textField.keyboardType = .decimalPad
-			textFieldEnabled = true
-
-		case let .doubleTweak(value: value, _, _, _, stepSize: step):
-			self.updateStepper(
-				value: value,
-				stepperLimits: viewData.stepperLimits!,
-				stepSize: step ?? (stepperControl.maximumValue - stepperControl.minimumValue)/100
-			)
-
-			textField.text = value.stringValueRoundedToNearest(.thousandth)
+			textField.text = doubleValue.stringValueRoundedToNearest(.thousandth)
 			textField.keyboardType = .decimalPad
 			textFieldEnabled = true
 
@@ -241,7 +224,6 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.backgroundColor = value
 			textField.text = value.hexString
 			textFieldEnabled = false
-
 		}
 
 		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
@@ -251,10 +233,11 @@ internal final class TweakTableCell: UITableViewCell {
 
 	}
 
-	private func updateStepper(value: Double, stepperLimits: (stepperMin: Double, stepperMax: Double), stepSize: Double) {
-		(stepperControl.minimumValue, stepperControl.maximumValue) = stepperLimits
-		stepperControl.value = value
-		stepperControl.stepValue = stepSize
+	private func updateStepper(value: Double, stepperValues: TweakViewData.StepperValues) {
+		stepperControl.minimumValue = stepperValues.stepperMin
+		stepperControl.maximumValue = stepperValues.stepperMax
+		stepperControl.stepValue = stepperValues.stepSize
+		stepperControl.value = value // need to set this *after* the min/max have been set, else UIKit clips it.
 	}
 
 
