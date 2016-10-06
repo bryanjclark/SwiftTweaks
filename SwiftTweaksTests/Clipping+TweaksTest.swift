@@ -29,7 +29,7 @@ private struct ClippingTestCase<T where T: SignedNumberType> {
 	}
 }
 
-private struct StepperTestCase {
+private struct StepperClippingTestCase {
 	let currentValue: Double
 	let defaultValue: Double
 	let min: Double?
@@ -44,7 +44,7 @@ private struct StepperTestCase {
 		self.expected = expected
 	}
 
-	static func confirmTest(testCase: StepperTestCase) {
+	static func confirmTest(testCase: StepperClippingTestCase) {
 		let tweakViewData = TweakViewData.DoubleTweak(
 			value: testCase.currentValue,
 			defaultValue: testCase.defaultValue,
@@ -53,7 +53,7 @@ private struct StepperTestCase {
 			stepSize: nil
 		)
 
-		let (derivedMin, derivedMax) = tweakViewData.stepperLimits!
+		let (derivedMin, derivedMax, _) = tweakViewData.stepperValues!
 		let (expectedMin, expectedMax) = testCase.expected
 		XCTAssertEqual(derivedMin, expectedMin, "Derived minimum didn't match expected.")
 		XCTAssertEqual(derivedMax, expectedMax, "Derived maximum didn't match expected.")
@@ -83,24 +83,24 @@ class Clipping_TweaksTests: XCTestCase {
 
 	func testStepperLimits() {
 		let defaultMin = TweakViewData.stepperDefaultMinimum
-		let defaultMax = TweakViewData.stepperDefaultMaximum
+		let defaultMax = TweakViewData.stepperDefaultMaximumLarge
 		let defaultBounds = (defaultMin, defaultMax)
 		let boundsMultiplier = TweakViewData.stepperBoundsMultiplier
 		[
-			StepperTestCase(current: 10, def: 10, min: nil, max: nil, expected: defaultBounds),
+			StepperClippingTestCase(current: 10, def: 10, min: nil, max: nil, expected: defaultBounds),
 
-			StepperTestCase(current: 10, def: 40, min: nil, max: nil, expected: defaultBounds),
-			StepperTestCase(current: 40, def: 10, min: nil, max: nil, expected: defaultBounds),
+			StepperClippingTestCase(current: 10, def: 40, min: nil, max: nil, expected: defaultBounds),
+			StepperClippingTestCase(current: 40, def: 10, min: nil, max: nil, expected: defaultBounds),
 
-			StepperTestCase(current: 50, def: 101, min: nil, max: nil, expected: (defaultMin, 101 * boundsMultiplier)),
-			StepperTestCase(current: -10, def: -1, min: nil, max: nil, expected: (-10 * boundsMultiplier, defaultMax)),
-			StepperTestCase(current: 165, def: 165, min: nil, max: nil, expected: (defaultMin, 165 * boundsMultiplier)),
-			StepperTestCase(current: 60, def: -20, min: nil, max: nil, expected: (-20 * boundsMultiplier, defaultMax)),
+			StepperClippingTestCase(current: 50, def: 101, min: nil, max: nil, expected: (defaultMin, 101 * boundsMultiplier)),
+			StepperClippingTestCase(current: -10, def: -1, min: nil, max: nil, expected: (-10 * boundsMultiplier, defaultMax)),
+			StepperClippingTestCase(current: 165, def: 165, min: nil, max: nil, expected: (defaultMin, 165 * boundsMultiplier)),
+			StepperClippingTestCase(current: 60, def: -20, min: nil, max: nil, expected: (-20 * boundsMultiplier, defaultMax)),
 
-			StepperTestCase(current: -30, def: -40, min: -100, max: 0, expected: (-100, 0)),
-			StepperTestCase(current: 600, def: 500, min: 400, max: 1000, expected: (400, 1000)),
+			StepperClippingTestCase(current: -30, def: -40, min: -100, max: 0, expected: (-100, 0)),
+			StepperClippingTestCase(current: 600, def: 500, min: 400, max: 1000, expected: (400, 1000)),
 
-			StepperTestCase(current: 400, def: 200, min: nil, max: nil, expected: (defaultMin, 400 * boundsMultiplier)),
-		].forEach(StepperTestCase.confirmTest)
+			StepperClippingTestCase(current: 400, def: 200, min: nil, max: nil, expected: (defaultMin, 400 * boundsMultiplier)),
+		].forEach(StepperClippingTestCase.confirmTest)
 	}
 }
