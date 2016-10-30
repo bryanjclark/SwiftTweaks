@@ -168,7 +168,7 @@ fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 
 	private let floatingButton: UIButton = {
 		let button = UIButton(type: .custom)
-		let buttonImage = UIImage(swiftTweaksImage: .FloatingPlusButton).withRenderingMode(.alwaysTemplate)
+		let buttonImage = UIImage(swiftTweaksImage: .floatingPlusButton).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
 		return button

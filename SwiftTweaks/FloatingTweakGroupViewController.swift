@@ -99,7 +99,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	private let closeButton: UIButton = {
 		let button = UIButton()
-		let buttonImage = UIImage(swiftTweaksImage: .FloatingCloseButton).withRenderingMode(.alwaysTemplate)
+		let buttonImage = UIImage(swiftTweaksImage: .floatingCloseButton).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
 		return button
@@ -116,7 +116,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	fileprivate let restoreButton: UIButton = {
 		let button = UIButton()
-		let buttonImage = UIImage(swiftTweaksImage: .FloatingMinimizedArrow).withRenderingMode(.alwaysTemplate)
+		let buttonImage = UIImage(swiftTweaksImage: .floatingMinimizedArrow).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondary), for: UIControlState())
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlSecondaryPressed), for: .highlighted)
 		button.isHidden = true

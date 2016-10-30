@@ -62,7 +62,7 @@ internal final class TweakTableCell: UITableViewCell {
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
-		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
+		let disclosureArrowImage = UIImage(swiftTweaksImage: .disclosureIndicator)
 		let imageView = UIImageView(image: disclosureArrowImage.withRenderingMode(.alwaysTemplate))
 		imageView.contentMode = .center
 		imageView.tintColor = AppTheme.Colors.controlSecondary
