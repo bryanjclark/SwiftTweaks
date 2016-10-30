@@ -71,7 +71,12 @@ private final class TweakDiskPersistency {
 
 	private let queue = DispatchQueue(label: "org.khanacademy.swift_tweaks.disk_persistency", attributes: [])
 
+	private static let dataClassName = "TweakDiskPersistency.Data"
+
 	init(identifier: String) {
+		NSKeyedUnarchiver.setClass(TweakDiskPersistency.Data.self, forClassName: TweakDiskPersistency.dataClassName)
+		NSKeyedArchiver.setClassName(TweakDiskPersistency.dataClassName, for: TweakDiskPersistency.Data.self)
+
 		self.fileURL = TweakDiskPersistency.fileURLForIdentifier(identifier)
 		self.ensureDirectoryExists()
 	}
