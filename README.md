@@ -105,7 +105,7 @@ To use a tweak, you replace a number or `UIColor`s in your code with a `Tweak` r
 
 Here’s our original code:
 ```swift
-button.tintColor = UIColor.greenColor()
+button.tintColor = UIColor.green
 ```
 
 **assign** returns the current value of the tweak:
@@ -138,7 +138,7 @@ By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can als
 To add `SwiftTweaks` to your application, add it to your `Cartfile`:
 
 ```
-github "Khan/SwiftTweaks" ~> 1.1
+github "Khan/SwiftTweaks"
 ```
 
 In addition, add `-DDEBUG` to **Other Swift Flags** in your project's Build Settings for your *Debug* configuration.
@@ -146,7 +146,7 @@ In addition, add `-DDEBUG` to **Other Swift Flags** in your project's Build Sett
 #### [CocoaPods](http://cocoapods.org/?q=SwiftTweaks)
 
 ```ruby
-pod 'SwiftTweaks', '~> 1.1'
+pod 'SwiftTweaks'
 
 # Enable DEBUG flag in Swift for SwiftTweaks
 post_install do |installer|
