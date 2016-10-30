@@ -11,8 +11,8 @@ import SwiftTweaks
 
 public struct ExampleTweaks: TweakLibraryType {
 	public static let colorBackground = Tweak("General", "Colors", "Background", UIColor(white: 0.95, alpha: 1.0))
-	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
-	public static let colorButtonText = Tweak("General", "Colors", "Button Text", UIColor.whiteColor())
+	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blue)
+	public static let colorButtonText = Tweak("General", "Colors", "Button Text", UIColor.white)
 
 	// Tweaks work *great* with numbers, you just need to tell the compiler
 	// what kind of number you're using (Int, CGFloat, or Double)

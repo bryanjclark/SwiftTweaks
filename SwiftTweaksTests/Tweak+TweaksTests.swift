@@ -9,17 +9,17 @@
 import XCTest
 @testable import SwiftTweaks
 
-private struct ClippingTweakTestCase<T where T: SignedNumberType, T: TweakableType> {
+private struct ClippingTweakTestCase<T> where T: SignedNumber, T: TweakableType {
 	let defaultValue: T
 	let min: T?
 	let max: T?
 	let expected: T
 
-	static func verify(testCase: ClippingTweakTestCase) {
-		let tweak: Tweak<T> = Tweak("a", "b", "c",
+	static func verify(_ testCase: ClippingTweakTestCase) {
+		let tweak: Tweak<T> = Tweak(collectionName: "a", groupName: "b", tweakName: "c",
 		                            defaultValue: testCase.defaultValue,
-		                            min: testCase.min,
-		                            max: testCase.max,
+		                            minimumValue: testCase.min,
+		                            maximumValue: testCase.max,
 		                            stepSize: nil
 		)
 		XCTAssertEqual(testCase.expected, tweak.defaultValue)

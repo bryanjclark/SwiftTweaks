@@ -12,10 +12,10 @@ import CoreGraphics
 /// A measure of precision for decimal numbers.
 /// The rawValue is the number of decimals, e.g. .Thousandth = 3 for 0.001
 internal enum PrecisionLevel: Int {
-	case Integer = 0
-	case Tenth = 1
-	case Hundredth = 2
-	case Thousandth = 3
+	case integer = 0
+	case tenth = 1
+	case hundredth = 2
+	case thousandth = 3
 
 	/// The smallest value for the precision - e.g. .Thousandth.multiplier = .001
 	var precision: Double {
@@ -34,32 +34,32 @@ internal protocol Roundable {
 	var doubleValue: Double { get }
 
 	/// Returns the value, rounded to the given precision level.
-	func roundToNearest(precisionLevel: PrecisionLevel) -> Self
+	func roundToNearest(_ precisionLevel: PrecisionLevel) -> Self
 }
 
 extension Roundable {
-	func stringValueRoundedToNearest(precisionLevel: PrecisionLevel) -> String {
-		let numberFormatter = NSNumberFormatter()
+	func stringValueRoundedToNearest(_ precisionLevel: PrecisionLevel) -> String {
+		let numberFormatter = NumberFormatter()
 		numberFormatter.maximumFractionDigits = precisionLevel.maximumFractionDigits
-		return numberFormatter.stringFromNumber(doubleValue)!
+        return numberFormatter.string(from: NSNumber(value: doubleValue))!
 	}
 }
 
 extension Double: Roundable {
 	var doubleValue: Double { return self }
 
-	func roundToNearest(precisionLevel: PrecisionLevel) -> Double {
+	func roundToNearest(_ precisionLevel: PrecisionLevel) -> Double {
 		// I'd tried using Foundation's NSDecimalNumberHandler, but it wasn't working out as well!
 		// This is goofy, but it works:
 		// For .Thousandth, multiply times 1000, then round, then divide by 1000. Boom! Rounded to the required precision value.
-		return Double(round(doubleValue / precisionLevel.precision)) * precisionLevel.precision
+        return Double((doubleValue / precisionLevel.precision).rounded()) * precisionLevel.precision
 	}
 }
 
 extension CGFloat: Roundable {
 	var doubleValue: Double { return Double(self) }
 
-	func roundToNearest(precisionLevel: PrecisionLevel) -> CGFloat {
+	func roundToNearest(_ precisionLevel: PrecisionLevel) -> CGFloat {
 		return CGFloat(Double(self).roundToNearest(precisionLevel))
 	}
 }

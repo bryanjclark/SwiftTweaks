@@ -19,14 +19,14 @@ public protocol TweakableType {
 /// While Tweak<T> is generic, we have to build UI for editing each kind of <T> - hence the need for a protocol to restrict what can be tweaked.
 /// Of course, we can add new TweakViewDataTypes over time, too!
 public enum TweakViewDataType {
-	case Boolean
-	case Integer
-	case CGFloat
-	case Double
-	case UIColor
+	case boolean
+	case integer
+	case cgFloat
+	case double
+	case uiColor
 
 	public static let allTypes: [TweakViewDataType] = [
-		.Boolean, .Integer, .CGFloat, .Double, .UIColor
+		.boolean, .integer, .cgFloat, .double, .uiColor
 	]
 }
 
@@ -34,42 +34,42 @@ public enum TweakViewDataType {
 /// Our public type-erasure (AnyTweak) means that this has to be public, unfortunately
 /// ...but there's no need for you to directly use this enum.
 public enum TweakDefaultData {
-	case Boolean(defaultValue: Bool)
-	case Integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
-	case Float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
-	case DoubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
-	case Color(defaultValue: UIColor)
+	case boolean(defaultValue: Bool)
+	case integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
+	case float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
+	case doubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
+	case color(defaultValue: UIColor)
 }
 
 // MARK: Types that conform to TweakableType
 
 extension Bool: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .Boolean
+		return .boolean
 	}
 }
 
 extension Int: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .Integer
+		return .integer
 	}
 }
 
 extension CGFloat: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .CGFloat
+		return .cgFloat
 	}
 }
 
 extension Double: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .Double
+		return .double
 	}
 }
 
 extension UIColor: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .UIColor
+		return .uiColor
 	}
 }
 

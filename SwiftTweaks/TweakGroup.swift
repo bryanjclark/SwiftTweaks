@@ -23,7 +23,7 @@ internal struct TweakGroup {
 extension TweakGroup {
 	internal var sortedTweaks: [AnyTweak] {
 		return tweaks
-			.sort { $0.0 < $1.0 }
+			.sorted { $0.0 < $1.0 }
 			.map { return $0.1 }
 	}
 }

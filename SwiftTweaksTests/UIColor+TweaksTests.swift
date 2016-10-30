@@ -18,7 +18,7 @@ class UIColor_TweaksTests: XCTestCase {
 		let string: String
 		let expectedColor: UIColor?
 
-		static func verify(testCase: HexToColorTestCase) {
+		static func verify(_ testCase: HexToColorTestCase) {
 			if let generatedColor = UIColor.colorWithHexString(testCase.string) {
 				if let expectedColor = testCase.expectedColor {
 					XCTAssertEqual(generatedColor.hexString, expectedColor.hexString, "Generated color with hex \(generatedColor.hexString) from test string \(testCase.string), but expected color with hex \(expectedColor.hexString)")
@@ -70,23 +70,23 @@ class UIColor_TweaksTests: XCTestCase {
 		let color: UIColor
 		let expectedHex: String
 
-		static func verify(testCase: ColorToHexTestCase) {
+		static func verify(_ testCase: ColorToHexTestCase) {
 			XCTAssertEqual(testCase.color.hexString, testCase.expectedHex, "Expected color \(testCase.color) to generate #\(testCase.expectedHex)")
 		}
 	}
 
 	func testColorToHex() {
 		let testCases = [
-			ColorToHexTestCase(color: UIColor.redColor(), expectedHex: "#FF0000"),
-			ColorToHexTestCase(color: UIColor.greenColor(), expectedHex: "#00FF00"),
-			ColorToHexTestCase(color: UIColor.blueColor(), expectedHex: "#0000FF"),
-			ColorToHexTestCase(color: UIColor.whiteColor(), expectedHex: "#FFFFFF"),
-			ColorToHexTestCase(color: UIColor.blackColor(), expectedHex: "#000000"),
+			ColorToHexTestCase(color: UIColor.red, expectedHex: "#FF0000"),
+			ColorToHexTestCase(color: UIColor.green, expectedHex: "#00FF00"),
+			ColorToHexTestCase(color: UIColor.blue, expectedHex: "#0000FF"),
+			ColorToHexTestCase(color: UIColor.white, expectedHex: "#FFFFFF"),
+			ColorToHexTestCase(color: UIColor.black, expectedHex: "#000000"),
 
 			// Our UI ignores the alpha component of a hex code - so we expect a 6-character hex even when alpha's present
-			ColorToHexTestCase(color: UIColor.redColor().colorWithAlphaComponent(0), expectedHex: "#FF0000"),
-			ColorToHexTestCase(color: UIColor.blackColor().colorWithAlphaComponent(0.234), expectedHex: "#000000"),
-			ColorToHexTestCase(color: UIColor.whiteColor().colorWithAlphaComponent(1.0), expectedHex: "#FFFFFF")
+			ColorToHexTestCase(color: UIColor.red.withAlphaComponent(0), expectedHex: "#FF0000"),
+			ColorToHexTestCase(color: UIColor.black.withAlphaComponent(0.234), expectedHex: "#000000"),
+			ColorToHexTestCase(color: UIColor.white.withAlphaComponent(1.0), expectedHex: "#FFFFFF")
 		]
 
 		testCases.forEach { ColorToHexTestCase.verify($0) }

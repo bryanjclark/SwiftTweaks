@@ -9,7 +9,7 @@
 import UIKit
 
 internal protocol TweakColorCellDelegate {
-	func tweakColorCellDidChangeValue(cell: TweakColorCell)
+	func tweakColorCellDidChangeValue(_ cell: TweakColorCell)
 }
 
 /// a UITableViewCell that contains a slider & text field for editing a ColorComponent.
@@ -27,22 +27,22 @@ internal final class TweakColorCell: UITableViewCell {
 	private let slider = UISlider()
 	private let label: UILabel = {
 		let label = UILabel()
-		label.textAlignment = .Right
-		label.textColor = UIColor.lightGrayColor()
+		label.textAlignment = .right
+		label.textColor = UIColor.lightGray
 		return label
 	}()
 	private let textField: UITextField = {
 		let textField = UITextField()
-		textField.textAlignment = .Right
-		textField.returnKeyType = .Done
+		textField.textAlignment = .right
+		textField.returnKeyType = .done
 		return textField
 	}()
 	private let accessory = UIView()
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-		super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
+		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		slider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), forControlEvents: .ValueChanged)
+		slider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
 
 		textField.delegate = self
 
@@ -68,13 +68,13 @@ internal final class TweakColorCell: UITableViewCell {
 		}
 
 		switch viewData {
-		case .HexComponent:
-			let textFieldFrame = CGRect(origin: CGPointZero, size: CGSize(width: bounds.width * 0.5, height: bounds.height))
+		case .hexComponent:
+			let textFieldFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width * 0.5, height: bounds.height))
 			textField.frame = textFieldFrame
-			accessory.bounds = CGRectIntegral(textFieldFrame)
-		case .NumericalComponent:
+			accessory.bounds = textFieldFrame.integral
+		case .numericalComponent:
 			let sliderFrame = CGRect(
-				origin: CGPointZero,
+				origin: CGPoint.zero,
 				size: CGSize(width: bounds.width - 130, height: bounds.height))
 			let labelFrame = CGRect(
 				origin: CGPoint(x: sliderFrame.width, y: 0),
@@ -82,12 +82,12 @@ internal final class TweakColorCell: UITableViewCell {
 			slider.frame = sliderFrame
 			label.frame = labelFrame
 
-			let accessoryFrame = CGRectUnion(sliderFrame, labelFrame)
+			let accessoryFrame = sliderFrame.union(labelFrame)
 			accessory.bounds = accessoryFrame
 		}
 	}
 
-	private func updateSubviews() {
+	fileprivate func updateSubviews() {
 		// No point in setting data if we don't have it.
 		guard let viewData = viewData else {
 			return
@@ -96,40 +96,40 @@ internal final class TweakColorCell: UITableViewCell {
 		textLabel?.text = viewData.title
 
 		switch viewData {
-		case .HexComponent(let hexString):
-			slider.hidden = true
-			label.hidden = true
-			textField.hidden = false
+		case .hexComponent(let hexString):
+			slider.isHidden = true
+			label.isHidden = true
+			textField.isHidden = false
 
 			textField.textColor = tintColor
 			textField.text = hexString
-		case .NumericalComponent(let numberComponent):
-			slider.hidden = false
-			label.hidden = false
-			textField.hidden = true
+		case .numericalComponent(let numberComponent):
+			slider.isHidden = false
+			label.isHidden = false
+			textField.isHidden = true
 
 			slider.minimumValue = numberComponent.type.minimumValue
 			slider.maximumValue = numberComponent.type.maximumValue
 			slider.value = numberComponent.value
 			slider.tintColor = numberComponent.type.tintColor ?? tintColor
 
-			let numberFormatter = NSNumberFormatter()
-			numberFormatter.numberStyle = .DecimalStyle
+			let numberFormatter = NumberFormatter()
+			numberFormatter.numberStyle = .decimal
 			numberFormatter.minimumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
 			numberFormatter.maximumFractionDigits = numberComponent.type.roundsToInteger ? 0 : 2
 			numberFormatter.minimumIntegerDigits = 1
-			label.text = numberFormatter.stringFromNumber(numberComponent.value)
+            label.text = numberFormatter.string(from: NSNumber(value: numberComponent.value))
 		}
 	}
 
 	// MARK: Events
-	@objc private func sliderValueChanged(sender: UISlider) {
+	@objc private func sliderValueChanged(_ sender: UISlider) {
 		switch viewData! {
-		case .NumericalComponent(let oldValue):
+		case .numericalComponent(let oldValue):
 			let newValue = ColorComponentNumerical(type: oldValue.type, value: slider.value)
-			viewData = .NumericalComponent(newValue)
+			viewData = .numericalComponent(newValue)
 			delegate?.tweakColorCellDidChangeValue(self)
-		case .HexComponent:
+		case .hexComponent:
 			assertionFailure("Shouldn't be able to change slider if viewData.type != NumericalComponent")
 			break
 		}
@@ -137,14 +137,14 @@ internal final class TweakColorCell: UITableViewCell {
 }
 
 extension TweakColorCell: UITextFieldDelegate {
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true
 	}
 
-	func textFieldDidEndEditing(textField: UITextField) {
-		if let text = textField.text, newValue = UIColor.colorWithHexString(text) {
-			viewData = .HexComponent(newValue.hexString)
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		if let text = textField.text, let newValue = UIColor.colorWithHexString(text) {
+			viewData = .hexComponent(newValue.hexString)
 			delegate?.tweakColorCellDidChangeValue(self)
 		} else {
 			updateSubviews()

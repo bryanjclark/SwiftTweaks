@@ -25,7 +25,7 @@ public struct Tweak<T: TweakableType> {
 	internal init(collectionName: String, groupName: String, tweakName: String, defaultValue: T, minimumValue: T? = nil, maximumValue: T? = nil, stepSize: T? = nil) {
 
 		[collectionName, groupName, tweakName].forEach {
-			if $0.containsString(TweakIdentifierSeparator) {
+			if $0.contains(TweakIdentifierSeparator) {
 				assertionFailure("The substring `\(TweakIdentifierSeparator)` can't be used in a tweak name, group name, or collection name.")
 			}
 		}
@@ -53,7 +53,7 @@ extension Tweak {
 	}
 }
 
-extension Tweak where T: SignedNumberType {
+extension Tweak where T: SignedNumber {
 	/// Creates a Tweak<T> where T: SignedNumberType
 	/// You can optionally provide a min / max / stepSize to restrict the bounds and behavior of a tweak.
 	/// The step size is "how much does the value change when I tap the UIStepper"
@@ -83,31 +83,31 @@ extension Tweak: TweakType {
 
 	public var tweakDefaultData: TweakDefaultData {
 		switch T.tweakViewDataType {
-		case .Boolean:
-			return .Boolean(defaultValue: (defaultValue as! Bool))
-		case .Integer:
-			return .Integer(
+		case .boolean:
+			return .boolean(defaultValue: (defaultValue as! Bool))
+		case .integer:
+			return .integer(
 				defaultValue: defaultValue as! Int,
 				min: minimumValue as? Int,
 				max: maximumValue as? Int,
 				stepSize: stepSize as? Int
 			)
-		case .CGFloat:
-			return .Float(
+		case .cgFloat:
+			return .float(
 				defaultValue: defaultValue as! CGFloat,
 				min: minimumValue as? CGFloat,
 				max: maximumValue as? CGFloat,
 				stepSize: stepSize as? CGFloat
 			)
-		case .Double:
-			return .DoubleTweak(
+		case .double:
+			return .doubleTweak(
 				defaultValue: defaultValue as! Double,
 				min: minimumValue as? Double,
 				max: maximumValue as? Double,
 				stepSize: stepSize as? Double
 			)
-		case .UIColor:
-			return .Color(defaultValue: defaultValue as! UIColor)
+		case .uiColor:
+			return .color(defaultValue: defaultValue as! UIColor)
 		}
 	}
 

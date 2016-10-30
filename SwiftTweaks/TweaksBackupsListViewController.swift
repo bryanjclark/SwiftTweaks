@@ -9,7 +9,7 @@
 import UIKit
 
 internal protocol TweaksBackupsListViewControllerDelegate {
-	func tweaksBackupsListDidPressDismiss(tweaksBackupsListViewController: TweaksBackupsListViewController)
+	func tweaksBackupsListDidPressDismiss(_ tweaksBackupsListViewController: TweaksBackupsListViewController)
 }
 
 /// Lists out the TweakBackups in a given TweakStore.
@@ -22,14 +22,14 @@ internal final class TweaksBackupsListViewController: UIViewController {
 		self.tweakStore = tweakStore
 		self.delegate = delegate
 
-		self.tableView = UITableView(frame: CGRectZero, style: .Plain)
+		self.tableView = UITableView(frame: CGRect.zero, style: .plain)
 
 		super.init(nibName: nil, bundle: nil)
 
 		toolbarItems = [
-			UIBarButtonItem(title: "New", style: .Plain, target: self, action: #selector(self.newButtonTapped)),
-			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: #selector(self.dismissButtonTapped))
+			UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(self.newButtonTapped)),
+			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+			UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 	}
 

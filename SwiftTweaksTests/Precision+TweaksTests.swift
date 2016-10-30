@@ -21,7 +21,7 @@ private struct PrecisionTestCase<T: Roundable> {
 		self.epsilon = epsilon
 	}
 
-	static func verify(testCase: PrecisionTestCase) {
+	static func verify(_ testCase: PrecisionTestCase) {
 		// Yes, these `doubleValue` bits feel goofy, but they were required to make the compiler happy.
 		XCTAssertEqualWithAccuracy(
 			testCase.inputValue.roundToNearest(testCase.precision).doubleValue,
@@ -34,24 +34,24 @@ private struct PrecisionTestCase<T: Roundable> {
 class Precision_TweaksTests: XCTestCase {
 	func testPrecision() {
 		let tests: [(Double, PrecisionLevel, Double)] = [
-			(0.1, .Integer, 0),
-			(0.5, .Integer, 1),
-			(0.00001, .Thousandth, 0),
-			(0.0001, .Thousandth, 0),
-			(0.001, .Thousandth, 0.001),
-			(0.01, .Tenth, 0),
-			(0.1, .Integer, 0),
+			(0.1, .integer, 0),
+			(0.5, .integer, 1),
+			(0.00001, .thousandth, 0),
+			(0.0001, .thousandth, 0),
+			(0.001, .thousandth, 0.001),
+			(0.01, .tenth, 0),
+			(0.1, .integer, 0),
 
-			(0.55, .Integer, 1),
-			(0.55, .Tenth, 0.6),
-			(0.44451, .Thousandth, 0.445),
+			(0.55, .integer, 1),
+			(0.55, .tenth, 0.6),
+			(0.44451, .thousandth, 0.445),
 
-			(0.49999999, .Thousandth, 0.500),
-			(0.4999, .Thousandth, 0.500),
-			(0.499, .Thousandth, 0.499),
-			(0.499, .Hundredth, 0.50),
-			(0.499, .Tenth, 0.5),
-			(0.499, .Integer, 0),
+			(0.49999999, .thousandth, 0.500),
+			(0.4999, .thousandth, 0.500),
+			(0.499, .thousandth, 0.499),
+			(0.499, .hundredth, 0.50),
+			(0.499, .tenth, 0.5),
+			(0.499, .integer, 0),
 		]
 
 		// Double
