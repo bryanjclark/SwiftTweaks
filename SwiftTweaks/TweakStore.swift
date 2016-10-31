@@ -21,10 +21,10 @@ public final class TweakStore {
 	private let storeName: String
 
 	/// Caches "single" bindings - when a tweak is updated, we'll call each of the corresponding bindings.
-	private var tweakBindings: [String: [AnyTweakBinding]] = [:]
+	private var tweakBindings: [AnyTweak: [AnyTweakBinding]] = [:]
 
 	/// Caches "multi" bindings - when any tweak in a Set is updated, we'll call each of the corresponding bindings.
-	private var tweakSetBindings: [Set<AnyTweak>: [() -> Void]] = [:]
+	private var tweakSetBindings: [Set<AnyTweak>: [MultiTweakBinding]] = [:]
 
 	/// Persists tweaks' currentValues and maintains them on disk.
 	private let persistence: TweakPersistency
@@ -70,29 +70,46 @@ public final class TweakStore {
 		return self.currentValueForTweak(tweak)
 	}
 
-	public func bind<T>(_ tweak: Tweak<T>, binding: @escaping (T) -> Void) {
+	public func bind<T: TweakableType>(_ tweak: Tweak<T>, binding: @escaping (T) -> Void) -> TweakBindingIdentifier {
 		// Create the TweakBinding<T>, and wrap it in our type-erasing AnyTweakBinding
 		let tweakBinding = TweakBinding(tweak: tweak, binding: binding)
 		let anyTweakBinding = AnyTweakBinding(tweakBinding: tweakBinding)
 
 		// Cache the binding
-		let existingTweakBindings = tweakBindings[tweak.persistenceIdentifier] ?? []
-		tweakBindings[tweak.persistenceIdentifier] = existingTweakBindings + [anyTweakBinding]
+		let anyTweak = AnyTweak(tweak: tweak)
+		let existingTweakBindings = tweakBindings[anyTweak] ?? []
+		tweakBindings[anyTweak] = existingTweakBindings + [anyTweakBinding]
 
 		// Then immediately apply the binding on whatever current value we have
 		binding(currentValueForTweak(tweak))
+
+		return tweakBinding.identifier
 	}
 
-	public func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) {
+	public func unbind(_ identifier: TweakBindingIdentifier) {
+		let existingTweakBindings = tweakBindings[identifier.tweak] ?? []
+		tweakBindings[identifier.tweak] = existingTweakBindings.filter { $0.identifier != identifier }
+	}
+
+	public func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) -> MultiTweakBindingIdentifier {
 		// Convert the array (which makes it easier to call a `bindTweakSet`) into a set (which makes it possible to cache the tweakSet)
 		let tweakSet = Set(tweaks.map(AnyTweak.init))
 
+		let tweakBinding = MultiTweakBinding(tweakSet: tweakSet, binding: binding)
+
 		// Cache the cluster binding
-        let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
-        tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
+		let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
+		tweakSetBindings[tweakSet] = existingTweakSetBindings + [tweakBinding]
 
 		// Immediately call the binding
 		binding()
+
+		return tweakBinding.identifier
+	}
+
+	public func unbindMultiple(_ identifier: MultiTweakBindingIdentifier) {
+		let existingTweakSetBindings = tweakSetBindings[identifier.tweakSet] ?? []
+		tweakSetBindings[identifier.tweakSet] = existingTweakSetBindings.filter { $0.identifier != identifier }
 	}
 
 	// MARK: - Internal
@@ -149,14 +166,15 @@ public final class TweakStore {
 
 	private func updateBindingsForTweak(_ tweak: AnyTweak) {
 		// Find any 1-to-1 bindings and update them
-		tweakBindings[tweak.persistenceIdentifier]?.forEach {
+		let anyTweak = AnyTweak(tweak: tweak)
+		tweakBindings[anyTweak]?.forEach {
 			$0.applyBindingWithValue(currentViewDataForTweak(tweak).value)
 		}
 
 		// Find any cluster bindings and update them
 		for (tweakSet, bindingsArray) in tweakSetBindings {
 			if tweakSet.contains(tweak) {
-				bindingsArray.forEach { $0() }
+				bindingsArray.forEach { $0.applyBinding() }
 			}
 		}
 	}
