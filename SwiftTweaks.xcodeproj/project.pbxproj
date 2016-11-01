@@ -94,6 +94,7 @@
 		D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */; };
 		D5CE0BE11DC7E1FB00F79235 /* TweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */; };
 		D5CE0BE21DC7E1FB00F79235 /* MultiTweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */; };
+		D5E3FEE91DC8760A00C9D648 /* MultiTweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +338,7 @@
 				93A84ED21BEAE86E0022D2F3 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		93A84ED21BEAE86E0022D2F3 /* Products */ = {
 			isa = PBXGroup;
@@ -608,6 +610,7 @@
 				9314725E1BFFB41700F66D20 /* TweakGroup.swift in Sources */,
 				9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */,
 				939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */,
+				D5E3FEE91DC8760A00C9D648 /* MultiTweakBinding.swift in Sources */,
 				931472591BFFB41700F66D20 /* TweakStore.swift in Sources */,
 				931472571BFFB41700F66D20 /* AnyTweak.swift in Sources */,
 				9314725F1BFFB41700F66D20 /* TweakStore+Sharing.swift in Sources */,
