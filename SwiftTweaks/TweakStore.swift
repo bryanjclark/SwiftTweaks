@@ -88,8 +88,8 @@ public final class TweakStore {
 		let tweakSet = Set(tweaks.map(AnyTweak.init))
 
 		// Cache the cluster binding
-        let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
-        tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
+		let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
+		tweakSetBindings[tweakSet] = existingTweakSetBindings + [binding]
 
 		// Immediately call the binding
 		binding()
@@ -136,6 +136,9 @@ public final class TweakStore {
 		case let .color(defaultValue: defaultValue):
 			let currentValue = cachedValue as? UIColor ?? defaultValue
 			return .color(value: currentValue, defaultValue: defaultValue)
+		case let .stringList(defaultValue: defaultValue, options: options):
+			let currentValue = cachedValue as? StringOption ?? defaultValue
+			return .stringList(value: currentValue, defaultValue: defaultValue, options: options)
 		}
 	}
 

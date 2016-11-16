@@ -27,6 +27,8 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let colorText1 = Tweak("Text", "Color", "text-1", UIColor(white: 0.05, alpha: 1.0))
 	public static let colorText2 = Tweak("Text", "Color", "text-2", UIColor(white: 0.15, alpha: 1.0))
 
+    public static let title = Tweak<StringOption>.stringList("Text", "Text", "Title", options: ["SwiftTweaks", "Welcome!", "Example"])
+
 	// Tweaks are often used in combination with each other, so we have some templates available for ease-of-use:
 	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation", duration: 0.5) // Note: "duration" is optional, if you don't provide it, there's a sensible default!
 
@@ -52,6 +54,7 @@ public struct ExampleTweaks: TweakLibraryType {
 
 			colorText1,
 			colorText2,
+			title,
 
 			fontSizeText1,
 			fontSizeText2,
