@@ -82,10 +82,11 @@ extension Tweak where T: SignedNumber {
 extension Tweak {
 	// This can't be an initializer because generic types apparently can't handle fixed-type initializers
 	public static func stringList(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String?=nil) -> Tweak<StringOption> {
-		assert(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
-		if defaultValue != nil && options.index(of: defaultValue!) == nil {
-			assertionFailure("The default value of the stringList tweak \"\(tweakName)\" must be in the list of options")
-		}
+		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
+		precondition(
+			defaultValue != nil && options.index(of: defaultValue!) == nil,
+			"The default value of the stringList tweak \"\(tweakName)\" must be in the list of options"
+		)
 
 		return Tweak<StringOption>(
 			collectionName: collectionName,
