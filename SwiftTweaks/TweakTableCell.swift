@@ -61,6 +61,11 @@ internal final class TweakTableCell: UITableViewCell {
 		textField.returnKeyType = .Done
 		return textField
 	}()
+	private let segmentedControl: UISegmentedControl = {
+		let segmentedControl = UISegmentedControl()
+		segmentedControl.tintColor = AppTheme.Colors.controlTinted
+		return segmentedControl
+	}()
 	private let disclosureArrow: UIImageView = {
 		let disclosureArrowImage = UIImage(swiftTweaksImage: .DisclosureIndicator)
 		let imageView = UIImageView(image: disclosureArrowImage.imageWithRenderingMode(.AlwaysTemplate))
@@ -72,11 +77,12 @@ internal final class TweakTableCell: UITableViewCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow, segmentedControl].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), forControlEvents: .ValueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), forControlEvents: .ValueChanged)
 		textField.delegate = self
+		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
 	}
@@ -163,6 +169,18 @@ internal final class TweakTableCell: UITableViewCell {
 
 			let accessoryFrame = CGRectUnion(CGRectUnion(colorControlFrame, textFrame), disclosureArrowFrame)
 			accessory.bounds = CGRectIntegral(accessoryFrame)
+		case let .StringList(value: value, _, options: options):
+			segmentedControl.removeAllSegments()
+			for option in options {
+				segmentedControl.insertSegmentWithTitle(
+					option.value,
+					atIndex: segmentedControl.numberOfSegments,
+					animated: false
+				)
+			}
+			segmentedControl.selectedSegmentIndex = options.indexOf(value)!
+			segmentedControl.sizeToFit()
+			accessory.bounds = segmentedControl.bounds
 		}
 	}
 
@@ -183,18 +201,28 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.hidden = true
 			colorChit.hidden = true
 			disclosureArrow.hidden = true
+			segmentedControl.hidden = true
 		case .Integer, .Float, .DoubleTweak:
 			switchControl.hidden = true
 			textField.hidden = false
 			stepperControl.hidden = false
 			colorChit.hidden = true
 			disclosureArrow.hidden = true
+			segmentedControl.hidden = true
 		case .Color:
 			switchControl.hidden = true
 			textField.hidden = false
 			stepperControl.hidden = true
 			colorChit.hidden = false
 			disclosureArrow.hidden = false
+			segmentedControl.hidden = true
+		case .StringList:
+			switchControl.hidden = true
+			textField.hidden = true
+			stepperControl.hidden = true
+			colorChit.hidden = true
+			disclosureArrow.hidden = true
+			segmentedControl.hidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -236,6 +264,10 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.text = value.hexString
 			textFieldEnabled = false
 
+		case let .StringList(value: value, _, options: options):
+			let index = options.indexOf(value)
+			segmentedControl.selectedSegmentIndex = index!
+			textFieldEnabled = false
 		}
 
 		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
@@ -247,6 +279,15 @@ internal final class TweakTableCell: UITableViewCell {
 
 
 	// MARK: Events
+	@objc private func segmentedControlChanged(sender: UISegmentedControl) {
+		switch viewData! {
+		case let .StringList(_, defaultValue: defaultValue, options: options):
+			viewData = .StringList(value: options[sender.selectedSegmentIndex], defaultValue: defaultValue, options: options)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		default:
+			assertionFailure("Shouldn't be able to update segmented control if view data isn't StringList type")
+		}
+	}
 
 	@objc private func switchChanged(sender: UISwitch) {
 		switch viewData! {
@@ -261,16 +302,16 @@ internal final class TweakTableCell: UITableViewCell {
 	@objc private func stepperChanged(sender: UIStepper) {
 		switch viewData! {
 		case let .Integer(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
-			viewData = TweakViewData(type: .Integer, value: Int(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
+			viewData = TweakViewData(type: .Integer, value: Int(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
 		case let .Float(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
-			viewData = TweakViewData(type: .CGFloat, value: CGFloat(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
+			viewData = TweakViewData(type: .CGFloat, value: CGFloat(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
 		case let .DoubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
-			viewData = TweakViewData(type: .Double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
+			viewData = TweakViewData(type: .Double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .Color, .Boolean:
-			assertionFailure("Shouldn't be able to update text field with a Color or Boolean tweak.")
+		case .Color, .Boolean, .StringList:
+			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}
 	}
 }
@@ -289,34 +330,34 @@ extension TweakTableCell: UITextFieldDelegate {
 		switch viewData! {
 		case let .Integer(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, newValue = Int(text) {
-				viewData = TweakViewData(type: .Integer, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
+				viewData = TweakViewData(type: .Integer, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
 			}
 		case let .Float(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, newValue = Float(text) {
-				viewData = TweakViewData(type: .CGFloat, value: CGFloat(newValue), defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
+				viewData = TweakViewData(type: .CGFloat, value: CGFloat(newValue), defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
 			}
 		case let .DoubleTweak(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, newValue = Double(text) {
-				viewData = TweakViewData(type: .Double, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step)
+				viewData = TweakViewData(type: .Double, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
 			}
 		case let .Color(_, defaultValue: defaultValue):
 			if let text = textField.text, newValue = UIColor.colorWithHexString(text) {
-				viewData = TweakViewData(type: .UIColor, value: newValue, defaultValue: defaultValue, minimum: nil, maximum: nil, stepSize: nil)
+				viewData = TweakViewData(type: .UIColor, value: newValue, defaultValue: defaultValue, minimum: nil, maximum: nil, stepSize: nil, options: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()
 			}
-		case .Boolean:
-			assertionFailure("Shouldn't be able to update text field with a Boolean tweak.")
+		case .Boolean, .StringList:
+			assertionFailure("Shouldn't be able to update text field with a Boolean or StringList tweak.")
 		}
 	}
 }

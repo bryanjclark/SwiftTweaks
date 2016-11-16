@@ -15,8 +15,9 @@ internal enum TweakViewData {
 	case Float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case DoubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case Color(value: UIColor, defaultValue: UIColor)
+	case StringList(value: StringOption, defaultValue: StringOption, options: [StringOption])
 
-	init<T: TweakableType>(type: TweakViewDataType, value: T, defaultValue: T, minimum: T?, maximum: T?, stepSize: T?) {
+	init<T: TweakableType>(type: TweakViewDataType, value: T, defaultValue: T, minimum: T?, maximum: T?, stepSize: T?, options: [T]?) {
 		switch type {
 		case .Boolean:
 			self = .Boolean(value: value as! Bool, defaultValue: defaultValue as! Bool)
@@ -31,6 +32,8 @@ internal enum TweakViewData {
 		case .Double:
 			let clippedValue = clip(value as! Double, minimum as? Double, maximum as? Double)
 			self = .DoubleTweak(value: clippedValue, defaultValue: defaultValue as! Double, min: minimum as? Double, max: maximum as? Double, stepSize: stepSize as? Double)
+		case .StringList:
+			self = .StringList(value: value as! StringOption, defaultValue: defaultValue as! StringOption, options: options!.map { $0 as! StringOption })
 		}
 	}
 
@@ -46,6 +49,8 @@ internal enum TweakViewData {
 			return doubleValue
 		case let .Color(value: colorValue, defaultValue: _):
 			return colorValue
+		case let .StringList(value: stringValue, _, _):
+			return stringValue
 		}
 	}
 
@@ -68,6 +73,9 @@ internal enum TweakViewData {
 		case let .Color(value: value, defaultValue: defaultValue):
 			string = "Color(\(value.hexString), alpha: \(value.alphaValue))"
 			differsFromDefault = (value != defaultValue)
+		case let .StringList(value: value, defaultValue: defaultValue, _):
+			string = value.value
+			differsFromDefault = string != defaultValue.value
 		}
 		return (string, differsFromDefault)
 	}
@@ -76,7 +84,7 @@ internal enum TweakViewData {
 		switch self {
 		case .Integer, .Float, .DoubleTweak:
 			return true
-		case .Boolean, .Color:
+		case .Boolean, .Color, .StringList:
 			return false
 		}
 	}
@@ -99,7 +107,7 @@ internal enum TweakViewData {
 		let maximum: Double?
 
 		switch self {
-		case .Boolean, .Color:
+		case .Boolean, .Color, .StringList:
 			return nil
 
 		case let .Integer(intValue, intDefaultValue, intMin, intMax, _):

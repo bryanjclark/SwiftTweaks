@@ -166,6 +166,7 @@ private final class TweakDiskPersistency {
 			case .CGFloat: return anyObject as? CGFloat
 			case .Double: return anyObject as? Double
 			case .UIColor: return anyObject as? UIColor
+			case .StringList: return anyObject as? StringOption
 			}
 		}
 	}
@@ -180,6 +181,7 @@ private extension TweakViewDataType {
 		case .CGFloat: return "cgfloat"
 		case .Double: return "double"
 		case .UIColor: return "uicolor"
+		case .StringList: return "stringlist"
 		}
 	}
 }
@@ -193,6 +195,7 @@ private extension TweakableType {
 			case .CGFloat: return self as! CGFloat
 			case .Double: return self as! Double
 			case .UIColor: return self as! UIColor
+			case .StringList: return (self as! StringOption).value as AnyObject
 		}
 	}
 }

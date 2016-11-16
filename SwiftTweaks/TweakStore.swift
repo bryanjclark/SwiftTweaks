@@ -136,6 +136,9 @@ public final class TweakStore {
 		case let .Color(defaultValue: defaultValue):
 			let currentValue = cachedValue as? UIColor ?? defaultValue
 			return .Color(value: currentValue, defaultValue: defaultValue)
+		case let .StringList(defaultValue: defaultValue, options: options):
+			let currentValue = cachedValue as? StringOption ?? defaultValue
+			return .StringList(value: currentValue, defaultValue: defaultValue, options: options)
 		}
 	}
 

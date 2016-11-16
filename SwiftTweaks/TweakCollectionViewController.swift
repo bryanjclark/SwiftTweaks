@@ -85,7 +85,7 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .UIColor:
 			let colorEditVC = TweakColorEditViewController(anyTweak: tweak, tweakStore: tweakStore, delegate: self)
 			navigationController?.pushViewController(colorEditVC, animated: true)
-		case .Boolean, .Integer, .CGFloat, .Double:
+		case .Boolean, .Integer, .CGFloat, .Double, .StringList:
 			break
 		}
 	}

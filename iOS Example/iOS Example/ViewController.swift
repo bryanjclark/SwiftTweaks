@@ -58,6 +58,10 @@ class ViewController: UIViewController {
 			self.titleLabel.font = UIFont.systemFontOfSize(fontSize)
 		}
 
+        ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
+            self.titleLabel.text = title.value
+        }
+
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
 		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
