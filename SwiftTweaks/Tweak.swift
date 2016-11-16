@@ -80,7 +80,8 @@ extension Tweak where T: SignedNumberType {
 }
 
 extension Tweak {
-	// This can't be an initializer because generic types apparently can't handle fixed-type initializers
+	/// This can't be an initializer because generic types apparently can't handle fixed-type initializers.
+	/// If no default value is provided, the first item in the `options` list is used.
 	public static func stringList(collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String?=nil) -> Tweak<StringOption> {
 		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
 		precondition(defaultValue == nil || options.indexOf(defaultValue!) != nil,
@@ -90,7 +91,7 @@ extension Tweak {
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: tweakName,
-			defaultValue: StringOption(value: defaultValue ?? options[0]),
+			defaultValue: StringOption(value: defaultValue ?? options.first!),
 			options: options.map(StringOption.init)
 		)
 	}
