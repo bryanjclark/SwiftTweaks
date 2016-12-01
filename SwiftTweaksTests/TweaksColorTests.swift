@@ -19,14 +19,14 @@ class UIColor_TweaksTests: XCTestCase {
 		let expectedColor: UIColor?
 
 		static func verify(_ testCase: HexToColorTestCase) {
-			if let generatedColor = UIColor.colorWithHexString(testCase.string) {
+			if let generatedColor = TweaksColor.colorWithHexString(testCase.string) {
 				if let expectedColor = testCase.expectedColor {
-					XCTAssertEqual(generatedColor.hexString, expectedColor.hexString, "Generated color with hex \(generatedColor.hexString) from test string \(testCase.string), but expected color with hex \(expectedColor.hexString)")
+					XCTAssertEqual(TweaksColor.hexString(fromColor: generatedColor), TweaksColor.hexString(fromColor: expectedColor), "Generated color with hex \(TweaksColor.hexString(fromColor: generatedColor)) from test string \(testCase.string), but expected color with hex \(TweaksColor.hexString(fromColor: expectedColor))")
 				} else {
 					XCTFail("Generated a color from hex string \(testCase.string), but expected no color.")
 				}
 			} else if let expectedColor = testCase.expectedColor {
-				XCTFail("Failed to generate expected color: \(expectedColor.hexString) from hex string \(testCase.string)")
+				XCTFail("Failed to generate expected color: \(TweaksColor.hexString(fromColor: expectedColor)) from hex string \(testCase.string)")
 			}
 		}
 	}
@@ -71,7 +71,7 @@ class UIColor_TweaksTests: XCTestCase {
 		let expectedHex: String
 
 		static func verify(_ testCase: ColorToHexTestCase) {
-			XCTAssertEqual(testCase.color.hexString, testCase.expectedHex, "Expected color \(testCase.color) to generate #\(testCase.expectedHex)")
+			XCTAssertEqual(TweaksColor.hexString(fromColor: testCase.color), testCase.expectedHex, "Expected color \(testCase.color) to generate #\(testCase.expectedHex)")
 		}
 	}
 
