@@ -222,7 +222,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 		case let .color(value: value, _):
 			colorChit.backgroundColor = value
-			textField.text = value.hexString
+			textField.text = TweaksColor.hexString(fromColor: value)
 			textFieldEnabled = false
 		}
 
@@ -304,7 +304,7 @@ extension TweakTableCell: UITextFieldDelegate {
 				updateSubviews()
 			}
 		case let .color(_, defaultValue: defaultValue):
-			if let text = textField.text, let newValue = UIColor.colorWithHexString(text) {
+			if let text = textField.text, let newValue = TweaksColor.colorWithHexString(text) {
 				viewData = TweakViewData(type: .uiColor, value: newValue, defaultValue: defaultValue, minimum: nil, maximum: nil, stepSize: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
