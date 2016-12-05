@@ -80,7 +80,7 @@ internal enum TweakViewData {
 			string = "Double(\(value))"
 			differsFromDefault = (value != defaultValue)
 		case let .color(value: value, defaultValue: defaultValue):
-			string = "Color(\(value.hexString), alpha: \(value.alphaValue))"
+            string = "Color(\(TweaksColor.hexString(fromColor: value)), alpha: \(TweaksColor.alphaValue(fromColor: value)))"
 			differsFromDefault = (value != defaultValue)
 		}
 		return (string, differsFromDefault)

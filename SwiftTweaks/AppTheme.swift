@@ -14,17 +14,17 @@ internal struct AppTheme {
 		fileprivate struct Palette {
 			static let whiteColor = UIColor.white
 			static let blackColor = UIColor.black
-			static let grayColor = UIColor(hex: 0x8E8E93)
-			static let pageBackground1 = UIColor(hex: 0xF8F8F8)
+			static let grayColor = TweaksColor.color(withHex: 0x8E8E93)
+			static let pageBackground1 = TweaksColor.color(withHex: 0xF8F8F8)
 
-			static let tintColor = UIColor(hex: 0x007AFF)
-			static let tintColorPressed = UIColor(hex: 0x084BC1)
+			static let tintColor = TweaksColor.color(withHex: 0x007AFF)
+			static let tintColorPressed = TweaksColor.color(withHex: 0x084BC1)
 			static let controlGrayscale = UIColor.darkGray
 
-			static let secondaryControl = UIColor(hex: 0xC8C7CC)
-			static let secondaryControlPressed = UIColor(hex: 0xAFAFB3)
+			static let secondaryControl = TweaksColor.color(withHex: 0xC8C7CC)
+			static let secondaryControlPressed = TweaksColor.color(withHex: 0xAFAFB3)
 
-			static let destructiveRed = UIColor(hex: 0xC90911)
+			static let destructiveRed = TweaksColor.color(withHex: 0xC90911)
 		}
 
 		static let sectionHeaderTitleColor = Palette.grayColor
