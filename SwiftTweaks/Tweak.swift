@@ -84,8 +84,8 @@ extension Tweak {
 	public static func stringList(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String?=nil) -> Tweak<StringOption> {
 		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
 		precondition(
-			defaultValue != nil && options.index(of: defaultValue!) == nil,
-			"The default value of the stringList tweak \"\(tweakName)\" must be in the list of options"
+			defaultValue == nil || (defaultValue != nil && options.index(of: defaultValue!) != nil),
+			"The default value \"\(defaultValue)\" of the stringList tweak \"\(tweakName)\" must be in the list of options \"\(options)\""
 		)
 
 		return Tweak<StringOption>(

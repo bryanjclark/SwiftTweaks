@@ -169,7 +169,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 			let accessoryFrame = colorControlFrame.union(textFrame).union(disclosureArrowFrame)
 			accessory.bounds = accessoryFrame.integral
-		case let .stringList(value: value, defaultValue: defaultValue, options: options):
+		case let .stringList(value: value, defaultValue: _, options: options):
 			segmentedControl.removeAllSegments()
 			for option in options {
 				segmentedControl.insertSegment(
