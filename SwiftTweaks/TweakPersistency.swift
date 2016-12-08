@@ -171,11 +171,11 @@ private final class TweakDiskPersistency {
 			case .cgFloat: return anyObject as? CGFloat
 			case .double: return anyObject as? Double
 			case .uiColor: return anyObject as? UIColor
-            case .stringList:
-                guard let stringOptionString = anyObject as? String else {
-                    return nil
-                }
-                return StringOption(value: stringOptionString)
+			case .stringList:
+				guard let stringOptionString = anyObject as? String else {
+					return nil
+				}
+				return StringOption(value: stringOptionString)
 			}
 		}
 	}
