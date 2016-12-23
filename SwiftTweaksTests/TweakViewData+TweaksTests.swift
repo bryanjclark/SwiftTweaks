@@ -195,13 +195,13 @@ class TweakViewData_TweaksTests: XCTestCase {
 		tests
 			.map { test in
 				StepperTestCase(
-  				defaultValue: test.def,
-  				currentValue: test.current,
-  				customMin: test.min,
-  				customMax: test.max,
-  				customStep: nil,
-  				expectedStep: nil,
-  				expectedBounds: test.expected
+					defaultValue: test.def,
+					currentValue: test.current,
+					customMin: test.min,
+					customMax: test.max,
+					customStep: nil,
+					expectedStep: nil,
+					expectedBounds: test.expected
 				)
 			}
 			.forEach(StepperTestCase.verifyStepperBoundsTestCase)
