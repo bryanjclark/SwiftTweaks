@@ -56,12 +56,12 @@ class Precision_TweaksTests: XCTestCase {
 
 		// Double
 		tests
-			.map { return PrecisionTestCase($0, $1, $2, DBL_EPSILON) }
+			.map { PrecisionTestCase($0, $1, $2, DBL_EPSILON) }
 			.forEach(PrecisionTestCase.verify)
 
 		// CGFloat
 		tests
-			.map { return PrecisionTestCase(CGFloat($0), $1, CGFloat($2), CGFloat(FLT_EPSILON)) }
+			.map { PrecisionTestCase(CGFloat($0), $1, CGFloat($2), CGFloat(FLT_EPSILON)) }
 			.forEach(PrecisionTestCase.verify)
 	}
 }

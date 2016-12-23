@@ -56,12 +56,12 @@ class UIColor_TweaksTests: XCTestCase {
 			HexToColorTestCase(string: "111", expectedColor: nil),
 		]
 
-		testCases.forEach { HexToColorTestCase.verify($0) }
+		testCases.forEach(HexToColorTestCase.verify)
 
 		// Re-run tests, prepending a "#" to each string.
 		testCases
-			.map { return HexToColorTestCase(string: "#"+$0.string, expectedColor: $0.expectedColor) }
-			.forEach { HexToColorTestCase.verify($0) }
+			.map { HexToColorTestCase(string: "#"+$0.string, expectedColor: $0.expectedColor) }
+			.forEach(HexToColorTestCase.verify)
 	}
 
 
@@ -89,7 +89,7 @@ class UIColor_TweaksTests: XCTestCase {
 			ColorToHexTestCase(color: UIColor.white.withAlphaComponent(1.0), expectedHex: "#FFFFFF")
 		]
 
-		testCases.forEach { ColorToHexTestCase.verify($0) }
+		testCases.forEach(ColorToHexTestCase.verify)
 
 	}
 }
