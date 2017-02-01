@@ -208,7 +208,7 @@ internal final class TweakTableCell: UITableViewCell {
 			let doubleValue = viewData.doubleValue!
 			self.updateStepper(value: doubleValue, stepperValues: viewData.stepperValues!)
 
-			textField.text = String(doubleValue)
+			textField.text = String(describing: viewData.value)
 			textField.keyboardType = .numberPad
 			textFieldEnabled = true
 
