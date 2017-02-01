@@ -8,13 +8,14 @@
 
 import Foundation
 
-/// Represents a Tweak and a closure that should be run whenever the Tweak changes.
+/// Represents a closure that should be run whenever the Tweak changes.
 internal struct TweakBinding<T: TweakableType>: TweakBindingType{
-	let tweak: Tweak<T>
-	let binding: (T) -> Void
+	let identifier: TweakBindingIdentifier
+	private let binding: (T) -> Void
 
 	init(tweak: Tweak<T>, binding: @escaping (T) -> Void) {
-		self.tweak = tweak
+		let anyTweak = AnyTweak(tweak: tweak)
+		self.identifier = TweakBindingIdentifier(tweak: anyTweak)
 		self.binding = binding
 	}
 
@@ -30,6 +31,10 @@ internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 internal struct AnyTweakBinding: TweakBindingType {
 	private let tweakBinding: TweakBindingType
 
+	var identifier: TweakBindingIdentifier {
+		return tweakBinding.identifier
+	}
+
 	init(tweakBinding: TweakBindingType) {
 		self.tweakBinding = tweakBinding
 	}
@@ -41,5 +46,7 @@ internal struct AnyTweakBinding: TweakBindingType {
 
 // When combined with AnyTweakBinding, this provides our type-erasure around TweakBinding<T>
 internal protocol TweakBindingType {
+	var identifier: TweakBindingIdentifier { get }
+
 	func applyBindingWithValue(_ value: TweakableType)
 }
