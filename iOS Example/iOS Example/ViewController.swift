@@ -29,12 +29,13 @@ class ViewController: UIViewController {
 	private let bounceButton: UIButton = {
 		let button = UIButton()
 		button.setTitle("Animate", for: UIControlState())
-		ExampleTweaks.bind(ExampleTweaks.colorTint) { button.backgroundColor = $0 }
-		ExampleTweaks.bind(ExampleTweaks.colorButtonText) { button.setTitleColor($0, for: .normal) }
 		button.layer.cornerRadius = 5
 		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		return button
 	}()
+
+	private var tweakBindings = Set<TweakBindingIdentifier>()
+	private var multiTweakBindings = Set<MultiTweakBindingIdentifier>()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -45,18 +46,23 @@ class ViewController: UIViewController {
 		view.addSubview(bounceButton)
 
 		// Here's a demonstration of TweakLibraryType.bind() - the underlying tweak value is immediately applied, and the binding is re-called each time the tweak changes.
-		ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.isHidden = !$0 }
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.isHidden = !$0 })
 
-		// Bind is useful when you want to keep something up to date easily. To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
-		ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 }
-		ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0 }
-		ExampleTweaks.bind(ExampleTweaks.colorText2) { self.bodyLabel.textColor = $0 }
+		// Bind is useful when you want to keep something up to date easily. 
+		// To demonstrate - let's apply a bunch of tweaks here in viewDidLoad, 
+		// which is only called once in the lifecycle of the view, yet these bindings will update whenever the underlying tweaks change!
+		// Note that we're holding on to the `bindingIdentifier`: to avoid memory leaks, we tear down these bindings in `deinit`
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorTint) { self.bounceButton.backgroundColor = $0 })
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorButtonText) { self.bounceButton.setTitleColor($0, for: .normal) })
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 })
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0 })
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.bodyLabel.textColor = $0 })
 
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
-		ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
+		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
 			self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
-		}
+		})
 
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
@@ -69,7 +75,7 @@ class ViewController: UIViewController {
 			ExampleTweaks.verticalMargins
 			]
 
-		ExampleTweaks.bindMultiple(tweaksToWatch) {
+		let multipleBinding = ExampleTweaks.bindMultiple(tweaksToWatch) {
 			// This closure will be called immediately, and then again each time *any* of the tweaksToWatch change.
 			let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
 			let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)
@@ -104,6 +110,7 @@ class ViewController: UIViewController {
 				), size: self.bounceButton.bounds.size
 			)
 		}
+		multiTweakBindings.insert(multipleBinding)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +125,12 @@ class ViewController: UIViewController {
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+
+	deinit {
+		// Here's where we tear-down the tweak bindings that we used above.
+		self.tweakBindings.forEach(ExampleTweaks.unbind)
+		self.multiTweakBindings.forEach(ExampleTweaks.unbindMultiple)
 	}
 
 
