@@ -164,16 +164,21 @@ private final class TweakDiskPersistency {
 		}
 
 		// Reads from the cache, casting to the appropriate TweakViewDataType
-		private static func tweakableTypeWithAnyObject(_ anyObject: AnyObject, withType type: TweakViewDataType) -> TweakableType? {
-			switch type {
-			case .integer: return anyObject as? Int
-			case .boolean: return anyObject as? Bool
-			case .cgFloat: return anyObject as? CGFloat
-			case .double: return anyObject as? Double
-			case .uiColor: return anyObject as? UIColor
-			}
-		}
-	}
+        private static func tweakableTypeWithAnyObject(_ anyObject: AnyObject, withType type: TweakViewDataType) -> TweakableType? {
+            switch type {
+            case .integer: return anyObject as? Int
+            case .boolean: return anyObject as? Bool
+            case .cgFloat: return anyObject as? CGFloat
+            case .double: return anyObject as? Double
+            case .uiColor: return anyObject as? UIColor
+            case .optionsList:
+                guard let optionValue = anyObject as? String else {
+                    return nil
+                }
+                return StringOption(value: optionValue)
+            }
+        }
+    }
 }
 
 private extension TweakViewDataType {
@@ -185,19 +190,21 @@ private extension TweakViewDataType {
 		case .cgFloat: return "cgfloat"
 		case .double: return "double"
 		case .uiColor: return "uicolor"
+        case .optionsList: return "optionsList"
 		}
 	}
 }
 
 private extension TweakableType {
-	/// Gets the underlying value from a Tweakable Type
-	var nsCoding: AnyObject {
-		switch type(of: self).tweakViewDataType {
-			case .boolean: return self as! Bool as AnyObject
-			case .integer: return self as! Int as AnyObject
-			case .cgFloat: return self as! CGFloat as AnyObject
-			case .double: return self as! Double as AnyObject
-			case .uiColor: return self as! UIColor
-		}
-	}
+    /// Gets the underlying value from a Tweakable Type
+    var nsCoding: AnyObject {
+        switch type(of: self).tweakViewDataType {
+        case .boolean: return self as! Bool as AnyObject
+        case .integer: return self as! Int as AnyObject
+        case .cgFloat: return self as! CGFloat as AnyObject
+        case .double: return self as! Double as AnyObject
+        case .uiColor: return self as! UIColor
+        case .optionsList: return (self as! StringOption).value as AnyObject
+        }
+    }
 }
