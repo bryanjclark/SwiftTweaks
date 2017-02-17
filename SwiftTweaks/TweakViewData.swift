@@ -33,6 +33,8 @@ internal enum TweakViewData {
 			let clippedValue = clip(value as! Double, minimum as? Double, maximum as? Double)
 			self = .doubleTweak(value: clippedValue, defaultValue: defaultValue as! Double, min: minimum as? Double, max: maximum as? Double, stepSize: stepSize as? Double)
         case .optionsList:
+            precondition(options != nil, "optionsList cannot be nil for OptionsList Type.")
+            precondition(!options!.isEmpty, "optionsList cannot be empty. At least one option is required.")
             self = .optionsList(value: value as! StringOption, defaultValue: defaultValue as! StringOption, options: options!.map{ $0 as! StringOption })
 		}
 	}

@@ -70,7 +70,7 @@ public final class TweakStore {
 		return self.currentValueForTweak(tweak)
 	}
 
-	public func bind<T: TweakableType>(_ tweak: Tweak<T>, binding: @escaping (T) -> Void) -> TweakBindingIdentifier {
+    public func bind<T: TweakableType>(_ tweak: Tweak<T>, observerInitialValue: Bool = true, binding: @escaping (T) -> Void) -> TweakBindingIdentifier {
 		// Create the TweakBinding<T>, and wrap it in our type-erasing AnyTweakBinding
 		let tweakBinding = TweakBinding(tweak: tweak, binding: binding)
 		let anyTweakBinding = AnyTweakBinding(tweakBinding: tweakBinding)
@@ -81,7 +81,9 @@ public final class TweakStore {
 		tweakBindings[anyTweak] = existingTweakBindings + [anyTweakBinding]
 
 		// Then immediately apply the binding on whatever current value we have
-		binding(currentValueForTweak(tweak))
+        if observerInitialValue {
+            binding(currentValueForTweak(tweak))
+        }
 
 		return tweakBinding.identifier
 	}
@@ -91,7 +93,7 @@ public final class TweakStore {
 		tweakBindings[identifier.tweak] = existingTweakBindings.filter { $0.identifier != identifier }
 	}
 
-	public func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) -> MultiTweakBindingIdentifier {
+    public func bindMultiple(_ tweaks: [TweakType], observeInitialValue: Bool = true, binding: @escaping () -> Void) -> MultiTweakBindingIdentifier {
 		// Convert the array (which makes it easier to call a `bindTweakSet`) into a set (which makes it possible to cache the tweakSet)
 		let tweakSet = Set(tweaks.map(AnyTweak.init))
 
@@ -101,8 +103,10 @@ public final class TweakStore {
 		let existingTweakSetBindings = tweakSetBindings[tweakSet] ?? []
 		tweakSetBindings[tweakSet] = existingTweakSetBindings + [tweakBinding]
 
-		// Immediately call the binding
-		binding()
+		// Immediately call the binding if needed
+        if observeInitialValue {
+            binding()
+        }
 
 		return tweakBinding.identifier
 	}

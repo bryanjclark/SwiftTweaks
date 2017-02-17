@@ -75,7 +75,7 @@ internal final class TweakTableCell: UITableViewCell {
         return optionsTextField
     }()
     
-    private let doneButton = UIBarButtonItem(title: "Done TT", style: .done, target: nil, action: nil)
+    private let doneButton = UIBarButtonItem(title: "Done", style: .done, target: nil, action: nil)
     private let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     private let optionsPickerView =  UIPickerView()
     private let optionsTextFieldToolbar: UIToolbar = {
