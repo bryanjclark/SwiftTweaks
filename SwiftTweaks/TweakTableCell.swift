@@ -68,15 +68,50 @@ internal final class TweakTableCell: UITableViewCell {
 		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
+    
+    private let optionsTextField: UITextField = {
+        let optionsTextField = UITextField()
+        optionsTextField.textAlignment = .right
+        return optionsTextField
+    }()
+    
+    private let doneButton = UIBarButtonItem(title: "Done", style: .done, target: nil, action: nil)
+    private let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    private let optionsPickerView =  UIPickerView()
+    private let optionsTextFieldToolbar: UIToolbar = {
+        let toolBar = UIToolbar()
+        toolBar.tintColor = AppTheme.Colors.controlTinted
+        toolBar.sizeToFit()
+        return toolBar
+    }()
+    
+    dynamic func selectedOption(sender: AnyObject) {
+        switch viewData! {
+        case let .optionsList(_, defaultValue: defaultValue, options: options):
+            viewData = .optionsList(value: options[optionsPickerView.selectedRow(inComponent: 0)], defaultValue: defaultValue, options: options)
+            delegate?.tweakCellDidChangeCurrentValue(self)
+            optionsTextField.resignFirstResponder()
+        default:
+            assertionFailure("Shouldn't be triggered if view data isn't OptionsList type")
+        }
+    }
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, optionsTextField, disclosureArrow].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), for: .valueChanged)
 		textField.delegate = self
+        optionsPickerView.delegate = self
+        optionsPickerView.dataSource = self
+        
+        doneButton.target = self
+        doneButton.action = #selector(selectedOption(sender:))
+        optionsTextFieldToolbar.setItems([spaceButton, doneButton], animated: false)
+        optionsTextField.inputView = optionsPickerView
+        optionsTextField.inputAccessoryView = optionsTextFieldToolbar
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
 	}
@@ -87,6 +122,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
 	private static let colorTextWidthFraction: CGFloat = 0.30
+    private static let optionsListWidthFraction: CGFloat = 0.60
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
 
@@ -127,6 +163,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 			textField.frame = textFrame
 			stepperControl.frame = stepperControlFrame
+            optionsTextField.backgroundColor = .blue
 
 			let accessoryFrame = textFrame.union(stepperControlFrame)
 			accessory.bounds = accessoryFrame.integral
@@ -163,6 +200,16 @@ internal final class TweakTableCell: UITableViewCell {
 
 			let accessoryFrame = colorControlFrame.union(textFrame).union(disclosureArrowFrame)
 			accessory.bounds = accessoryFrame.integral
+        case .optionsList:
+            let textFrame = CGRect(
+                origin: CGPoint.zero,
+                size: CGSize(
+                    width: bounds.width * TweakTableCell.optionsListWidthFraction,
+                    height: bounds.height
+                )
+            )
+            optionsTextField.frame = textFrame
+            accessory.bounds = optionsTextField.bounds
 		}
 	}
 
@@ -172,6 +219,7 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.isHidden = true
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
+            optionsTextField.isHidden = false
 			return
 		}
 
@@ -183,18 +231,28 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+            optionsTextField.isHidden = false
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+            optionsTextField.isHidden = false
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
+            optionsTextField.isHidden = true
+        case .optionsList:
+            optionsTextField.isHidden = false
+            switchControl.isHidden = true
+            textField.isHidden = true
+            stepperControl.isHidden = true
+            colorChit.isHidden = true
+            disclosureArrow.isHidden = true
 		}
 
 		// Update accessory internals based on viewData
@@ -224,13 +282,14 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.backgroundColor = value
 			textField.text = value.hexString
 			textFieldEnabled = false
+        case let .optionsList(value: stringOption, _, _):
+            optionsTextField.text = stringOption.value
+            textFieldEnabled = false
 		}
 
 		textFieldEnabled = textFieldEnabled && !self.isInFloatingTweakGroupWindow
-
 		textField.isUserInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? AppTheme.Colors.textPrimary : AppTheme.Colors.controlSecondary
-
 	}
 
 	private func updateStepper(value: Double, stepperValues: TweakViewData.StepperValues) {
@@ -264,7 +323,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean:
+		case .color, .boolean, .optionsList:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean tweak.")
 		}
 	}
@@ -310,8 +369,37 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean:
+		case .boolean, .optionsList:
 			assertionFailure("Shouldn't be able to update text field with a Boolean tweak.")
 		}
 	}
+}
+
+
+
+extension TweakTableCell: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        guard let viewData = viewData else { return 0 }
+        switch viewData {
+        case let .optionsList(_, _, options: options):
+            return options.count
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let viewData = viewData else { return nil }
+        switch viewData {
+        case let .optionsList(_, _, options: options):
+            return options[row].value
+        default:
+            return nil
+        }
+    }
 }
