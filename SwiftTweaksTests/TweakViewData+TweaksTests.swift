@@ -33,9 +33,9 @@ class TweakViewData_TweaksTests: XCTestCase {
 			return .float(
 				value: CGFloat(currentValue),
 				defaultValue: CGFloat(defaultValue),
-				min: customMin.map {CGFloat.init($0) },
-				max: customMax.map {CGFloat.init($0) },
-				stepSize: customStep.map {CGFloat.init($0) }
+				min: customMin.map { CGFloat.init($0) },
+				max: customMax.map { CGFloat.init($0) },
+				stepSize: customStep.map { CGFloat.init($0) }
 			)
 		}
 
@@ -119,7 +119,7 @@ class TweakViewData_TweaksTests: XCTestCase {
 		]
 
 		tests
-			.map { return StepperTestCase(
+			.map { StepperTestCase(
 				defaultValue: $0,
 				currentValue: $0, // NOTE: We don't currently care about currentValue for stepSize calculations.
 				customMin: $1,
@@ -150,7 +150,7 @@ class TweakViewData_TweaksTests: XCTestCase {
 			]
 
 		tests
-			.map { return StepperTestCase(
+			.map { StepperTestCase(
 				defaultValue: Double($0),
 				currentValue: Double($0), // NOTE: We don't currently care about currentValue for stepSize calculations.
 				customMin: $1.map(Double.init),
@@ -194,14 +194,14 @@ class TweakViewData_TweaksTests: XCTestCase {
 
 		tests
 			.map { test in
-				return StepperTestCase(
-				defaultValue: test.def,
-				currentValue: test.current,
-				customMin: test.min,
-				customMax: test.max,
-				customStep: nil,
-				expectedStep: nil,
-				expectedBounds: test.expected
+				StepperTestCase(
+					defaultValue: test.def,
+					currentValue: test.current,
+					customMin: test.min,
+					customMax: test.max,
+					customStep: nil,
+					expectedStep: nil,
+					expectedBounds: test.expected
 				)
 			}
 			.forEach(StepperTestCase.verifyStepperBoundsTestCase)

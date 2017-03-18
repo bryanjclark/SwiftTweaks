@@ -123,8 +123,6 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		return button
 	}()
 
-	private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-
 	private func installSubviews() {
 		// Create the rounded corners and shadows
 		view.layer.cornerRadius = FloatingTweakGroupViewController.windowCornerRadius
@@ -133,11 +131,8 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		view.layer.shadowRadius = AppTheme.Shadows.floatingShadowRadius
 		view.layer.shadowOpacity = AppTheme.Shadows.floatingShadowOpacity
 
-		// Set up the blurry background
-		view.backgroundColor = .clear
-		backgroundView.layer.cornerRadius = FloatingTweakGroupViewController.windowCornerRadius
-		backgroundView.clipsToBounds = true
-		self.view.addSubview(backgroundView)
+		// Set up the background
+		view.backgroundColor = .white
 
 		// The table view
 		tableView.delegate = self
@@ -161,8 +156,6 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	}
 
 	private func layoutSubviews() {
-		backgroundView.frame = self.view.bounds
-
 		tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: FloatingTweakGroupViewController.height))
 
 		tableView.scrollIndicatorInsets = UIEdgeInsets(

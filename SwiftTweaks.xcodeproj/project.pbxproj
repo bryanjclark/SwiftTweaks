@@ -89,6 +89,12 @@
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
 		B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
+		D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */; };
+		D5CE0BDE1DC7E04A00F79235 /* MultiTweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */; };
+		D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */; };
+		D5CE0BE11DC7E1FB00F79235 /* TweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */; };
+		D5CE0BE21DC7E1FB00F79235 /* MultiTweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */; };
+		D5E3FEE91DC8760A00C9D648 /* MultiTweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +174,9 @@
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
 		B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakDebug.swift; sourceTree = "<group>"; };
+		D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBindingIdentifier.swift; sourceTree = "<group>"; };
+		D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTweakBinding.swift; sourceTree = "<group>"; };
+		D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTweakBindingIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				93C942581BFBDC550054811A /* TweakBinding.swift */,
+				D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */,
 				937962921BFE7B0A0046E4CE /* TweakViewData.swift */,
 				931A247F1BFA95B000E40192 /* TweakPersistency.swift */,
 				9345EC0D1BF2B9100086AB5D /* TweakCollection.swift */,
@@ -328,6 +338,7 @@
 				93A84ED21BEAE86E0022D2F3 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		93A84ED21BEAE86E0022D2F3 /* Products */ = {
 			isa = PBXGroup;
@@ -378,6 +389,8 @@
 				93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */,
 				93AA344E1BEBBD2D004B734B /* TweakStore.swift */,
 				B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */,
+				D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */,
+				D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */,
 				9345EC0C1BF2B9040086AB5D /* Internal */,
 			);
 			name = Model;
@@ -530,6 +543,7 @@
 				93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */,
 				933223591CB842D2002D586B /* EdgeInsetsTweakTemplate.swift in Sources */,
 				938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */,
+				D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */,
 				937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */,
 				939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */,
 				939F2CDB1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift in Sources */,
@@ -541,6 +555,7 @@
 				937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */,
 				93C942591BFBDC550054811A /* TweakBinding.swift in Sources */,
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
+				D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */,
 				9332235B1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
 				93212CB01CEE255F00AA85D0 /* ShadowTweakTemplate.swift in Sources */,
@@ -548,6 +563,7 @@
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
 				933223541CB83F0C002D586B /* BasicAnimationTweakTemplate.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
+				D5CE0BDE1DC7E04A00F79235 /* MultiTweakBinding.swift in Sources */,
 				933223561CB8403E002D586B /* UIView+BasicAnimationTweakTemplate.swift in Sources */,
 				937962951BFE7B2C0046E4CE /* TweakStore+Sharing.swift in Sources */,
 				931A24741BFA7A3800E40192 /* TweakColorCell.swift in Sources */,
@@ -583,7 +599,9 @@
 				93A84EF31BEAE88D0022D2F3 /* Tweak.swift in Sources */,
 				B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */,
 				931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */,
+				D5CE0BE11DC7E1FB00F79235 /* TweakBindingIdentifier.swift in Sources */,
 				931472551BFFB41700F66D20 /* TweaksBackupsListViewController.swift in Sources */,
+				D5CE0BE21DC7E1FB00F79235 /* MultiTweakBindingIdentifier.swift in Sources */,
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
@@ -592,6 +610,7 @@
 				9314725E1BFFB41700F66D20 /* TweakGroup.swift in Sources */,
 				9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */,
 				939F2CD01CB7197A00345E03 /* FloatingTweakGroupViewController.swift in Sources */,
+				D5E3FEE91DC8760A00C9D648 /* MultiTweakBinding.swift in Sources */,
 				931472591BFFB41700F66D20 /* TweakStore.swift in Sources */,
 				931472571BFFB41700F66D20 /* AnyTweak.swift in Sources */,
 				9314725F1BFFB41700F66D20 /* TweakStore+Sharing.swift in Sources */,

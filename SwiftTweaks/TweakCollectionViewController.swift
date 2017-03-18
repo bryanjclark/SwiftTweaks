@@ -89,6 +89,23 @@ extension TweakCollectionViewController: UITableViewDelegate {
 			break
 		}
 	}
+    
+    private static let sectionFooterHeight: CGFloat = 27
+    
+    internal func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return TweakCollectionViewController.sectionFooterHeight
+    }
+    
+    internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return TweakGroupSectionHeader.height
+    }
+    
+    internal func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TweakGroupSectionHeader.identifier) as! TweakGroupSectionHeader
+        headerView.tweakGroup = tweakCollection.sortedTweakGroups[section]
+        headerView.delegate = self
+        return headerView
+    }
 }
 
 extension TweakCollectionViewController: UITableViewDataSource {
@@ -108,23 +125,6 @@ extension TweakCollectionViewController: UITableViewDataSource {
 		cell.viewData = tweakStore.currentViewDataForTweak(tweak)
 		cell.delegate = self
 		return cell
-	}
-
-	private static let sectionFooterHeight: CGFloat = 27
-
-    private func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return TweakCollectionViewController.sectionFooterHeight
-	}
-
-	private func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return TweakGroupSectionHeader.height
-	}
-
-	private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TweakGroupSectionHeader.identifier) as! TweakGroupSectionHeader
-		headerView.tweakGroup = tweakCollection.sortedTweakGroups[section]
-		headerView.delegate = self
-		return headerView
 	}
 
 	fileprivate func tweakAtIndexPath(_ indexPath: IndexPath) -> AnyTweak {
