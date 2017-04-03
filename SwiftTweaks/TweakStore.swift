@@ -112,6 +112,13 @@ public final class TweakStore {
 		tweakSetBindings[identifier.tweakSet] = existingTweakSetBindings.filter { $0.identifier != identifier }
 	}
 
+	public func setValue<T: TweakableType>(_ value: T, for tweak: Tweak<T>) {
+		let anyTweak = AnyTweak(tweak: tweak)
+
+		persistence.setValue(value, forTweakIdentifiable: tweak)
+		updateBindingsForTweak(anyTweak)
+	}
+
 	// MARK: - Internal
 	
 	/// Resets all tweaks to their `defaultValue`
