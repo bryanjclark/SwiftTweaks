@@ -37,11 +37,11 @@ import UIKit
 	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
 	private var shaking: Bool = false
 
-	private var shouldPresentTweaks: Bool {
+	private var shouldPresentTweaksWhileShaking: Bool {
 		if tweakStore.enabled {
 			switch gestureType {
 			case .shake: return shaking || runningInSimulator
-			case .gesture: return true
+			case .gesture: return false
 			}
 		} else {
 			return false
@@ -86,7 +86,7 @@ import UIKit
 		if motion == .motionShake {
 			shaking = true
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(TweakWindow.shakeWindowTimeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-				if self.shouldPresentTweaks {
+				if self.shouldPresentTweaksWhileShaking {
 					self.presentTweaks()
 				}
 			}
