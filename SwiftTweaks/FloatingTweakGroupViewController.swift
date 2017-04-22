@@ -299,7 +299,7 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 			let alert = UIAlertController(title: "Can't edit colors here.", message: "Sorry, haven't built out the floating UI for it yet!", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
-		case .boolean, .integer, .cgFloat, .double:
+		case .boolean, .integer, .cgFloat, .double, .optionsList:
 			break
 		}
 	}
