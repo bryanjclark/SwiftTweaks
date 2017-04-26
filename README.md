@@ -73,7 +73,7 @@ A tweak library is responsible for listing out a bunch of `public static` tweaks
 
 ```swift
 public struct ExampleTweaks: TweakLibraryType {
-	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
+	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blue)
 	public static let marginHorizontal = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
 	public static let marginVertical = Tweak<CGFloat>("General", "Layout", "V. Margins", defaultValue: 10, min: 0)
 	public static let featureFlagMainScreenHelperText = Tweak("Feature Flags", "Main Screen", "Show Body Text", true)
