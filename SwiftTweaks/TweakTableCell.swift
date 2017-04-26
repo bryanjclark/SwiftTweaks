@@ -61,11 +61,6 @@ internal final class TweakTableCell: UITableViewCell {
 		textField.returnKeyType = .done
 		return textField
 	}()
-	public let segmentedControl: UISegmentedControl = {
-		let segmentedControl = UISegmentedControl()
-		segmentedControl.tintColor = AppTheme.Colors.controlTinted
-		return segmentedControl
-	}()
 	private let disclosureArrow: UIImageView = {
 		let disclosureArrowImage = UIImage(swiftTweaksImage: .disclosureIndicator)
 		let imageView = UIImageView(image: disclosureArrowImage.withRenderingMode(.alwaysTemplate))
@@ -77,12 +72,11 @@ internal final class TweakTableCell: UITableViewCell {
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow, segmentedControl].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), for: .valueChanged)
 		textField.delegate = self
-		segmentedControl.addTarget(self, action: #selector(self.segmentedControlChanged(_:)), for: .valueChanged)
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
 	}
@@ -112,6 +106,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case .boolean:
 			switchControl.sizeToFit()
 			accessory.bounds = switchControl.bounds
+
 		case .integer, .float, .doubleTweak:
 			stepperControl.sizeToFit()
 
@@ -136,6 +131,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 			let accessoryFrame = textFrame.union(stepperControlFrame)
 			accessory.bounds = accessoryFrame.integral
+
 		case .color:
 			let textFrame = CGRect(
 				origin: CGPoint.zero,
@@ -169,18 +165,15 @@ internal final class TweakTableCell: UITableViewCell {
 
 			let accessoryFrame = colorControlFrame.union(textFrame).union(disclosureArrowFrame)
 			accessory.bounds = accessoryFrame.integral
-		case let .stringList(value: value, defaultValue: _, options: options):
-			segmentedControl.removeAllSegments()
-			for option in options {
-				segmentedControl.insertSegment(
-					withTitle: option.value,
-					at: segmentedControl.numberOfSegments,
-					animated: false
-				)
-			}
-			segmentedControl.selectedSegmentIndex = options.index(of: value)!
-			segmentedControl.sizeToFit()
-			accessory.bounds = segmentedControl.bounds
+
+		case .stringList:
+			let textFieldSize = self.textField.sizeThatFits(CGSize(
+				width: CGFloat.greatestFiniteMagnitude,
+				height: bounds.height
+			))
+			let textFieldFrame = CGRect(origin: .zero, size: CGSize(width: textFieldSize.width, height: bounds.height))
+			textField.frame = textFieldFrame
+			accessory.bounds = textField.bounds
 		}
 	}
 
@@ -190,6 +183,7 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.isHidden = true
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
+			disclosureArrow.isHidden = true
 			return
 		}
 
@@ -201,28 +195,24 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			segmentedControl.isHidden = true
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			segmentedControl.isHidden = true
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
-			segmentedControl.isHidden = true
 		case .stringList:
 			switchControl.isHidden = true
-			textField.isHidden = true
+			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			segmentedControl.isHidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -253,9 +243,8 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.text = value.hexString
 			textFieldEnabled = false
 
-		case let .stringList(value: value, _, options: options):
-			let index = options.index(of: value)
-			segmentedControl.selectedSegmentIndex = index!
+		case let .stringList(value: value, _, options: _):
+			textField.text = value.value
 			textFieldEnabled = false
 		}
 
@@ -275,16 +264,6 @@ internal final class TweakTableCell: UITableViewCell {
 
 
 	// MARK: Events
-	@objc private func segmentedControlChanged(_ sender: UISegmentedControl) {
-		switch viewData! {
-		case let .stringList(_, defaultValue: defaultValue, options: options):
-			viewData = .stringList(value: options[sender.selectedSegmentIndex], defaultValue: defaultValue, options: options)
-			delegate?.tweakCellDidChangeCurrentValue(self)
-		default:
-			assertionFailure("Shouldn't be able to update segmented control if view data isn't StringList type")
-		}
-	}
-
 	@objc private func switchChanged(_ sender: UISwitch) {
 		switch viewData! {
 		case let .boolean(_, defaultValue: defaultValue):
