@@ -85,7 +85,7 @@ extension Tweak {
 		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
 		precondition(
 			defaultValue == nil || (defaultValue != nil && options.index(of: defaultValue!) != nil),
-			"The default value \"\(defaultValue)\" of the stringList tweak \"\(tweakName)\" must be in the list of options \"\(options)\""
+			"The default value \"\(String(describing: defaultValue))\" of the stringList tweak \"\(tweakName)\" must be in the list of options \"\(options)\""
 		)
 
 		return Tweak<StringOption>(

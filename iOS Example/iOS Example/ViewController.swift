@@ -64,9 +64,10 @@ class ViewController: UIViewController {
 			self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
 		})
 
-        ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
+        let binding = ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
             self.titleLabel.text = title.value
         }
+		tweakBindings.insert(binding)
 
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
