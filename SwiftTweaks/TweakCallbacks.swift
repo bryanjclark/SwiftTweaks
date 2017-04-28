@@ -11,16 +11,18 @@ import Foundation
 public typealias TweakBlock = () -> Void
 
 public class TweakCallbacks {
-	public typealias CallbackIdentifier = String
+	public typealias CallbackIdentifier = UInt
 	
+	private var lastToken: CallbackIdentifier = 0
 	private var callbacks: [CallbackIdentifier: TweakBlock] = [:]
 	
 	public init() {}
 	
 	public func addCallback(_ callback: @escaping TweakBlock) -> CallbackIdentifier {
-		let token = UUID().uuidString
-		callbacks[token] = callback
-		return token
+		let nextToken = lastToken + 1
+		callbacks[nextToken] = callback
+		lastToken = nextToken
+		return nextToken
 	}
 	
 	public func removeCallback(with token: CallbackIdentifier) {
@@ -30,7 +32,7 @@ public class TweakCallbacks {
 	// MARK: Internal
 	
 	func executeAllCallbacks() {
-		callbacks.forEach { $0.value() }
+		callbacks.keys.sorted().forEach { callbacks[$0]?() }
 	}
 }
 
