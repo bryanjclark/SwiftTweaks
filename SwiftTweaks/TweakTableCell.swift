@@ -70,10 +70,11 @@ internal final class TweakTableCell: UITableViewCell {
 	}()
 	private let actionButton: TweakButton = {
 		let button = TweakButton(type: .system)
-		button.setTitle("🤖", for: .normal)
 		button.borderWidth = 2
-		button.setBorderColor(color: AppTheme.Colors.controlTinted, for: .normal)
-		button.setBorderColor(color: AppTheme.Colors.controlTintedPressed, for: .highlighted)
+		button.contentMode = .center
+		button.setImage(UIImage(swiftTweaksImage: .disclosureIndicator), for: .normal)
+		button.setBorderColor(AppTheme.Colors.controlTinted, for: .normal)
+		button.setBorderColor(AppTheme.Colors.controlTintedPressed, for: .highlighted)
 		return button
 	}()
 
@@ -185,10 +186,10 @@ internal final class TweakTableCell: UITableViewCell {
 			accessory.bounds = textField.bounds
 
 		case .action:
-			actionButton.sizeToFit()
-			actionButton.bounds.size.width = 64
+			actionButton.bounds.size = CGSize(width: 64, height: 32)
 			var frame = actionButton.bounds
-			frame.origin.x = -1 * actionButton.bounds.width / 2
+			frame.origin.x = -1 * frame.width / 2
+			frame.origin.y = -1 * frame.height / 2
 			accessory.bounds = frame
 		}
 	}

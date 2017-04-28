@@ -64,13 +64,22 @@ class ViewController: UIViewController {
         tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0; self.bodyLabel.textColor = $0 })
 tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitleLabel.textColor = $0 })
         _ = ExampleTweaks.action.addCallback {
+        // If you used `TweaksCallbacks` type, you can subscribe to those tweaks with callbacks.
+        // Those will be run in order.
+        // If you want to execute something only once, you can remove callback using identifier that `addCallback` method provides.
         _ = ExampleTweaks.actionUI.addCallback {
-            self.presentedViewController?.dismiss(animated: true, completion: {
+            let showAlert = {
                 let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         
                 self.present(alert, animated: true, completion: nil)
-            })
+            }
+            
+            if let presentedViewController = self.presentedViewController {
+                presentedViewController.dismiss(animated: true, completion: showAlert)
+            } else {
+                showAlert()
+            }
         }
         
         _ = ExampleTweaks.actionConsole.addCallback {
@@ -79,6 +88,12 @@ tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitl
         _ = ExampleTweaks.actionConsole.addCallback {
             print("🤖 I'm afraid I can't do that")
         }
+        
+        let callbackIdentifier = ExampleTweaks.actionConsole.addCallback {
+            // this won't be run
+            print("👩🏻‍🚀 <turns off HAL>")
+        }
+        ExampleTweaks.actionConsole.removeCallback(with: callbackIdentifier)
         
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:

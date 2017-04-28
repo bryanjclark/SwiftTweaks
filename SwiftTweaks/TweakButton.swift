@@ -29,7 +29,7 @@ class TweakButton: UIButton {
 		didSet { updateState() }
 	}
 	
-	func setBorderColor(color: UIColor, for state: UIControlState = .normal) {
+	func setBorderColor(_ color: UIColor, for state: UIControlState = .normal) {
 		borderColors[state.rawValue] = color
 	}
 	

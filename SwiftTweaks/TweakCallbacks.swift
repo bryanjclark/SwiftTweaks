@@ -48,6 +48,7 @@ extension Tweak where T == TweakCallbacks {
 		self.init(collectionName, groupName, tweakName, TweakCallbacks())
 	}
 	
+	@discardableResult
 	public func addCallback(_ callback: @escaping TweakBlock) -> TweakCallbacks.CallbackIdentifier {
 		return defaultValue.addCallback(callback)
 	}
