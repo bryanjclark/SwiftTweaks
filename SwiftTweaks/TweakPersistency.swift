@@ -177,6 +177,7 @@ private final class TweakDiskPersistency {
 					return nil
 				}
 				return StringOption(value: stringOptionString)
+			case .action: return nil
 			}
 		}
 	}
@@ -192,6 +193,7 @@ private extension TweakViewDataType {
 		case .double: return "double"
 		case .uiColor: return "uicolor"
 		case .stringList: return "stringlist"
+		case .action: return "action"
 		}
 	}
 }
@@ -206,6 +208,7 @@ private extension TweakableType {
 			case .double: return self as! Double as AnyObject
 			case .uiColor: return self as! UIColor
 			case .stringList: return (self as! StringOption).value as AnyObject
+			case .action: return true as AnyObject
 		}
 	}
 }

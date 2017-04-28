@@ -68,14 +68,20 @@ internal final class TweakTableCell: UITableViewCell {
 		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
+	private let actionButton: UIButton = {
+		let button = UIButton(type: .system)
+		button.setTitle("🤖", for: .normal)
+		return button
+	}()
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow, actionButton].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), for: .valueChanged)
+		actionButton.addTarget(self, action: #selector(self.buttonPressed(_:)), for: .touchUpInside)
 		textField.delegate = self
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
@@ -174,6 +180,10 @@ internal final class TweakTableCell: UITableViewCell {
 			let textFieldFrame = CGRect(origin: .zero, size: CGSize(width: textFieldSize.width, height: bounds.height))
 			textField.frame = textFieldFrame
 			accessory.bounds = textField.bounds
+
+		case .action:
+			actionButton.sizeToFit()
+			accessory.bounds = actionButton.bounds
 		}
 	}
 
@@ -184,6 +194,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 			return
 		}
 
@@ -195,24 +206,35 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
+			actionButton.isHidden = true
 		case .stringList:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
+		case .action:
+			switchControl.isHidden = true
+			textField.isHidden = true
+			stepperControl.isHidden = true
+			colorChit.isHidden = true
+			disclosureArrow.isHidden = true
+			actionButton.isHidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -245,6 +267,8 @@ internal final class TweakTableCell: UITableViewCell {
 
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
+			textFieldEnabled = false
+		case .action:
 			textFieldEnabled = false
 		}
 
@@ -285,7 +309,20 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .stringList:
+		case .color, .boolean, .stringList, .action:
+			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
+		}
+	}
+	
+	@objc private func buttonPressed(_ sender: UIButton) {
+		guard let viewData = viewData else {
+			return
+		}
+		
+		switch viewData {
+		case let .action(closureTweak):
+			closureTweak.executeAllCallbacks()
+		default:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}
 	}
@@ -331,7 +368,7 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .stringList:
+		case .boolean, .stringList, .action:
 			assertionFailure("Shouldn't be able to update text field with a Boolean or StringList tweak.")
 		}
 	}
