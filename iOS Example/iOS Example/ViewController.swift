@@ -82,10 +82,10 @@ tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitl
             }
         }
         
-        _ = ExampleTweaks.actionConsole.addCallback {
+        ExampleTweaks.actionConsole.addCallback {
             print("🤖 I'm sorry Dave")
         }
-        _ = ExampleTweaks.actionConsole.addCallback {
+        ExampleTweaks.actionConsole.addCallback {
             print("🤖 I'm afraid I can't do that")
         }
         
