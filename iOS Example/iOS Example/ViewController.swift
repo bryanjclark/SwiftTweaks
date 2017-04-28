@@ -93,7 +93,7 @@ tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitl
             // this won't be run
             print("👩🏻‍🚀 <turns off HAL>")
         }
-        ExampleTweaks.actionConsole.removeCallback(with: callbackIdentifier)
+        _ = try? ExampleTweaks.actionConsole.removeCallback(with: callbackIdentifier)
         
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:

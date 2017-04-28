@@ -11,6 +11,10 @@ import Foundation
 public typealias TweakBlock = () -> Void
 
 public class TweakCallbacks {
+	public enum Error: Swift.Error {
+		case wrongIdentifier
+	}
+	
 	public typealias CallbackIdentifier = UInt
 	
 	private var lastToken: CallbackIdentifier = 0
@@ -25,7 +29,10 @@ public class TweakCallbacks {
 		return nextToken
 	}
 	
-	public func removeCallback(with token: CallbackIdentifier) {
+	public func removeCallback(with token: CallbackIdentifier) throws {
+		guard callbacks.keys.contains(token) else {
+			throw Error.wrongIdentifier
+		}
 		callbacks[token] = nil
 	}
 	
@@ -53,7 +60,7 @@ extension Tweak where T == TweakCallbacks {
 		return defaultValue.addCallback(callback)
 	}
 	
-	public func removeCallback(with token: TweakCallbacks.CallbackIdentifier) {
-		defaultValue.removeCallback(with: token)
+	public func removeCallback(with token: TweakCallbacks.CallbackIdentifier) throws {
+		try defaultValue.removeCallback(with: token)
 	}
 }
