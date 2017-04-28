@@ -64,13 +64,22 @@ class ViewController: UIViewController {
         tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0; self.bodyLabel.textColor = $0 })
 tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitleLabel.textColor = $0 })
         _ = ExampleTweaks.action.addCallback {
+        _ = ExampleTweaks.actionUI.addCallback {
             self.presentedViewController?.dismiss(animated: true, completion: {
-                let alert = UIAlertController(title: "Hello", message: "🤖 says hello!", preferredStyle: .alert)
+                let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         
                 self.present(alert, animated: true, completion: nil)
             })
         }
+        
+        _ = ExampleTweaks.actionConsole.addCallback {
+            print("🤖 I'm sorry Dave")
+        }
+        _ = ExampleTweaks.actionConsole.addCallback {
+            print("🤖 I'm afraid I can't do that")
+        }
+        
 
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
