@@ -28,6 +28,7 @@ Currently, you can tweak the following types:
 - `CGFloat`
 - `Double`
 - `UIColor`
+- [`TweakCallbacks`](#callbacks)
 
 A `Tweak` looks like this:
 ```swift
@@ -56,6 +57,30 @@ public static let edgeInsets = EdgeInsetsTweakTemplate("Layout", "Screen Edge In
 Of course, you can create your own `TweakGroupTemplate` type if you'd like - they're handy whenever you have a cluster of tweaks that need to be used together to get a desired effect. They can be built out of any combination of `Tweak`s.
 
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Demo.gif?raw=true)
+
+### Callbacks
+
+SwiftTweaks now supports callbacks. If you need to execute more complicated operations or operations that do not depend on data from certain tweak value.
+You can use `TweakCallbacks` as a type in your `TweakStore` to create a Tweak that executed your custom callbacks.
+
+```swift
+public static let action = Tweak<TweakCallbacks>("Actions", "Action", "Perform some action")
+```
+
+Later in the code you can add callbacks to that tweak, which are executed when a button in Tweaks window is pressed.
+
+```swift
+let idenfitier = ExampleTweaks.action.addCallback {
+	/// Some complicated action happens here
+	print("We're all done!")
+}
+```
+
+If you want to, you can also always remove callback using unique idenfitier that `addCallback` method provides.
+
+```swift
+ExampleTweaks.action.removeCallback(with: idenfitier)
+```
 
 ### Wait, what about [Facebook Tweaks](https://github.com/facebook/Tweaks)?
 Good question! I’m glad you asked. **The whole reason SwiftTweaks exists is because we love the stuffing out of FBTweaks.** We’re long-time fans of FBTweaks in our Objective-C projects: Replace the magic numbers with an `FBTweak` macro, and you’re all set! You can leave an FBTweak macro in your production code, because it’s replaced at compile-time with the tweak’s default value.
@@ -112,15 +137,15 @@ button.tintColor = UIColor.green
 ```
 
 **assign** returns the current value of the tweak:
-```swift	
+```swift
 button.tintColor = ExampleTweaks.assign(ExampleTweaks.colorTint)
 ```
 **bind** calls its closure immediately, and again each time the tweak changes:
-```swift	
+```swift
 ExampleTweaks.bind(ExampleTweaks.colorTint) { button.tintColor = $0 }
 ```
 **bindMultiple** calls its closure immediately, and again each time any of its tweaks change:
-```swift	
+```swift
 // A "multipleBind" is called initially, and each time _any_ of the included tweaks change:
 let tweaksToWatch: [TweakType] = [ExampleTweaks.marginHorizontal, ExampleTweaks.marginVertical]
 ExampleTweaks.bindMultiple(tweaksToWatch) {

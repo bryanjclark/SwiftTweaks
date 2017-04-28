@@ -80,7 +80,6 @@ tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitl
             print("🤖 I'm afraid I can't do that")
         }
         
-
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
 		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
