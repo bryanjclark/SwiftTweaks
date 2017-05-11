@@ -34,15 +34,15 @@ public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueCol
 There are also helpful `TweakGroupTemplate` types, so you can quickly declare commonly-used-together combos. They all have sensible defaults, but of course, you can set your own!
 ```swift
 // Controls delay and duration for UIView.animate
-// Use it with UIView.animateWithBasicAnimationTweakTemplate
+// Use it with UIView.animate(basicTweakTemplate:...)
 public static let basicAnimation = BasicAnimationTweakTemplate("Animation", "Basic Animation")
 
 // Controls delay, duration, damping, and initial spring velocity for UIView.animate
-// Use it with UIView.animateWithSpringAnimationTweakTemplate
+// Use it with UIView.animate(springTweakTemplate:...)
 public static let springAnimation = SpringAnimationTweakTemplate("Animation", "Spring Animation")
 
 // Controls shadow color, radius, offset, and opacity for CALayer
-// Use it with CALayer.applyShadowTweakTemplate
+// Use it with CALayer.apply(shadowTweakTemplate:...)
 public static let shadowTweak = ShadowTweakTemplate("Shadows", "Button Shadow")
 
 // Controls top/right/bottom/left for UIEdgeInsets

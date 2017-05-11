@@ -146,16 +146,16 @@ class ViewController: UIViewController {
 		let originalFrame = self.bounceButton.frame
 
 		// To help make TweakGroupTemplateSpringAnimation even more useful - check this out:
-		UIView.animateWithSpringAnimationTweakTemplate(
-			ExampleTweaks.buttonAnimation,
+		UIView.animate(
+			springTweakTemplate: ExampleTweaks.buttonAnimation,
 			tweakStore: ExampleTweaks.defaultStore,
 			options: .beginFromCurrentState,
 			animations: { 
 				self.bounceButton.frame = originalFrame.offsetBy(dx: 0, dy: 200)
 			},
 			completion: { _ in
-				UIView.animateWithSpringAnimationTweakTemplate(
-					ExampleTweaks.buttonAnimation,
+				UIView.animate(
+					springTweakTemplate: ExampleTweaks.buttonAnimation,
 					tweakStore: ExampleTweaks.defaultStore,
 					options: .beginFromCurrentState,
 					animations: {
