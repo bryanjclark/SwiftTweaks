@@ -71,37 +71,6 @@ internal final class TweakCollectionViewController: UIViewController {
 		delegate.tweakCollectionViewControllerDidPressDismissButton(self)
 	}
 
-	fileprivate func presentOptions(forStringListTweak tweak: AnyTweak) {
-		let tweakOptions: [StringOption]
-		switch self.tweakStore.currentViewDataForTweak(tweak) {
-		case let .stringList(_, _, options: options):
-			tweakOptions = options
-		default:
-			fatalError("Can't present UIAlertController for non-string-list options")
-		}
-
-		let alertController = UIAlertController(title: tweak.tweakName, message: nil, preferredStyle: .actionSheet)
-		tweakOptions.forEach { stringOption in
-			alertController.addAction(
-				UIAlertAction(
-					title: stringOption.value,
-					style: .default,
-					handler: { _ in
-						self.update(stringListTweak: tweak, to: stringOption)
-					}
-				)
-			)
-		}
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-		alertController.addAction(cancelAction)
-
-		// TODO (bryan): This prints out the error:
-		// "Presenting view controllers on detached view controllers is discouraged"
-		// Sometimes you have to tap the cell twice :(((((
-		// Not ideal, but it's still better than the segmented control that we had!
-		present(alertController, animated: true, completion: nil)
-	}
-
 	private func update(stringListTweak tweak: AnyTweak, to toValue: StringOption) {
 		let tweakDefault: StringOption
 		let tweakOptions: [StringOption]
@@ -131,7 +100,8 @@ extension TweakCollectionViewController: UITableViewDelegate {
 			let colorEditVC = TweakColorEditViewController(anyTweak: tweak, tweakStore: tweakStore, delegate: self)
 			navigationController?.pushViewController(colorEditVC, animated: true)
 		case .stringList:
-			self.presentOptions(forStringListTweak: tweak)
+			let stringOptionVC = StringOptionViewController(anyTweak: tweak, tweakStore: self.tweakStore, delegate: self)
+			self.navigationController?.pushViewController(stringOptionVC, animated: true)
 		case .boolean, .integer, .cgFloat, .double:
 			break
 		}
@@ -193,6 +163,12 @@ extension TweakCollectionViewController: TweakTableCellDelegate {
 
 extension TweakCollectionViewController: TweakColorEditViewControllerDelegate {
 	func tweakColorEditViewControllerDidPressDismissButton(_ tweakColorEditViewController: TweakColorEditViewController) {
+		self.delegate.tweakCollectionViewControllerDidPressDismissButton(self)
+	}
+}
+
+extension TweakCollectionViewController: StringOptionViewControllerDelegate {
+	func stringOptionViewControllerDidPressDismissButton(_ tweakSelectionViewController: StringOptionViewController) {
 		self.delegate.tweakCollectionViewControllerDidPressDismissButton(self)
 	}
 }
