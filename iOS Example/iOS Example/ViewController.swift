@@ -64,6 +64,11 @@ class ViewController: UIViewController {
 			self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
 		})
 
+        let binding = ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
+            self.titleLabel.text = title.value
+        }
+		tweakBindings.insert(binding)
+
 		// Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
 		// In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
 		// What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
@@ -141,16 +146,16 @@ class ViewController: UIViewController {
 		let originalFrame = self.bounceButton.frame
 
 		// To help make TweakGroupTemplateSpringAnimation even more useful - check this out:
-		UIView.animateWithSpringAnimationTweakTemplate(
-			ExampleTweaks.buttonAnimation,
+		UIView.animate(
+			springTweakTemplate: ExampleTweaks.buttonAnimation,
 			tweakStore: ExampleTweaks.defaultStore,
 			options: .beginFromCurrentState,
 			animations: { 
 				self.bounceButton.frame = originalFrame.offsetBy(dx: 0, dy: 200)
 			},
 			completion: { _ in
-				UIView.animateWithSpringAnimationTweakTemplate(
-					ExampleTweaks.buttonAnimation,
+				UIView.animate(
+					springTweakTemplate: ExampleTweaks.buttonAnimation,
 					tweakStore: ExampleTweaks.defaultStore,
 					options: .beginFromCurrentState,
 					animations: {
