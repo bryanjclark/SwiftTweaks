@@ -24,10 +24,10 @@ public enum TweakViewDataType {
 	case cgFloat
 	case double
 	case uiColor
-    case optionsList
+	case stringList
 
 	public static let allTypes: [TweakViewDataType] = [
-		.boolean, .integer, .cgFloat, .double, .uiColor, .optionsList
+		.boolean, .integer, .cgFloat, .double, .uiColor, .stringList
 	]
 }
 
@@ -40,10 +40,30 @@ public enum TweakDefaultData {
 	case float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case doubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(defaultValue: UIColor)
-    case optionsList(defaultValue: StringOption, options: [StringOption])
+	case stringList(defaultValue: StringOption, options: [StringOption])
 }
 
 // MARK: Types that conform to TweakableType
+
+public struct StringOption {
+	public let value: String
+	init(value: String) {
+		self.value = value
+	}
+}
+
+extension StringOption: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .stringList
+	}
+}
+
+extension StringOption: Equatable {
+	public static func ==(lhs: StringOption, rhs: StringOption) -> Bool {
+		return lhs.value == rhs.value
+	}
+
+}
 
 extension Bool: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
@@ -75,29 +95,3 @@ extension UIColor: TweakableType {
 	}
 }
 
-
-public protocol TweakableEnum {
-    var caseValues: [String] { get }
-}
-
-public struct StringOption {
-    public let value: String
-    
-    init(value: String) {
-        self.value = value
-    }
-}
-
-
-extension StringOption: TweakableType {
-    
-    public static var tweakViewDataType: TweakViewDataType {
-        return .optionsList
-    }
-}
-
-extension StringOption: Equatable {
-    public static func ==(lhs: StringOption, rhs: StringOption) -> Bool {
-        return lhs.value == rhs.value
-    }
-}

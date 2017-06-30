@@ -14,7 +14,17 @@ import UIKit
 @objc public final class TweakWindow: UIWindow {
 
 	public enum GestureType {
+		/// Shake the device, like you're trying to undo some text
 		case shake
+
+		/// A commonly-used shortcut: double-tap with two fingers.
+		/// In the simulator, hold down option and double-tap.
+		/// SwiftTweaks handles adding the gesture to the entire TweakWindow.
+		case twoFingerDoubleTap
+
+		/// Use whatever shortcut you'd like to bring up SwiftTweaks.
+		/// It's up to you to add the gesture recognizer to your UI somewhere; 
+		/// (you can add the gesture to the TweakWindow right after calling TweakWindow.init if you like!)
 		case gesture(UIGestureRecognizer)
 	}
 
@@ -37,11 +47,11 @@ import UIKit
 	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
 	private var shaking: Bool = false
 
-	private var shouldPresentTweaks: Bool {
+	private var shouldShakePresentTweaks: Bool {
 		if tweakStore.enabled {
 			switch gestureType {
 			case .shake: return shaking || runningInSimulator
-			case .gesture: return true
+			case .twoFingerDoubleTap, .gesture: return false
 			}
 		} else {
 			return false
@@ -69,6 +79,12 @@ import UIKit
 		switch gestureType {
 		case .gesture(let gestureRecognizer):
 			gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
+		case .twoFingerDoubleTap:
+			let twoFingerDoubleTapGesture = UITapGestureRecognizer()
+			twoFingerDoubleTapGesture.numberOfTapsRequired = 2
+			twoFingerDoubleTapGesture.numberOfTouchesRequired = 2
+			twoFingerDoubleTapGesture.addTarget(self, action: #selector(self.presentTweaks))
+			self.addGestureRecognizer(twoFingerDoubleTapGesture)
 		case .shake:
 			break
 		}
@@ -86,7 +102,7 @@ import UIKit
 		if motion == .motionShake {
 			shaking = true
 			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(TweakWindow.shakeWindowTimeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-				if self.shouldPresentTweaks {
+				if self.shouldShakePresentTweaks {
 					self.presentTweaks()
 				}
 			}

@@ -15,9 +15,9 @@ internal enum TweakViewData {
 	case float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case doubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(value: UIColor, defaultValue: UIColor)
-    case optionsList(value: StringOption, defaultValue: StringOption, options: [StringOption])
+	case stringList(value: StringOption, defaultValue: StringOption, options: [StringOption])
 
-    init<T: TweakableType>(type: TweakViewDataType, value: T, defaultValue: T, minimum: T?, maximum: T?, stepSize: T?, options: [T]? = nil) {
+	init<T: TweakableType>(type: TweakViewDataType, value: T, defaultValue: T, minimum: T?, maximum: T?, stepSize: T?, options: [T]?) {
 		switch type {
 		case .boolean:
 			self = .boolean(value: value as! Bool, defaultValue: defaultValue as! Bool)
@@ -32,10 +32,8 @@ internal enum TweakViewData {
 		case .double:
 			let clippedValue = clip(value as! Double, minimum as? Double, maximum as? Double)
 			self = .doubleTweak(value: clippedValue, defaultValue: defaultValue as! Double, min: minimum as? Double, max: maximum as? Double, stepSize: stepSize as? Double)
-        case .optionsList:
-            precondition(options != nil, "optionsList cannot be nil for OptionsList Type.")
-            precondition(!options!.isEmpty, "optionsList cannot be empty. At least one option is required.")
-            self = .optionsList(value: value as! StringOption, defaultValue: defaultValue as! StringOption, options: options!.map{ $0 as! StringOption })
+		case .stringList:
+			self = .stringList(value: value as! StringOption, defaultValue: defaultValue as! StringOption, options: options!.map { $0 as! StringOption })
 		}
 	}
 
@@ -51,15 +49,15 @@ internal enum TweakViewData {
 			return doubleValue
 		case let .color(value: colorValue, defaultValue: _):
 			return colorValue
-        case let .optionsList(value: value, _,_):
-            return value
+		case let .stringList(value: stringValue, _, _):
+			return stringValue
 		}
 	}
 
 	/// For signedNumberType tweaks, this is a shortcut to `value` as a Double
 	var doubleValue: Double? {
 		switch self {
-		case .boolean, .color, .optionsList:
+		case .boolean, .color, .stringList:
 			return nil
 		case let .integer(value: intValue, _, _, _, _):
 			return Double(intValue)
@@ -89,9 +87,9 @@ internal enum TweakViewData {
 		case let .color(value: value, defaultValue: defaultValue):
 			string = "Color(\(value.hexString), alpha: \(value.alphaValue))"
 			differsFromDefault = (value != defaultValue)
-        case let .optionsList(value: stringOption, defaultValue: defaultValue,_):
-            string = stringOption.value
-            differsFromDefault = (stringOption.value != defaultValue.value)
+		case let .stringList(value: value, defaultValue: defaultValue, _):
+			string = value.value
+			differsFromDefault = string != defaultValue.value
 		}
 		return (string, differsFromDefault)
 	}
@@ -100,7 +98,7 @@ internal enum TweakViewData {
 		switch self {
 		case .integer, .float, .doubleTweak:
 			return true
-		case .boolean, .color, .optionsList:
+		case .boolean, .color, .stringList:
 			return false
 		}
 	}
@@ -140,7 +138,7 @@ internal enum TweakViewData {
 		let step: Double?
 		let isInteger: Bool
 		switch self {
-		case .boolean, .color, .optionsList:
+		case .boolean, .color, .stringList:
 			return nil
 
 		case let .integer(intValue, intDefaultValue, intMin, intMax, intStep):

@@ -12,18 +12,18 @@ public extension UIView {
 
 	/// A convenience wrapper for iOS-style spring animations.
 	/// Under the hood, it gets the current value for each tweak in the group, and uses that in an animation.
-	public static func animateWithSpringAnimationTweakTemplate(
-		_ springAnimationTweakTemplate: SpringAnimationTweakTemplate,
+	public static func animate(
+		springTweakTemplate: SpringAnimationTweakTemplate,
 		tweakStore: TweakStore,
 		options: UIViewAnimationOptions,
 		animations: @escaping () -> Void,
 		completion: ((Bool) -> Void)?
 	) {
 		UIView.animate(
-			withDuration: tweakStore.assign(springAnimationTweakTemplate.duration),
-			delay: tweakStore.assign(springAnimationTweakTemplate.delay),
-			usingSpringWithDamping: tweakStore.assign(springAnimationTweakTemplate.damping),
-			initialSpringVelocity: tweakStore.assign(springAnimationTweakTemplate.initialSpringVelocity),
+			withDuration: tweakStore.assign(springTweakTemplate.duration),
+			delay: tweakStore.assign(springTweakTemplate.delay),
+			usingSpringWithDamping: tweakStore.assign(springTweakTemplate.damping),
+			initialSpringVelocity: tweakStore.assign(springTweakTemplate.initialSpringVelocity),
 			options: options,
 			animations: animations,
 			completion: completion

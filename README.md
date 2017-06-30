@@ -34,15 +34,15 @@ public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueCol
 There are also helpful `TweakGroupTemplate` types, so you can quickly declare commonly-used-together combos. They all have sensible defaults, but of course, you can set your own!
 ```swift
 // Controls delay and duration for UIView.animate
-// Use it with UIView.animateWithBasicAnimationTweakTemplate
+// Use it with UIView.animate(basicTweakTemplate:...)
 public static let basicAnimation = BasicAnimationTweakTemplate("Animation", "Basic Animation")
 
 // Controls delay, duration, damping, and initial spring velocity for UIView.animate
-// Use it with UIView.animateWithSpringAnimationTweakTemplate
+// Use it with UIView.animate(springTweakTemplate:...)
 public static let springAnimation = SpringAnimationTweakTemplate("Animation", "Spring Animation")
 
 // Controls shadow color, radius, offset, and opacity for CALayer
-// Use it with CALayer.applyShadowTweakTemplate
+// Use it with CALayer.apply(shadowTweakTemplate:...)
 public static let shadowTweak = ShadowTweakTemplate("Shadows", "Button Shadow")
 
 // Controls top/right/bottom/left for UIEdgeInsets
@@ -73,7 +73,7 @@ A tweak library is responsible for listing out a bunch of `public static` tweaks
 
 ```swift
 public struct ExampleTweaks: TweakLibraryType {
-	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blueColor())
+	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blue)
 	public static let marginHorizontal = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
 	public static let marginVertical = Tweak<CGFloat>("General", "Layout", "V. Margins", defaultValue: 10, min: 0)
 	public static let featureFlagMainScreenHelperText = Tweak("Feature Flags", "Main Screen", "Show Body Text", true)
