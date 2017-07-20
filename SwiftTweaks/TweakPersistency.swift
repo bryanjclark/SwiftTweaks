@@ -71,7 +71,7 @@ private final class TweakDiskPersistency {
 
 	private let queue = DispatchQueue(label: "org.khanacademy.swift_tweaks.disk_persistency", attributes: [])
 
-	private static let dataClassName = "TweakDiskPersistency.Data"
+	private static let dataClassName = String(describing: TweakDiskPersistency.Data.self)
 
 	init(identifier: String) {
 		NSKeyedUnarchiver.setClass(TweakDiskPersistency.Data.self, forClassName: TweakDiskPersistency.dataClassName)
@@ -118,6 +118,8 @@ private final class TweakDiskPersistency {
 
 		init(cache: TweakCache) {
 			self.cache = cache
+            
+            super.init()
 		}
 
 		@objc convenience init?(coder aDecoder: NSCoder) {
