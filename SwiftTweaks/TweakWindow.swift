@@ -76,17 +76,19 @@ import UIKit
 
 		tintColor = AppTheme.Colors.controlTinted
 
-		switch gestureType {
-		case .gesture(let gestureRecognizer):
-			gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
-		case .twoFingerDoubleTap:
-			let twoFingerDoubleTapGesture = UITapGestureRecognizer()
-			twoFingerDoubleTapGesture.numberOfTapsRequired = 2
-			twoFingerDoubleTapGesture.numberOfTouchesRequired = 2
-			twoFingerDoubleTapGesture.addTarget(self, action: #selector(self.presentTweaks))
-			self.addGestureRecognizer(twoFingerDoubleTapGesture)
-		case .shake:
-			break
+		if tweakStore.enabled {
+			switch gestureType {
+			case .gesture(let gestureRecognizer):
+				gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
+			case .twoFingerDoubleTap:
+				let twoFingerDoubleTapGesture = UITapGestureRecognizer()
+				twoFingerDoubleTapGesture.numberOfTapsRequired = 2
+				twoFingerDoubleTapGesture.numberOfTouchesRequired = 2
+				twoFingerDoubleTapGesture.addTarget(self, action: #selector(self.presentTweaks))
+				self.addGestureRecognizer(twoFingerDoubleTapGesture)
+			case .shake:
+				break
+			}
 		}
 
 		tweaksViewController = TweaksViewController(tweakStore: tweakStore, delegate: self)
@@ -124,6 +126,10 @@ import UIKit
 
 	@objc private func presentTweaks() {
 		guard let rootViewController = rootViewController else {
+			return
+		}
+
+		guard self.tweakStore.enabled else {
 			return
 		}
 
