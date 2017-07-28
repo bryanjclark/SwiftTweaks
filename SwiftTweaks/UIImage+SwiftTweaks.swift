@@ -9,7 +9,6 @@
 import UIKit
 
 internal extension UIImage {
-
 	enum SwiftTweaksImage: String {
 		case disclosureIndicator = "disclosure-indicator"
 		case floatingPlusButton = "floating-plus-button"
