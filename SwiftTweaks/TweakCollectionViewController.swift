@@ -125,7 +125,7 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .stringList:
 			let stringOptionVC = StringOptionViewController(anyTweak: tweak, tweakStore: self.tweakStore, delegate: self)
 			self.navigationController?.pushViewController(stringOptionVC, animated: true)
-		case .boolean, .integer, .cgFloat, .double, .action:
+		case .boolean, .integer, .cgFloat, .double, .closure:
 			break
 		}
 	}

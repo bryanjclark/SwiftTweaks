@@ -45,7 +45,7 @@ public class TweakCallbacks {
 
 extension TweakCallbacks: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
-		return .action
+		return .closure
 	}
 }
 

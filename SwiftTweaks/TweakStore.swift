@@ -156,9 +156,9 @@ public final class TweakStore {
 		case let .stringList(defaultValue: defaultValue, options: options):
 			let currentValue = cachedValue as? StringOption ?? defaultValue
 			return .stringList(value: currentValue, defaultValue: defaultValue, options: options)
-		case let .action(defaultValue: defaultValue):
+		case let .closure(defaultValue: defaultValue):
 			let currentValue = cachedValue as? TweakCallbacks ?? defaultValue
-			return .action(value: currentValue)
+			return .closure(value: currentValue)
 		}
 	}
 

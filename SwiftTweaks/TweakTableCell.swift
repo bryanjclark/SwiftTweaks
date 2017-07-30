@@ -185,7 +185,7 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.frame = textFieldFrame
 			accessory.bounds = textField.bounds
 
-		case .action:
+		case .closure:
 			actionButton.bounds.size = CGSize(width: 64, height: 32)
 			var frame = actionButton.bounds
 			frame.origin.x = -1 * frame.width / 2
@@ -235,7 +235,7 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
 			actionButton.isHidden = true
-		case .action:
+		case .closure:
 			switchControl.isHidden = true
 			textField.isHidden = true
 			stepperControl.isHidden = true
@@ -275,7 +275,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
 			textFieldEnabled = false
-		case .action:
+		case .closure:
 			textFieldEnabled = false
 		}
 
@@ -316,7 +316,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .stringList, .action:
+		case .color, .boolean, .stringList, .closure:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}
 	}
@@ -327,7 +327,7 @@ internal final class TweakTableCell: UITableViewCell {
 		}
 		
 		switch viewData {
-		case let .action(closureTweak):
+		case let .closure(closureTweak):
 			closureTweak.executeAllCallbacks()
 		default:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
@@ -375,7 +375,7 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .stringList, .action:
+		case .boolean, .stringList, .closure:
 			assertionFailure("Shouldn't be able to update text field with a Boolean or StringList tweak.")
 		}
 	}

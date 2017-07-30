@@ -303,7 +303,7 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 			let alert = UIAlertController(title: "Can't edit string-options here.", message: "Sorry, haven't built out the floating UI for it yet!", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
-		case .boolean, .integer, .cgFloat, .double, .action:
+		case .boolean, .integer, .cgFloat, .double, .closure:
 			break
 		}
 	}
