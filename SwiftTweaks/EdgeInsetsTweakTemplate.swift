@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 /// A shortcut to create UIEdgeInsets using Tweaks.
 public struct EdgeInsetsTweakTemplate: TweakGroupTemplateType {
