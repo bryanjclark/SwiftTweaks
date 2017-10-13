@@ -15,6 +15,7 @@ internal protocol TweaksRootViewControllerDelegate {
 }
 
 /// A "container" view controller with two states: listing out the TweakCollections, or displaying the TweakBackups
+/// (NOTE: TweakBackups aren't yet built!)
 internal final class TweaksRootViewController: UIViewController {
 
 	private let segmentedControl: UISegmentedControl

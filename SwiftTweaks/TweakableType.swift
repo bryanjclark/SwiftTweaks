@@ -24,6 +24,8 @@ public enum TweakViewDataType {
 	case cgFloat
 	case double
 	case uiColor
+
+	/// A list of strings: [String]
 	case stringList
 
 	public static let allTypes: [TweakViewDataType] = [

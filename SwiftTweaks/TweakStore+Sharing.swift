@@ -9,6 +9,8 @@
 import UIKit
 
 internal extension TweakStore {
+	/// A plaintext representation of your current TweakStore's values.
+	/// Useful for sharing your tweaked Tweaks with a teammate via email/Slack/carrier-pigeon
 	internal var textRepresentation: String {
 		// Let's sort our tweaks by collection/group/name, and then return the list!
 		let returnValue: String = sortedTweakCollections
