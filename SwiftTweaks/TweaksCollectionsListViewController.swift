@@ -54,8 +54,11 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		resetButton.tintColor = AppTheme.Colors.controlDestructive
 		navigationItem.rightBarButtonItem = resetButton
 
+		let exportButton = UIBarButtonItem(title: "Export", style: .plain, target: self, action: #selector(self.actionButtonTapped))
+		exportButton.tintColor = AppTheme.Colors.controlTinted
+		navigationItem.leftBarButtonItem = exportButton
+
 		toolbarItems = [
-			UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.actionButtonTapped)),
 			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
 			UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(self.dismissButtonTapped))
 		]
