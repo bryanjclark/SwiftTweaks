@@ -13,10 +13,17 @@ class ViewController: UIViewController {
 
 	private let titleLabel: UILabel = {
 		let label = UILabel()
-		label.textAlignment = NSTextAlignment.center
+		label.textAlignment = .left
 		label.text = "SwiftTweaks"
 		return label
 	}()
+
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "github.com/Khan/SwiftTweaks"
+        return label
+    }()
 
 	private let bodyLabel: UILabel = {
 		let label = UILabel()
@@ -30,7 +37,7 @@ class ViewController: UIViewController {
 		let button = UIButton()
 		button.setTitle("Animate", for: UIControlState())
 		button.layer.cornerRadius = 5
-		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 32, bottom: 14, right: 32)
 		return button
 	}()
 
@@ -40,10 +47,9 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+        [titleLabel, subtitleLabel, bodyLabel, bounceButton].forEach(view.addSubview)
+
 		bounceButton.addTarget(self, action: #selector(self.bounceButtonPressed(_:)), for: .touchUpInside)
-		view.addSubview(titleLabel)
-		view.addSubview(bodyLabel)
-		view.addSubview(bounceButton)
 
 		// Here's a demonstration of TweakLibraryType.bind() - the underlying tweak value is immediately applied, and the binding is re-called each time the tweak changes.
 		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.featureFlagMainScreenHelperText) { self.bodyLabel.isHidden = !$0 })
@@ -55,8 +61,8 @@ class ViewController: UIViewController {
 		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorTint) { self.bounceButton.backgroundColor = $0 })
 		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorButtonText) { self.bounceButton.setTitleColor($0, for: .normal) })
 		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 })
-		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0 })
-		tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.bodyLabel.textColor = $0 })
+        tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0; self.bodyLabel.textColor = $0 })
+        tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitleLabel.textColor = $0 })
 
 		// The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
 		// Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
@@ -87,7 +93,7 @@ class ViewController: UIViewController {
 			let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
 			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.verticalMargins)
 
-			self.titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize)
+			self.titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize, weight: UIFontWeightBold)
 			self.titleLabel.sizeToFit()
 			self.titleLabel.frame = CGRect(
 				origin: CGPoint(x: horizontalMargins, y: 30),
@@ -97,11 +103,19 @@ class ViewController: UIViewController {
 				)
 			)
 
+            self.subtitleLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
+            self.subtitleLabel.sizeToFit()
+            self.subtitleLabel.frame = CGRect(
+                origin: CGPoint(x: horizontalMargins, y: self.titleLabel.frame.maxY),
+                size: CGSize(width: self.titleLabel.frame.width, height: self.subtitleLabel.frame.size.height)
+                )
+
+
 			self.bodyLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
 			self.bodyLabel.frame = CGRect(
 				origin: CGPoint(
 					x: horizontalMargins,
-					y: self.titleLabel.frame.maxY + verticalGapBetweenLabels),
+					y: self.subtitleLabel.frame.maxY + verticalGapBetweenLabels),
 				size: self.bodyLabel.sizeThatFits(
 					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.greatestFiniteMagnitude)
 				)
