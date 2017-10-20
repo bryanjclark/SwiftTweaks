@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 internal protocol StringOptionViewControllerDelegate {
 	func stringOptionViewControllerDidPressDismissButton(_ tweakSelectionViewController: StringOptionViewController)

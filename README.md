@@ -64,7 +64,7 @@ There are three steps to add SwiftTweaks to your project:
 
 1. Create a `TweakLibraryType`, which contains a set of `Tweak`s and a `TweakStore` to persist them.
 2. Reference that `TweakLibraryType` in your code to use a `Tweak`.
-3. In your AppDelegate, make the `TweakWindow` the root view controller of your app (there are other options, but this is the most straightforward! More on that later.)
+3. In your AppDelegate, make the `TweakWindow` the window of your app (there are other options, but this is the most straightforward! More on that later.)
 
 Now build-and-run, then shake your phone to bring up the Tweaks UI! Adjust tweaks, and when you’re satisfied with what you’ve got, share your tweaks with others from within the Tweaks UI.
 
