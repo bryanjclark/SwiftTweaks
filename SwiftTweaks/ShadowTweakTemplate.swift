@@ -73,28 +73,28 @@ public struct ShadowTweakTemplate: TweakGroupTemplateType {
 
 	private static let colorDefault = UIColor.black
 
-	private static let opacityDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	private static let opacityDefaults = ComparableTweakDefaultParameters<CGFloat>(
 		defaultValue: 0.2,
 		minValue: 0.0,
 		maxValue: 1.0,
 		stepSize: 0.05
 	)
 
-	private static let offsetYDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	private static let offsetYDefaults = ComparableTweakDefaultParameters<CGFloat>(
 		defaultValue: 0,
 		minValue: nil,
 		maxValue: nil,
 		stepSize: 0.5
 	)
 
-	private static let offsetXDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	private static let offsetXDefaults = ComparableTweakDefaultParameters<CGFloat>(
 		defaultValue: 0,
 		minValue: nil,
 		maxValue: nil,
 		stepSize: 0.5
 	)
 
-	private static let radiusDefaults = SignedNumberTweakDefaultParameters<CGFloat>(
+	private static let radiusDefaults = ComparableTweakDefaultParameters<CGFloat>(
 		defaultValue: 0,
 		minValue: 0,
 		maxValue: nil,

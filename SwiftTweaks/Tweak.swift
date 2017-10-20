@@ -12,15 +12,15 @@ import UIKit
 
 /// Tweaks let you adjust things on the fly.
 /// Because each T needs a UI component, we have to restrict what T can be - hence T: TweakableType.
-/// If T: SignedNumberType, you can declare a min / max / stepSize for a Tweak.
+/// If T: Comparable, you can declare a min / max / stepSize for a Tweak.
 public struct Tweak<T: TweakableType> {
 	public let collectionName: String
 	public let groupName: String
 	public let tweakName: String
 	internal let defaultValue: T
-	internal let minimumValue: T?	// Only supported for T: SignedNumberType
-	internal let maximumValue: T?	// Only supported for T: SignedNumberType
-	internal let stepSize: T?		// Only supported for T: SignedNumberType
+	internal let minimumValue: T?	// Only supported for T: Comparable
+	internal let maximumValue: T?	// Only supported for T: Comparable
+	internal let stepSize: T?		// Only supported for T: Comparable
 	internal let options: [T]?		// Only supported for T: StringOption
 
 	internal init(collectionName: String, groupName: String, tweakName: String, defaultValue: T, minimumValue: T? = nil, maximumValue: T? = nil, stepSize: T? = nil, options: [T]? = nil) {
@@ -56,8 +56,8 @@ extension Tweak {
 
 }
 
-extension Tweak where T: SignedNumber {
-	/// Creates a Tweak<T> where T: SignedNumberType
+extension Tweak where T: Comparable {
+	/// Creates a Tweak<T> where T: Comparable
 	/// You can optionally provide a min / max / stepSize to restrict the bounds and behavior of a tweak.
 	/// The step size is "how much does the value change when I tap the UIStepper"
 	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, defaultValue: T, min minimumValue: T? = nil, max maximumValue: T? = nil, stepSize: T? = nil) {

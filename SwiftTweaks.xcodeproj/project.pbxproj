@@ -68,7 +68,7 @@
 		939F2CD21CB71AC900345E03 /* Tweak+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */; };
 		939F2CD51CB8097D00345E03 /* TweakGroupTemplateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */; };
 		939F2CD91CB810D300345E03 /* SpringAnimationTweakTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CD81CB810D300345E03 /* SpringAnimationTweakTemplate.swift */; };
-		939F2CDB1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */; };
+		939F2CDB1CB813F900345E03 /* ComparableTweakDefaultParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDA1CB813F900345E03 /* ComparableTweakDefaultParameters.swift */; };
 		939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDD1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift */; };
 		939F2CE01CB81ED400345E03 /* TweakClusterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -143,7 +143,7 @@
 		939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tweak+TweaksTests.swift"; sourceTree = "<group>"; };
 		939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakGroupTemplateType.swift; sourceTree = "<group>"; };
 		939F2CD81CB810D300345E03 /* SpringAnimationTweakTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringAnimationTweakTemplate.swift; sourceTree = "<group>"; };
-		939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignedNumberTweakDefaultParameters.swift; sourceTree = "<group>"; };
+		939F2CDA1CB813F900345E03 /* ComparableTweakDefaultParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComparableTweakDefaultParameters.swift; sourceTree = "<group>"; };
 		939F2CDD1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+TweakGroupTemplateSpringAnimation.swift"; sourceTree = "<group>"; };
 		939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakClusterType.swift; sourceTree = "<group>"; };
 		93A3AF311BF1677B00CAD43B /* TweakWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakWindow.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 				93AA34581BEC0EF9004B734B /* TweakableType.swift */,
 				93A84EEC1BEAE88D0022D2F3 /* Tweak.swift */,
 				939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */,
-				939F2CDA1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift */,
+				939F2CDA1CB813F900345E03 /* ComparableTweakDefaultParameters.swift */,
 				939F2CDC1CB817ED00345E03 /* TweakGroupTemplate */,
 				93DB80341BFCE4E80031D61A /* AnyTweak.swift */,
 				93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */,
@@ -417,7 +417,7 @@
 				TargetAttributes = {
 					93A84ED01BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0910;
 					};
 					93A84EDA1BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
@@ -483,7 +483,7 @@
 				D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */,
 				937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */,
 				939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */,
-				939F2CDB1CB813F900345E03 /* SignedNumberTweakDefaultParameters.swift in Sources */,
+				939F2CDB1CB813F900345E03 /* ComparableTweakDefaultParameters.swift in Sources */,
 				9338E9ED1CB575AF002A92BE /* AppTheme.swift in Sources */,
 				931A24801BFA95B000E40192 /* TweakPersistency.swift in Sources */,
 				93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */,
@@ -688,6 +688,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -704,6 +706,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
