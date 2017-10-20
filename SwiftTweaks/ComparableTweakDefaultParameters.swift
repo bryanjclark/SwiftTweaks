@@ -1,5 +1,5 @@
 //
-//  SignedNumberTweakDefaultParameters.swift
+//  ComparableTweakDefaultParameters.swift
 //  SwiftTweaks
 //
 //  Created by Bryan Clark on 4/8/16.
@@ -10,7 +10,7 @@ import Foundation
 
 /// A struct you can use to represent default / min / max / stepSize values.
 /// (You'll probably only want to use this in creating custom TweakGroupTemplateTypes)
-public struct SignedNumberTweakDefaultParameters<T: SignedNumber> {
+public struct ComparableTweakDefaultParameters<T: Comparable> {
 	public let defaultValue: T
 	public let minValue: T?
 	public let maxValue: T?
@@ -24,8 +24,8 @@ public struct SignedNumberTweakDefaultParameters<T: SignedNumber> {
 	}
 }
 
-public extension Tweak where T: SignedNumber {
-	init(collectionName: String, groupName: String, tweakName: String, defaultParameters: SignedNumberTweakDefaultParameters<T>, customDefaultValue: T?) {
+public extension Tweak where T: Comparable {
+	init(collectionName: String, groupName: String, tweakName: String, defaultParameters: ComparableTweakDefaultParameters<T>, customDefaultValue: T?) {
 		self.init(
 			collectionName: collectionName,
 			groupName: groupName,

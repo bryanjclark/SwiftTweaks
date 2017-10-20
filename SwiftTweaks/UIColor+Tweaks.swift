@@ -23,24 +23,24 @@ internal extension UIColor {
 			.uppercased()
 
 		// We should have 6 or 8 characters now.
-		let hexStringLength = hexString.characters.count
+		let hexStringLength = hexString.count
 		if (hexStringLength != 6) && (hexStringLength != 8) {
 			return nil
 		}
 
 		// Break the string into its components
 		let hexStringContainsAlpha = (hexStringLength == 8)
-		let colorStrings: [String] = [
-			hexString[hexString.startIndex...hexString.characters.index(hexString.startIndex, offsetBy: 1)],
-			hexString[hexString.characters.index(hexString.startIndex, offsetBy: 2)...hexString.characters.index(hexString.startIndex, offsetBy: 3)],
-			hexString[hexString.characters.index(hexString.startIndex, offsetBy: 4)...hexString.characters.index(hexString.startIndex, offsetBy: 5)],
-			hexStringContainsAlpha ? hexString[hexString.characters.index(hexString.startIndex, offsetBy: 6)...hexString.characters.index(hexString.startIndex, offsetBy: 7)] : "FF"
+		let colorStrings: [Substring] = [
+			hexString[hexString.startIndex...hexString.index(hexString.startIndex, offsetBy: 1)],
+			hexString[hexString.index(hexString.startIndex, offsetBy: 2)...hexString.index(hexString.startIndex, offsetBy: 3)],
+			hexString[hexString.index(hexString.startIndex, offsetBy: 4)...hexString.index(hexString.startIndex, offsetBy: 5)],
+			hexStringContainsAlpha ? hexString[hexString.index(hexString.startIndex, offsetBy: 6)...hexString.index(hexString.startIndex, offsetBy: 7)] : "FF"
 		]
 
 		// Convert string components into their CGFloat (r,g,b,a) components
 		let colorFloats: [CGFloat] = colorStrings.map {
 			var componentInt: CUnsignedInt = 0
-			Scanner(string: $0).scanHexInt32(&componentInt)
+			Scanner(string: String($0)).scanHexInt32(&componentInt)
 			return CGFloat(componentInt) / CGFloat(255.0)
 		}
 
