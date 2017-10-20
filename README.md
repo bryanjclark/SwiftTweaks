@@ -1,20 +1,23 @@
 # SwiftTweaks
+_Adjust your iOS app on the fly without waiting to re-compile!_
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks)
-[![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases)
-![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg)
-![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg)
-[![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
-
-Adjust your iOS app on the fly without needing to compile!
-![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)
+![SwiftTweaks Icon](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks_README_icon.png?raw=true)
 
 Your users won’t see your animation study, Sketch comps, or prototypes. What they will see is the finished product - so it’s really important to make sure that your app feels right on a real device!
 
 Animations that look great on your laptop often feel too slow when in-hand. Layouts that looks perfect on a 27-inch display might be too cramped on a 4-inch device. Light gray text may look subtle in Sketch, but it’s downright illegible when you’re outside on a sunny day.
 
 These animation timings, font sizes, and color choices are all examples of “magic numbers” - the constants that give your app its usability and identity. The goal of SwiftTweaks: allow you to fine-tune these magic numbers in the debug builds of your Swift project, without having to wait for Xcode to rebuild the app.
+
+![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks)
+[![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases)
+![Swift 3.0](https://img.shields.io/badge/Swift-4.0-orange.svg)
+![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg)
+[![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
+
 
 ## Overview
 Use a `Tweak` in place of a boolean, number, or color in your code. You can adjust that `Tweak` without having to recompile, which means you can play with animation timings, colors, and layouts without needing Xcode!
