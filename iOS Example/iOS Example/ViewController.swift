@@ -87,47 +87,9 @@ class ViewController: UIViewController {
 			]
 
 		let multipleBinding = ExampleTweaks.bindMultiple(tweaksToWatch) {
-			// This closure will be called immediately, and then again each time *any* of the tweaksToWatch change.
-			let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
-			let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)
-			let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
-			let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.verticalMargins)
-
-			self.titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize, weight: UIFontWeightBold)
-			self.titleLabel.sizeToFit()
-			self.titleLabel.frame = CGRect(
-				origin: CGPoint(x: horizontalMargins, y: 30),
-				size: CGSize(
-					width: self.view.bounds.width - horizontalMargins * 2,
-					height: self.titleLabel.bounds.height
-				)
-			)
-
-            self.subtitleLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
-            self.subtitleLabel.sizeToFit()
-            self.subtitleLabel.frame = CGRect(
-                origin: CGPoint(x: horizontalMargins, y: self.titleLabel.frame.maxY),
-                size: CGSize(width: self.titleLabel.frame.width, height: self.subtitleLabel.frame.size.height)
-                )
-
-
-			self.bodyLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
-			self.bodyLabel.frame = CGRect(
-				origin: CGPoint(
-					x: horizontalMargins,
-					y: self.subtitleLabel.frame.maxY + verticalGapBetweenLabels),
-				size: self.bodyLabel.sizeThatFits(
-					CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.greatestFiniteMagnitude)
-				)
-			)
-
-			self.bounceButton.sizeToFit()
-			self.bounceButton.frame = CGRect(
-				origin: CGPoint(
-					x: self.view.center.x - self.bounceButton.bounds.width / 2,
-					y: self.bodyLabel.frame.maxY + verticalGapBetweenLabels
-				), size: self.bounceButton.bounds.size
-			)
+            // This closure will be called immediately,
+            // and then again each time *any* of the tweaksToWatch change.
+			self.layoutContentsOfView()
 		}
 		multiTweakBindings.insert(multipleBinding)
 	}
@@ -141,6 +103,13 @@ class ViewController: UIViewController {
 		view.backgroundColor = ExampleTweaks.assign(ExampleTweaks.colorBackground)
 	}
 
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+            self.layoutContentsOfView()
+        }
+    }
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -151,6 +120,59 @@ class ViewController: UIViewController {
 		self.tweakBindings.forEach(ExampleTweaks.unbind)
 		self.multiTweakBindings.forEach(ExampleTweaks.unbindMultiple)
 	}
+
+
+    // MARK: Subviews
+    private func layoutContentsOfView() {
+        let titleLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText1)
+        let bodyLabelFontSize = ExampleTweaks.assign(ExampleTweaks.fontSizeText2)
+        let horizontalMargins = ExampleTweaks.assign(ExampleTweaks.horizontalMargins)
+        let verticalGapBetweenLabels = ExampleTweaks.assign(ExampleTweaks.verticalMargins)
+
+        self.titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize, weight: UIFont.Weight.bold)
+        self.titleLabel.sizeToFit()
+        let safeAreaInsets: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+            safeAreaInsets = self.view.safeAreaInsets
+        } else {
+            safeAreaInsets = .zero
+        }
+        self.titleLabel.frame = CGRect(
+            origin: CGPoint(
+                x: horizontalMargins,
+                y: 30 + safeAreaInsets.top),
+            size: CGSize(
+                width: self.view.bounds.width - horizontalMargins * 2,
+                height: self.titleLabel.bounds.height
+            )
+        )
+
+        self.subtitleLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
+        self.subtitleLabel.sizeToFit()
+        self.subtitleLabel.frame = CGRect(
+            origin: CGPoint(x: horizontalMargins, y: self.titleLabel.frame.maxY),
+            size: CGSize(width: self.titleLabel.frame.width, height: self.subtitleLabel.frame.size.height)
+        )
+
+
+        self.bodyLabel.font = UIFont.systemFont(ofSize: bodyLabelFontSize)
+        self.bodyLabel.frame = CGRect(
+            origin: CGPoint(
+                x: horizontalMargins,
+                y: self.subtitleLabel.frame.maxY + verticalGapBetweenLabels),
+            size: self.bodyLabel.sizeThatFits(
+                CGSize(width: self.view.bounds.width - horizontalMargins * 2, height: CGFloat.greatestFiniteMagnitude)
+            )
+        )
+
+        self.bounceButton.sizeToFit()
+        self.bounceButton.frame = CGRect(
+            origin: CGPoint(
+                x: self.view.center.x - self.bounceButton.bounds.width / 2,
+                y: self.bodyLabel.frame.maxY + verticalGapBetweenLabels
+            ), size: self.bounceButton.bounds.size
+        )
+    }
 
 
 	// MARK: Events
