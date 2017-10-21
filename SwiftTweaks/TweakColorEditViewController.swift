@@ -108,8 +108,8 @@ internal final class TweakColorEditViewController: UIViewController {
 			width: view.bounds.width - 2 * TweakColorEditViewController.headerHorizontalMargin,
 			height: TweakColorEditViewController.colorPreviewHeight
 		)
-        let frames = colorPreviewView.bounds.divided(atDistance: colorPreviewView.bounds.width/2, from: .minYEdge)
-        let solidFrame = frames.0
+        let frames = colorPreviewView.bounds.divided(atDistance: colorPreviewView.bounds.width/2, from: .minXEdge)
+        let solidFrame = frames.slice
         
 		colorPreviewSolidView.frame = solidFrame.integral
 		colorPreviewAlphaView.frame = colorPreviewView.bounds
