@@ -28,6 +28,8 @@ Currently, you can tweak the following types:
 - `CGFloat`
 - `Double`
 - `UIColor`
+- `String`
+- `StringOption`
 
 A `Tweak` looks like this:
 ```swift
@@ -191,7 +193,7 @@ public struct FirstTweaksLibrary: TweakLibraryType {
 ```
 
 #### Why can’t any type be used for a `Tweak`?
-While `Tweak<T>` is generic, we have to restrict `T` to be `TweakableType` so that we can guarantee that each kind of `T` can be represented in our editing interface and persisted on disk. More types would be awesome, though! It’d be neat to support dictionaries, closures, strings, and other things.
+While `Tweak<T>` is generic, we have to restrict `T` to be `TweakableType` so that we can guarantee that each kind of `T` can be represented in our editing interface and persisted on disk. More types would be awesome, though! It’d be neat to support dictionaries, closures, and other things.
 
 If you’d like to extend `TweakableType`, you’ll need to extend some internal components, like `TweakViewDataType`, `TweakDefaultData`, `TweakViewData`, and `TweakPersistency`. Feel free to open a pull request if you’d like to add a new type!
 
