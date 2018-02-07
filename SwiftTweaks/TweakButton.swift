@@ -22,11 +22,11 @@ final class TweakButton: UIButton {
 		didSet { updateState() }
 	}
 	
-	var borderWidth: CGFloat = 2 {
+	@objc var borderWidth: CGFloat = 2 {
 		didSet { updateState() }
 	}
 	
-	var cornerRadius: CGFloat = 4 {
+	@objc var cornerRadius: CGFloat = 4 {
 		didSet { updateState() }
 	}
 	
