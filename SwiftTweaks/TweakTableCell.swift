@@ -77,6 +77,8 @@ internal final class TweakTableCell: UITableViewCell {
 		button.setBorderColor(AppTheme.Colors.controlTintedPressed, for: .highlighted)
 		return button
 	}()
+	
+	weak var ownerViewController: UIViewController?
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
@@ -328,7 +330,7 @@ internal final class TweakTableCell: UITableViewCell {
 		
 		switch viewData {
 		case let .closure(closureTweak):
-			closureTweak.executeAllCallbacks()
+			closureTweak.executeAllCallbacks(sender: sender, viewController: ownerViewController)
 		default:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}

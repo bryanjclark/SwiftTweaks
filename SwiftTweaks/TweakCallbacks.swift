@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-public typealias TweakBlock = () -> Void
+public typealias TweakBlock = (_ sender: UIView, _ viewController: UIViewController?) -> Void
 
 public class TweakCallbacks {
 	public enum Error: Swift.Error {
@@ -38,8 +39,8 @@ public class TweakCallbacks {
 	
 	// MARK: Internal
 	
-	func executeAllCallbacks() {
-		callbacks.keys.sorted().forEach { callbacks[$0]?() }
+	func executeAllCallbacks(sender: UIView, viewController: UIViewController?) {
+		callbacks.keys.sorted().forEach { callbacks[$0]?(sender, viewController) }
 	}
 }
 

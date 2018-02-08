@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         // If you used `TweaksCallbacks` type, you can subscribe to those tweaks with callbacks.
         // Those will be run in order.
         // If you want to execute something only once, you can remove callback using identifier that `addCallback` method provides.
-        _ = ExampleTweaks.actionUI.addCallback {
+        _ = ExampleTweaks.actionUI.addCallback { _, _ in
             let showAlert = {
                 let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -81,14 +81,14 @@ class ViewController: UIViewController {
             }
         }
         
-        ExampleTweaks.actionConsole.addCallback {
+        ExampleTweaks.actionConsole.addCallback { _, _ in
             print("🤖 I'm sorry Dave")
         }
-        ExampleTweaks.actionConsole.addCallback {
+        ExampleTweaks.actionConsole.addCallback { _, _ in
             print("🤖 I'm afraid I can't do that")
         }
         
-        let callbackIdentifier = ExampleTweaks.actionConsole.addCallback {
+        let callbackIdentifier = ExampleTweaks.actionConsole.addCallback { _, _ in
             // this won't be run
             print("👩🏻‍🚀 <turns off HAL>")
         }
