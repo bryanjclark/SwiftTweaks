@@ -34,6 +34,8 @@ public struct ExampleTweaks: TweakLibraryType {
 
     public static let actionUI = Tweak<TweakCallbacks>("Actions", "UI", "Dismiss and show alert")
     public static let actionConsole = Tweak<TweakCallbacks>("Actions", "Callbacks", "Print something")
+    public static let actionPush = Tweak<TweakCallbacks>("Actions", "UI", "Show another view controller")
+    
     /*
 	Seriously, SpringAnimationTweakTemplate is *THE BEST* - here's what the equivalent would be if you were to make that by hand:
 
@@ -65,6 +67,7 @@ public struct ExampleTweaks: TweakLibraryType {
             
             actionUI,
             actionConsole,
+            actionPush,
             
 			featureFlagMainScreenHelperText
 		]

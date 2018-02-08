@@ -81,6 +81,15 @@ class ViewController: UIViewController {
             }
         }
         
+        ExampleTweaks.actionPush.addCallback { _, viewController in
+            guard let navigationController = viewController?.navigationController else {
+                return assertionFailure()
+            }
+            
+            let exampleViewController = ExampleCallbackViewController(nibName: nil, bundle: nil)
+            navigationController.pushViewController(exampleViewController, animated: true)
+        }
+        
         ExampleTweaks.actionConsole.addCallback { _, _ in
             print("🤖 I'm sorry Dave")
         }
