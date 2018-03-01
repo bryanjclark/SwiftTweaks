@@ -53,6 +53,15 @@ extension Tweak {
 			defaultValue: defaultValue
 		)
 	}
+	
+	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, _ defaultValueProvider: () -> T) {
+		self.init(
+			collectionName: collectionName,
+			groupName: groupName,
+			tweakName: tweakName,
+			defaultValue: defaultValueProvider()
+		)
+	}
 
 }
 
