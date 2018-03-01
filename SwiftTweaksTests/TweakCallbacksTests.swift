@@ -32,7 +32,7 @@ class TweakCallbacksTests: XCTestCase {
 	
 	func testAddingCallback() {
 		var executed = false
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			executed = true
 		}
 		// shouldn't be executed after just adding
@@ -46,13 +46,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testOrder() {
 		var order: [Int] = []
 		
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(0)
 		}
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(1)
 		}
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(2)
 		}
 		
@@ -66,13 +66,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testMultipleExecutions() {
 		var order: [Int] = []
 		
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(0)
 		}
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(1)
 		}
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(2)
 		}
 		
@@ -94,13 +94,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testRemovingCallback() {
 		var order: [Int] = []
 		
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(0)
 		}
-		let identifier = tweak.addCallback {
+		let identifier = tweak.addCallback { _,_ in
 			order.append(1)
 		}
-		tweak.addCallback {
+		tweak.addCallback { _,_ in
 			order.append(2)
 		}
 		
@@ -125,6 +125,6 @@ class TweakCallbacksTests: XCTestCase {
 	}
 	
 	private func executeTweak() {
-		tweak.defaultValue.executeAllCallbacks()
+		tweak.defaultValue.executeAllCallbacks(sender: UIView(), viewController: nil)
 	}
 }
