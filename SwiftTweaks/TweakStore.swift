@@ -161,6 +161,12 @@ public final class TweakStore {
 			return .closure(value: currentValue)
 		}
 	}
+	
+	internal func setValue<T>(_ value: T?, forTweak tweak: Tweak<T>) {
+		let anyTweak = AnyTweak(tweak: tweak)
+		persistence.setValue(value, forTweakIdentifiable: anyTweak)
+		updateBindingsForTweak(anyTweak)
+	}
 
 	internal func setValue(_ viewData: TweakViewData, forTweak tweak: AnyTweak) {
 		persistence.setValue(viewData.value, forTweakIdentifiable: tweak)

@@ -40,4 +40,8 @@ public extension TweakLibraryType {
 	static func unbindMultiple(identifier: MultiTweakBindingIdentifier) {
 		self.defaultStore.unbindMultiple(identifier)
 	}
+	
+	static func overrideValue<T>(_ tweak: Tweak<T>, value: T?) {
+		self.defaultStore.setValue(value, forTweak: tweak)
+	}
 }
