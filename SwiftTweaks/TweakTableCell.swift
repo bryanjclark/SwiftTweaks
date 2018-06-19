@@ -68,14 +68,26 @@ internal final class TweakTableCell: UITableViewCell {
 		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
+	private let actionButton: TweakButton = {
+		let button = TweakButton(type: .system)
+		button.borderWidth = 2
+		button.contentMode = .center
+		button.setImage(UIImage(swiftTweaksImage: .disclosureIndicator), for: .normal)
+		button.setBorderColor(AppTheme.Colors.controlTinted, for: .normal)
+		button.setBorderColor(AppTheme.Colors.controlTintedPressed, for: .highlighted)
+		return button
+	}()
+	
+	weak var ownerViewController: UIViewController?
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow, actionButton].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), for: .valueChanged)
+		actionButton.addTarget(self, action: #selector(self.buttonPressed(_:)), for: .touchUpInside)
 		textField.delegate = self
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
@@ -174,6 +186,13 @@ internal final class TweakTableCell: UITableViewCell {
 			let textFieldFrame = CGRect(origin: .zero, size: CGSize(width: textFieldSize.width, height: bounds.height))
 			textField.frame = textFieldFrame
 			accessory.bounds = textField.bounds
+
+		case .closure:
+			actionButton.bounds.size = CGSize(width: 64, height: 32)
+			var frame = actionButton.bounds
+			frame.origin.x = -1 * frame.width / 2
+			frame.origin.y = -1 * frame.height / 2
+			accessory.bounds = frame
 		}
 	}
 
@@ -184,6 +203,7 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 			return
 		}
 
@@ -195,24 +215,35 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
+			actionButton.isHidden = true
 		case .stringList:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			actionButton.isHidden = true
+		case .closure:
+			switchControl.isHidden = true
+			textField.isHidden = true
+			stepperControl.isHidden = true
+			colorChit.isHidden = true
+			disclosureArrow.isHidden = true
+			actionButton.isHidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -245,6 +276,8 @@ internal final class TweakTableCell: UITableViewCell {
 
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
+			textFieldEnabled = false
+		case .closure:
 			textFieldEnabled = false
 		}
 
@@ -285,7 +318,20 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .stringList:
+		case .color, .boolean, .stringList, .closure:
+			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
+		}
+	}
+	
+	@objc private func buttonPressed(_ sender: UIButton) {
+		guard let viewData = viewData else {
+			return
+		}
+		
+		switch viewData {
+		case let .closure(closureTweak):
+			closureTweak.executeAllCallbacks(sender: sender, viewController: ownerViewController)
+		default:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}
 	}
@@ -331,7 +377,7 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .stringList:
+		case .boolean, .stringList, .closure:
 			assertionFailure("Shouldn't be able to update text field with a Boolean or StringList tweak.")
 		}
 	}

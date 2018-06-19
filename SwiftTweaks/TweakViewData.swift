@@ -16,6 +16,7 @@ internal enum TweakViewData {
 	case doubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(value: UIColor, defaultValue: UIColor)
 	case stringList(value: StringOption, defaultValue: StringOption, options: [StringOption])
+	case closure(value: TweakCallbacks)
 
 	init<T: TweakableType>(type: TweakViewDataType, value: T, defaultValue: T, minimum: T?, maximum: T?, stepSize: T?, options: [T]?) {
 		switch type {
@@ -34,6 +35,8 @@ internal enum TweakViewData {
 			self = .doubleTweak(value: clippedValue, defaultValue: defaultValue as! Double, min: minimum as? Double, max: maximum as? Double, stepSize: stepSize as? Double)
 		case .stringList:
 			self = .stringList(value: value as! StringOption, defaultValue: defaultValue as! StringOption, options: options!.map { $0 as! StringOption })
+		case .closure:
+			self = .closure(value: value as! TweakCallbacks)
 		}
 	}
 
@@ -51,13 +54,15 @@ internal enum TweakViewData {
 			return colorValue
 		case let .stringList(value: stringValue, _, _):
 			return stringValue
+		case let .closure(value: value):
+			return value
 		}
 	}
 
 	/// For signedNumberType tweaks, this is a shortcut to `value` as a Double
 	var doubleValue: Double? {
 		switch self {
-		case .boolean, .color, .stringList:
+		case .boolean, .color, .stringList, .closure:
 			return nil
 		case let .integer(value: intValue, _, _, _, _):
 			return Double(intValue)
@@ -90,6 +95,9 @@ internal enum TweakViewData {
 		case let .stringList(value: value, defaultValue: defaultValue, _):
 			string = value.value
 			differsFromDefault = string != defaultValue.value
+		case .closure:
+			string = ""
+			differsFromDefault = false
 		}
 		return (string, differsFromDefault)
 	}
@@ -98,7 +106,7 @@ internal enum TweakViewData {
 		switch self {
 		case .integer, .float, .doubleTweak:
 			return true
-		case .boolean, .color, .stringList:
+		case .boolean, .color, .stringList, .closure:
 			return false
 		}
 	}
@@ -138,7 +146,7 @@ internal enum TweakViewData {
 		let step: Double?
 		let isInteger: Bool
 		switch self {
-		case .boolean, .color, .stringList:
+		case .boolean, .color, .stringList, .closure:
 			return nil
 
 		case let .integer(intValue, intDefaultValue, intMin, intMax, intStep):

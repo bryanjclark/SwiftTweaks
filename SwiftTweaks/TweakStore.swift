@@ -156,7 +156,16 @@ public final class TweakStore {
 		case let .stringList(defaultValue: defaultValue, options: options):
 			let currentValue = cachedValue as? StringOption ?? defaultValue
 			return .stringList(value: currentValue, defaultValue: defaultValue, options: options)
+		case let .closure(defaultValue: defaultValue):
+			let currentValue = cachedValue as? TweakCallbacks ?? defaultValue
+			return .closure(value: currentValue)
 		}
+	}
+	
+	internal func setValue<T>(_ value: T?, forTweak tweak: Tweak<T>) {
+		let anyTweak = AnyTweak(tweak: tweak)
+		persistence.setValue(value, forTweakIdentifiable: anyTweak)
+		updateBindingsForTweak(anyTweak)
 	}
 
 	internal func setValue(_ viewData: TweakViewData, forTweak tweak: AnyTweak) {

@@ -32,7 +32,11 @@ public struct ExampleTweaks: TweakLibraryType {
 	// Tweaks are often used in combination with each other, so we have some templates available for ease-of-use:
 	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation", duration: 0.5) // Note: "duration" is optional, if you don't provide it, there's a sensible default!
 
-	/*
+    public static let actionUI = Tweak<TweakCallbacks>("Actions", "UI", "Dismiss and show alert")
+    public static let actionConsole = Tweak<TweakCallbacks>("Actions", "Callbacks", "Print something")
+    public static let actionPush = Tweak<TweakCallbacks>("Actions", "UI", "Show another view controller")
+    
+    /*
 	Seriously, SpringAnimationTweakTemplate is *THE BEST* - here's what the equivalent would be if you were to make that by hand:
 
 	public static let animationDuration = Tweak<Double>("Animation", "Button Animation", "Duration", defaultValue: 0.5, min: 0.0)
@@ -60,7 +64,11 @@ public struct ExampleTweaks: TweakLibraryType {
 			fontSizeText2,
 
 			buttonAnimation,
-
+            
+            actionUI,
+            actionConsole,
+            actionPush,
+            
 			featureFlagMainScreenHelperText
 		]
 
