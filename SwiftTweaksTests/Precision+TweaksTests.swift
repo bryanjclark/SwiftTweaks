@@ -23,7 +23,7 @@ private struct PrecisionTestCase<T: Roundable> {
 
 	static func verify(_ testCase: PrecisionTestCase) {
 		// Yes, these `doubleValue` bits feel goofy, but they were required to make the compiler happy.
-		XCTAssertEqualWithAccuracy(
+		XCTAssertEqual(
 			testCase.inputValue.roundToNearest(testCase.precision).doubleValue,
 			testCase.expectedValue.doubleValue,
 			accuracy: testCase.epsilon.doubleValue
@@ -56,12 +56,12 @@ class Precision_TweaksTests: XCTestCase {
 
 		// Double
 		tests
-			.map { PrecisionTestCase($0, $1, $2, DBL_EPSILON) }
+			.map { PrecisionTestCase($0, $1, $2, Double.ulpOfOne) }
 			.forEach(PrecisionTestCase.verify)
 
 		// CGFloat
 		tests
-			.map { PrecisionTestCase(CGFloat($0), $1, CGFloat($2), CGFloat(FLT_EPSILON)) }
+			.map { PrecisionTestCase(CGFloat($0), $1, CGFloat($2), CGFloat(Float.ulpOfOne)) }
 			.forEach(PrecisionTestCase.verify)
 	}
 }
