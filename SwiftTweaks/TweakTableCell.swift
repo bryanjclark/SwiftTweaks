@@ -59,6 +59,8 @@ internal final class TweakTableCell: UITableViewCell {
 		let textField = UITextField()
 		textField.textAlignment = .right
 		textField.returnKeyType = .done
+		textField.adjustsFontSizeToFitWidth = true
+		textField.minimumFontSize = 12
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
@@ -174,18 +176,25 @@ internal final class TweakTableCell: UITableViewCell {
 					width: bounds.width * TweakTableCell.stringTextWidthFraction,
 					height: bounds.height
 				)
-			)
+			).integral
 			textField.frame = textFrame
 			accessory.bounds = textField.bounds
 
 		case .stringList:
-			let textFieldSize = self.textField.sizeThatFits(CGSize(
-				width: CGFloat.greatestFiniteMagnitude,
-				height: bounds.height
-			))
-			let textFieldFrame = CGRect(origin: .zero, size: CGSize(width: textFieldSize.width, height: bounds.height))
+			let textFieldFrame = CGRect(
+				origin: .zero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.stringTextWidthFraction,
+					height: bounds.height
+				)
+			).integral
 			textField.frame = textFieldFrame
-			accessory.bounds = textField.bounds
+			let disclosureArrowFrame = CGRect(
+				origin: CGPoint(x: textFieldFrame.width + TweakTableCell.horizontalPadding, y: 0),
+				size: CGSize(width: disclosureArrow.bounds.width, height: bounds.height)
+			)
+			disclosureArrow.frame = disclosureArrowFrame
+			accessory.bounds = textFieldFrame.union(disclosureArrowFrame).integral
 		}
 	}
 
@@ -230,7 +239,7 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
-			disclosureArrow.isHidden = true
+			disclosureArrow.isHidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -263,6 +272,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 		case let .string(value, _):
 			textField.text = value
+			textField.placeholder = NSLocalizedString("Tap to edit", comment: "Text field placeholder for editable text")
 			textField.keyboardType = .default
 			textFieldEnabled = true
 
