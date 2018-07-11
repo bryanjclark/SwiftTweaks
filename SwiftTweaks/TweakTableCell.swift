@@ -70,8 +70,6 @@ internal final class TweakTableCell: UITableViewCell {
 		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
-	
-	weak var ownerViewController: UIViewController?
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)

@@ -167,7 +167,6 @@ extension TweakCollectionViewController: UITableViewDataSource {
 		cell.textLabel?.text = tweak.tweakName
 		cell.viewData = tweakStore.currentViewDataForTweak(tweak)
 		cell.delegate = self
-		cell.ownerViewController = self
 		return cell
 	}
 
