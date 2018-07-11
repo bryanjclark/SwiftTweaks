@@ -1,5 +1,5 @@
 //
-//  TweakCallbacksTests.swift
+//  TweakActionTests.swift
 //  SwiftTweaks
 //
 //  Created by Jarosław Pendowski on 28/04/2017.
@@ -9,14 +9,14 @@
 import XCTest
 @testable import SwiftTweaks
 
-class TweakCallbacksTests: XCTestCase {
+class TweakActionTests: XCTestCase {
 	
-	var tweak: Tweak<TweakCallbacks>!
+	var tweak: Tweak<TweakAction>!
     
     override func setUp() {
         super.setUp()
 		
-		tweak = Tweak<TweakCallbacks>("", "", "")
+		tweak = Tweak<TweakAction>("", "", "")
     }
     
     override func tearDown() {
@@ -32,7 +32,7 @@ class TweakCallbacksTests: XCTestCase {
 	
 	func testAddingCallback() {
 		var executed = false
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			executed = true
 		}
 		// shouldn't be executed after just adding
@@ -46,13 +46,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testOrder() {
 		var order: [Int] = []
 		
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(0)
 		}
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(1)
 		}
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(2)
 		}
 		
@@ -66,13 +66,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testMultipleExecutions() {
 		var order: [Int] = []
 		
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(0)
 		}
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(1)
 		}
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(2)
 		}
 		
@@ -94,13 +94,13 @@ class TweakCallbacksTests: XCTestCase {
 	func testRemovingCallback() {
 		var order: [Int] = []
 		
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(0)
 		}
-		let identifier = tweak.addCallback { _,_ in
+		let identifier = tweak.addClosure {
 			order.append(1)
 		}
-		tweak.addCallback { _,_ in
+		tweak.addClosure {
 			order.append(2)
 		}
 		
@@ -110,7 +110,7 @@ class TweakCallbacksTests: XCTestCase {
 		
 		XCTAssertEqual(order, [0, 1, 2])
 		
-		_ = try? tweak.removeCallback(with: identifier)
+		_ = try? tweak.removeClosure(with: identifier)
 		
 		executeTweak()
 
@@ -119,12 +119,12 @@ class TweakCallbacksTests: XCTestCase {
 	
 	func testRemovingNonExisting() {
 		do {
-			try tweak.removeCallback(with: 42)
+			try tweak.removeClosure(with: 42)
 			XCTFail("Should threw at nonexisting identifier")
 		} catch { }
 	}
 	
 	private func executeTweak() {
-		tweak.defaultValue.executeAllCallbacks(sender: UIView(), viewController: nil)
+		tweak.defaultValue.evaluateAllClosures()
 	}
 }

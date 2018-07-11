@@ -209,7 +209,7 @@ internal final class TweakTableCell: UITableViewCell {
 			disclosureArrow.frame = disclosureArrowFrame
 			accessory.bounds = textFieldFrame.union(disclosureArrowFrame).integral
 
-		case .closure:
+		case .action:
 			actionButton.bounds.size = CGSize(width: 64, height: 32)
 			var frame = actionButton.bounds
 			frame.origin.x = -1 * frame.width / 2
@@ -259,7 +259,7 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
 			actionButton.isHidden = true
-		case .closure:
+		case .action:
 			switchControl.isHidden = true
 			textField.isHidden = true
 			stepperControl.isHidden = true
@@ -311,7 +311,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
 			textFieldEnabled = false
-		case .closure:
+		case .action:
 			textFieldEnabled = false
 		}
 
@@ -352,8 +352,8 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .closure, .stringList, .string:
-			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
+		case .color, .boolean, .action, .stringList, .string:
+			assertionFailure("Shouldn't be able to update text field with a Color/Boolean/Action/StringList/String tweak.")
 		}
 	}
 
@@ -363,8 +363,8 @@ internal final class TweakTableCell: UITableViewCell {
 		}
 		
 		switch viewData {
-		case let .closure(closureTweak):
-			closureTweak.executeAllCallbacks(sender: sender, viewController: ownerViewController)
+		case let .action(actionTweak):
+			actionTweak.evaluateAllClosures()
 		default:
 			assertionFailure("Can't tap a closure button")
 		}
@@ -418,8 +418,8 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .closure, .stringList:
-			assertionFailure("Shouldn't be able to update text field with a Boolean/Closure/StringList tweak.")
+		case .boolean, .action, .stringList:
+			assertionFailure("Shouldn't be able to update text field with a Boolean/Action/StringList tweak.")
 		}
 	}
 }

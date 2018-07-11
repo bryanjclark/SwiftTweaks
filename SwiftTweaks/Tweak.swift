@@ -146,9 +146,9 @@ extension Tweak: TweakType {
 				defaultValue: defaultValue as! StringOption,
 				options: options!.map { $0 as! StringOption }
 			)
-		case .closure:
-			return .closure(
-				defaultValue: defaultValue as! TweakCallbacks
+		case .action:
+			return .action(
+				defaultValue: defaultValue as! TweakAction
 			)
 		}
 	}

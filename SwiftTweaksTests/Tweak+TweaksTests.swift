@@ -9,7 +9,7 @@
 import XCTest
 @testable import SwiftTweaks
 
-private struct ClippingTweakTestCase<T> where T: SignedNumber, T: TweakableType {
+private struct ClippingTweakTestCase<T> where T: SignedNumeric, T: Comparable, T: TweakableType {
 	let defaultValue: T
 	let min: T?
 	let max: T?

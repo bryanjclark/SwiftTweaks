@@ -29,7 +29,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	static func editingSupported(forTweak tweak: AnyTweak) -> Bool {
 		switch tweak.tweakViewDataType {
-		case .boolean, .integer, .cgFloat, .double, .closure:
+		case .boolean, .integer, .cgFloat, .double, .action:
 			return true
 		case .uiColor, .stringList, .string:
 			return false

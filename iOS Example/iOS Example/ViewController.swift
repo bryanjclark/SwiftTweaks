@@ -97,43 +97,26 @@ class ViewController: UIViewController {
         // There are *so* many use cases for this - maybe you need a way to clear a cache, or force a crash, or any number of other things.
         // With `TweaksCallbacks`, you can add callbacks to tweaks, and they will be called when that tweak is tapped in the SwiftTweaks menu.
         
-        _ = ExampleTweaks.actionUI.addCallback { _, _ in
-            let showAlert = {
-                let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-            }
-            
-            if let presentedViewController = self.presentedViewController {
-                presentedViewController.dismiss(animated: true, completion: showAlert)
-            } else {
-                showAlert()
-            }
+        _ = ExampleTweaks.actionUI.addClosure {
+            // STOPSHIP (bryan): SwiftTweaks should dismiss the UI if you
+            let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        ExampleTweaks.actionPush.addCallback { _, viewController in
-            guard let navigationController = viewController?.navigationController else {
-                return assertionFailure()
-            }
-            
-            let exampleViewController = ExampleCallbackViewController(nibName: nil, bundle: nil)
-            navigationController.pushViewController(exampleViewController, animated: true)
-        }
-        
-        ExampleTweaks.actionConsole.addCallback { _, _ in
+
+        ExampleTweaks.actionConsole.addClosure {
             print("🤖 I'm sorry Dave")
         }
-        ExampleTweaks.actionConsole.addCallback { _, _ in
+        ExampleTweaks.actionConsole.addClosure {
             print("🤖 I'm afraid I can't do that")
         }
         
         // You can remove a callback with the identifier returned from `addCallback`.
-        let callbackIdentifier = ExampleTweaks.actionConsole.addCallback { _, _ in
+        let callbackIdentifier = ExampleTweaks.actionConsole.addClosure {
             // this won't be run
             print("👩🏻‍🚀 <turns off HAL>")
         }
-        _ = try? ExampleTweaks.actionConsole.removeCallback(with: callbackIdentifier)
+        _ = try? ExampleTweaks.actionConsole.removeClosure  (with: callbackIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
