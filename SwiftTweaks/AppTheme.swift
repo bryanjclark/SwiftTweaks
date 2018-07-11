@@ -16,6 +16,7 @@ internal struct AppTheme {
 			static let blackColor = UIColor.black
 			static let grayColor = UIColor(hex: 0x8E8E93)
 			static let pageBackground1 = UIColor(hex: 0xF8F8F8)
+			static let touchHighlight = UIColor(hex: 0xF2F2F2)
 
 			static let tintColor = UIColor(hex: 0x007AFF)
 			static let tintColorPressed = UIColor(hex: 0x084BC1)
@@ -42,6 +43,7 @@ internal struct AppTheme {
 		static let floatingTweakGroupNavBG = Palette.pageBackground1
 
 		static let tableSeparator = Palette.secondaryControl
+		static let tableCellTouchHighlight = Palette.touchHighlight
 
 		static let debugRed = UIColor.red.withAlphaComponent(0.3)
 		static let debugYellow = UIColor.yellow.withAlphaComponent(0.3)

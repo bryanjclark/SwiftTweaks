@@ -117,6 +117,8 @@ internal final class TweakCollectionViewController: UIViewController {
 
 extension TweakCollectionViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+
 		let tweak = tweakAtIndexPath(indexPath)
 		switch tweak.tweakViewDataType {
 		case .uiColor:
@@ -128,7 +130,10 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .action:
 			let actionTweak = tweak.tweak as! Tweak<TweakAction>
 			actionTweak.defaultValue.evaluateAllClosures()
-		case .boolean, .integer, .cgFloat, .double, .string:
+		case .integer, .cgFloat, .double, .string:
+			let cell = tableView.cellForRow(at: indexPath) as! TweakTableCell
+			cell.startEditingTextField()
+		case .boolean:
 			break
 		}
 	}
@@ -149,6 +154,10 @@ extension TweakCollectionViewController: UITableViewDelegate {
         headerView.delegate = self
         return headerView
     }
+
+	func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		return true
+	}
 }
 
 extension TweakCollectionViewController: UITableViewDataSource {

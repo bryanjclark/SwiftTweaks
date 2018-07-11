@@ -24,11 +24,6 @@ internal final class TweakTableCell: UITableViewCell {
 			detailTextLabel?.text = nil
 			selectionStyle = .none
 
-			defer {
-				setNeedsLayout()
-				layoutIfNeeded()
-			}
-
 			updateSubviews()
 		}
 	}
@@ -81,6 +76,10 @@ internal final class TweakTableCell: UITableViewCell {
 		textField.delegate = self
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
+
+		let touchHighlightView = UIView()
+		touchHighlightView.backgroundColor = AppTheme.Colors.tableCellTouchHighlight
+		self.selectedBackgroundView = touchHighlightView
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -203,6 +202,8 @@ internal final class TweakTableCell: UITableViewCell {
 	}
 
 	fileprivate func updateSubviews() {
+		defer { self.setNeedsLayout() }
+
 		guard let viewData = viewData else {
 			switchControl.isHidden = true
 			textField.isHidden = true
@@ -220,36 +221,42 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			selectionStyle = .none
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			selectionStyle = .default
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
+			selectionStyle = .default
 		case .string:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			selectionStyle = .default
 		case .action:
 			switchControl.isHidden = true
 			textField.isHidden = true
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
+			selectionStyle = .default
 		case .stringList:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = false
+			selectionStyle = .default
 		}
 
 		// For action tweaks, we tint the cell's text label
@@ -307,7 +314,6 @@ internal final class TweakTableCell: UITableViewCell {
 
 		textField.isUserInteractionEnabled = textFieldEnabled
 		textField.textColor = textFieldEnabled ? AppTheme.Colors.textPrimary : AppTheme.Colors.controlSecondary
-
 	}
 
 	private func updateStepper(value: Double, stepperValues: TweakViewData.StepperValues) {
@@ -317,8 +323,15 @@ internal final class TweakTableCell: UITableViewCell {
 		stepperControl.value = value // need to set this *after* the min/max have been set, else UIKit clips it.
 	}
 
+	/// Makes the text field active, bringing up the keyboard.
+	/// NOTE: If the cell is in a FloatingTweakWindow, this does nothing.
+	public func startEditingTextField() {
+		self.textField.becomeFirstResponder()
+	}
+
 
 	// MARK: Events
+
 	@objc private func switchChanged(_ sender: UISwitch) {
 		switch viewData! {
 		case let .boolean(_, defaultValue: defaultValue):
