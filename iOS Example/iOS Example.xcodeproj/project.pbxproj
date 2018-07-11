@@ -14,8 +14,6 @@
 		93A3AF281BF143B400CAD43B /* SwiftTweaks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3AF241BF143AC00CAD43B /* SwiftTweaks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		93A3AF2E1BF1443A00CAD43B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A3AF2C1BF1443A00CAD43B /* LaunchScreen.storyboard */; };
 		93A3AF301BF154D600CAD43B /* ExampleTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF2F1BF154D600CAD43B /* ExampleTweaks.swift */; };
-		AA48CC35202C8BA700C178DA /* ExampleCallbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA48CC34202C8BA700C178DA /* ExampleCallbackViewController.swift */; };
-		AA48CC38202C8F2900C178DA /* ExampleCallbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA48CC37202C8F2900C178DA /* ExampleCallbackViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +63,6 @@
 		93A3AF1E1BF143AC00CAD43B /* SwiftTweaks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftTweaks.xcodeproj; path = ../SwiftTweaks.xcodeproj; sourceTree = "<group>"; };
 		93A3AF2D1BF1443A00CAD43B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93A3AF2F1BF154D600CAD43B /* ExampleTweaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTweaks.swift; sourceTree = "<group>"; };
-		AA48CC34202C8BA700C178DA /* ExampleCallbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCallbackViewController.swift; sourceTree = "<group>"; };
-		AA48CC37202C8F2900C178DA /* ExampleCallbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleCallbackViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +100,6 @@
 				93A3AEFE1BF142A400CAD43B /* AppDelegate.swift */,
 				93A3AF2F1BF154D600CAD43B /* ExampleTweaks.swift */,
 				93A3AF001BF142A400CAD43B /* ViewController.swift */,
-				AA48CC34202C8BA700C178DA /* ExampleCallbackViewController.swift */,
-				AA48CC37202C8F2900C178DA /* ExampleCallbackViewController.xib */,
 				93A3AF051BF142A400CAD43B /* Assets.xcassets */,
 				93A3AF2C1BF1443A00CAD43B /* LaunchScreen.storyboard */,
 				93A3AF0A1BF142A400CAD43B /* Info.plist */,
@@ -207,7 +201,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93A3AF061BF142A400CAD43B /* Assets.xcassets in Resources */,
-				AA48CC38202C8F2900C178DA /* ExampleCallbackViewController.xib in Resources */,
 				93A3AF2E1BF1443A00CAD43B /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,7 +214,6 @@
 			files = (
 				93A3AF011BF142A400CAD43B /* ViewController.swift in Sources */,
 				93A3AF301BF154D600CAD43B /* ExampleTweaks.swift in Sources */,
-				AA48CC35202C8BA700C178DA /* ExampleCallbackViewController.swift in Sources */,
 				93A3AEFF1BF142A400CAD43B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
