@@ -233,6 +233,11 @@ fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	var tweakGroup: TweakGroup? {
 		didSet {
 			titleLabel.text = tweakGroup?.title
+			guard let tweakGroup = tweakGroup else { return }
+			let shouldShowFloatingButton = tweakGroup.sortedTweaks.reduce(false) { (accum, tweak) -> Bool in
+				return accum || FloatingTweakGroupViewController.editingSupported(forTweak: tweak)
+			}
+			self.floatingButton.isHidden = !shouldShowFloatingButton
 		}
 	}
 

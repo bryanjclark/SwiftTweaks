@@ -27,6 +27,15 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		}
 	}
 
+	static func editingSupported(forTweak tweak: AnyTweak) -> Bool {
+		switch tweak.tweakViewDataType {
+		case .boolean, .integer, .cgFloat, .double:
+			return true
+		case .uiColor, .stringList, .string:
+			return false
+		}
+	}
+
 	private let presenter: FloatingTweaksWindowPresenter
 	fileprivate let tweakStore: TweakStore
 	private let fullFrame: CGRect
@@ -294,15 +303,8 @@ extension FloatingTweakGroupViewController: UIGestureRecognizerDelegate {
 extension FloatingTweakGroupViewController: UITableViewDelegate {
 	@objc func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let tweak = tweakAtIndexPath(indexPath) else { return }
-		let tweakEditingAllowed: Bool
-		switch tweak.tweakViewDataType {
-		case .boolean, .integer, .cgFloat, .double:
-			tweakEditingAllowed = false
-		case .uiColor, .stringList, .string:
-			tweakEditingAllowed = false
-		}
 
-		if !tweakEditingAllowed {
+		if !FloatingTweakGroupViewController.editingSupported(forTweak: tweak) {
 			let alert = UIAlertController(title: "Can't edit this tweak here.", message: "You can edit it back in the main view, though!", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
