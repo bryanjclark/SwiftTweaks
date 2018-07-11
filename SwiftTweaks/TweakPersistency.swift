@@ -172,6 +172,7 @@ private final class TweakDiskPersistency {
 			case .cgFloat: return anyObject as? CGFloat
 			case .double: return anyObject as? Double
 			case .uiColor: return anyObject as? UIColor
+			case .string: return anyObject as? String
 			case .stringList:
 				guard let stringOptionString = anyObject as? String else {
 					return nil
@@ -192,6 +193,7 @@ private extension TweakViewDataType {
 		case .cgFloat: return "cgfloat"
 		case .double: return "double"
 		case .uiColor: return "uicolor"
+		case .string: return "string"
 		case .stringList: return "stringlist"
 		case .closure: return "closure"
 		}
@@ -207,6 +209,7 @@ private extension TweakableType {
 			case .cgFloat: return self as! CGFloat as AnyObject
 			case .double: return self as! Double as AnyObject
 			case .uiColor: return self as! UIColor
+			case .string: return self as! NSString
 			case .stringList: return (self as! StringOption).value as AnyObject
 			case .closure: return true as AnyObject
 		}

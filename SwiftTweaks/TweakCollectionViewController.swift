@@ -125,7 +125,7 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .stringList:
 			let stringOptionVC = StringOptionViewController(anyTweak: tweak, tweakStore: self.tweakStore, delegate: self)
 			self.navigationController?.pushViewController(stringOptionVC, animated: true)
-		case .boolean, .integer, .cgFloat, .double, .closure:
+		case .boolean, .integer, .cgFloat, .closure, .double, .string:
 			break
 		}
 	}
@@ -234,6 +234,11 @@ fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	var tweakGroup: TweakGroup? {
 		didSet {
 			titleLabel.text = tweakGroup?.title
+			guard let tweakGroup = tweakGroup else { return }
+			let shouldShowFloatingButton = tweakGroup.sortedTweaks.reduce(false) { (accum, tweak) -> Bool in
+				return accum || FloatingTweakGroupViewController.editingSupported(forTweak: tweak)
+			}
+			self.floatingButton.isHidden = !shouldShowFloatingButton
 		}
 	}
 

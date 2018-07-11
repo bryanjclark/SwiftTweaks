@@ -63,9 +63,40 @@ class ViewController: UIViewController {
         tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorBackground) { self.view.backgroundColor = $0 })
         tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText1) { self.titleLabel.textColor = $0; self.bodyLabel.textColor = $0 })
         tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.colorText2) { self.subtitleLabel.textColor = $0 })
-        // If you used `TweaksCallbacks` type, you can subscribe to those tweaks with callbacks.
-        // Those will be run in order.
-        // If you want to execute something only once, you can remove callback using identifier that `addCallback` method provides.
+
+        // The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
+        // Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
+        tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
+            self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
+        })
+        
+        let binding = ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
+            self.titleLabel.text = title.value
+        }
+        tweakBindings.insert(binding)
+        
+        // Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
+        // In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
+        // What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
+        // Note that inside this closure, we're calling `assign` to get the current value.
+        let tweaksToWatch: [TweakType] = [
+            ExampleTweaks.fontSizeText1,
+            ExampleTweaks.fontSizeText2,
+            ExampleTweaks.horizontalMargins,
+            ExampleTweaks.verticalMargins
+        ]
+        
+        let multipleBinding = ExampleTweaks.bindMultiple(tweaksToWatch) {
+            // This closure will be called immediately,
+            // and then again each time *any* of the tweaksToWatch change.
+            self.layoutContentsOfView()
+        }
+        multiTweakBindings.insert(multipleBinding)
+
+        // You can even run code with a tweak! 
+        // There are *so* many use cases for this - maybe you need a way to clear a cache, or force a crash, or any number of other things.
+        // With `TweaksCallbacks`, you can add callbacks to tweaks, and they will be called when that tweak is tapped in the SwiftTweaks menu.
+        
         _ = ExampleTweaks.actionUI.addCallback { _, _ in
             let showAlert = {
                 let alert = UIAlertController(title: "🤖", message: "I'm completely operational, and all my circuits are functioning perfectly.", preferredStyle: .alert)
@@ -97,40 +128,12 @@ class ViewController: UIViewController {
             print("🤖 I'm afraid I can't do that")
         }
         
+        // You can remove a callback with the identifier returned from `addCallback`.
         let callbackIdentifier = ExampleTweaks.actionConsole.addCallback { _, _ in
             // this won't be run
             print("👩🏻‍🚀 <turns off HAL>")
         }
         _ = try? ExampleTweaks.actionConsole.removeCallback(with: callbackIdentifier)
-        
-        // The above examples used very concise syntax - that's because Swift makes it easy to write concisely!
-        // Of course, you can write binding closures in a more verbose syntax if you find it easier to read, like this:
-        tweakBindings.insert(ExampleTweaks.bind(ExampleTweaks.fontSizeText1) { fontSize in
-            self.titleLabel.font = UIFont.systemFont(ofSize: fontSize)
-        })
-        
-        let binding = ExampleTweaks.bind(ExampleTweaks.title) { (title: StringOption) in
-            self.titleLabel.text = title.value
-        }
-        tweakBindings.insert(binding)
-        
-        // Now let's look at a trickier example: let's say that you have a layout, and it depends on multiple tweaks. 
-        // In our case, we have tweaks for two font sizes, as well as two layout parameters (horizontal margins and vertical padding between the labels). 
-        // What we'll do in this case is create a layout closure, and then call it each time any of those tweaks change. You could also call an existing function (like `layoutSubviews` or something like that) instead of creating a closure.
-        // Note that inside this closure, we're calling `assign` to get the current value.
-        let tweaksToWatch: [TweakType] = [
-            ExampleTweaks.fontSizeText1,
-            ExampleTweaks.fontSizeText2,
-            ExampleTweaks.horizontalMargins,
-            ExampleTweaks.verticalMargins
-        ]
-        
-        let multipleBinding = ExampleTweaks.bindMultiple(tweaksToWatch) {
-            // This closure will be called immediately,
-            // and then again each time *any* of the tweaksToWatch change.
-            self.layoutContentsOfView()
-        }
-        multiTweakBindings.insert(multipleBinding)
     }
     
     override func viewWillAppear(_ animated: Bool) {

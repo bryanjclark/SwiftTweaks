@@ -24,11 +24,12 @@ public enum TweakViewDataType {
 	case cgFloat
 	case double
 	case uiColor
+	case string
 	case stringList
 	case closure
 
 	public static let allTypes: [TweakViewDataType] = [
-		.boolean, .integer, .cgFloat, .double, .uiColor, .stringList, .closure
+		.boolean, .integer, .cgFloat, .closure, .double, .uiColor, .string, .stringList, 
 	]
 }
 
@@ -41,6 +42,7 @@ public enum TweakDefaultData {
 	case float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case doubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(defaultValue: UIColor)
+	case string(defaultValue: String)
 	case stringList(defaultValue: StringOption, options: [StringOption])
 	case closure(defaultValue: TweakCallbacks)
 }
@@ -94,5 +96,11 @@ extension Double: TweakableType {
 extension UIColor: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
 		return .uiColor
+	}
+}
+
+extension String: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .string
 	}
 }

@@ -59,6 +59,8 @@ internal final class TweakTableCell: UITableViewCell {
 		let textField = UITextField()
 		textField.textAlignment = .right
 		textField.returnKeyType = .done
+		textField.adjustsFontSizeToFitWidth = true
+		textField.minimumFontSize = 12
 		return textField
 	}()
 	private let disclosureArrow: UIImageView = {
@@ -99,6 +101,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
 	private static let colorTextWidthFraction: CGFloat = 0.30
+	private static let stringTextWidthFraction: CGFloat = 0.60
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
 
@@ -178,14 +181,33 @@ internal final class TweakTableCell: UITableViewCell {
 			let accessoryFrame = colorControlFrame.union(textFrame).union(disclosureArrowFrame)
 			accessory.bounds = accessoryFrame.integral
 
+		case .string:
+			let textFrame = CGRect(
+				origin: .zero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.stringTextWidthFraction,
+					height: bounds.height
+				)
+			).integral
+			textField.frame = textFrame
+			accessory.bounds = textField.bounds
+
 		case .stringList:
-			let textFieldSize = self.textField.sizeThatFits(CGSize(
-				width: CGFloat.greatestFiniteMagnitude,
-				height: bounds.height
-			))
-			let textFieldFrame = CGRect(origin: .zero, size: CGSize(width: textFieldSize.width, height: bounds.height))
+			let textFieldFrame = CGRect(
+				origin: .zero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.stringTextWidthFraction,
+					height: bounds.height
+				)
+			).integral
 			textField.frame = textFieldFrame
 			accessory.bounds = textField.bounds
+			let disclosureArrowFrame = CGRect(
+				origin: CGPoint(x: textFieldFrame.width + TweakTableCell.horizontalPadding, y: 0),
+				size: CGSize(width: disclosureArrow.bounds.width, height: bounds.height)
+			)
+			disclosureArrow.frame = disclosureArrowFrame
+			accessory.bounds = textFieldFrame.union(disclosureArrowFrame).integral
 
 		case .closure:
 			actionButton.bounds.size = CGSize(width: 64, height: 32)
@@ -230,7 +252,7 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
 			actionButton.isHidden = true
-		case .stringList:
+		case .string:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
@@ -244,6 +266,12 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
 			actionButton.isHidden = false
+		case .stringList:
+			switchControl.isHidden = true
+			textField.isHidden = false
+			stepperControl.isHidden = true
+			colorChit.isHidden = true
+			disclosureArrow.isHidden = false
 		}
 
 		// Update accessory internals based on viewData
@@ -273,6 +301,12 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.backgroundColor = value
 			textField.text = value.hexString
 			textFieldEnabled = false
+
+		case let .string(value, _):
+			textField.text = value
+			textField.placeholder = NSLocalizedString("Tap to edit", comment: "Text field placeholder for editable text")
+			textField.keyboardType = .default
+			textFieldEnabled = true
 
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
@@ -318,11 +352,11 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .stringList, .closure:
+		case .color, .boolean, .closure, .stringList, .string:
 			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
 		}
 	}
-	
+
 	@objc private func buttonPressed(_ sender: UIButton) {
 		guard let viewData = viewData else {
 			return
@@ -332,7 +366,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .closure(closureTweak):
 			closureTweak.executeAllCallbacks(sender: sender, viewController: ownerViewController)
 		default:
-			assertionFailure("Shouldn't be able to update text field with a Color or Boolean or StringList tweak.")
+			assertionFailure("Can't tap a closure button")
 		}
 	}
 }
@@ -377,8 +411,15 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .stringList, .closure:
-			assertionFailure("Shouldn't be able to update text field with a Boolean or StringList tweak.")
+		case let .string(_, defaultValue):
+			if let newValue = textField.text {
+				viewData = TweakViewData(type: .string, value: newValue, defaultValue: defaultValue, minimum: nil, maximum: nil, stepSize: nil, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case .boolean, .closure, .stringList:
+			assertionFailure("Shouldn't be able to update text field with a Boolean/Closure/StringList tweak.")
 		}
 	}
 }

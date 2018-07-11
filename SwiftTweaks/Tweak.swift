@@ -139,6 +139,8 @@ extension Tweak: TweakType {
 			)
 		case .uiColor:
 			return .color(defaultValue: defaultValue as! UIColor)
+		case .string:
+			return .string(defaultValue: defaultValue as! String)
 		case .stringList:
 			return .stringList(
 				defaultValue: defaultValue as! StringOption,
