@@ -70,26 +70,16 @@ internal final class TweakTableCell: UITableViewCell {
 		imageView.tintColor = AppTheme.Colors.controlSecondary
 		return imageView
 	}()
-	private let actionButton: TweakButton = {
-		let button = TweakButton(type: .system)
-		button.borderWidth = 2
-		button.contentMode = .center
-		button.setImage(UIImage(swiftTweaksImage: .disclosureIndicator), for: .normal)
-		button.setBorderColor(AppTheme.Colors.controlTinted, for: .normal)
-		button.setBorderColor(AppTheme.Colors.controlTintedPressed, for: .highlighted)
-		return button
-	}()
 	
 	weak var ownerViewController: UIViewController?
 
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-		[switchControl, stepperControl, colorChit, textField, disclosureArrow, actionButton].forEach { accessory.addSubview($0) }
+		[switchControl, stepperControl, colorChit, textField, disclosureArrow].forEach { accessory.addSubview($0) }
 
 		switchControl.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 		stepperControl.addTarget(self, action: #selector(self.stepperChanged(_:)), for: .valueChanged)
-		actionButton.addTarget(self, action: #selector(self.buttonPressed(_:)), for: .touchUpInside)
 		textField.delegate = self
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
@@ -210,11 +200,7 @@ internal final class TweakTableCell: UITableViewCell {
 			accessory.bounds = textFieldFrame.union(disclosureArrowFrame).integral
 
 		case .action:
-			actionButton.bounds.size = CGSize(width: 64, height: 32)
-			var frame = actionButton.bounds
-			frame.origin.x = -1 * frame.width / 2
-			frame.origin.y = -1 * frame.height / 2
-			accessory.bounds = frame
+			accessory.bounds = .zero
 		}
 	}
 
@@ -225,7 +211,6 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			actionButton.isHidden = true
 			return
 		}
 
@@ -237,41 +222,46 @@ internal final class TweakTableCell: UITableViewCell {
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			actionButton.isHidden = true
 		case .integer, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			actionButton.isHidden = true
 		case .color:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = false
 			disclosureArrow.isHidden = false
-			actionButton.isHidden = true
 		case .string:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			actionButton.isHidden = true
 		case .action:
 			switchControl.isHidden = true
 			textField.isHidden = true
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
-			actionButton.isHidden = false
 		case .stringList:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = true
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = false
+		}
+
+		// For action tweaks, we tint the cell's text label
+		switch viewData {
+		case .action:
+			self.textLabel?.textColor = AppTheme.Colors.controlTinted
+			self.textLabel?.highlightedTextColor = AppTheme.Colors.controlTintedPressed
+		default:
+			self.textLabel?.textColor = AppTheme.Colors.textPrimary
+			self.textLabel?.highlightedTextColor = nil
 		}
 
 		// Update accessory internals based on viewData
@@ -354,19 +344,6 @@ internal final class TweakTableCell: UITableViewCell {
 			delegate?.tweakCellDidChangeCurrentValue(self)
 		case .color, .boolean, .action, .stringList, .string:
 			assertionFailure("Shouldn't be able to update text field with a Color/Boolean/Action/StringList/String tweak.")
-		}
-	}
-
-	@objc private func buttonPressed(_ sender: UIButton) {
-		guard let viewData = viewData else {
-			return
-		}
-		
-		switch viewData {
-		case let .action(actionTweak):
-			actionTweak.evaluateAllClosures()
-		default:
-			assertionFailure("Can't tap a closure button")
 		}
 	}
 }

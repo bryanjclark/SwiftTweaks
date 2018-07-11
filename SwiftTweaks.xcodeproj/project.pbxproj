@@ -89,11 +89,8 @@
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
 		AA19DB5320485D0B00C5538F /* StringOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932493981EFC5A4000B2E904 /* StringOptionViewController.swift */; };
 		AA356AF01EB3B5A90063F4E2 /* TweakAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */; };
-		AA356AF21EB3B7730063F4E2 /* TweakButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AF11EB3B7730063F4E2 /* TweakButton.swift */; };
 		AA356AF41EB3C5B40063F4E2 /* TweakActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */; };
 		AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */; };
-		AA356AF61EB3C6550063F4E2 /* TweakButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AF11EB3B7730063F4E2 /* TweakButton.swift */; };
-		AA3BD55A1F2E6B1D007912C0 /* TweakButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3BD5591F2E6B1D007912C0 /* TweakButtonTests.swift */; };
 		B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */; };
@@ -170,9 +167,7 @@
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
 		AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakAction.swift; sourceTree = "<group>"; };
-		AA356AF11EB3B7730063F4E2 /* TweakButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakButton.swift; sourceTree = "<group>"; };
 		AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakActionTests.swift; sourceTree = "<group>"; };
-		AA3BD5591F2E6B1D007912C0 /* TweakButtonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakButtonTests.swift; sourceTree = "<group>"; };
 		B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakDebug.swift; sourceTree = "<group>"; };
 		D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBindingIdentifier.swift; sourceTree = "<group>"; };
 		D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTweakBinding.swift; sourceTree = "<group>"; };
@@ -263,7 +258,6 @@
 				939482B81BFFD89400ADBFE0 /* TweakBackup.swift */,
 				937AA36E1CB5D6DA000928C5 /* HitTransparentWindow.swift */,
 				937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */,
-				AA356AF11EB3B7730063F4E2 /* TweakButton.swift */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -322,7 +316,6 @@
 				939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */,
 				930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */,
 				AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */,
-				AA3BD5591F2E6B1D007912C0 /* TweakButtonTests.swift */,
 				93A84EE21BEAE86E0022D2F3 /* Info.plist */,
 			);
 			path = SwiftTweaksTests;
@@ -504,7 +497,6 @@
 				933223591CB842D2002D586B /* EdgeInsetsTweakTemplate.swift in Sources */,
 				938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */,
 				D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */,
-				AA356AF21EB3B7730063F4E2 /* TweakButton.swift in Sources */,
 				937962931BFE7B0A0046E4CE /* TweakViewData.swift in Sources */,
 				939F2CDE1CB81A6800345E03 /* UIView+TweakGroupTemplateSpringAnimation.swift in Sources */,
 				939F2CDB1CB813F900345E03 /* ComparableTweakDefaultParameters.swift in Sources */,
@@ -569,8 +561,6 @@
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
-				AA3BD55A1F2E6B1D007912C0 /* TweakButtonTests.swift in Sources */,
-				AA356AF61EB3C6550063F4E2 /* TweakButton.swift in Sources */,
 				93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				931472581BFFB41700F66D20 /* TweakLibrary.swift in Sources */,
 				9314725E1BFFB41700F66D20 /* TweakGroup.swift in Sources */,
