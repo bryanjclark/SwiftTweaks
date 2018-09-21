@@ -150,7 +150,7 @@
 				TargetAttributes = {
 					93A3AEFA1BF142A400CAD43B = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -355,8 +355,7 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -370,8 +369,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
