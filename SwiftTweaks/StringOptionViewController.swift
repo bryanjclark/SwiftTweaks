@@ -43,7 +43,7 @@ internal class StringOptionViewController: UITableViewController {
 		self.delegate = delegate
 		self.currentOption = tweakStore.currentValueForTweak(self.tweak).value
 		
-		super.init(style: UITableViewStyle.plain)
+		super.init(style: UITableView.Style.plain)
 		
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: StringOptionViewController.cellIdentifier)
 		self.tableView.reloadData()

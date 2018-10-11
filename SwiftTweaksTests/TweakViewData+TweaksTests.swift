@@ -51,17 +51,17 @@ class TweakViewData_TweaksTests: XCTestCase {
 
 		static func verifyNonIntegerStepSizeForTestCase(testCase: StepperTestCase) {
 			let floatStepSize = testCase.floatTweakViewData.stepperValues!.stepSize
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				floatStepSize,
 				testCase.expectedStep!,
-				accuracy: Double(FLT_EPSILON)
+				accuracy: .ulpOfOne
 			)
 
 			let doubleStepSize = testCase.doubleTweakViewData.stepperValues!.stepSize
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				doubleStepSize,
 				testCase.expectedStep!,
-				accuracy: DBL_EPSILON
+				accuracy: .ulpOfOne
 			)
 		}
 
@@ -71,28 +71,28 @@ class TweakViewData_TweaksTests: XCTestCase {
 		}
 
 		static func verifyStepperBoundsTestCase(testCase: StepperTestCase) {
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				testCase.expectedBounds!.0,
 				testCase.floatTweakViewData.stepperValues!.stepperMin,
-				accuracy: Double(FLT_EPSILON)
+				accuracy: .ulpOfOne
 			)
 
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				testCase.expectedBounds!.1,
 				testCase.floatTweakViewData.stepperValues!.stepperMax,
-				accuracy: Double(FLT_EPSILON)
+				accuracy: .ulpOfOne
 			)
 
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				testCase.expectedBounds!.0,
 				testCase.doubleTweakViewData.stepperValues!.stepperMin,
-				accuracy: DBL_EPSILON
+				accuracy: .ulpOfOne
 			)
 
-			XCTAssertEqualWithAccuracy(
+			XCTAssertEqual(
 				testCase.expectedBounds!.1,
 				testCase.doubleTweakViewData.stepperValues!.stepperMax,
-				accuracy: DBL_EPSILON
+				accuracy: .ulpOfOne
 			)
 		}
 	}

@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
 	private let bounceButton: UIButton = {
 		let button = UIButton()
-		button.setTitle("Animate", for: UIControlState())
+		button.setTitle("Animate", for: UIControl.State())
 		button.layer.cornerRadius = 5
 		button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 32, bottom: 14, right: 32)
 		return button

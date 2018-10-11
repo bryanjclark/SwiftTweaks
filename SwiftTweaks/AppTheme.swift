@@ -50,7 +50,7 @@ internal struct AppTheme {
 	}
 
 	struct Fonts {
-		static let sectionHeaderTitleFont: UIFont = .preferredFont(forTextStyle: UIFontTextStyle.body)
+		static let sectionHeaderTitleFont: UIFont = .preferredFont(forTextStyle: UIFont.TextStyle.body)
 	}
 
 	struct Shadows {
