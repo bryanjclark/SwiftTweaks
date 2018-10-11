@@ -14,7 +14,7 @@ These animation timings, font sizes, and color choices are all examples of “ma
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks)
 [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases)
-![Swift 3.0](https://img.shields.io/badge/Swift-4.0-orange.svg)
+![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg)
 ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg)
 [![Build Status](https://travis-ci.org/Khan/SwiftTweaks.svg?branch=master)](https://travis-ci.org/Khan/SwiftTweaks)
 
