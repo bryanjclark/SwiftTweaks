@@ -14,6 +14,7 @@ import UIKit
 internal protocol FloatingTweaksWindowPresenter {
 	func presentFloatingTweaksUI(forTweakGroup tweakGroup: TweakGroup)
 	func dismissFloatingTweaksUI()
+	func resumeDisplayingMainTweaksInterface()
 }
 
 // MARK: - FloatingTweakGroupViewController
@@ -85,7 +86,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	internal static let margins: CGFloat = 5
 	private static let minimizedWidth: CGFloat = 30
 
-	private static let closeButtonSize = CGSize(width: 42, height: 32)
+	private static let navBarButtonSize = CGSize(width: 42, height: 32)
 	private static let navBarHeight: CGFloat = 32
 	private static let windowCornerRadius: CGFloat = 5
 
@@ -111,6 +112,14 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	private let closeButton: UIButton = {
 		let button = UIButton()
 		let buttonImage = UIImage(swiftTweaksImage: .floatingCloseButton).withRenderingMode(.alwaysTemplate)
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControl.State())
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
+		return button
+	}()
+
+	private let reopenButton: UIButton = {
+		let button = UIButton()
+		let buttonImage = UIImage(swiftTweaksImage: .floatingReopenButton).withRenderingMode(.alwaysTemplate)
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControl.State())
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
 		return button
@@ -152,7 +161,9 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 		// The "fake nav bar"
 		closeButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
+		reopenButton.addTarget(self, action: #selector(self.reopenButtonTapped), for: .touchUpInside)
 		navBar.addSubview(closeButton)
+		navBar.addSubview(reopenButton)
 		navBar.addSubview(titleLabel)
 		view.addSubview(navBar)
 
@@ -192,7 +203,13 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 			return mask
 			}()
 
-		closeButton.frame = CGRect(origin: .zero, size: FloatingTweakGroupViewController.closeButtonSize)
+		closeButton.frame = CGRect(origin: .zero, size: FloatingTweakGroupViewController.navBarButtonSize)
+		reopenButton.sizeToFit()
+		reopenButton.frame = CGRect(
+			origin: CGPoint(
+				x: navBar.bounds.width - FloatingTweakGroupViewController.navBarButtonSize.width,
+				y: 0),
+			size: FloatingTweakGroupViewController.navBarButtonSize)
 		titleLabel.frame = CGRect(
 			origin: CGPoint(
 				x: closeButton.frame.width,
@@ -214,6 +231,10 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	}
 
 	// MARK: Actions
+
+	@objc private func reopenButtonTapped() {
+		self.presenter.resumeDisplayingMainTweaksInterface()
+	}
 
 	@objc private func closeButtonTapped() {
 		presenter.dismissFloatingTweaksUI()

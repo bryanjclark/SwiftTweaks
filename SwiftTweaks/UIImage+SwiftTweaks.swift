@@ -14,6 +14,7 @@ internal extension UIImage {
 		case disclosureIndicator = "disclosure-indicator"
 		case floatingPlusButton = "floating-plus-button"
 		case floatingCloseButton = "floating-ui-close"
+		case floatingReopenButton = "floating-ui-open-tweaks"
 		case floatingMinimizedArrow = "floating-ui-minimized-arrow"
 	}
 

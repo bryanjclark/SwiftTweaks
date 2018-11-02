@@ -173,57 +173,56 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 
 	/// Presents a floating TweakGroup over your app's UI, so you don't have to hop in and out of the full-modal Tweak UI.
 	internal func presentFloatingTweaksUI(forTweakGroup tweakGroup: TweakGroup) {
-		if (floatingTweakGroupUIWindow == nil) {
-			let window = HitTransparentWindow()
-			window.frame = UIScreen.main.bounds
-			window.backgroundColor = UIColor.clear
+		guard floatingTweakGroupUIWindow == nil else { return }
 
-			var originY = window.frame.size.height - FloatingTweakGroupViewController.height - FloatingTweakGroupViewController.margins
-			if #available(iOS 11.0, *) {
-				originY = originY - self.safeAreaInsets.bottom
-			}
+		let window = HitTransparentWindow()
+		window.frame = UIScreen.main.bounds
+		window.backgroundColor = UIColor.clear
 
-			let floatingTweakGroupFrame = CGRect(
-				origin: CGPoint(
-					x: FloatingTweakGroupViewController.margins,
-					y: originY
-				),
-				size: CGSize(
-					width: window.frame.size.width - FloatingTweakGroupViewController.margins*2,
-					height: FloatingTweakGroupViewController.height
-				)
-			)
-
-			let floatingTweaksVC = FloatingTweakGroupViewController(frame: floatingTweakGroupFrame, tweakStore: tweakStore, presenter: self)
-			floatingTweaksVC.tweakGroup = tweakGroup
-			window.rootViewController = floatingTweaksVC
-			window.addSubview(floatingTweaksVC.view)
-
-			window.alpha = 0
-			let initialWindowFrame = window.frame.offsetBy(dx: 0, dy: floatingTweaksVC.view.bounds.height)
-			let destinationWindowFrame = window.frame
-			window.makeKeyAndVisible()
-			floatingTweakGroupUIWindow = window
-
-			window.frame = initialWindowFrame
-			UIView.animate(
-				withDuration: TweakWindow.presentationDuration,
-				delay: 0,
-				usingSpringWithDamping: TweakWindow.presentationDamping,
-				initialSpringVelocity: TweakWindow.presentationVelocity,
-				options: .beginFromCurrentState,
-				animations: { 
-					window.frame = destinationWindowFrame
-					window.alpha = 1
-				},
-				completion: nil
-			)
+		var originY = window.frame.size.height - FloatingTweakGroupViewController.height - FloatingTweakGroupViewController.margins
+		if #available(iOS 11.0, *) {
+			originY = originY - self.safeAreaInsets.bottom
 		}
+
+		let floatingTweakGroupFrame = CGRect(
+			origin: CGPoint(
+				x: FloatingTweakGroupViewController.margins,
+				y: originY
+			),
+			size: CGSize(
+				width: window.frame.size.width - FloatingTweakGroupViewController.margins*2,
+				height: FloatingTweakGroupViewController.height
+			)
+		)
+
+		let floatingTweaksVC = FloatingTweakGroupViewController(frame: floatingTweakGroupFrame, tweakStore: tweakStore, presenter: self)
+		floatingTweaksVC.tweakGroup = tweakGroup
+		window.rootViewController = floatingTweaksVC
+		window.addSubview(floatingTweaksVC.view)
+
+		window.alpha = 0
+		let initialWindowFrame = window.frame.offsetBy(dx: 0, dy: floatingTweaksVC.view.bounds.height)
+		let destinationWindowFrame = window.frame
+		window.makeKeyAndVisible()
+		floatingTweakGroupUIWindow = window
+
+		window.frame = initialWindowFrame
+		UIView.animate(
+			withDuration: TweakWindow.presentationDuration,
+			delay: 0,
+			usingSpringWithDamping: TweakWindow.presentationDamping,
+			initialSpringVelocity: TweakWindow.presentationVelocity,
+			options: .beginFromCurrentState,
+			animations: {
+				window.frame = destinationWindowFrame
+				window.alpha = 1
+			},
+			completion: nil
+		)
 	}
 
 	/// Dismisses the floating TweakGroup
 	func dismissFloatingTweaksUI() {
-
 		guard let floatingTweakGroupUIWindow = floatingTweakGroupUIWindow else { return }
 
 		UIView.animate(
@@ -239,5 +238,12 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 				self.floatingTweakGroupUIWindow = nil
 			}
 		)
+	}
+
+	func resumeDisplayingMainTweaksInterface() {
+		guard floatingTweakGroupUIWindow != nil else { return }
+
+		self.dismissFloatingTweaksUI()
+		self.presentTweaks()
 	}
 }
