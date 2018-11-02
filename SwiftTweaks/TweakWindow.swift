@@ -171,10 +171,15 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 			window.frame = UIScreen.main.bounds
 			window.backgroundColor = UIColor.clear
 
+			var originY = window.frame.size.height - FloatingTweakGroupViewController.height - FloatingTweakGroupViewController.margins
+			if #available(iOS 11.0, *) {
+				originY = originY - self.safeAreaInsets.bottom
+			}
+
 			let floatingTweakGroupFrame = CGRect(
 				origin: CGPoint(
 					x: FloatingTweakGroupViewController.margins,
-					y: window.frame.size.height - FloatingTweakGroupViewController.height - FloatingTweakGroupViewController.margins
+					y: originY
 				),
 				size: CGSize(
 					width: window.frame.size.width - FloatingTweakGroupViewController.margins*2,
