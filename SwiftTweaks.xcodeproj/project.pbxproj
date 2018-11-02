@@ -60,6 +60,7 @@
 		937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */; };
 		939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939482B81BFFD89400ADBFE0 /* TweakBackup.swift */; };
+		939CB70F218CFE570041E3EA /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
 		939F2CCC1CB715E800345E03 /* Clipping+TweaksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */; };
 		939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9EC1CB575AF002A92BE /* AppTheme.swift */; };
 		939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */; };
@@ -144,6 +145,7 @@
 		937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingTweakGroupViewController.swift; sourceTree = "<group>"; };
 		938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollectionViewController.swift; sourceTree = "<group>"; };
 		939482B81BFFD89400ADBFE0 /* TweakBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBackup.swift; sourceTree = "<group>"; };
+		939CB70E218CFE570041E3EA /* HapticsPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsPlayer.swift; sourceTree = "<group>"; };
 		939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Clipping+TweaksTest.swift"; sourceTree = "<group>"; };
 		939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tweak+TweaksTests.swift"; sourceTree = "<group>"; };
 		939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakGroupTemplateType.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */,
+				939CB70E218CFE570041E3EA /* HapticsPlayer.swift */,
 				9356CD1E1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift */,
 				938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */,
 				931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */,
@@ -490,6 +493,7 @@
 				9345EC071BF296350086AB5D /* TweaksBackupsListViewController.swift in Sources */,
 				9338E9E71CB57068002A92BE /* UIImage+SwiftTweaks.swift in Sources */,
 				93AA34591BEC0EF9004B734B /* TweakableType.swift in Sources */,
+				939CB70F218CFE570041E3EA /* HapticsPlayer.swift in Sources */,
 				93A84EF21BEAE88D0022D2F3 /* Tweak.swift in Sources */,
 				931A247E1BFA8F8000E40192 /* ColorRepresentation.swift in Sources */,
 				9345EC101BF2B95C0086AB5D /* TweakGroup.swift in Sources */,

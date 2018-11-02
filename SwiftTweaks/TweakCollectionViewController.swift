@@ -26,6 +26,8 @@ internal final class TweakCollectionViewController: UIViewController {
 		return tableView
 	}()
 
+	fileprivate let hapticsPlayer = HapticsPlayer()
+
 	init(tweakCollection: TweakCollection, tweakStore: TweakStore, delegate: TweakCollectionViewControllerDelegate) {
 		self.tweakCollection = tweakCollection
 		self.tweakStore = tweakStore
@@ -71,6 +73,11 @@ internal final class TweakCollectionViewController: UIViewController {
 
 		// Reload data (in case colors were changed on a divedown)
 		tableView.reloadData()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		self.hapticsPlayer.prepare()
 	}
 
 
@@ -130,6 +137,7 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .action:
 			let actionTweak = tweak.tweak as! Tweak<TweakAction>
 			actionTweak.defaultValue.evaluateAllClosures()
+			self.hapticsPlayer.playNotificationSuccess()
 		case .integer, .cgFloat, .double, .string:
 			let cell = tableView.cellForRow(at: indexPath) as! TweakTableCell
 			cell.startEditingTextField()

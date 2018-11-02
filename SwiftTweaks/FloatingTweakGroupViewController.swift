@@ -39,6 +39,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	private let presenter: FloatingTweaksWindowPresenter
 	fileprivate let tweakStore: TweakStore
 	private let fullFrame: CGRect
+	fileprivate let hapticsPlayer = HapticsPlayer()
 
 	internal init(frame: CGRect, tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
 		self.tweakStore = tweakStore
@@ -69,6 +70,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		super.viewDidAppear(animated)
 
 		tableView.flashScrollIndicators()
+		hapticsPlayer.prepare()
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -308,6 +310,13 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 			let alert = UIAlertController(title: "Can't edit this tweak here.", message: "You can edit it back in the main view, though!", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
+		}
+
+		switch tweak.tweakViewDataType {
+		case .action:
+			self.hapticsPlayer.playNotificationSuccess()
+		case .boolean, .cgFloat, .double, .integer, .string, .stringList, .uiColor:
+			break
 		}
 	}
 }
