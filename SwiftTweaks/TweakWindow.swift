@@ -139,7 +139,14 @@ import UIKit
 		}
 
 		if !(visibleViewController is TweaksViewController) {
-			visibleViewController.present(tweaksViewController, animated: true, completion: nil)
+			switch visibleViewController.traitCollection.horizontalSizeClass {
+			case .compact, .unspecified:
+				visibleViewController.present(tweaksViewController, animated: true, completion: nil)
+			case .regular:
+				tweaksViewController.modalPresentationStyle = .formSheet
+				visibleViewController.present(tweaksViewController, animated: true, completion: nil)
+			}
+
 		}
 
 	}
