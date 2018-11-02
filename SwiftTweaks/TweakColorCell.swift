@@ -39,7 +39,7 @@ internal final class TweakColorCell: UITableViewCell {
 	}()
 	private let accessory = UIView()
 
-	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
 		slider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)

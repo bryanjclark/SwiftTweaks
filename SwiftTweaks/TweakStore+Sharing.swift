@@ -35,11 +35,11 @@ extension TweakStoreActivityItemSource: UIActivityItemSource {
 		return textRepresentation
 	}
 
-	@objc func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivityType?) -> String {
+	@objc func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
 		return "SwiftTweaks Backup"
 	}
 
-	@objc func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivityType?) -> Any? {
+	@objc func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
 		return textRepresentation
 	}
 }

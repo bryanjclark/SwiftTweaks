@@ -24,28 +24,28 @@ class ViewController: UIViewController {
         label.text = "github.com/Khan/SwiftTweaks"
         return label
     }()
-    
-    private let bodyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here! You can even force-quit the app and the changes will persist!"
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
-    
-    private let bounceButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Animate", for: UIControlState())
-        button.layer.cornerRadius = 5
-        button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 32, bottom: 14, right: 32)
-        return button
-    }()
-    
-    private var tweakBindings = Set<TweakBindingIdentifier>()
-    private var multiTweakBindings = Set<MultiTweakBindingIdentifier>()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+	private let bodyLabel: UILabel = {
+		let label = UILabel()
+		label.text = "Shake your device to bring up the Tweaks UI. Make your changes, and when you dismiss, you'll see 'em applied here! You can even force-quit the app and the changes will persist!"
+		label.numberOfLines = 0
+		label.lineBreakMode = .byWordWrapping
+		return label
+	}()
+
+	private let bounceButton: UIButton = {
+		let button = UIButton()
+		button.setTitle("Animate", for: UIControl.State())
+		button.layer.cornerRadius = 5
+		button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 32, bottom: 14, right: 32)
+		return button
+	}()
+
+	private var tweakBindings = Set<TweakBindingIdentifier>()
+	private var multiTweakBindings = Set<MultiTweakBindingIdentifier>()
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
         
         [titleLabel, subtitleLabel, bodyLabel, bounceButton].forEach(view.addSubview)
         

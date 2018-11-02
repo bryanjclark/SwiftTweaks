@@ -92,8 +92,8 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 
 	fileprivate static let TweakCollectionCellIdentifier = "TweakCollectionCellIdentifier"
 	private class TweakCollectionCell: UITableViewCell {
-		override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-			super.init(style: UITableViewCellStyle.value1, reuseIdentifier: reuseIdentifier)
+		override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+			super.init(style: UITableViewCell.CellStyle.value1, reuseIdentifier: reuseIdentifier)
 			accessoryType = .disclosureIndicator
 
 			let touchHighlightView = UIView()

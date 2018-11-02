@@ -15,7 +15,7 @@ public extension UIView {
 	public static func animate(
 		springTweakTemplate: SpringAnimationTweakTemplate,
 		tweakStore: TweakStore,
-		options: UIViewAnimationOptions,
+		options: UIView.AnimationOptions,
 		animations: @escaping () -> Void,
 		completion: ((Bool) -> Void)?
 	) {

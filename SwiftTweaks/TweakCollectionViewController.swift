@@ -60,7 +60,7 @@ internal final class TweakCollectionViewController: UIViewController {
 		tableView.register(TweakGroupSectionHeader.self, forHeaderFooterViewReuseIdentifier: TweakGroupSectionHeader.identifier)
 		view.addSubview(tableView)
 
-		let keyboardTriggers: [Notification.Name] = [.UIKeyboardWillShow, .UIKeyboardWillHide]
+		let keyboardTriggers: [Notification.Name] = [UIResponder.keyboardWillShowNotification, UIResponder.keyboardWillHideNotification]
 		keyboardTriggers.forEach { notificationName in
 			NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: .main, using: handleKeyboardVisibilityChange(_:))
 		}
@@ -79,8 +79,8 @@ internal final class TweakCollectionViewController: UIViewController {
 	@objc private func handleKeyboardVisibilityChange(_ notification: Notification) {
 		if
 			let userInfo = notification.userInfo,
-			let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect,
-			let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber
+			let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+			let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
 		{
 			UIView.animate(
 				withDuration: animationDuration.doubleValue,
@@ -227,7 +227,7 @@ fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 	private let floatingButton: UIButton = {
 		let button = UIButton(type: .custom)
 		let buttonImage = UIImage(swiftTweaksImage: .floatingPlusButton).withRenderingMode(.alwaysTemplate)
-		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControlState())
+		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTinted), for: UIControl.State())
 		button.setImage(buttonImage.imageTintedWithColor(AppTheme.Colors.controlTintedPressed), for: .highlighted)
 		return button
 	}()

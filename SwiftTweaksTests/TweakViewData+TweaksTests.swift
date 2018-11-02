@@ -54,14 +54,14 @@ class TweakViewData_TweaksTests: XCTestCase {
 			XCTAssertEqual(
 				floatStepSize,
 				testCase.expectedStep!,
-				accuracy: Double(Float.ulpOfOne)
+				accuracy: .ulpOfOne
 			)
 
 			let doubleStepSize = testCase.doubleTweakViewData.stepperValues!.stepSize
 			XCTAssertEqual(
 				doubleStepSize,
 				testCase.expectedStep!,
-				accuracy: Double.ulpOfOne
+				accuracy: .ulpOfOne
 			)
 		}
 
@@ -74,25 +74,25 @@ class TweakViewData_TweaksTests: XCTestCase {
 			XCTAssertEqual(
 				testCase.expectedBounds!.0,
 				testCase.floatTweakViewData.stepperValues!.stepperMin,
-				accuracy: Double(Float.ulpOfOne)
+				accuracy: .ulpOfOne
 			)
 
 			XCTAssertEqual(
 				testCase.expectedBounds!.1,
 				testCase.floatTweakViewData.stepperValues!.stepperMax,
-				accuracy: Double(Float.ulpOfOne)
+				accuracy: .ulpOfOne
 			)
 
 			XCTAssertEqual(
 				testCase.expectedBounds!.0,
 				testCase.doubleTweakViewData.stepperValues!.stepperMin,
-				accuracy: Double.ulpOfOne
+				accuracy: .ulpOfOne
 			)
 
 			XCTAssertEqual(
 				testCase.expectedBounds!.1,
 				testCase.doubleTweakViewData.stepperValues!.stepperMax,
-				accuracy: Double.ulpOfOne
+				accuracy: .ulpOfOne
 			)
 		}
 	}
