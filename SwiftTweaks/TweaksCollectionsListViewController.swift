@@ -95,6 +95,10 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 			super.init(style: UITableViewCell.CellStyle.value1, reuseIdentifier: reuseIdentifier)
 			accessoryType = .disclosureIndicator
+
+			let touchHighlightView = UIView()
+			touchHighlightView.backgroundColor = AppTheme.Colors.tableCellTouchHighlight
+			self.selectedBackgroundView = touchHighlightView
 		}
 
 		required init?(coder aDecoder: NSCoder) {

@@ -26,6 +26,8 @@ internal final class TweakCollectionViewController: UIViewController {
 		return tableView
 	}()
 
+	fileprivate let hapticsPlayer = HapticsPlayer()
+
 	init(tweakCollection: TweakCollection, tweakStore: TweakStore, delegate: TweakCollectionViewControllerDelegate) {
 		self.tweakCollection = tweakCollection
 		self.tweakStore = tweakStore
@@ -73,6 +75,11 @@ internal final class TweakCollectionViewController: UIViewController {
 		tableView.reloadData()
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		self.hapticsPlayer.prepare()
+	}
+
 
 	// MARK: Events
 
@@ -117,6 +124,8 @@ internal final class TweakCollectionViewController: UIViewController {
 
 extension TweakCollectionViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+
 		let tweak = tweakAtIndexPath(indexPath)
 		switch tweak.tweakViewDataType {
 		case .uiColor:
@@ -125,7 +134,14 @@ extension TweakCollectionViewController: UITableViewDelegate {
 		case .stringList:
 			let stringOptionVC = StringOptionViewController(anyTweak: tweak, tweakStore: self.tweakStore, delegate: self)
 			self.navigationController?.pushViewController(stringOptionVC, animated: true)
-		case .boolean, .integer, .cgFloat, .double, .string:
+		case .action:
+			let actionTweak = tweak.tweak as! Tweak<TweakAction>
+			actionTweak.defaultValue.evaluateAllClosures()
+			self.hapticsPlayer.playNotificationSuccess()
+		case .integer, .cgFloat, .double, .string:
+			let cell = tableView.cellForRow(at: indexPath) as! TweakTableCell
+			cell.startEditingTextField()
+		case .boolean:
 			break
 		}
 	}
@@ -146,6 +162,10 @@ extension TweakCollectionViewController: UITableViewDelegate {
         headerView.delegate = self
         return headerView
     }
+
+	func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		return true
+	}
 }
 
 extension TweakCollectionViewController: UITableViewDataSource {

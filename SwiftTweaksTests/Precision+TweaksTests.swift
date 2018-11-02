@@ -56,7 +56,7 @@ class Precision_TweaksTests: XCTestCase {
 
 		// Double
 		tests
-			.map { PrecisionTestCase($0, $1, $2, .ulpOfOne) }
+			.map { PrecisionTestCase($0, $1, $2, Double.ulpOfOne) }
 			.forEach(PrecisionTestCase.verify)
 
 		// CGFloat

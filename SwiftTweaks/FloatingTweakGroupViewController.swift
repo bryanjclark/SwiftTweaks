@@ -29,7 +29,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	static func editingSupported(forTweak tweak: AnyTweak) -> Bool {
 		switch tweak.tweakViewDataType {
-		case .boolean, .integer, .cgFloat, .double:
+		case .boolean, .integer, .cgFloat, .double, .action:
 			return true
 		case .uiColor, .stringList, .string:
 			return false
@@ -39,6 +39,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 	private let presenter: FloatingTweaksWindowPresenter
 	fileprivate let tweakStore: TweakStore
 	private let fullFrame: CGRect
+	fileprivate let hapticsPlayer = HapticsPlayer()
 
 	internal init(frame: CGRect, tweakStore: TweakStore, presenter: FloatingTweaksWindowPresenter) {
 		self.tweakStore = tweakStore
@@ -69,6 +70,7 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 		super.viewDidAppear(animated)
 
 		tableView.flashScrollIndicators()
+		hapticsPlayer.prepare()
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -309,6 +311,14 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 			alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
 		}
+
+		switch tweak.tweakViewDataType {
+		case .action:
+			self.hapticsPlayer.playNotificationSuccess()
+		case .boolean, .cgFloat, .double, .integer, .string, .stringList, .uiColor:
+			break
+		}
+		self.tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
 

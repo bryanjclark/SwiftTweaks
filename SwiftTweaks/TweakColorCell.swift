@@ -46,6 +46,10 @@ internal final class TweakColorCell: UITableViewCell {
 
 		textField.delegate = self
 
+		let touchHighlightView = UIView()
+		touchHighlightView.backgroundColor = AppTheme.Colors.tableCellTouchHighlight
+		self.selectedBackgroundView = touchHighlightView
+
 		accessory.addSubview(slider)
 		accessory.addSubview(textField)
 		accessory.addSubview(label)

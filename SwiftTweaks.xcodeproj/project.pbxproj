@@ -60,6 +60,7 @@
 		937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */; };
 		938D5EC51BF2C6A700B834E7 /* TweakCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */; };
 		939482B91BFFD89500ADBFE0 /* TweakBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939482B81BFFD89400ADBFE0 /* TweakBackup.swift */; };
+		939CB70F218CFE570041E3EA /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
 		939F2CCC1CB715E800345E03 /* Clipping+TweaksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */; };
 		939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9EC1CB575AF002A92BE /* AppTheme.swift */; };
 		939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338E9E61CB57068002A92BE /* UIImage+SwiftTweaks.swift */; };
@@ -87,6 +88,10 @@
 		93C942591BFBDC550054811A /* TweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C942581BFBDC550054811A /* TweakBinding.swift */; };
 		93DB80351BFCE4E80031D61A /* AnyTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB80341BFCE4E80031D61A /* AnyTweak.swift */; };
 		93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */; };
+		AA19DB5320485D0B00C5538F /* StringOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932493981EFC5A4000B2E904 /* StringOptionViewController.swift */; };
+		AA356AF01EB3B5A90063F4E2 /* TweakAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */; };
+		AA356AF41EB3C5B40063F4E2 /* TweakActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */; };
+		AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */; };
 		B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		D47EC86221556E0300273BB7 /* StringOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932493981EFC5A4000B2E904 /* StringOptionViewController.swift */; };
@@ -140,6 +145,7 @@
 		937AA3701CB61BDE000928C5 /* FloatingTweakGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingTweakGroupViewController.swift; sourceTree = "<group>"; };
 		938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakCollectionViewController.swift; sourceTree = "<group>"; };
 		939482B81BFFD89400ADBFE0 /* TweakBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBackup.swift; sourceTree = "<group>"; };
+		939CB70E218CFE570041E3EA /* HapticsPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsPlayer.swift; sourceTree = "<group>"; };
 		939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Clipping+TweaksTest.swift"; sourceTree = "<group>"; };
 		939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tweak+TweaksTests.swift"; sourceTree = "<group>"; };
 		939F2CD41CB8097D00345E03 /* TweakGroupTemplateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakGroupTemplateType.swift; sourceTree = "<group>"; };
@@ -163,6 +169,8 @@
 		93C942581BFBDC550054811A /* TweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBinding.swift; sourceTree = "<group>"; };
 		93DB80341BFCE4E80031D61A /* AnyTweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTweak.swift; sourceTree = "<group>"; };
 		93E777031BED4BBD003F0DE2 /* TweakLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakLibrary.swift; sourceTree = "<group>"; };
+		AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakAction.swift; sourceTree = "<group>"; };
+		AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakActionTests.swift; sourceTree = "<group>"; };
 		B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakDebug.swift; sourceTree = "<group>"; };
 		D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakBindingIdentifier.swift; sourceTree = "<group>"; };
 		D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTweakBinding.swift; sourceTree = "<group>"; };
@@ -242,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				9345EC081BF2A0490086AB5D /* TweaksRootViewController.swift */,
+				939CB70E218CFE570041E3EA /* HapticsPlayer.swift */,
 				9356CD1E1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift */,
 				938D5EC41BF2C6A700B834E7 /* TweakCollectionViewController.swift */,
 				931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */,
@@ -310,6 +319,7 @@
 				93478C7B1CBDF03A0064D8AD /* Precision+TweaksTests.swift */,
 				939F2CD11CB71AC900345E03 /* Tweak+TweaksTests.swift */,
 				930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */,
+				AA356AF31EB3C5B40063F4E2 /* TweakActionTests.swift */,
 				93A84EE21BEAE86E0022D2F3 /* Info.plist */,
 			);
 			path = SwiftTweaksTests;
@@ -318,7 +328,7 @@
 		93A84EFA1BEAE8940022D2F3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				93AA34581BEC0EF9004B734B /* TweakableType.swift */,
+				AA356AEE1EB3B5990063F4E2 /* Types */,
 				93A84EEC1BEAE88D0022D2F3 /* Tweak.swift */,
 				939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */,
 				939F2CDA1CB813F900345E03 /* ComparableTweakDefaultParameters.swift */,
@@ -355,6 +365,15 @@
 				9338E9EC1CB575AF002A92BE /* AppTheme.swift */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		AA356AEE1EB3B5990063F4E2 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				93AA34581BEC0EF9004B734B /* TweakableType.swift */,
+				AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */,
+			);
+			name = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,6 +493,7 @@
 				9345EC071BF296350086AB5D /* TweaksBackupsListViewController.swift in Sources */,
 				9338E9E71CB57068002A92BE /* UIImage+SwiftTweaks.swift in Sources */,
 				93AA34591BEC0EF9004B734B /* TweakableType.swift in Sources */,
+				939CB70F218CFE570041E3EA /* HapticsPlayer.swift in Sources */,
 				93A84EF21BEAE88D0022D2F3 /* Tweak.swift in Sources */,
 				931A247E1BFA8F8000E40192 /* ColorRepresentation.swift in Sources */,
 				9345EC101BF2B95C0086AB5D /* TweakGroup.swift in Sources */,
@@ -496,6 +516,7 @@
 				D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */,
 				9332235B1CB84AF0002D586B /* UIEdgeInsets+EdgeInsetsTweakTemplate.swift in Sources */,
 				9356CD1F1BF16DFA00D0BBD1 /* TweaksCollectionsListViewController.swift in Sources */,
+				AA356AF01EB3B5A90063F4E2 /* TweakAction.swift in Sources */,
 				93212CB01CEE255F00AA85D0 /* ShadowTweakTemplate.swift in Sources */,
 				93B058E31CC44D8900AB2759 /* Precision.swift in Sources */,
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
@@ -525,9 +546,11 @@
 				93A84EE11BEAE86E0022D2F3 /* SwiftTweaksTests.swift in Sources */,
 				930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */,
 				93B058D71CBDF58500AB2759 /* TweakClusterType.swift in Sources */,
+				AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */,
 				939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */,
 				931472511BFFB41700F66D20 /* TweakColorEditViewController.swift in Sources */,
 				931472611BFFB41700F66D20 /* Clip.swift in Sources */,
+				AA19DB5320485D0B00C5538F /* StringOptionViewController.swift in Sources */,
 				939F2CCE1CB7196800345E03 /* UIImage+SwiftTweaks.swift in Sources */,
 				9314725B1BFFB41700F66D20 /* TweakViewData.swift in Sources */,
 				9314724D1BFFB41700F66D20 /* TweaksViewController.swift in Sources */,
@@ -560,6 +583,7 @@
 				931472501BFFB41700F66D20 /* TweakCollectionViewController.swift in Sources */,
 				9314725A1BFFB41700F66D20 /* TweakBinding.swift in Sources */,
 				939F2CCC1CB715E800345E03 /* Clipping+TweaksTest.swift in Sources */,
+				AA356AF41EB3C5B40063F4E2 /* TweakActionTests.swift in Sources */,
 				931472601BFFB41700F66D20 /* UIColor+Tweaks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
