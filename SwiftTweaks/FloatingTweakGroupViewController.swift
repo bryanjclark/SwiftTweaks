@@ -318,6 +318,7 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 		case .boolean, .cgFloat, .double, .integer, .string, .stringList, .uiColor:
 			break
 		}
+		self.tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
 
