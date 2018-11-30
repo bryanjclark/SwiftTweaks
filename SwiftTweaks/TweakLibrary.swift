@@ -20,6 +20,7 @@ public extension TweakLibraryType {
 	}
 
 	/// Immediately binds the currentValue of a given tweak, and then continues to update whenever the tweak changes.
+	@discardableResult
 	static func bind<T>(_ tweak: Tweak<T>, binding: @escaping (T) -> Void) -> TweakBindingIdentifier {
 		return self.defaultStore.bind(tweak, binding: binding)
 	}
@@ -32,6 +33,7 @@ public extension TweakLibraryType {
 	//  Accepts a collection of Tweaks, and immediately calls the updateHandler.
 	/// The updateHandler is then re-called each time any of the collection's tweaks change.
 	/// Inside the updateHandler, you'll need to use `assign` to get the tweaks' current values.
+	@discardableResult
 	static func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) -> MultiTweakBindingIdentifier {
 		return self.defaultStore.bindMultiple(tweaks, binding: binding)
 	}
