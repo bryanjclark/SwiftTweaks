@@ -27,7 +27,7 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let colorText1 = Tweak("Text", "Color", "text-1", UIColor.black)
 	public static let colorText2 = Tweak("Text", "Color", "text-2", UIColor(hue: 213/255, saturation: 0.07, brightness: 0.58, alpha: 1))
 
-	public static let title = Tweak<StringOption>.stringList("Text", "Text", "Title", options: ["SwiftTweaks", "Welcome!", "Example"])
+    public static let title = Tweak("Text", "Text", "Title", options: ["SwiftTweaks", "Welcome!", "Example"])
 	public static let subtitle = Tweak<String>("Text", "Text", "Subtitle", "Subtitle")
 
 	// Tweaks are often used in combination with each other, so we have some templates available for ease-of-use:
