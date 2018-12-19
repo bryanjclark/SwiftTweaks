@@ -89,6 +89,7 @@ internal final class TweakTableCell: UITableViewCell {
 	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
 	private static let colorTextWidthFraction: CGFloat = 0.30
 	private static let stringTextWidthFraction: CGFloat = 0.60
+	private static let stringListValueLeadingPadding: CGFloat = 10 // Leading padding before the string list's value text field
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
 
@@ -180,10 +181,14 @@ internal final class TweakTableCell: UITableViewCell {
 			accessory.bounds = textField.bounds
 
 		case .stringList:
+			let textFieldSize = self.textField.sizeThatFits(CGSize(
+				width: CGFloat.greatestFiniteMagnitude,
+				height: bounds.height
+			))
 			let textFieldFrame = CGRect(
 				origin: .zero,
 				size: CGSize(
-					width: bounds.width * TweakTableCell.stringTextWidthFraction,
+					width: textFieldSize.width + TweakTableCell.stringListValueLeadingPadding,
 					height: bounds.height
 				)
 			).integral
