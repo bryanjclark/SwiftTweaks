@@ -92,7 +92,7 @@ extension Tweak where T == StringOption {
 	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String? = nil) {
 		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
 		precondition(
-			defaultValue == nil || (defaultValue != nil && options.contains(defaultValue!) == false),
+			defaultValue == nil || options.contains(defaultValue!),
 			"The default value \"\(String(describing: defaultValue))\" of the stringList tweak \"\(tweakName)\" must be in the list of options \"\(options)\""
 		)
 
