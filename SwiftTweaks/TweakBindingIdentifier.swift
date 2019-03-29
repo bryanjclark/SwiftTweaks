@@ -19,7 +19,9 @@ public struct TweakBindingIdentifier: Hashable {
 	}
 
 	public func hash(into hasher: inout Hasher) {
-		hasher.combine("\(tweak.tweakIdentifier)\(TweakIdentifierSeparator)\(identifier)")
+		hasher.combine(tweak.tweakIdentifier)
+		hasher.combine(TweakIdentifierSeparator)
+		hasher.combine(identifier)
 	}
 }
 
