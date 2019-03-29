@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07190479224D931A00D28728 /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
 		930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -94,7 +95,6 @@
 		AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA356AEF1EB3B5A90063F4E2 /* TweakAction.swift */; };
 		B0E03A551CFF818900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
 		B0E03A571CFF86E900BFB1E6 /* TweakDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E03A541CFF818900BFB1E6 /* TweakDebug.swift */; };
-		D47EC86221556E0300273BB7 /* StringOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932493981EFC5A4000B2E904 /* StringOptionViewController.swift */; };
 		D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDB1DC7DFC200F79235 /* TweakBindingIdentifier.swift */; };
 		D5CE0BDE1DC7E04A00F79235 /* MultiTweakBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDD1DC7E04A00F79235 /* MultiTweakBinding.swift */; };
 		D5CE0BE01DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CE0BDF1DC7E0D600F79235 /* MultiTweakBindingIdentifier.swift */; };
@@ -432,25 +432,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Khan Academy";
 				TargetAttributes = {
 					93A84ED01BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1020;
 					};
 					93A84EDA1BEAE86E0022D2F3 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = 93A84ECB1BEAE86E0022D2F3 /* Build configuration list for PBXProject "SwiftTweaks" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 93A84EC71BEAE86E0022D2F3;
 			productRefGroup = 93A84ED21BEAE86E0022D2F3 /* Products */;
@@ -548,6 +549,7 @@
 				93B058D71CBDF58500AB2759 /* TweakClusterType.swift in Sources */,
 				AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */,
 				939F2CCF1CB7197800345E03 /* HitTransparentWindow.swift in Sources */,
+				07190479224D931A00D28728 /* HapticsPlayer.swift in Sources */,
 				931472511BFFB41700F66D20 /* TweakColorEditViewController.swift in Sources */,
 				931472611BFFB41700F66D20 /* Clip.swift in Sources */,
 				AA19DB5320485D0B00C5538F /* StringOptionViewController.swift in Sources */,
@@ -565,7 +567,6 @@
 				D5CE0BE21DC7E1FB00F79235 /* MultiTweakBindingIdentifier.swift in Sources */,
 				939F2CCD1CB7196400345E03 /* AppTheme.swift in Sources */,
 				9314724F1BFFB41700F66D20 /* TweaksCollectionsListViewController.swift in Sources */,
-				D47EC86221556E0300273BB7 /* StringOptionViewController.swift in Sources */,
 				931472541BFFB41700F66D20 /* TweakTableCell.swift in Sources */,
 				93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				931472581BFFB41700F66D20 /* TweakLibrary.swift in Sources */,
@@ -721,7 +722,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -739,7 +740,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -751,7 +752,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaksTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -763,7 +764,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.Khan-Academy.SwiftTweaksTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -257,6 +257,8 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 			} else {
 				restore()
 			}
+		@unknown default:
+			return
 		}
 	}
 

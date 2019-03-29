@@ -18,8 +18,8 @@ public struct TweakBindingIdentifier: Hashable {
 		self.identifier = UUID()
 	}
 
-	public var hashValue: Int {
-		return "\(tweak.tweakIdentifier)\(TweakIdentifierSeparator)\(identifier)".hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine("\(tweak.tweakIdentifier)\(TweakIdentifierSeparator)\(identifier)")
 	}
 }
 
