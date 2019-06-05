@@ -14,7 +14,7 @@ internal extension UIColor {
 
 	/// Creates a UIColor with a given hex string (e.g. "#FF00FF")
 	// NOTE: Would use a failable init (e.g. `UIColor(hexString: _)` but have to wait until Swift 2.2.1 https://github.com/Khan/SwiftTweaks/issues/38
-	internal static func colorWithHexString(_ hexString: String) -> UIColor? {
+	static func colorWithHexString(_ hexString: String) -> UIColor? {
 		// Strip whitespace, "#", "0x", and make uppercase
 		let hexString = hexString
 			.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
@@ -47,7 +47,7 @@ internal extension UIColor {
 		return UIColor(red: colorFloats[0], green: colorFloats[1], blue: colorFloats[2], alpha: colorFloats[3])
 	}
 
-	internal convenience init(hex: UInt32, alpha: CGFloat = 1) {
+	convenience init(hex: UInt32, alpha: CGFloat = 1) {
 		self.init(
 			red: CGFloat((hex & 0xFF0000) >> 16) / 255.0,
 			green: CGFloat((hex & 0x00FF00) >> 8) / 255.0,
@@ -56,14 +56,14 @@ internal extension UIColor {
 		)
 	}
 
-	internal var alphaValue: CGFloat {
+	var alphaValue: CGFloat {
 		var white: CGFloat = 0
 		var alpha: CGFloat = 0
 		getWhite(&white, alpha: &alpha)
 		return alpha
 	}
 
-	internal var hexString: String {
+	var hexString: String {
 		assert(canProvideRGBComponents, "Must be an RGB color to use UIColor.hexValue")
 
 		var red: CGFloat = 0

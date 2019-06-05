@@ -9,7 +9,7 @@
 import UIKit
 
 internal extension TweakStore {
-	internal var textRepresentation: String {
+	var textRepresentation: String {
 		// Let's sort our tweaks by collection/group/name, and then return the list!
 		let returnValue: String = sortedTweakCollections
 			.reduce([]) { $0 + $1.allTweaks }
