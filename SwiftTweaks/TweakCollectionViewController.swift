@@ -62,7 +62,7 @@ internal final class TweakCollectionViewController: UIViewController {
 		tableView.register(TweakGroupSectionHeader.self, forHeaderFooterViewReuseIdentifier: TweakGroupSectionHeader.identifier)
 		view.addSubview(tableView)
 
-		let keyboardTriggers: [Notification.Name] = [UIResponder.keyboardWillShowNotification, UIResponder.keyboardWillHideNotification]
+        let keyboardTriggers: [Notification.Name] = [.UIKeyboardWillShow, .UIKeyboardWillHide]
 		keyboardTriggers.forEach { notificationName in
 			NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: .main, using: handleKeyboardVisibilityChange(_:))
 		}
@@ -86,8 +86,8 @@ internal final class TweakCollectionViewController: UIViewController {
 	@objc private func handleKeyboardVisibilityChange(_ notification: Notification) {
 		if
 			let userInfo = notification.userInfo,
-			let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-			let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
+            let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect,
+            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber
 		{
 			UIView.animate(
 				withDuration: animationDuration.doubleValue,

@@ -31,8 +31,8 @@ internal final class TweaksRootViewController: UIViewController {
 				newContentView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
 				view.addSubview(newContentView!)
-				addChild(newContentViewController)
-				newContentViewController.didMove(toParent: self)
+                addChildViewController(newContentViewController)
+                newContentViewController.didMove(toParentViewController: self)
 
 				toolbarItems = newContentViewController.toolbarItems
 				navigationItem.leftBarButtonItem = newContentViewController.navigationItem.leftBarButtonItem
@@ -41,7 +41,7 @@ internal final class TweaksRootViewController: UIViewController {
 
 			if let oldContent = oldValue {
 				oldContent.viewController.view.removeFromSuperview()
-				oldContent.viewController.removeFromParent()
+                oldContent.viewController.removeFromParentViewController()
 			}
 		}
 	}
