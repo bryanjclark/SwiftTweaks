@@ -21,7 +21,7 @@ internal struct TweakBinding<T: TweakableType>: TweakBindingType{
 
 	func applyBindingWithValue(_ value: TweakableType) {
 		switch type(of: value).tweakViewDataType {
-		case .boolean, .integer, .cgFloat, .action, .double, .uiColor, .string, .stringList:
+		case .boolean, .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64, .cgFloat, .action, .double, .uiColor, .string, .stringList:
 			binding(value as! T)
 		}
 	}

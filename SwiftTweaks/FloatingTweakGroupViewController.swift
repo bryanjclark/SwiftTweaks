@@ -30,7 +30,8 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 
 	static func editingSupported(forTweak tweak: AnyTweak) -> Bool {
 		switch tweak.tweakViewDataType {
-		case .boolean, .integer, .cgFloat, .double, .action:
+		case .boolean, .integer, .int8, .int16, .int32, .int64,
+             .uInt8, .uInt16, .uInt32, .uInt64, .cgFloat, .double, .action:
 			return true
 		case .uiColor, .stringList, .string:
 			return false
@@ -341,7 +342,8 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 			if let actionTweak = tweak.tweak as? Tweak<TweakAction> {            
 				actionTweak.defaultValue.evaluateAllClosures()
 			}
-		case .boolean, .cgFloat, .double, .integer, .string, .stringList, .uiColor:
+		case .boolean, .cgFloat, .double, .integer, .int8, .int16, .int32, .int64,
+             .uInt8, .uInt16, .uInt32, .uInt64, .string, .stringList, .uiColor:
 			break
 		}
 		self.tableView.deselectRow(at: indexPath, animated: true)

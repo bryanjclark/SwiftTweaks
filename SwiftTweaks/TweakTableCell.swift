@@ -31,7 +31,7 @@ internal final class TweakTableCell: UITableViewCell {
 	internal var isInFloatingTweakGroupWindow = false
 
 	private var accessory = UIView()
-
+    
 	private let switchControl: UISwitch = {
 		let switchControl = UISwitch()
 		switchControl.onTintColor = AppTheme.Colors.controlTinted
@@ -76,7 +76,7 @@ internal final class TweakTableCell: UITableViewCell {
 		textField.delegate = self
 
 		detailTextLabel!.textColor = AppTheme.Colors.textPrimary
-
+        
 		let touchHighlightView = UIView()
 		touchHighlightView.backgroundColor = AppTheme.Colors.tableCellTouchHighlight
 		self.selectedBackgroundView = touchHighlightView
@@ -109,7 +109,7 @@ internal final class TweakTableCell: UITableViewCell {
 			switchControl.sizeToFit()
 			accessory.bounds = switchControl.bounds
 
-		case .integer, .float, .doubleTweak:
+		case .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64, .float, .doubleTweak:
 			stepperControl.sizeToFit()
 
 			let textFrame = CGRect(
@@ -222,7 +222,7 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
 			selectionStyle = .none
-		case .integer, .float, .doubleTweak:
+		case .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64, .float, .doubleTweak:
 			switchControl.isHidden = true
 			textField.isHidden = false
 			stepperControl.isHidden = false
@@ -276,7 +276,7 @@ internal final class TweakTableCell: UITableViewCell {
 			switchControl.isOn = value
 			textFieldEnabled = false
 
-		case .integer:
+		case .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64:
 			let doubleValue = viewData.doubleValue!
 			self.updateStepper(value: doubleValue, stepperValues: viewData.stepperValues!)
 
@@ -347,6 +347,30 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .integer(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .integer, value: Int(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .int8(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .int8, value: Int8(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .int16(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .int16, value: Int16(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .int32(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .int32, value: Int32(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .int64(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .int64, value: Int64(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .uInt8(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .uInt8, value: UInt8(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .uInt16(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .uInt16, value: UInt16(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .uInt32(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .uInt32, value: UInt32(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
+		case let .uInt64(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			viewData = TweakViewData(type: .uInt64, value: UInt64(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
+			delegate?.tweakCellDidChangeCurrentValue(self)
 		case let .float(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .cgFloat, value: CGFloat(stepperControl.value), defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
@@ -374,6 +398,62 @@ extension TweakTableCell: UITextFieldDelegate {
 		case let .integer(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
 			if let text = textField.text, let newValue = Int(text) {
 				viewData = TweakViewData(type: .integer, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .int8(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = Int8(text) {
+				viewData = TweakViewData(type: .int8, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .int16(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = Int16(text) {
+				viewData = TweakViewData(type: .int16, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .int32(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = Int32(text) {
+				viewData = TweakViewData(type: .int32, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .int64(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = Int64(text) {
+				viewData = TweakViewData(type: .int64, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .uInt8(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = UInt8(text) {
+				viewData = TweakViewData(type: .uInt8, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .uInt16(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = UInt16(text) {
+				viewData = TweakViewData(type: .uInt16, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .uInt32(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = UInt32(text) {
+				viewData = TweakViewData(type: .uInt32, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
+				delegate?.tweakCellDidChangeCurrentValue(self)
+			} else {
+				updateSubviews()
+			}
+		case let .uInt64(_, defaultValue: defaultValue, min: minimum, max: maximum, stepSize: step):
+			if let text = textField.text, let newValue = UInt64(text) {
+				viewData = TweakViewData(type: .uInt64, value: newValue, defaultValue: defaultValue, minimum: minimum, maximum: maximum, stepSize: step, options: nil)
 				delegate?.tweakCellDidChangeCurrentValue(self)
 			} else {
 				updateSubviews()

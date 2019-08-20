@@ -144,6 +144,30 @@ public final class TweakStore {
 		case let .integer(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? Int ?? defaultValue
 			return .integer(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .int8(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Int8 ?? defaultValue
+			return .int8(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .int16(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Int16 ?? defaultValue
+			return .int16(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .int32(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Int32 ?? defaultValue
+			return .int32(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .int64(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? Int64 ?? defaultValue
+			return .int64(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .uInt8(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? UInt8 ?? defaultValue
+			return .uInt8(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .uInt16(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? UInt16 ?? defaultValue
+			return .uInt16(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .uInt32(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? UInt32 ?? defaultValue
+			return .uInt32(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
+		case let .uInt64(defaultValue: defaultValue, min: min, max: max, stepSize: step):
+			let currentValue = cachedValue as? UInt64 ?? defaultValue
+			return .uInt64(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)
 		case let .float(defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			let currentValue = cachedValue as? CGFloat ?? defaultValue
 			return .float(value: currentValue, defaultValue: defaultValue, min: min, max: max, stepSize: step)

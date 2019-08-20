@@ -138,7 +138,7 @@ extension TweakCollectionViewController: UITableViewDelegate {
 			let actionTweak = tweak.tweak as! Tweak<TweakAction>
 			actionTweak.defaultValue.evaluateAllClosures()
 			self.hapticsPlayer.playNotificationSuccess()
-		case .integer, .cgFloat, .double, .string:
+		case .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64, .cgFloat, .double, .string:
 			let cell = tableView.cellForRow(at: indexPath) as! TweakTableCell
 			cell.startEditingTextField()
 		case .boolean:

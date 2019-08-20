@@ -21,6 +21,14 @@ public protocol TweakableType {
 public enum TweakViewDataType {
 	case boolean
 	case integer
+	case int8
+	case int16
+	case int32
+	case int64
+	case uInt8
+	case uInt16
+	case uInt32
+	case uInt64
 	case cgFloat
 	case double
 	case uiColor
@@ -29,7 +37,10 @@ public enum TweakViewDataType {
 	case action
 
 	public static let allTypes: [TweakViewDataType] = [
-		.boolean, .integer, .cgFloat, .action, .double, .uiColor, .string, .stringList, 
+		.boolean, .integer,
+		.int8, .int16, .int32, .int64,
+		.uInt8, .uInt16, .uInt32, .uInt64,
+		.cgFloat, .action, .double, .uiColor, .string, .stringList, 
 	]
 }
 
@@ -39,6 +50,14 @@ public enum TweakViewDataType {
 public enum TweakDefaultData {
 	case boolean(defaultValue: Bool)
 	case integer(defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
+	case int8(defaultValue: Int8, min: Int8?, max: Int8?, stepSize: Int8?)
+	case int16(defaultValue: Int16, min: Int16?, max: Int16?, stepSize: Int16?)
+	case int32(defaultValue: Int32, min: Int32?, max: Int32?, stepSize: Int32?)
+	case int64(defaultValue: Int64, min: Int64?, max: Int64?, stepSize: Int64?)
+	case uInt8(defaultValue: UInt8, min: UInt8?, max: UInt8?, stepSize: UInt8?)
+	case uInt16(defaultValue: UInt16, min: UInt16?, max: UInt16?, stepSize: UInt16?)
+	case uInt32(defaultValue: UInt32, min: UInt32?, max: UInt32?, stepSize: UInt32?)
+	case uInt64(defaultValue: UInt64, min: UInt64?, max: UInt64?, stepSize: UInt64?)
 	case float(defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case doubleTweak(defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(defaultValue: UIColor)
@@ -78,6 +97,54 @@ extension Bool: TweakableType {
 extension Int: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
 		return .integer
+	}
+}
+
+extension Int8: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .int8
+	}
+}
+
+extension Int16: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .int16
+	}
+}
+
+extension Int32: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .int32
+	}
+}
+
+extension Int64: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .int64
+	}
+}
+
+extension UInt8: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .uInt8
+	}
+}
+
+extension UInt16: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .uInt16
+	}
+}
+
+extension UInt32: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .uInt32
+	}
+}
+
+extension UInt64: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .uInt64
 	}
 }
 

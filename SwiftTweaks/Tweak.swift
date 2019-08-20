@@ -136,6 +136,62 @@ extension Tweak: TweakType {
 				max: maximumValue as? Int,
 				stepSize: stepSize as? Int
 			)
+		case .int8:
+			return .int8(
+				defaultValue: defaultValue as! Int8,
+				min: minimumValue as? Int8,
+				max: maximumValue as? Int8,
+				stepSize: stepSize as? Int8
+			)
+		case .int16:
+			return .int16(
+				defaultValue: defaultValue as! Int16,
+				min: minimumValue as? Int16,
+				max: maximumValue as? Int16,
+				stepSize: stepSize as? Int16
+			)
+		case .int32:
+			return .int32(
+				defaultValue: defaultValue as! Int32,
+				min: minimumValue as? Int32,
+				max: maximumValue as? Int32,
+				stepSize: stepSize as? Int32
+			)
+		case .int64:
+			return .int64(
+				defaultValue: defaultValue as! Int64,
+				min: minimumValue as? Int64,
+				max: maximumValue as? Int64,
+				stepSize: stepSize as? Int64
+			)
+		case .uInt8:
+			return .uInt8(
+				defaultValue: defaultValue as! UInt8,
+				min: minimumValue as? UInt8,
+				max: maximumValue as? UInt8,
+				stepSize: stepSize as? UInt8
+			)
+		case .uInt16:
+			return .uInt16(
+				defaultValue: defaultValue as! UInt16,
+				min: minimumValue as? UInt16,
+				max: maximumValue as? UInt16,
+				stepSize: stepSize as? UInt16
+			)
+		case .uInt32:
+			return .uInt32(
+				defaultValue: defaultValue as! UInt32,
+				min: minimumValue as? UInt32,
+				max: maximumValue as? UInt32,
+				stepSize: stepSize as? UInt32
+			)
+		case .uInt64:
+			return .uInt64(
+				defaultValue: defaultValue as! UInt64,
+				min: minimumValue as? UInt64,
+				max: maximumValue as? UInt64,
+				stepSize: stepSize as? UInt64
+			)
 		case .cgFloat:
 			return .float(
 				defaultValue: defaultValue as! CGFloat,

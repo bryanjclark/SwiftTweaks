@@ -168,6 +168,14 @@ private final class TweakDiskPersistency {
 		private static func tweakableTypeWithAnyObject(_ anyObject: AnyObject, withType type: TweakViewDataType) -> TweakableType? {
 			switch type {
 			case .integer: return anyObject as? Int
+			case .int8: return anyObject as? Int8
+			case .int16: return anyObject as? Int16
+			case .int32: return anyObject as? Int32
+			case .int64: return anyObject as? Int64
+			case .uInt8: return anyObject as? UInt8
+			case .uInt16: return anyObject as? UInt16
+			case .uInt32: return anyObject as? UInt32
+			case .uInt64: return anyObject as? UInt64
 			case .boolean: return anyObject as? Bool
 			case .cgFloat: return anyObject as? CGFloat
 			case .double: return anyObject as? Double
@@ -190,6 +198,14 @@ private extension TweakViewDataType {
 		switch self {
 		case .boolean: return "boolean"
 		case .integer: return "integer"
+		case .int8: return "int8"
+		case .int16: return "int16"
+		case .int32: return "int32"
+		case .int64: return "int64"
+		case .uInt8: return "uInt8"
+		case .uInt16: return "uInt16"
+		case .uInt32: return "uInt32"
+		case .uInt64: return "uInt64"
 		case .cgFloat: return "cgfloat"
 		case .double: return "double"
 		case .uiColor: return "uicolor"
@@ -206,6 +222,14 @@ private extension TweakableType {
 		switch type(of: self).tweakViewDataType {
 			case .boolean: return self as! Bool as AnyObject
 			case .integer: return self as! Int as AnyObject
+			case .int8: return self as! Int8 as AnyObject
+			case .int16: return self as! Int16 as AnyObject
+			case .int32: return self as! Int32 as AnyObject
+			case .int64: return self as! Int64 as AnyObject
+			case .uInt8: return self as! UInt8 as AnyObject
+			case .uInt16: return self as! UInt16 as AnyObject
+			case .uInt32: return self as! UInt32 as AnyObject
+			case .uInt64: return self as! UInt64 as AnyObject
 			case .cgFloat: return self as! CGFloat as AnyObject
 			case .double: return self as! Double as AnyObject
 			case .uiColor: return self as! UIColor

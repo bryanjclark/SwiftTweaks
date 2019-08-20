@@ -12,6 +12,14 @@ import UIKit
 internal enum TweakViewData {
 	case boolean(value: Bool, defaultValue: Bool)
 	case integer(value: Int, defaultValue: Int, min: Int?, max: Int?, stepSize: Int?)
+	case int8(value: Int8, defaultValue: Int8, min: Int8?, max: Int8?, stepSize: Int8?)
+	case int16(value: Int16, defaultValue: Int16, min: Int16?, max: Int16?, stepSize: Int16?)
+	case int32(value: Int32, defaultValue: Int32, min: Int32?, max: Int32?, stepSize: Int32?)
+	case int64(value: Int64, defaultValue: Int64, min: Int64?, max: Int64?, stepSize: Int64?)
+	case uInt8(value: UInt8, defaultValue: UInt8, min: UInt8?, max: UInt8?, stepSize: UInt8?)
+	case uInt16(value: UInt16, defaultValue: UInt16, min: UInt16?, max: UInt16?, stepSize: UInt16?)
+	case uInt32(value: UInt32, defaultValue: UInt32, min: UInt32?, max: UInt32?, stepSize: UInt32?)
+	case uInt64(value: UInt64, defaultValue: UInt64, min: UInt64?, max: UInt64?, stepSize: UInt64?)
 	case float(value: CGFloat, defaultValue: CGFloat, min: CGFloat?, max: CGFloat?, stepSize: CGFloat?)
 	case doubleTweak(value: Double, defaultValue: Double, min: Double?, max: Double?, stepSize: Double?)
 	case color(value: UIColor, defaultValue: UIColor)
@@ -25,6 +33,30 @@ internal enum TweakViewData {
 			self = .boolean(value: value as! Bool, defaultValue: defaultValue as! Bool)
 		case .uiColor:
 			self = .color(value: value as! UIColor, defaultValue: defaultValue as! UIColor)
+		case .int8:
+			let clippedValue = clip(value as! Int8, minimum as? Int8, maximum as? Int8)
+			self = .int8(value: clippedValue, defaultValue: defaultValue as! Int8, min: minimum as? Int8, max: maximum as? Int8, stepSize: stepSize as? Int8)
+		case .int16:
+			let clippedValue = clip(value as! Int16, minimum as? Int16, maximum as? Int16)
+			self = .int16(value: clippedValue, defaultValue: defaultValue as! Int16, min: minimum as? Int16, max: maximum as? Int16, stepSize: stepSize as? Int16)
+		case .int32:
+			let clippedValue = clip(value as! Int32, minimum as? Int32, maximum as? Int32)
+			self = .int32(value: clippedValue, defaultValue: defaultValue as! Int32, min: minimum as? Int32, max: maximum as? Int32, stepSize: stepSize as? Int32)
+		case .int64:
+			let clippedValue = clip(value as! Int64, minimum as? Int64, maximum as? Int64)
+			self = .int64(value: clippedValue, defaultValue: defaultValue as! Int64, min: minimum as? Int64, max: maximum as? Int64, stepSize: stepSize as? Int64)
+		case .uInt8:
+			let clippedValue = clip(value as! UInt8, minimum as? UInt8, maximum as? UInt8)
+			self = .uInt8(value: clippedValue, defaultValue: defaultValue as! UInt8, min: minimum as? UInt8, max: maximum as? UInt8, stepSize: stepSize as? UInt8)
+		case .uInt16:
+			let clippedValue = clip(value as! UInt16, minimum as? UInt16, maximum as? UInt16)
+			self = .uInt16(value: clippedValue, defaultValue: defaultValue as! UInt16, min: minimum as? UInt16, max: maximum as? UInt16, stepSize: stepSize as? UInt16)
+		case .uInt32:
+			let clippedValue = clip(value as! UInt32, minimum as? UInt32, maximum as? UInt32)
+			self = .uInt32(value: clippedValue, defaultValue: defaultValue as! UInt32, min: minimum as? UInt32, max: maximum as? UInt32, stepSize: stepSize as? UInt32)
+		case .uInt64:
+			let clippedValue = clip(value as! UInt64, minimum as? UInt64, maximum as? UInt64)
+			self = .uInt64(value: clippedValue, defaultValue: defaultValue as! UInt64, min: minimum as? UInt64, max: maximum as? UInt64, stepSize: stepSize as? UInt64)
 		case .integer:
 			let clippedValue = clip(value as! Int, minimum as? Int, maximum as? Int)
 			self = .integer(value: clippedValue, defaultValue: defaultValue as! Int, min: minimum as? Int, max: maximum as? Int, stepSize: stepSize as? Int)
@@ -49,6 +81,22 @@ internal enum TweakViewData {
 			return boolValue
 		case let .integer(value: intValue, _, _, _, _):
 			return intValue
+		case let .int8(value: intValue, _, _, _, _):
+			return intValue
+		case let .int16(value: intValue, _, _, _, _):
+			return intValue
+		case let .int32(value: intValue, _, _, _, _):
+			return intValue
+		case let .int64(value: intValue, _, _, _, _):
+			return intValue
+		case let .uInt8(value: intValue, _, _, _, _):
+			return intValue
+		case let .uInt16(value: intValue, _, _, _, _):
+			return intValue
+		case let .uInt32(value: intValue, _, _, _, _):
+			return intValue
+		case let .uInt64(value: intValue, _, _, _, _):
+			return intValue
 		case let .float(value: floatValue, _, _, _, _):
 			return floatValue
 		case let .doubleTweak(value: doubleValue, _, _, _, _):
@@ -71,6 +119,22 @@ internal enum TweakViewData {
 			return nil
 		case let .integer(value: intValue, _, _, _, _):
 			return Double(intValue)
+		case let .int8(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .int16(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .int32(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .int64(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .uInt8(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .uInt16(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .uInt32(value: intValue, _, _, _, _):
+			return Double(intValue)
+		case let .uInt64(value: intValue, _, _, _, _):
+			return Double(intValue)
 		case let .float(value: floatValue, _, _, _, _):
 			return Double(floatValue)
 		case let .doubleTweak(value: doubleValue, _, _, _, _):
@@ -87,6 +151,30 @@ internal enum TweakViewData {
 			differsFromDefault = (value != defaultValue)
 		case let .integer(value: value, defaultValue: defaultValue, _, _, _):
 			string = "Int(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .int8(value: value, defaultValue: defaultValue, _, _, _):
+			string = "Int8(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .int16(value: value, defaultValue: defaultValue, _, _, _):
+			string = "Int16(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .int32(value: value, defaultValue: defaultValue, _, _, _):
+			string = "Int32(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .int64(value: value, defaultValue: defaultValue, _, _, _):
+			string = "Int64(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .uInt8(value: value, defaultValue: defaultValue, _, _, _):
+			string = "UInt8(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .uInt16(value: value, defaultValue: defaultValue, _, _, _):
+			string = "UInt16(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .uInt32(value: value, defaultValue: defaultValue, _, _, _):
+			string = "UInt32(\(value))"
+			differsFromDefault = (value != defaultValue)
+		case let .uInt64(value: value, defaultValue: defaultValue, _, _, _):
+			string = "UInt64(\(value))"
 			differsFromDefault = (value != defaultValue)
 		case let .float(value: value, defaultValue: defaultValue, _, _, _):
 			string = "Float(\(value))"
@@ -112,7 +200,7 @@ internal enum TweakViewData {
 
 	private var isSignedNumberType: Bool {
 		switch self {
-		case .integer, .float, .doubleTweak:
+		case .integer, .int8, .int16, .int32, .int64, .uInt8, .uInt16, .uInt32, .uInt64, .float, .doubleTweak: // XXX not really signed?
 			return true
 		case .boolean, .color, .action, .string, .stringList:
 			return false
@@ -158,6 +246,70 @@ internal enum TweakViewData {
 			return nil
 
 		case let .integer(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .int8(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .int16(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .int32(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .int64(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .uInt8(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .uInt16(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .uInt32(intValue, intDefaultValue, intMin, intMax, intStep):
+			currentValue = Double(intValue)
+			defaultValue = Double(intDefaultValue)
+			minimum = intMin.map(Double.init)
+			maximum = intMax.map(Double.init)
+			step = intStep.map(Double.init)
+			isInteger = true
+
+		case let .uInt64(intValue, intDefaultValue, intMin, intMax, intStep):
 			currentValue = Double(intValue)
 			defaultValue = Double(intDefaultValue)
 			minimum = intMin.map(Double.init)
