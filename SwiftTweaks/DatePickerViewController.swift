@@ -19,6 +19,8 @@ internal class DatePickerViewController: UIViewController {
 	fileprivate let delegate: DatePickerViewControllerDelegate
     fileprivate let datePicker: UIDatePicker
     fileprivate let dateLabel: UILabel
+    fileprivate let dateFormatter = DateFormatter()
+    fileprivate let timeFormatter = DateFormatter()
 	
 	fileprivate var currentOption: Date {
 		didSet {
@@ -35,7 +37,7 @@ internal class DatePickerViewController: UIViewController {
 	fileprivate static let cellIdentifier = "TweakSelectionViewControllerCellIdentifier"
 	
     @objc func datePickerChanged(picker: UIDatePicker) {
-        dateLabel.text = "\(picker.date)" // XXX make this better
+        dateLabel.text = dateFormatter.string(from: datePicker.date) + "\n" + timeFormatter.string(from: datePicker.date)
         currentOption = picker.date
     }
 
@@ -51,12 +53,16 @@ internal class DatePickerViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
+        dateFormatter.dateStyle = .long
+        timeFormatter.timeStyle = .long
+        
         datePicker.datePickerMode = .dateAndTime
         datePicker.addTarget(self,
                              action: #selector(datePickerChanged(picker:)),
                              for: .valueChanged)
         datePicker.date = currentOption
-        dateLabel.text = "\(datePicker.date)" // XXX make this better
+        dateLabel.text = dateFormatter.string(from: datePicker.date) + "\n" + timeFormatter.string(from: datePicker.date)
+        dateLabel.numberOfLines = 2
         
 		title = tweak.tweakName
 		toolbarItems = [
@@ -82,37 +88,25 @@ internal class DatePickerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        var topUnsafeAreaSize: CGFloat = 0
-        
-        if #available(iOS 11.0, *) {
-            let safeLayout = view.safeAreaLayoutGuide
-            topUnsafeAreaSize = 80
-        } else {
-            if #available(iOS 9.0, *) {
-                let fuck = self.topLayoutGuide.heightAnchor
-            } else {
-                // Fallback on earlier versions
-            }
-            // Fallback on earlier versions
-        }
+        let labelHeight: CGFloat = 60
 
-        let labelHeight: CGFloat = 80
+		datePicker.frame = CGRect(
+          origin: view.bounds.origin,
+          size: CGSize(
+            width: view.bounds.size.width,
+            height: view.bounds.size.height-labelHeight/2
+          )
+        )
+		datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        var realHeight = self.view.frame.height - 60
-        
-        let dateLabelFrame = CGRect(
-          origin: CGPoint(x: 0, y: realHeight-labelHeight),
+        dateLabel.frame = CGRect(
+          origin: CGPoint(x: 0, y: view.bounds.size.height-labelHeight-60),
           size: CGSize(width: self.view.frame.width,
                        height: labelHeight)
         )
-        let datePickerFrame = CGRect(
-          origin: CGPoint(x: 0, y: 0),
-          size: CGSize(width: self.view.frame.width,
-                       height: realHeight-labelHeight)
-        )
-        datePicker.frame = datePickerFrame
-        dateLabel.frame = dateLabelFrame
         dateLabel.textAlignment = .center
+        dateLabel.font = UIFont.systemFont(ofSize: 24)
+        dateLabel.adjustsFontSizeToFitWidth = true
     }
     
 	// MARK: Events

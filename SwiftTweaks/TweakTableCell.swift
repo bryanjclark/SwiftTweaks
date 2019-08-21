@@ -328,7 +328,10 @@ internal final class TweakTableCell: UITableViewCell {
 			textFieldEnabled = true
 
 		case let .date(value, _):
-			textField.text = "\(value)" // XXX fix this
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateStyle = .short
+			dateFormatter.timeStyle = .short
+			textField.text = dateFormatter.string(from: value)
 
 			textFieldEnabled = false
 
