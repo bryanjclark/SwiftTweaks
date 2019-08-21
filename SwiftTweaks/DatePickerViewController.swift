@@ -17,10 +17,10 @@ internal class DatePickerViewController: UIViewController {
 	fileprivate let tweak: Tweak<Date>
 	fileprivate let tweakStore: TweakStore
 	fileprivate let delegate: DatePickerViewControllerDelegate
-    fileprivate let datePicker: UIDatePicker
-    fileprivate let dateLabel: UILabel
-    fileprivate let dateFormatter = DateFormatter()
-    fileprivate let timeFormatter = DateFormatter()
+	fileprivate let datePicker: UIDatePicker
+	fileprivate let dateLabel: UILabel
+	fileprivate let dateFormatter = DateFormatter()
+	fileprivate let timeFormatter = DateFormatter()
 	
 	fileprivate var currentOption: Date {
 		didSet {
