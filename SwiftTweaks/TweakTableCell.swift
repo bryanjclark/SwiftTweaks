@@ -163,7 +163,7 @@ internal final class TweakTableCell: UITableViewCell {
 
 			textField.frame = textFrame
 			colorChit.frame = colorControlFrame
-			disclosureArrow.frame = disclosureArrowFrame
+ 			disclosureArrow.frame = disclosureArrowFrame
 
 			let accessoryFrame = colorControlFrame.union(textFrame).union(disclosureArrowFrame)
 			accessory.bounds = accessoryFrame.integral
@@ -178,6 +178,23 @@ internal final class TweakTableCell: UITableViewCell {
 			).integral
 			textField.frame = textFrame
 			accessory.bounds = textField.bounds
+
+		case .date:
+			let textFieldFrame = CGRect(
+				origin: .zero,
+				size: CGSize(
+					width: bounds.width * TweakTableCell.stringTextWidthFraction,
+					height: bounds.height
+				)
+			).integral
+			textField.frame = textFieldFrame
+			accessory.bounds = textField.bounds
+			let disclosureArrowFrame = CGRect(
+				origin: CGPoint(x: textFieldFrame.width + TweakTableCell.horizontalPadding, y: 0),
+				size: CGSize(width: disclosureArrow.bounds.width, height: bounds.height)
+			)
+			disclosureArrow.frame = disclosureArrowFrame
+			accessory.bounds = textFieldFrame.union(disclosureArrowFrame).integral
 
 		case .stringList:
 			let textFieldFrame = CGRect(
@@ -243,6 +260,13 @@ internal final class TweakTableCell: UITableViewCell {
 			colorChit.isHidden = true
 			disclosureArrow.isHidden = true
 			selectionStyle = .default
+		case .date:
+			switchControl.isHidden = true
+			textField.isHidden = false
+			stepperControl.isHidden = true
+			colorChit.isHidden = true
+			disclosureArrow.isHidden = false
+			selectionStyle = .default
 		case .action:
 			switchControl.isHidden = true
 			textField.isHidden = true
@@ -302,6 +326,11 @@ internal final class TweakTableCell: UITableViewCell {
 			textField.placeholder = NSLocalizedString("Tap to edit", comment: "Text field placeholder for editable text")
 			textField.keyboardType = .default
 			textFieldEnabled = true
+
+		case let .date(value, _):
+			textField.text = "\(value)" // XXX fix this
+
+			textFieldEnabled = false
 
 		case let .stringList(value: value, _, options: _):
 			textField.text = value.value
@@ -377,7 +406,7 @@ internal final class TweakTableCell: UITableViewCell {
 		case let .doubleTweak(_, defaultValue: defaultValue, min: min, max: max, stepSize: step):
 			viewData = TweakViewData(type: .double, value: stepperControl.value, defaultValue: defaultValue, minimum: min, maximum: max, stepSize: step, options: nil)
 			delegate?.tweakCellDidChangeCurrentValue(self)
-		case .color, .boolean, .action, .stringList, .string:
+		case .color, .boolean, .action, .stringList, .string, .date:
 			assertionFailure("Shouldn't be able to update text field with a Color/Boolean/Action/StringList/String tweak.")
 		}
 	}
@@ -486,7 +515,7 @@ extension TweakTableCell: UITextFieldDelegate {
 			} else {
 				updateSubviews()
 			}
-		case .boolean, .action, .stringList:
+		case .boolean, .action, .stringList, .date:
 			assertionFailure("Shouldn't be able to update text field with a Boolean/Action/StringList tweak.")
 		}
 	}

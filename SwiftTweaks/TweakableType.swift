@@ -35,12 +35,13 @@ public enum TweakViewDataType {
 	case string
 	case stringList
 	case action
+	case date
 
 	public static let allTypes: [TweakViewDataType] = [
 		.boolean, .integer,
 		.int8, .int16, .int32, .int64,
 		.uInt8, .uInt16, .uInt32, .uInt64,
-		.cgFloat, .action, .double, .uiColor, .string, .stringList, 
+		.cgFloat, .action, .double, .uiColor, .string, .stringList, .date
 	]
 }
 
@@ -64,6 +65,7 @@ public enum TweakDefaultData {
 	case string(defaultValue: String)
 	case stringList(defaultValue: StringOption, options: [StringOption])
 	case action(defaultValue: TweakAction)
+	case date(defaultValue: Date)
 }
 
 // MARK: Types that conform to TweakableType
@@ -169,5 +171,11 @@ extension UIColor: TweakableType {
 extension String: TweakableType {
 	public static var tweakViewDataType: TweakViewDataType {
 		return .string
+	}
+}
+
+extension Date: TweakableType {
+	public static var tweakViewDataType: TweakViewDataType {
+		return .date
 	}
 }

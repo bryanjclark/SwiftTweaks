@@ -210,6 +210,8 @@ extension Tweak: TweakType {
 			return .color(defaultValue: defaultValue as! UIColor)
 		case .string:
 			return .string(defaultValue: defaultValue as! String)
+		case .date:
+			return .date(defaultValue: defaultValue as! Date)
 		case .stringList:
 			return .stringList(
 				defaultValue: defaultValue as! StringOption,
