@@ -41,6 +41,7 @@ Currently, you can tweak the following types:
 - [`TweakCallbacks`](#callbacks)
 - `String`
 - `StringOption`
+- `Date`
 
 A `Tweak` looks like this:
 
