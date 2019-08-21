@@ -83,10 +83,6 @@ internal class DatePickerViewController: UIViewController {
         view.addSubview(dateLabel)
 
         view.backgroundColor = .white
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         let labelHeight: CGFloat = 60
 
