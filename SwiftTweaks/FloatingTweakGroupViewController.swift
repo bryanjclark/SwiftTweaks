@@ -257,6 +257,8 @@ internal final class FloatingTweakGroupViewController: UIViewController {
 			} else {
 				restore()
 			}
+		@unknown default:
+			return
 		}
 	}
 
@@ -336,6 +338,9 @@ extension FloatingTweakGroupViewController: UITableViewDelegate {
 		switch tweak.tweakViewDataType {
 		case .action:
 			self.hapticsPlayer.playNotificationSuccess()
+			if let actionTweak = tweak.tweak as? Tweak<TweakAction> {            
+				actionTweak.defaultValue.evaluateAllClosures()
+			}
 		case .boolean, .cgFloat, .double, .integer, .string, .stringList, .uiColor:
 			break
 		}

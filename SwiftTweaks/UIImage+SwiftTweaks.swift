@@ -29,7 +29,7 @@ internal extension UIImage {
 	}
 
 	/// Returns the image, tinted to the given color.
-	internal func imageTintedWithColor(_ color: UIColor) -> UIImage {
+	func imageTintedWithColor(_ color: UIColor) -> UIImage {
 		let imageRect = CGRect(origin: CGPoint.zero, size: self.size)
 
 		UIGraphicsBeginImageContextWithOptions(imageRect.size, false, 0.0) // Retina aware.

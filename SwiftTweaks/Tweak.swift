@@ -88,21 +88,34 @@ extension Tweak where T: Comparable {
 	}
 }
 
-extension Tweak {
-	// This can't be an initializer because generic types apparently can't handle fixed-type initializers
-	public static func stringList(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String?=nil) -> Tweak<StringOption> {
+extension Tweak where T == StringOption {
+	public init(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String? = nil) {
 		precondition(!options.isEmpty, "Options list cannot be empty (stringList tweak \"\(tweakName)\")")
 		precondition(
-			defaultValue == nil || (defaultValue != nil && options.index(of: defaultValue!) != nil),
+			defaultValue == nil || options.contains(defaultValue!),
 			"The default value \"\(String(describing: defaultValue))\" of the stringList tweak \"\(tweakName)\" must be in the list of options \"\(options)\""
 		)
 
-		return Tweak<StringOption>(
+		self.init(
 			collectionName: collectionName,
 			groupName: groupName,
 			tweakName: tweakName,
 			defaultValue: StringOption(value: defaultValue ?? options[0]),
 			options: options.map(StringOption.init)
+		)
+	}
+}
+
+extension Tweak {
+	@available(*, deprecated, message: "replaced by 'init(_:_:_options:defaultValue:)'", renamed: "init(_:_:_options:defaultValue:)")
+	public static func stringList(_ collectionName: String, _ groupName: String, _ tweakName: String, options: [String], defaultValue: String? = nil) -> Tweak<StringOption> {
+
+		return Tweak<StringOption>(
+		collectionName,
+		groupName,
+		tweakName,
+		options: options,
+		defaultValue: defaultValue
 		)
 	}
 }
@@ -159,8 +172,8 @@ extension Tweak: TweakType {
 }
 
 extension Tweak: Hashable {
-	public var hashValue: Int {
-		return tweakIdentifier.hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(tweakIdentifier)
 	}
 }
 

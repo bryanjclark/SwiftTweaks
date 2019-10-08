@@ -10,7 +10,7 @@ import UIKit
 
 public extension CALayer {
 	/// A shortcut for applying a ShadowTweakTemplate to a CALayer.
-	public func apply(shadowTweakTemplate tweakTemplate: ShadowTweakTemplate, fromTweakStore tweakStore: TweakStore) {
+	func apply(shadowTweakTemplate tweakTemplate: ShadowTweakTemplate, fromTweakStore tweakStore: TweakStore) {
 		self.shadowColor = tweakStore.assign(tweakTemplate.color).cgColor
 		self.shadowOpacity = Float(tweakStore.assign(tweakTemplate.opacity))
 		self.shadowOffset = CGSize(width: 0, height: tweakStore.assign(tweakTemplate.offsetY))

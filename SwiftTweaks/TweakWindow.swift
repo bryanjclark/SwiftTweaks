@@ -145,6 +145,8 @@ import UIKit
 			case .regular:
 				tweaksViewController.modalPresentationStyle = .formSheet
 				visibleViewController.present(tweaksViewController, animated: true, completion: nil)
+			@unknown default:
+				return
 			}
 
 		}
