@@ -215,7 +215,7 @@ internal final class TweakTableCell: UITableViewCell {
 		
 		// Compute percent of available width used for title at default size.
 		let titleContentSize = textLabel.sizeThatFits(fittingSize)
-		let titleContentPercent = titleContentSize.width / availableContentWidth
+		let titleContentPercent = ceil(titleContentSize.width / availableContentWidth)
 		
 		// Compute percent of available width used for value at default size.
 		let textFieldContentWidth = self.textField.sizeThatFits(fittingSize).width + TweakTableCell.stringListValueLeadingPadding
