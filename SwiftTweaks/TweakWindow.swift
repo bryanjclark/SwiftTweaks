@@ -74,25 +74,46 @@ import UIKit
 
 		super.init(frame: frame)
 
-		tintColor = AppTheme.Colors.controlTinted
+		commonInit(tweakStore: tweakStore)
+	}
 
-		if tweakStore.enabled {
-			switch gestureType {
-			case .gesture(let gestureRecognizer):
-				gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
-			case .twoFingerDoubleTap:
-				let twoFingerDoubleTapGesture = UITapGestureRecognizer()
-				twoFingerDoubleTapGesture.numberOfTapsRequired = 2
-				twoFingerDoubleTapGesture.numberOfTouchesRequired = 2
-				twoFingerDoubleTapGesture.addTarget(self, action: #selector(self.presentTweaks))
-				self.addGestureRecognizer(twoFingerDoubleTapGesture)
-			case .shake:
-				break
-			}
-		}
+    @available(iOS 13.0, *)
+    public init(windowScene: UIWindowScene, gestureType: GestureType = .shake, tweakStore: TweakStore) {
+        self.gestureType = gestureType
 
-		tweaksViewController = TweaksViewController(tweakStore: tweakStore, delegate: self)
-		tweaksViewController.floatingTweaksWindowPresenter = self
+        self.tweakStore = tweakStore
+
+        // Are we running on a Mac? If so, then we're in a simulator!
+        #if (arch(i386) || arch(x86_64))
+            self.runningInSimulator = true
+        #else
+            self.runningInSimulator = false
+        #endif
+
+        super.init(windowScene: windowScene)
+		commonInit(tweakStore: tweakStore)
+    }
+	
+	private func commonInit(tweakStore: TweakStore) {
+        tintColor = AppTheme.Colors.controlTinted
+
+        if tweakStore.enabled {
+            switch gestureType {
+            case .gesture(let gestureRecognizer):
+                gestureRecognizer.addTarget(self, action: #selector(self.presentTweaks))
+            case .twoFingerDoubleTap:
+                let twoFingerDoubleTapGesture = UITapGestureRecognizer()
+                twoFingerDoubleTapGesture.numberOfTapsRequired = 2
+                twoFingerDoubleTapGesture.numberOfTouchesRequired = 2
+                twoFingerDoubleTapGesture.addTarget(self, action: #selector(self.presentTweaks))
+                self.addGestureRecognizer(twoFingerDoubleTapGesture)
+            case .shake:
+                break
+            }
+        }
+
+        tweaksViewController = TweaksViewController(tweakStore: tweakStore, delegate: self)
+        tweaksViewController.floatingTweaksWindowPresenter = self
 	}
 
 	public required init?(coder aDecoder: NSCoder) {
