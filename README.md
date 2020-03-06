@@ -113,7 +113,8 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blue)
 	public static let marginHorizontal = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
 	public static let marginVertical = Tweak<CGFloat>("General", "Layout", "V. Margins", defaultValue: 10, min: 0)
-	public static let featureFlagMainScreenHelperText = Tweak("Feature Flags", "Main Screen", "Show Body Text", true)
+	public static let font = Tweak<StringOption>.stringsList("General", "Layout", "Font", options: ["AvenirNext", "Helvetica", "SanFrancisco"])
+	public static let featureFlagMainScreenHelperText = Tweak<Bool>("Feature Flags", "Main Screen", "Show Body Text", true)
 
 	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
 
@@ -132,7 +133,7 @@ public struct ExampleTweaks: TweakLibraryType {
 
 Let’s break down what happened here:
 
-- We have four tweaks in `ExampleTweaks`: a tint color, two `CGFloat`s for layout, and a `Bool` that toggles an in-development feature.
+- We have five tweaks in `ExampleTweaks`: a tint color, two `CGFloat`s for layout, a `StringOption` for font choice, and a `Bool` that toggles an in-development feature.
 - The compiler can get confused between `Int`, `CGFloat`, and `Double` - so you might find it necessary to tell the `Tweak<T>` what type its `T` is - as we do here with our margin tweaks.
 - We create a `defaultStore` by creating a `TweakStore`, which needs to know whether tweaks are `enabled`, and a list of all `tweaks`.
 - The `enabled` flag on `TweakStore` exists so that `SwiftTweaks` isn’t accessible by your users in production. You can set it however you like; we enjoy using the `DEBUG` flag from our project’s Build Settings.
