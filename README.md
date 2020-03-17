@@ -113,7 +113,7 @@ public struct ExampleTweaks: TweakLibraryType {
 	public static let colorTint = Tweak("General", "Colors", "Tint", UIColor.blue)
 	public static let marginHorizontal = Tweak<CGFloat>("General", "Layout", "H. Margins", defaultValue: 15, min: 0)
 	public static let marginVertical = Tweak<CGFloat>("General", "Layout", "V. Margins", defaultValue: 10, min: 0)
-	public static let font = Tweak<StringOption>.stringsList("General", "Layout", "Font", options: ["AvenirNext", "Helvetica", "SanFrancisco"])
+	public static let font = Tweak("General", "Layout", "Font", options: ["AvenirNext", "Helvetica", "SanFrancisco"])
 	public static let featureFlagMainScreenHelperText = Tweak<Bool>("Feature Flags", "Main Screen", "Show Body Text", true)
 
 	public static let buttonAnimation = SpringAnimationTweakTemplate("Animation", "Button Animation")
