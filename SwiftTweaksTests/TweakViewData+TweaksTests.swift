@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SwiftTweaks
 
 class TweakViewData_TweaksTests: XCTestCase {
 

@@ -75,7 +75,6 @@
 		939F2CE01CB81ED400345E03 /* TweakClusterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F2CDF1CB81ED400345E03 /* TweakClusterType.swift */; };
 		93A3AF321BF1677B00CAD43B /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
 		93A84EDC1BEAE86E0022D2F3 /* SwiftTweaks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A84ED11BEAE86E0022D2F3 /* SwiftTweaks.framework */; };
-		93A84EE11BEAE86E0022D2F3 /* SwiftTweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A84EE01BEAE86E0022D2F3 /* SwiftTweaksTests.swift */; };
 		93A84EF01BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A84EEB1BEAE88D0022D2F3 /* HashingUtilities.swift */; };
 		93A84EF11BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A84EEB1BEAE88D0022D2F3 /* HashingUtilities.swift */; };
 		93A84EF21BEAE88D0022D2F3 /* Tweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A84EEC1BEAE88D0022D2F3 /* Tweak.swift */; };
@@ -158,7 +157,6 @@
 		93A84ED41BEAE86E0022D2F3 /* SwiftTweaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftTweaks.h; sourceTree = "<group>"; };
 		93A84ED61BEAE86E0022D2F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93A84EDB1BEAE86E0022D2F3 /* SwiftTweaksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftTweaksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		93A84EE01BEAE86E0022D2F3 /* SwiftTweaksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTweaksTests.swift; sourceTree = "<group>"; };
 		93A84EE21BEAE86E0022D2F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93A84EEB1BEAE88D0022D2F3 /* HashingUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashingUtilities.swift; sourceTree = "<group>"; };
 		93A84EEC1BEAE88D0022D2F3 /* Tweak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweak.swift; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 		93A84EDF1BEAE86E0022D2F3 /* SwiftTweaksTests */ = {
 			isa = PBXGroup;
 			children = (
-				93A84EE01BEAE86E0022D2F3 /* SwiftTweaksTests.swift */,
 				931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */,
 				939F2CCB1CB715E800345E03 /* Clipping+TweaksTest.swift */,
 				93478C7B1CBDF03A0064D8AD /* Precision+TweaksTests.swift */,
@@ -432,7 +429,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Khan Academy";
 				TargetAttributes = {
 					93A84ED01BEAE86E0022D2F3 = {
@@ -544,7 +541,6 @@
 			files = (
 				93B058E51CC53AD100AB2759 /* Precision.swift in Sources */,
 				931472521BFFB41700F66D20 /* ColorRepresentation.swift in Sources */,
-				93A84EE11BEAE86E0022D2F3 /* SwiftTweaksTests.swift in Sources */,
 				930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */,
 				93B058D71CBDF58500AB2759 /* TweakClusterType.swift in Sources */,
 				AA356AF51EB3C5FC0063F4E2 /* TweakAction.swift in Sources */,
@@ -618,6 +614,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -676,6 +673,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
