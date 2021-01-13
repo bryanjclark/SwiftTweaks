@@ -202,8 +202,8 @@ extension TweakWindow: FloatingTweaksWindowPresenter {
 		window.addSubview(floatingTweaksVC.view)
 
 		window.alpha = 0
-		let initialWindowFrame = window.frame.offsetBy(dx: 0, dy: floatingTweaksVC.view.bounds.height)
-		let destinationWindowFrame = window.frame
+		let destinationWindowFrame = floatingTweaksVC.view.frame
+		let initialWindowFrame = destinationWindowFrame.offsetBy(dx: 0, dy: floatingTweaksVC.view.bounds.height)
 		window.makeKeyAndVisible()
 		floatingTweakGroupUIWindow = window
 
