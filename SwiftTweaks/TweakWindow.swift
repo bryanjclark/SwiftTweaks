@@ -65,8 +65,7 @@ import UIKit
 
 		self.tweakStore = tweakStore
 
-		// Are we running on a Mac? If so, then we're in a simulator!
-		#if (arch(i386) || arch(x86_64))
+		#if targetEnvironment(simulator)
 			self.runningInSimulator = true
 		#else
 			self.runningInSimulator = false
