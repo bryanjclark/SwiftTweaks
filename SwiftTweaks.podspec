@@ -11,13 +11,15 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
   s.authors            = "Khan Academy", "Bryan Clark"
-  s.social_media_url   = "https://twitter.com/khanacademy"
+  s.social_media_url   = "https://www.twitter.com/khanacademy"
 
   s.platform     = :ios, "10.0"
 
   s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v4.1.0", :submodules => true }
   s.source_files = "SwiftTweaks/**/*.swift"
   s.resources = "SwiftTweaks/*.xcassets"
+
+  s.swift_version = "5.0"
   
   s.ios.framework = 'UIKit'
 
