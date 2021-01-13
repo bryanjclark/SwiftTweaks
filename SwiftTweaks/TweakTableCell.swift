@@ -89,6 +89,8 @@ internal final class TweakTableCell: UITableViewCell {
 	private static let numberTextWidthFraction: CGFloat = 0.25 // The fraction of the cell's width used for the text field
 	private static let colorTextWidthFraction: CGFloat = 0.30
 	private static let stringTextWidthFraction: CGFloat = 0.60
+	private static let stringListValueLeadingPadding: CGFloat = 10 // Leading padding before the string list's value text field
+	private static let stringListTitleMaxWidthFraction: CGFloat = 0.7 // Maximum percent of the available space that the title can use when truncating the value
 	private static let horizontalPadding: CGFloat = 6 // Horiz. separation between stepper and text field
 	private static let colorChitSize = CGSize(width: 29, height: 29)
 
@@ -180,13 +182,7 @@ internal final class TweakTableCell: UITableViewCell {
 			accessory.bounds = textField.bounds
 
 		case .stringList:
-			let textFieldFrame = CGRect(
-				origin: .zero,
-				size: CGSize(
-					width: bounds.width * TweakTableCell.stringTextWidthFraction,
-					height: bounds.height
-				)
-			).integral
+			let textFieldFrame = computeStringListTextFieldFrame()
 			textField.frame = textFieldFrame
 			accessory.bounds = textField.bounds
 			let disclosureArrowFrame = CGRect(
@@ -199,6 +195,55 @@ internal final class TweakTableCell: UITableViewCell {
 		case .action:
 			accessory.bounds = .zero
 		}
+	}
+	
+	// For stringList, in most cases we want to give the title's content precedence over the value,
+	// such that the value will scale down in the available space, and then truncate. However,
+	// for a very long title, limit the title to a fixed percentage of the cell's width.
+	fileprivate func computeStringListTextFieldFrame() -> CGRect {
+		guard let textLabel = textLabel else { return bounds }
+		
+		// Compute total width available for text
+		let fittingSize = CGSize(
+			width: CGFloat.greatestFiniteMagnitude,
+			height: bounds.height
+		)
+		let titleLeadingSystemPadding: CGFloat = 15.0
+		let accessoryTrailingSystemPadding: CGFloat = 15.0
+		let spaceAfterTextField = TweakTableCell.horizontalPadding + disclosureArrow.bounds.width + accessoryTrailingSystemPadding
+		let availableContentWidth = bounds.width - titleLeadingSystemPadding - TweakTableCell.stringListValueLeadingPadding - spaceAfterTextField
+		
+		// Compute percent of available width used for title at default size.
+		let titleContentSize = textLabel.sizeThatFits(fittingSize)
+		let titleContentPercent = ceil(titleContentSize.width / availableContentWidth)
+		
+		// Compute percent of available width used for value at default size.
+		let textFieldContentWidth = self.textField.sizeThatFits(fittingSize).width + TweakTableCell.stringListValueLeadingPadding
+		let textFieldContentPercent = textFieldContentWidth / availableContentWidth
+		
+		// Compute the default width for the text field: fill the available space left after the title
+		let textFieldAvailablePercent = 1.0 - titleContentPercent
+		var textFieldWidth = textFieldAvailablePercent * availableContentWidth
+
+		// Compute actual width for the textField.
+		let titleMaxWidthPercent = TweakTableCell.stringListTitleMaxWidthFraction
+		let allContentPercent = titleContentPercent + textFieldContentPercent
+		
+		// If the title is longer than the overflow threshhold, and the value is long enough that it would need to be scaled down,
+		// then let the text field have as much space as it wants, up to the `TweakTableCell.stringListTitleMaxWidthFraction` amount.
+		if titleContentPercent > titleMaxWidthPercent && allContentPercent > 1.0 {
+			let textFieldGuaranteedAvailableWidth = (1.0 - titleMaxWidthPercent) * availableContentWidth
+			let textFieldDesiredWidth = textFieldContentWidth
+			textFieldWidth = min(textFieldGuaranteedAvailableWidth, textFieldDesiredWidth)
+		}
+		
+		return CGRect(
+			origin: .zero,
+			size: CGSize(
+				width: textFieldWidth,
+				height: bounds.height
+			)
+		).integral
 	}
 
 	fileprivate func updateSubviews() {

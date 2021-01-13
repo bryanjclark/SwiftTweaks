@@ -23,8 +23,8 @@ internal final class TweakPersistency {
 
 	private var tweakCache: TweakCache = [:]
 
-	init(identifier: String) {
-		self.diskPersistency = TweakDiskPersistency(identifier: identifier)
+	init(identifier: String, appGroup: String?) {
+		self.diskPersistency = TweakDiskPersistency(identifier: identifier, appGroup: appGroup)
 		self.tweakCache = self.diskPersistency.loadFromDisk()
 	}
 
@@ -62,8 +62,14 @@ internal final class TweakPersistency {
 private final class TweakDiskPersistency {
 	private let fileURL: URL
 
-	private static func fileURLForIdentifier(_ identifier: String) -> URL {
-		return try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+	private static func fileURLForIdentifier(_ identifier: String, appGroup: String?) -> URL {
+		guard let appGroupName = appGroup else {
+			return try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+				.appendingPathComponent("SwiftTweaks")
+				.appendingPathComponent("\(identifier)")
+				.appendingPathExtension("db")
+		}
+		return FileManager().containerURL(forSecurityApplicationGroupIdentifier: appGroupName)!
 			.appendingPathComponent("SwiftTweaks")
 			.appendingPathComponent("\(identifier)")
 			.appendingPathExtension("db")
@@ -73,11 +79,11 @@ private final class TweakDiskPersistency {
 
 	private static let dataClassName = "TweakDiskPersistency.Data"
 
-	init(identifier: String) {
+	init(identifier: String, appGroup: String?) {
 		NSKeyedUnarchiver.setClass(TweakDiskPersistency.Data.self, forClassName: TweakDiskPersistency.dataClassName)
 		NSKeyedArchiver.setClassName(TweakDiskPersistency.dataClassName, for: TweakDiskPersistency.Data.self)
 
-		self.fileURL = TweakDiskPersistency.fileURLForIdentifier(identifier)
+		self.fileURL = TweakDiskPersistency.fileURLForIdentifier(identifier, appGroup: appGroup)
 		self.ensureDirectoryExists()
 	}
 
