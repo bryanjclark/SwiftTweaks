@@ -242,7 +242,7 @@ fileprivate final class TweakGroupSectionHeader: UITableViewHeaderFooterView {
 
 	private let titleLabel: UILabel = {
 		let label = UILabel()
-		label.textColor = AppTheme.Colors.sectionHeaderTitleColor
+		label.textColor = AppTheme.Colors.textSecondary
 		label.font = AppTheme.Fonts.sectionHeaderTitleFont
 
 		return label
