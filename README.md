@@ -215,7 +215,7 @@ end
 
 Nope! Wherever/however you prefer, just create a `TweaksViewController` like so:
 
-    let tweaksVC = TweaksViewController(tweakStore: ExampleTweaks.defaultStore)
+    let tweaksVC = TweaksViewController(tweakStore: ExampleTweaks.defaultStore, delegate: self)
 
 #### Can I have multiple `TweakLibraryType`s in my app?
 
