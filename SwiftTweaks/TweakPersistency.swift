@@ -99,8 +99,9 @@ private final class TweakDiskPersistency {
 
 		self.queue.sync {
 			result = (try? Foundation.Data(contentsOf: self.fileURL))
-				.flatMap(NSKeyedUnarchiver.unarchiveObject(with:))
-				.flatMap { $0 as? Data }
+				.flatMap {
+					return try? NSKeyedUnarchiver.unarchivedObject(ofClass: Data.self, from: $0)
+				}
 				.map { $0.cache }
 				?? [:]
 		}
@@ -110,7 +111,7 @@ private final class TweakDiskPersistency {
 
 	func saveToDisk(_ data: TweakCache) {
 		self.queue.async {
-			let nsData = NSKeyedArchiver.archivedData(withRootObject: Data(cache: data))
+			let nsData = try! NSKeyedArchiver.archivedData(withRootObject: Data(cache: data), requiringSecureCoding: true)
 			try! nsData.write(to: self.fileURL, options: [.atomic])
 		}
 	}
