@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftTweaks"
-  s.version      = "4.0.2"
+  s.version      = "4.1"
 
   s.summary      = "Tweak your Swift-based app on-device."
   s.description  = "SwiftTweaks is a way to adjust your Swift-based iOS app on-device without needing to recompile. Read more about it on our blog: http://engineering.khanacademy.org/posts/introducing-swifttweaks.htm"
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "9.0"
 
-  s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v4.0.2", :submodules => true }
+  s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v4.1", :submodules => true }
   s.source_files = "SwiftTweaks/**/*.swift"
   s.resources = "SwiftTweaks/*.xcassets"
   
