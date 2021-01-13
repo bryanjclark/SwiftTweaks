@@ -28,7 +28,11 @@ internal final class TweakColorCell: UITableViewCell {
 	private let label: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .right
-		label.textColor = UIColor.lightGray
+		if #available(iOS 13.0, *) {
+			label.textColor = UIColor.secondaryLabel
+		} else {
+			label.textColor = UIColor.lightGray
+		}
 		return label
 	}()
 	private let textField: UITextField = {

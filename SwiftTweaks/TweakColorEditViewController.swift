@@ -147,7 +147,7 @@ internal final class TweakColorEditViewController: UIViewController {
 	}
 
 	private func updateColorPreview() {
-		colorPreviewView.backgroundColor = .clear
+		colorPreviewView.backgroundColor = UIColor.white
 		colorPreviewSolidView.backgroundColor = viewData.color.withAlphaComponent(1.0)
 		colorPreviewAlphaView.backgroundColor = viewData.color
 	}
