@@ -42,7 +42,13 @@ import UIKit
 	fileprivate let tweakStore: TweakStore
 
 	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
-	private let runningInSimulator: Bool
+	private let runningInSimulator: Bool = {
+		#if targetEnvironment(simulator)
+			return true
+		#else
+			return false
+		#endif
+	}()
 
 	/// Whether or not the device is shaking. Used in determining when to present the Tweaks UI when the device is shaken.
 	private var shaking: Bool = false
@@ -62,14 +68,7 @@ import UIKit
 
 	public init(frame: CGRect, gestureType: GestureType = .shake, tweakStore: TweakStore) {
 		self.gestureType = gestureType
-
 		self.tweakStore = tweakStore
-
-		#if targetEnvironment(simulator)
-			self.runningInSimulator = true
-		#else
-			self.runningInSimulator = false
-		#endif
 
 		super.init(frame: frame)
 
@@ -79,17 +78,10 @@ import UIKit
     @available(iOS 13.0, *)
     public init(windowScene: UIWindowScene, gestureType: GestureType = .shake, tweakStore: TweakStore) {
         self.gestureType = gestureType
-
         self.tweakStore = tweakStore
 
-        // Are we running on a Mac? If so, then we're in a simulator!
-        #if (arch(i386) || arch(x86_64))
-            self.runningInSimulator = true
-        #else
-            self.runningInSimulator = false
-        #endif
-
         super.init(windowScene: windowScene)
+
 		commonInit(tweakStore: tweakStore)
     }
 	
