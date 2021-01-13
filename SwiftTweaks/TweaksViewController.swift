@@ -31,10 +31,13 @@ public final class TweaksViewController: UIViewController {
 
 		super.init(nibName: nil, bundle: nil)
 
-		let tweakRootVC = TweaksRootViewController(tweakStore: tweakStore, delegate: self)
+		let tweakRootVC = TweaksCollectionsListViewController(tweakStore: tweakStore, delegate: self)
 		navController = UINavigationController(rootViewController: tweakRootVC)
 		navController.isToolbarHidden = false
+		navController.willMove(toParent: self)
 		view.addSubview(navController.view)
+		addChild(navController)
+		navController.didMove(toParent: self)
 	}
 
 	public required init?(coder aDecoder: NSCoder) {
@@ -42,14 +45,35 @@ public final class TweaksViewController: UIViewController {
 	}
 }
 
-extension TweaksViewController: TweaksRootViewControllerDelegate {
-	internal func tweaksRootViewControllerDidPressDismissButton(_ tweaksRootViewController: TweaksRootViewController) {
-		delegate.tweaksViewControllerRequestsDismiss(self, completion: nil)
-	}
-
-	internal func tweaksRootViewController(_ tweaksRootViewController: TweaksRootViewController, requestsFloatingUIForTweakGroup tweakGroup: TweakGroup) {
+fileprivate extension TweaksViewController {
+	func displayFloatingTweakPanel(forTweakGroup tweakGroup: TweakGroup) {
 		delegate.tweaksViewControllerRequestsDismiss(self) {
 			self.floatingTweaksWindowPresenter?.presentFloatingTweaksUI(forTweakGroup: tweakGroup)
 		}
+	}
+}
+
+extension TweaksViewController: TweaksCollectionsListViewControllerDelegate {
+	func tweakCollectionListViewController(
+		_ tweakCollectionViewController: TweaksCollectionsListViewController,
+		didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup
+	) {
+		self.displayFloatingTweakPanel(forTweakGroup: tweakGroup)
+	}
+
+	func tweaksCollectionsListViewControllerDidTapDismissButton(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController) {
+		delegate.tweaksViewControllerRequestsDismiss(self, completion: nil)
+	}
+
+	func tweaksCollectionsListViewControllerDidTapShareButton(
+		_ tweaksCollectionsListViewController: TweaksCollectionsListViewController,
+		shareButton: UIBarButtonItem
+	) {
+		let activityVC = UIActivityViewController(
+			activityItems: [TweakStoreActivityItemSource(text: tweakStore.textRepresentation)],
+			applicationActivities: nil
+		)
+		activityVC.popoverPresentationController?.barButtonItem = shareButton
+		present(activityVC, animated: true, completion: nil)
 	}
 }

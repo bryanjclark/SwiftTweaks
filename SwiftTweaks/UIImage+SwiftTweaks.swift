@@ -25,7 +25,11 @@ internal extension UIImage {
 	// NOTE (bryan): if we just used UIImage(named:_), we get crashes when running in other apps!
 	// (Why? Because by default, iOS searches in your app's bundle, but we need to redirect that to the bundle associated with SwiftTweaks
 	private convenience init?(inThisBundleNamed imageName: String) {
+		#if SWIFT_PACKAGE
+		self.init(named: imageName, in: Bundle.module, compatibleWith: nil)
+		#else
 		self.init(named: imageName, in: Bundle(for: TweakTableCell.self), compatibleWith: nil) // NOTE (bryan): Could've used any class in SwiftTweaks here.
+		#endif
 	}
 
 	/// Returns the image, tinted to the given color.
