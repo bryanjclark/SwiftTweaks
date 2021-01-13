@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.authors            = "Khan Academy", "Bryan Clark"
   s.social_media_url   = "https://twitter.com/khanacademy"
 
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "10.0"
 
   s.source       = { :git => "https://github.com/Khan/SwiftTweaks.git", :tag => "v4.1", :submodules => true }
   s.source_files = "SwiftTweaks/**/*.swift"
