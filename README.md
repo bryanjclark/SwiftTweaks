@@ -30,7 +30,7 @@ Currently, you can tweak the following types:
 - `CGFloat`
 - `Double`
 - `UIColor`
-- [`TweakCallbacks`](#callbacks)
+- [`TweakAction`](#Actions)
 - `String`
 - `StringOption`
 
@@ -64,28 +64,27 @@ Of course, you can create your own `TweakGroupTemplate` type if you'd like - the
 
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Demo.gif?raw=true)
 
-### Callbacks
+### Actions
 
-SwiftTweaks now supports callbacks. If you need to execute more complicated operations or operations that do not depend on data from certain tweak value.
-You can use `TweakCallbacks` as a type in your `TweakStore` to create a Tweak that executed your custom callbacks.
+SwiftTweaks now supports closures, so you can perform actions that do not depend on data from SwiftTweaks. To do this, use `TweakAction` as a type in your `TweakStore` to create a Tweak that executes your custom closures:
 
 ```swift
-public static let action = Tweak<TweakCallbacks>("Actions", "Action", "Perform some action")
+public static let action = Tweak<TweakAction>("Actions", "Action", "Perform some action")
 ```
 
-Later in the code you can add callbacks to that tweak, which are executed when a button in Tweaks window is pressed.
+Later in the code you can add closures to that tweak, which are executed when a button in Tweaks window is pressed.
 
 ```swift
-let idenfitier = ExampleTweaks.action.addCallback {
+let idenfitier = ExampleTweaks.action.addClosure {
 	/// Some complicated action happens here
 	print("We're all done!")
 }
 ```
 
-If you want to, you can also always remove callback using unique idenfitier that `addCallback` method provides.
+If you want to, you can also always remove closure using unique idenfitier that `addClosure` method provides.
 
 ```swift
-ExampleTweaks.action.removeCallback(with: idenfitier)
+ExampleTweaks.action.removeClosure(with: idenfitier)
 ```
 
 ### Wait, what about [Facebook Tweaks](https://github.com/facebook/Tweaks)?

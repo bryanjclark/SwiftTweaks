@@ -104,7 +104,7 @@ class ViewController: UIViewController {
             print("🤖 I'm afraid I can't do that")
         }
         
-        // You can remove a callback with the identifier returned from `addCallback`.
+        // You can remove a callback with the identifier returned from `addClosure`.
         let callbackIdentifier = ExampleTweaks.actionPrintToConsole.addClosure {
             // this won't be run
             print("👩🏻‍🚀 <turns off HAL>")
