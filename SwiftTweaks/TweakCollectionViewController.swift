@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakCollectionViewControllerDelegate {
+internal protocol TweakCollectionViewControllerDelegate: class {
 	func tweakCollectionViewControllerDidPressDismissButton(_ tweakCollectionViewController: TweakCollectionViewController)
 	func tweakCollectionViewController(_ tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
 }
@@ -18,7 +18,7 @@ internal final class TweakCollectionViewController: UIViewController {
 	fileprivate let tweakCollection: TweakCollection
 	fileprivate let tweakStore: TweakStore
 
-	fileprivate let delegate: TweakCollectionViewControllerDelegate
+	fileprivate unowned var delegate: TweakCollectionViewControllerDelegate
 
 	fileprivate let tableView: UITableView = {
 		let tableView = UITableView(frame: CGRect.zero, style: .grouped)

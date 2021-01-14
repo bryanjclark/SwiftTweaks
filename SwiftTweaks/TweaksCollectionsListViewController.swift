@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweaksCollectionsListViewControllerDelegate {
+internal protocol TweaksCollectionsListViewControllerDelegate: class {
 	func tweaksCollectionsListViewControllerDidTapDismissButton(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController)
 	func tweaksCollectionsListViewControllerDidTapShareButton(_ tweaksCollectionsListViewController: TweaksCollectionsListViewController, shareButton: UIBarButtonItem)
 	func tweakCollectionListViewController(_ tweakCollectionViewController: TweaksCollectionsListViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
@@ -19,8 +19,7 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 	private let tableView: UITableView
 
 	fileprivate let tweakStore: TweakStore
-	fileprivate let delegate: TweaksCollectionsListViewControllerDelegate
-
+	fileprivate unowned var delegate: TweaksCollectionsListViewControllerDelegate
 
 	// MARK: Init
 

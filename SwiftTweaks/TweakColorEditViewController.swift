@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakColorEditViewControllerDelegate {
+internal protocol TweakColorEditViewControllerDelegate: class {
 	func tweakColorEditViewControllerDidPressDismissButton(_ tweakColorEditViewController: TweakColorEditViewController)
 }
 
@@ -16,7 +16,7 @@ internal protocol TweakColorEditViewControllerDelegate {
 internal final class TweakColorEditViewController: UIViewController {
 	private let tweak: Tweak<UIColor>
 	private let tweakStore: TweakStore
-	private let delegate: TweakColorEditViewControllerDelegate
+	private unowned var delegate: TweakColorEditViewControllerDelegate
 
 	fileprivate var viewData: ColorRepresentation {
 		didSet {

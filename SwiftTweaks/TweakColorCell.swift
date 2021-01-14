@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakColorCellDelegate {
+internal protocol TweakColorCellDelegate: class {
 	func tweakColorCellDidChangeValue(_ cell: TweakColorCell)
 }
 
@@ -16,7 +16,7 @@ internal protocol TweakColorCellDelegate {
 internal final class TweakColorCell: UITableViewCell {
 	internal static let cellHeight: CGFloat = 50
 
-	internal var delegate: TweakColorCellDelegate?
+	internal unowned var delegate: TweakColorCellDelegate?
 
 	internal var viewData: ColorComponent? {
 		didSet {

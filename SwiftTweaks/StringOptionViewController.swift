@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal protocol StringOptionViewControllerDelegate {
+internal protocol StringOptionViewControllerDelegate: class {
 	func stringOptionViewControllerDidPressDismissButton(_ tweakSelectionViewController: StringOptionViewController)
 }
 
@@ -17,7 +17,7 @@ internal protocol StringOptionViewControllerDelegate {
 internal class StringOptionViewController: UITableViewController {
 	fileprivate let tweak: Tweak<StringOption>
 	fileprivate let tweakStore: TweakStore
-	fileprivate let delegate: StringOptionViewControllerDelegate
+	fileprivate unowned var delegate: StringOptionViewControllerDelegate
 	
 	fileprivate var currentOption: String {
 		didSet {
