@@ -12,8 +12,9 @@ These animation timings, font sizes, and color choices are all examples of “ma
 
 ![Tweaks](https://github.com/Khan/SwiftTweaks/blob/master/Images/SwiftTweaks%20Overview.png?raw=true)
 
+![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](http://cocoapods.org/?q=SwiftTweaks)
+[![Version](http://img.shields.io/cocoapods/v/SwiftTweaks.svg)](https://cocoapods.org/pods/SwiftTweaks)
 [![GitHub release](https://img.shields.io/github/release/Khan/SwiftTweaks.svg)](https://github.com/Khan/SwiftTweaks/releases)
 ![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg)
 ![platforms](https://img.shields.io/badge/platforms-iOS%20-lightgrey.svg)
@@ -178,6 +179,15 @@ For more examples, check out the example project’s `ViewController.swift` file
 By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture!
 
 ## Installation
+
+#### Swift Package Manager
+
+SwiftTweaks is available via the Swift Package Manager; add it to Xcode with this URL:
+```
+https://github.com/Khan/SwiftTweaks
+```
+
+It's also listed in the (excellent) [Swift Package Index](https://swiftpackageindex.com/Khan/SwiftTweaks)!
 
 #### [Carthage](https://github.com/carthage/carthage)
 
