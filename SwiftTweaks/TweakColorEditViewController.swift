@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakColorEditViewControllerDelegate: class {
+internal protocol TweakColorEditViewControllerDelegate: AnyObject {
 	func tweakColorEditViewControllerDidPressDismissButton(_ tweakColorEditViewController: TweakColorEditViewController)
 }
 

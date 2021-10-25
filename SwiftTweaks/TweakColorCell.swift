@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakColorCellDelegate: class {
+internal protocol TweakColorCellDelegate: AnyObject {
 	func tweakColorCellDidChangeValue(_ cell: TweakColorCell)
 }
 
