@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-internal protocol TweakTableCellDelegate: class {
+internal protocol TweakTableCellDelegate: AnyObject {
 	func tweakCellDidChangeCurrentValue(_ tweakCell: TweakTableCell)
 }
 

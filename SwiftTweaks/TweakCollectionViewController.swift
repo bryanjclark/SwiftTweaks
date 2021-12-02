@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol TweakCollectionViewControllerDelegate: class {
+internal protocol TweakCollectionViewControllerDelegate: AnyObject {
 	func tweakCollectionViewControllerDidPressDismissButton(_ tweakCollectionViewController: TweakCollectionViewController)
 	func tweakCollectionViewController(_ tweakCollectionViewController: TweakCollectionViewController, didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup)
 }
@@ -224,7 +224,7 @@ extension TweakCollectionViewController: TweakGroupSectionHeaderDelegate {
 	}
 }
 
-private protocol TweakGroupSectionHeaderDelegate: class {
+private protocol TweakGroupSectionHeaderDelegate: AnyObject {
 	func tweakGroupSectionHeaderDidPressFloatingButton(_ sectionHeader: TweakGroupSectionHeader)
 }
 

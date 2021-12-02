@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol TweaksViewControllerDelegate: class {
+public protocol TweaksViewControllerDelegate: AnyObject {
 	func tweaksViewControllerRequestsDismiss(_ tweaksViewController: TweaksViewController, completion: (() -> ())?)
 }
 

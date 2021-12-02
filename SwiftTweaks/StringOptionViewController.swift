@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal protocol StringOptionViewControllerDelegate: class {
+internal protocol StringOptionViewControllerDelegate: AnyObject {
 	func stringOptionViewControllerDidPressDismissButton(_ tweakSelectionViewController: StringOptionViewController)
 }
 
