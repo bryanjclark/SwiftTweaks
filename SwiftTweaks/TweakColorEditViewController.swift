@@ -77,7 +77,7 @@ internal final class TweakColorEditViewController: UIViewController {
 		title = tweak.tweakName
 		toolbarItems = [
 			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .done, target: self, action: #selector(self.dismissButtonTapped))
+			UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 
 		view.tintColor = AppTheme.Colors.controlGrayscale
