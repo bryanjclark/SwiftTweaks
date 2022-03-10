@@ -23,8 +23,6 @@ public final class TweaksViewController: UIViewController {
 	public unowned var delegate: TweaksViewControllerDelegate
 	internal var floatingTweaksWindowPresenter: FloatingTweaksWindowPresenter?
 
-	internal static let dismissButtonTitle = NSLocalizedString("Dismiss", comment: "Button to dismiss TweaksViewController.")
-
 	public init(tweakStore: TweakStore, delegate: TweaksViewControllerDelegate) {
 		self.tweakStore = tweakStore
 		self.delegate = delegate

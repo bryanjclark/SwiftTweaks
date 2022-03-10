@@ -39,7 +39,7 @@ internal final class TweakCollectionViewController: UIViewController {
 
 		toolbarItems = [
 			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(title: TweaksViewController.dismissButtonTitle, style: .done, target: self, action: #selector(self.dismissButtonTapped))
+			UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissButtonTapped))
 		]
 	}
 
