@@ -29,6 +29,12 @@ public extension TweakLibraryType {
 		self.defaultStore.unbind(identifier)
 	}
 
+	/// Similar to `Combine.Subscribers.Assign`. returns nothing, since it doesn't strongly capture `on: OwnerObject`. example usage is:
+	/// `ExampleTweaks.bindWeakly(ExampleTweaks.colorTint, to: \.exampleButton.backgroundColor, on: self)`
+	static func bindWeakly<T, OwnerObject: AnyObject>(_ tweak: Tweak<T>, to keypath: ReferenceWritableKeyPath<OwnerObject, T>, on owner: OwnerObject) {
+		self.defaultStore.bindWeakly(tweak, to: keypath, on: owner)
+	}
+
 	//  Accepts a collection of Tweaks, and immediately calls the updateHandler.
 	/// The updateHandler is then re-called each time any of the collection's tweaks change.
 	/// Inside the updateHandler, you'll need to use `assign` to get the tweaks' current values.
