@@ -91,6 +91,14 @@ public final class TweakStore {
 		tweakBindings[identifier.tweak] = existingTweakBindings.filter { $0.identifier != identifier }
 	}
 
+	/// Similar to `Combine.Subscribers.Assign`. returns nothing, since it doesn't strongly capture `on: OwnerObject`. example usage is:
+	/// `ExampleTweaks.bindWeakly(ExampleTweaks.colorTint, to: \.exampleButton.backgroundColor, on: self)`
+	public func bindWeakly<T, OwnerObject: AnyObject>(_ tweak: Tweak<T>, to keypath: ReferenceWritableKeyPath<OwnerObject, T>, on owner: OwnerObject) {
+		_ = self.bind(tweak) { [weak owner] tweakValue  in
+			owner?[keyPath: keypath] = tweakValue
+		}
+	}
+
 	public func bindMultiple(_ tweaks: [TweakType], binding: @escaping () -> Void) -> MultiTweakBindingIdentifier {
 		// Convert the array (which makes it easier to call a `bindTweakSet`) into a set (which makes it possible to cache the tweakSet)
 		let tweakSet = Set(tweaks.map(AnyTweak.init))
