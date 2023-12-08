@@ -18,6 +18,11 @@ internal protocol TweaksCollectionsListViewControllerDelegate: AnyObject {
 internal final class TweaksCollectionsListViewController: UIViewController {
 	private let tableView: UITableView
 
+	private let searchController: UISearchController
+	private var searchString: String?
+	private var tweaksCollection: [TweakCollection]
+	private var filteredTweaksCollection: [TweakCollection]
+
 	fileprivate let tweakStore: TweakStore
 	fileprivate unowned var delegate: TweaksCollectionsListViewControllerDelegate
 
@@ -28,16 +33,17 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		self.delegate = delegate
 
 		self.tableView = UITableView(frame: CGRect.zero, style: .plain)
-
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.tweaksCollection = tweakStore.sortedTweakCollections
+		self.filteredTweaksCollection = tweakStore.sortedTweakCollections
+	
 		super.init(nibName: nil, bundle: nil)
-		
 		self.navigationItem.title = NSLocalizedString("Tweaks", comment: "Navigation title for Tweaks")
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
 
 	// MARK: View Lifecycle
 
@@ -50,7 +56,12 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		view.addSubview(tableView)
-
+	
+		if #available(iOS 11.0, *) {
+			setupSearchController()
+			navigationItem.searchController = searchController
+		}
+	
 		let resetButton = UIBarButtonItem(title: "Reset All", style: .plain, target: self, action: #selector(self.resetStore))
 		resetButton.tintColor = AppTheme.Colors.controlDestructive
 		navigationItem.rightBarButtonItem = resetButton
@@ -73,6 +84,23 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		}
 	}
 
+	// MARK: SearchController
+
+	private func setupSearchController() {
+		searchController.searchResultsUpdater = self
+		searchController.searchBar.placeholder = "Search.."
+		searchController.searchBar.text = searchString	}
+
+	private func filterAndUpdate() {
+		guard let searchString else {
+			filteredTweaksCollection = []
+			tableView.reloadData()
+			return
+		}
+		filteredTweaksCollection = tweaksCollection.filter { $0.title.localizedCaseInsensitiveContains(searchString) }
+		tableView.reloadData()
+	}
+	
 	// MARK: Events
 
 	@objc private func resetStore(_ sender: UIBarButtonItem) {
@@ -103,32 +131,36 @@ internal final class TweaksCollectionsListViewController: UIViewController {
 		}
 
 		required init?(coder aDecoder: NSCoder) {
-		    fatalError("init(coder:) has not been implemented")
+			fatalError("init(coder:) has not been implemented")
 		}
 	}
 }
 
+// MARK: - UITableViewDataSource
+	
 extension TweaksCollectionsListViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		numberOfSections
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return tweakStore.sortedTweakCollections.count
+		numberOfRows
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: TweaksCollectionsListViewController.TweakCollectionCellIdentifier, for: indexPath)
-		let tweakCollection = tweakStore.sortedTweakCollections[(indexPath as NSIndexPath).row]
+		let tweakCollection = tweak(for: indexPath)
 		cell.textLabel!.text = tweakCollection.title
 		cell.detailTextLabel!.text = "\(tweakCollection.numberOfTweaks)"
 		return cell
 	}
 }
 
+// MARK: - UITableViewDelegate
+
 extension TweaksCollectionsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let tweakCollection = tweakStore.sortedTweakCollections[indexPath.row]
+		let tweakCollection = tweak(for: indexPath)
 
 		let viewController = TweakCollectionViewController(
 			tweakCollection: tweakCollection,
@@ -138,6 +170,8 @@ extension TweaksCollectionsListViewController: UITableViewDelegate {
 		self.navigationController?.pushViewController(viewController, animated: true)
 	}
 }
+
+// MARK: - TweakCollectionViewControllerDelegate
 
 extension TweaksCollectionsListViewController: TweakCollectionViewControllerDelegate {
 	func tweakCollectionViewControllerDidPressDismissButton(_ tweakCollectionViewController: TweakCollectionViewController) {
@@ -149,5 +183,29 @@ extension TweaksCollectionsListViewController: TweakCollectionViewControllerDele
 		didTapFloatingTweakGroupButtonForTweakGroup tweakGroup: TweakGroup
 	) {
 		self.delegate.tweakCollectionListViewController(self, didTapFloatingTweakGroupButtonForTweakGroup: tweakGroup)
+	}
+}
+	
+// MARK: - UISearchResultsUpdating
+	
+extension TweaksCollectionsListViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		searchString = searchController.searchBar.text
+		filterAndUpdate()
+	}
+}
+	
+// MARK: - Helpers
+	
+extension TweaksCollectionsListViewController {
+	private var isFiltering: Bool {
+		guard let searchString else { return false }
+		return !searchString.isEmpty
+	}
+	
+	private var numberOfSections: Int { 1 }
+	private var numberOfRows: Int { isFiltering ? filteredTweaksCollection.count : tweaksCollection.count }
+	private func tweak(for indexPath: IndexPath) -> TweakCollection {
+		isFiltering ? filteredTweaksCollection[indexPath.row] : tweaksCollection[indexPath.row]
 	}
 }
