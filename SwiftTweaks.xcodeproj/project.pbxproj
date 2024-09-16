@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07190479224D931A00D28728 /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
+		6347E4112C98D1880099192C /* TweakWindowGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4102C98D1880099192C /* TweakWindowGroup.swift */; };
 		930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -108,6 +109,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6347E4102C98D1880099192C /* TweakWindowGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweakWindowGroup.swift; sourceTree = "<group>"; };
 		930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweakViewData+TweaksTests.swift"; sourceTree = "<group>"; };
 		931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+TweaksTests.swift"; sourceTree = "<group>"; };
 		931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakColorEditViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6347E40F2C98D1740099192C /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				6347E4102C98D1880099192C /* TweakWindowGroup.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		93212CAE1CEE254900AA85D0 /* Shadow Template */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +303,7 @@
 				93A84EFB1BEAE8A20022D2F3 /* Interface */,
 				93A84EFA1BEAE8940022D2F3 /* Model */,
 				93A84EFC1BEAE8AB0022D2F3 /* Utilities */,
+				6347E40F2C98D1740099192C /* SwiftUI */,
 				93A84ED61BEAE86E0022D2F3 /* Info.plist */,
 				931A24751BFA7EEE00E40192 /* Media.xcassets */,
 			);
@@ -505,6 +516,7 @@
 				AA356AF01EB3B5A90063F4E2 /* TweakAction.swift in Sources */,
 				93212CB01CEE255F00AA85D0 /* ShadowTweakTemplate.swift in Sources */,
 				93B058E31CC44D8900AB2759 /* Precision.swift in Sources */,
+				6347E4112C98D1880099192C /* TweakWindowGroup.swift in Sources */,
 				9338787E1BF6A4C5007DF1B4 /* TweakTableCell.swift in Sources */,
 				933223541CB83F0C002D586B /* BasicAnimationTweakTemplate.swift in Sources */,
 				93E777041BED4BBD003F0DE2 /* TweakLibrary.swift in Sources */,
