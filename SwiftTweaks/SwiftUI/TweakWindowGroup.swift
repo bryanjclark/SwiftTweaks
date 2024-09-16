@@ -48,8 +48,10 @@ struct TweakWindowGroup<Content: View>: Scene {
 				content()
 			}
 			.sheet(isPresented: $showingTweaks) {
-				// TODO: (Damitay)
-				Color.red
+				TweaksViewRepresentable(
+					tweakStore: tweakStore,
+					showingTweaks: $showingTweaks
+				)
 			}
 		}
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		07190479224D931A00D28728 /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
 		6347E4112C98D1880099192C /* TweakWindowGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4102C98D1880099192C /* TweakWindowGroup.swift */; };
+		6347E4132C98D38B0099192C /* TweaksViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */; };
 		930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -110,6 +111,7 @@
 
 /* Begin PBXFileReference section */
 		6347E4102C98D1880099192C /* TweakWindowGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweakWindowGroup.swift; sourceTree = "<group>"; };
+		6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweaksViewRepresentable.swift; sourceTree = "<group>"; };
 		930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweakViewData+TweaksTests.swift"; sourceTree = "<group>"; };
 		931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+TweaksTests.swift"; sourceTree = "<group>"; };
 		931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakColorEditViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				6347E4102C98D1880099192C /* TweakWindowGroup.swift */,
+				6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				93AA34571BEBC654004B734B /* TweaksViewController.swift in Sources */,
 				93A84EF01BEAE88D0022D2F3 /* HashingUtilities.swift in Sources */,
 				937AA3711CB61BDE000928C5 /* FloatingTweakGroupViewController.swift in Sources */,
+				6347E4132C98D38B0099192C /* TweaksViewRepresentable.swift in Sources */,
 				93C942591BFBDC550054811A /* TweakBinding.swift in Sources */,
 				9345EC0E1BF2B9100086AB5D /* TweakCollection.swift in Sources */,
 				D5CE0BDC1DC7DFC200F79235 /* TweakBindingIdentifier.swift in Sources */,
