@@ -6,7 +6,8 @@
 //  Copyright © 2024 Khan Academy. All rights reserved.
 //
 
-#if	canImport(SwiftUI)
+// Guarded by SwiftUI to prevent compilation errors when SwiftUI is not available.
+#if canImport(SwiftUI)
 
 import SwiftUI
 

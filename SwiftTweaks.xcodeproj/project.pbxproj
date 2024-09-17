@@ -10,6 +10,7 @@
 		07190479224D931A00D28728 /* HapticsPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939CB70E218CFE570041E3EA /* HapticsPlayer.swift */; };
 		6347E4112C98D1880099192C /* TweakWindowGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4102C98D1880099192C /* TweakWindowGroup.swift */; };
 		6347E4132C98D38B0099192C /* TweaksViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */; };
+		6347E4152C98D59E0099192C /* View+Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347E4142C98D59E0099192C /* View+Tweaks.swift */; };
 		930ECDB81DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */; };
 		931472491BFFB0C800F66D20 /* UIColor+TweaksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */; };
 		9314724C1BFFB41700F66D20 /* TweakWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3AF311BF1677B00CAD43B /* TweakWindow.swift */; };
@@ -112,6 +113,7 @@
 /* Begin PBXFileReference section */
 		6347E4102C98D1880099192C /* TweakWindowGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweakWindowGroup.swift; sourceTree = "<group>"; };
 		6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweaksViewRepresentable.swift; sourceTree = "<group>"; };
+		6347E4142C98D59E0099192C /* View+Tweaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Tweaks.swift"; sourceTree = "<group>"; };
 		930ECDB71DA6EEB9001009B3 /* TweakViewData+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweakViewData+TweaksTests.swift"; sourceTree = "<group>"; };
 		931472481BFFB0C800F66D20 /* UIColor+TweaksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+TweaksTests.swift"; sourceTree = "<group>"; };
 		931A24711BFA77FB00E40192 /* TweakColorEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweakColorEditViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				6347E4102C98D1880099192C /* TweakWindowGroup.swift */,
 				6347E4122C98D38B0099192C /* TweaksViewRepresentable.swift */,
+				6347E4142C98D59E0099192C /* View+Tweaks.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93AA344F1BEBBD2D004B734B /* TweakStore.swift in Sources */,
+				6347E4152C98D59E0099192C /* View+Tweaks.swift in Sources */,
 				931A24721BFA77FB00E40192 /* TweakColorEditViewController.swift in Sources */,
 				939F2CD91CB810D300345E03 /* SpringAnimationTweakTemplate.swift in Sources */,
 				9338E9E71CB57068002A92BE /* UIImage+SwiftTweaks.swift in Sources */,
