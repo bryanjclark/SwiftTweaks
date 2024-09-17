@@ -13,7 +13,7 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 /// A `UIViewControllerRepresentable` that presents the `TweaksViewController`.
-struct TweaksViewRepresentable: UIViewControllerRepresentable {
+public struct TweaksViewRepresentable: UIViewControllerRepresentable {
 	let tweakStore: TweakStore
 	let showingTweaks: Binding<Bool>
 
@@ -25,7 +25,7 @@ struct TweaksViewRepresentable: UIViewControllerRepresentable {
 		self.showingTweaks = showingTweaks
 	}
 
-	func makeUIViewController(context: Context) -> TweaksViewController {
+	public func makeUIViewController(context: Context) -> TweaksViewController {
 		let delegate = RepresentableDelegate(showingTweaks: showingTweaks)
 		return TweaksViewController(
 			tweakStore: tweakStore,
@@ -33,13 +33,13 @@ struct TweaksViewRepresentable: UIViewControllerRepresentable {
 		)
 	}
 
-	func updateUIViewController(_ uiViewController: TweaksViewController, context: Context) {
+	public func updateUIViewController(_ uiViewController: TweaksViewController, context: Context) {
 		// no-op
 	}
 }
 
 @available(iOS 13.0, *)
-class RepresentableDelegate: TweaksViewControllerDelegate {
+fileprivate class RepresentableDelegate: TweaksViewControllerDelegate {
 	@Binding var showingTweaks: Bool
 
 	init(showingTweaks: Binding<Bool>) {

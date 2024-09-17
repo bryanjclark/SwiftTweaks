@@ -14,8 +14,8 @@ import SwiftUI
 @available(iOS 15.0, *)
 /// A `Scene` that presents a `TweakStore` UI when a certain gesture is recognized.
 /// Use this in place of the WindowGroup in your App's @main struct.
-struct TweakWindowGroup<Content: View>: Scene {
-	enum GestureType {
+public struct TweakWindowGroup<Content: View>: Scene {
+	public enum GestureType {
 		/// Shake the device, like you're trying to undo some text
 		case shake
 	}
@@ -45,7 +45,7 @@ struct TweakWindowGroup<Content: View>: Scene {
 		self.content = content
 	}
 
-	var body: some Scene {
+	public var body: some Scene {
 		WindowGroup {
 			VStack {
 				content()
@@ -76,7 +76,7 @@ struct TweakWindowGroup<Content: View>: Scene {
 }
 
 @available(iOS 15.0, *)
-extension TweakWindowGroup {
+fileprivate extension TweakWindowGroup {
 	/// We need to know if we're running in the simulator (because shake gestures don't have a time duration in the simulator)
 	var runningInSimulator: Bool {
 #if targetEnvironment(simulator)

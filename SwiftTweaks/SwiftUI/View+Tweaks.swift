@@ -12,14 +12,14 @@
 import SwiftUI
 
 /// Whether the device began or ended shaking
-enum ShakePhase {
+internal enum ShakePhase {
 	case began
 	case ended
 }
 
 @available(iOS 15.0, *)
 /// `View` extension to add a shake gesture recognizer.
-extension View {
+internal extension View {
 	func onShake(_ block: @escaping (_ phase: ShakePhase) -> Void) -> some View {
 		self.overlay {
 			ShakeViewRepresentable(onShake: block)
@@ -31,7 +31,7 @@ extension View {
 
 @available(iOS 13.0, *)
 /// `View` extension to conditionally apply a transformation.
-extension View {
+internal extension View {
 	@ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
 		if condition {
 			transform(self)
@@ -43,7 +43,7 @@ extension View {
 
 @available(iOS 13.0, *)
 /// Hook into the responder chain to detect shake gestures
-struct ShakeViewRepresentable: UIViewControllerRepresentable {
+internal struct ShakeViewRepresentable: UIViewControllerRepresentable {
 	let onShake: (ShakePhase) -> ()
 
 	class ShakeViewController: UIViewController {
