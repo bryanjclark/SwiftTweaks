@@ -178,6 +178,10 @@ For more examples, check out the example project’s `ViewController.swift` file
 
 By default, SwiftTweaks uses a shake gesture to bring up the UI, but you can also use a custom gesture!
 
+### Step Three (SwiftUI): Set TweakWindowGroup as your root scene in your App
+
+`TweakWindowGroup` is a drop-in replacement for `WindowGroup` in your `App` struct. By default, it uses a shake gesture to bring up the UI. Custom gestures/two finger double-tap is not yet supported for SwiftUI.
+
 ## Installation
 
 #### Swift Package Manager
