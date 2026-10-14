@@ -85,7 +85,7 @@ let idenfitier = ExampleTweaks.action.addClosure {
 If you want to, you can also always remove closure using unique idenfitier that `addClosure` method provides.
 
 ```swift
-ExampleTweaks.action.removeClosure(with: idenfitier)
+ExampleTweaks.action.removeClosure(with: identifier)
 ```
 
 ### Wait, what about [Facebook Tweaks](https://github.com/facebook/Tweaks)?
